@@ -74,6 +74,89 @@
         }
 
 
+        .audio-control-container {
+            position: fixed;
+            top: 50%;
+            right: 30px;
+            transform: translateY(-50%);
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, rgba(10, 10, 10, 0.95), rgba(139, 0, 0, 0.1));
+            backdrop-filter: blur(10px);
+            padding: 20px 15px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(220, 20, 60, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .audio-control-container:hover {
+            border-color: var(--crimson);
+            box-shadow: 0 15px 40px rgba(220, 20, 60, 0.4);
+            transform: translateY(-50%) scale(1.02);
+        }
+
+        .audio-icon {
+            font-size: 1.2rem;
+            color: var(--crimson);
+            margin-bottom: 5px;
+            text-shadow: 0 0 10px rgba(220, 20, 60, 0.5);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .audio-slider {
+            writing-mode: bt-lr;
+            -webkit-appearance: slider-vertical;
+            width: 8px;
+            height: 100px;
+            background: linear-gradient(to top, rgba(139, 0, 0, 0.3), rgba(220, 20, 60, 0.6));
+            outline: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .audio-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            background: linear-gradient(135deg, var(--crimson), var(--accent));
+            cursor: pointer;
+            border-radius: 50%;
+            box-shadow: 0 0 15px rgba(220, 20, 60, 0.6);
+            transition: all 0.3s ease;
+        }
+
+        .audio-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+            box-shadow: 0 0 25px rgba(220, 20, 60, 0.8);
+        }
+
+        .volume-percentage {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 0.8rem;
+            color: var(--crimson);
+            letter-spacing: 1px;
+            text-align: center;
+            margin-top: 5px;
+            text-shadow: 0 0 5px rgba(220, 20, 60, 0.5);
+        }
+
+        @media (max-width: 768px) {
+            .audio-control-container {
+                right: 15px;
+                padding: 15px 10px;
+            }
+
+            .audio-slider {
+                height: 80px;
+            }
+        }
+
         .eboard-grid.animated .member-card:nth-child(1) {
             animation-delay: 0s;
         }
@@ -4194,7 +4277,7 @@
 </div>
 
 <script>
-   
+
     document.addEventListener('DOMContentLoaded', function () {
         const animatedBg = document.getElementById('animatedBg');
         const bgPulse = document.getElementById('bgPulse');
@@ -4204,7 +4287,7 @@
         let currentY = 0;
         const speed = 0.05;
 
-      
+
         window.addEventListener('scroll', () => {
             const scrolled = window.pageYOffset;
             const parallaxSpeed = 0.5;
@@ -4214,14 +4297,14 @@
             }
         });
 
-      
+
         document.addEventListener('mousemove', (e) => {
             mouseX = e.clientX;
             mouseY = e.clientY;
         });
 
         function animatePulse() {
-         
+
             currentX += (mouseX - currentX) * speed;
             currentY += (mouseY - currentY) * speed;
 
@@ -4234,21 +4317,21 @@
         }
         animatePulse();
 
-      
+
         setTimeout(() => {
             animatedBg.classList.add('loaded');
         }, 100);
 
-     
+
         const navLinks = document.querySelectorAll('.nav-link');
         navLinks.forEach(link => {
             link.addEventListener('click', function () {
-               
+
                 createBackgroundRipple(window.innerWidth / 2, window.innerHeight / 2);
             });
         });
 
-      
+
         function createBackgroundRipple(x, y) {
             const ripple = document.createElement('div');
             ripple.className = 'bg-ripple';
@@ -4267,20 +4350,20 @@
 
             document.body.appendChild(ripple);
 
-            
+
             requestAnimationFrame(() => {
                 ripple.style.transition = 'transform 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 1.5s ease-out';
                 ripple.style.transform = 'translate(-50%, -50%) scale(20)';
                 ripple.style.opacity = '0';
             });
 
-        
+
             setTimeout(() => {
                 ripple.remove();
             }, 1500);
         }
 
-      
+
         const heroSection = document.querySelector('#home');
         if (heroSection) {
             heroSection.addEventListener('mouseenter', () => {
@@ -4292,7 +4375,7 @@
             });
         }
 
-       
+
         const sections = document.querySelectorAll('.page-section');
         const observerOptions = {
             threshold: 0.5
@@ -4303,7 +4386,7 @@
                 if (entry.isIntersecting) {
                     const sectionId = entry.target.id;
 
-                 
+
                     switch (sectionId) {
                         case 'home':
                             animatedBg.style.opacity = '1';
@@ -4329,7 +4412,7 @@
         });
     });
 
- 
+
     document.addEventListener('click', function (e) {
         if (e.target.closest('.blossom-petal')) {
             const animatedBg = document.getElementById('animatedBg');
@@ -4344,7 +4427,7 @@
 </script>
 
 <body>
-    
+
     <div class="page-transition" id="pageTransition">
         <div class="shoji-door-left">
             <div class="shoji-grid"></div>
@@ -4376,7 +4459,7 @@
         </div>
     </div>
 
-    
+
     <div class="blossom-container">
         <div class="blossom-petal"><img src="images/blossom.png" alt="Blossom"></div>
         <div class="blossom-petal"><img src="images/blossom.png" alt="Blossom"></div>
@@ -4390,7 +4473,7 @@
         <div class="blossom-petal"><img src="images/blossom.png" alt="Blossom"></div>
     </div>
 
-    
+
     <div class="testudo-container">
         <div class="testudo-text">Drawn by u/Vivaldi44<br>our little Testudo-chan mascot at UMD!</div>
         <div class="testudo-bubbles">
@@ -4402,7 +4485,7 @@
         </div>
     </div>
 
-    
+
     <div class="floating-mascot-container">
         <div class="mascot-text">Click me for special promotions!</div>
         <div class="thought-bubbles">
@@ -4415,7 +4498,11 @@
         </div>
     </div>
 
-    
+    <div class="audio-control-container">
+        <input type="range" id="volumeSlider" class="audio-slider" min="0" max="100" value="50">
+        <div class="volume-percentage">50%</div>
+    </div>
+
     <nav id="navbar">
         <div class="nav-container">
             <a href="#home" class="logo">
@@ -4445,7 +4532,7 @@
         </div>
     </nav>
 
-    
+
     <section id="home" class="page-section active">
         <div class="hero">
             <div class="hero-mascot">
@@ -4481,8 +4568,8 @@
         </div>
     </section>
 
-    
-    
+
+
     <section id="meetings" class="page-section">
         <div class="section-header">
             <h2>WEEKLY MEETINGS</h2>
@@ -4510,7 +4597,7 @@
             </div>
         </div>
 
-        
+
         <div class="screening-container">
             <div class="screening-header">
                 <h3>THIS WEEK'S SCREENING</h3>
@@ -4523,7 +4610,7 @@
             <div class="anime-showcase">
                 <div class="showcase-main">
                     <div class="anime-slider" id="animeSlider">
-                        
+
                         <div class="anime-slide active" data-anime="1">
                             <div class="anime-poster">
                                 <img src="images/anime1.png" alt="Excel Saga">
@@ -4550,7 +4637,7 @@
                             </div>
                         </div>
 
-                        
+
                         <div class="anime-slide" data-anime="2">
                             <div class="anime-poster">
                                 <img src="images/anime2.png" alt="School-Live!">
@@ -4577,7 +4664,7 @@
                             </div>
                         </div>
 
-                        
+
                         <div class="anime-slide" data-anime="3">
                             <div class="anime-poster">
                                 <img src="images/anime3.png" alt="Talentless Nana">
@@ -4604,7 +4691,7 @@
                             </div>
                         </div>
 
-                        
+
                         <div class="anime-slide" data-anime="4">
                             <div class="anime-poster">
                                 <img src="images/anime4.png" alt="The Executioner and Her Way of Life">
@@ -4631,7 +4718,7 @@
                             </div>
                         </div>
 
-                        
+
                         <div class="anime-slide" data-anime="5">
                             <div class="anime-poster">
                                 <img src="images/anime5.png" alt="Turkey! Time to Strike">
@@ -4658,12 +4745,12 @@
                         </div>
                     </div>
 
-                    
+
                     <button class="slide-nav prev-slide" onclick="changeAnime(-1)">‹</button>
                     <button class="slide-nav next-slide" onclick="changeAnime(1)">›</button>
                 </div>
 
-                
+
                 <div class="anime-thumbnails">
                     <div class="thumbnail active" data-anime="1" onclick="goToAnime(1)">
                         <img src="images/anime1.png" alt="Excel Saga">
@@ -4687,7 +4774,7 @@
                     </div>
                 </div>
 
-                
+
                 <div class="screening-progress">
                     <div class="progress-bar">
                         <div class="progress-fill" id="progressFill"></div>
@@ -4719,14 +4806,14 @@
         </div>
     </section>
 
-    
+
     <section id="events" class="page-section">
         <div class="section-header">
             <h2>EVENTS</h2>
             <p class="section-subtitle">Special occasions throughout the year</p>
         </div>
 
-        
+
         <div class="event-section maid-cafe-section">
             <div class="event-header">
                 <h3>MAID CAFE</h3>
@@ -4766,7 +4853,7 @@
             </div>
         </div>
 
-        
+
         <div class="event-section kamecon-section">
             <div class="event-header">
                 <h3>KAMECON</h3>
@@ -4806,7 +4893,7 @@
             </div>
         </div>
 
-        
+
         <div class="event-section chainsaw-section">
             <div class="event-header">
                 <h3>CHAINSAW MAN PROMOTIONS</h3>
@@ -4872,8 +4959,8 @@
         </div>
     </section>
 
-    
-    
+
+
     <section id="promotions" class="page-section">
         <div class="promotions-hero">
             <div class="floating-particles">
@@ -4928,7 +5015,7 @@
         </div>
     </section>
 
-    
+
     <section id="eboard" class="page-section">
         <div class="section-header">
             <h2>EXECUTIVE BOARD</h2>
@@ -4969,7 +5056,7 @@
                 <div class="member-name">Michele Mason</div>
             </div>
         </div>
-        
+
         <div class="president-section">
             <div class="pres-header">
                 <span class="pres-label">MEET THE PRESIDENT</span>
@@ -5051,7 +5138,7 @@
         </div>
     </section>
 
-    
+
     <section id="join" class="page-section">
         <div class="section-header">
             <h2>JOIN TAS</h2>
@@ -5076,7 +5163,7 @@
         </div>
     </section>
 
-    
+
     <section id="subgroups" class="page-section">
         <div class="section-header">
             <h2>SUBGROUPS</h2>
@@ -5107,14 +5194,14 @@
         </div>
     </section>
 
-    
+
     <section id="resources" class="page-section">
         <div class="section-header">
             <h2>ANIME RESOURCES</h2>
             <p class="section-subtitle">Curated recommendations & streaming sites</p>
         </div>
 
-        
+
         <div class="resources-section">
             <h3 class="resources-subtitle">STREAMING PLATFORMS</h3>
             <div class="resources-list">
@@ -5134,7 +5221,7 @@
                 </a>
             </div>
         </div>
-        
+
         <div class="recommendations-section">
             <h3 class="resources-subtitle">SEASONAL RECOMMENDATIONS</h3>
             <div class="season-tabs">
@@ -5144,7 +5231,7 @@
                 <button class="season-tab" data-season="winter">WINTER 2025</button>
             </div>
 
-            
+
             <div class="anime-grid active" id="fall">
                 <div class="anime-card">
                     <div class="anime-rank">#1</div>
@@ -5325,7 +5412,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="genre-guide">
             <h3 class="resources-subtitle">GENRE STARTER GUIDE</h3>
             <div class="genre-grid">
@@ -5376,7 +5463,7 @@
             </div>
         </div>
 
-        
+
         <div class="watch-order">
             <h3 class="resources-subtitle">WATCH ORDER GUIDES</h3>
             <div class="order-cards">
@@ -5408,7 +5495,7 @@
         </div>
     </section>
 
-    
+
     <section id="donate" class="page-section">
         <div class="section-header">
             <h2>SUPPORT TAS</h2>
@@ -5424,7 +5511,7 @@
         </div>
     </section>
 
-    
+
     <section id="contact" class="page-section">
         <div class="section-header">
             <h2>CONTACT US</h2>
@@ -5450,7 +5537,7 @@
         </div>
     </section>
 
-    
+
     <footer>
         <div class="footer-content">
             <ul class="footer-links">
@@ -5468,21 +5555,21 @@
     </footer>
 
     <script>
-       
+
         (function () {
             const seasonTabs = document.querySelectorAll('#resources .season-tab');
             const animeGrids = document.querySelectorAll('#resources .anime-grid');
 
             seasonTabs.forEach(tab => {
                 tab.addEventListener('click', function () {
-             
+
                     seasonTabs.forEach(t => t.classList.remove('active'));
                     animeGrids.forEach(grid => grid.classList.remove('active'));
 
-               
+
                     this.classList.add('active');
 
-               
+
                     const season = this.getAttribute('data-season');
                     const targetGrid = document.querySelector(`#resources #${season}`);
                     if (targetGrid) {
@@ -5491,7 +5578,7 @@
                 });
             });
         })();
-     
+
         const cosplayItems = document.querySelectorAll('.cosplay-item');
         const cosplayViewer = document.getElementById('cosplayViewer');
         const cosplayImage = document.getElementById('cosplayImage');
@@ -5511,13 +5598,13 @@
             });
         }
 
-    
+
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && cosplayViewer.classList.contains('active')) {
                 cosplayViewer.classList.remove('active');
             }
         });
-     
+
         let currentAnime = 1;
         const totalAnime = 5;
         let autoSlideInterval;
@@ -5527,26 +5614,26 @@
             const thumbnails = document.querySelectorAll('.thumbnail');
             const dots = document.querySelectorAll('.dot');
 
-          
+
             slides[currentAnime - 1].classList.remove('active');
             thumbnails[currentAnime - 1].classList.remove('active');
             dots[currentAnime - 1].classList.remove('active');
 
-           
+
             currentAnime += direction;
             if (currentAnime > totalAnime) currentAnime = 1;
             if (currentAnime < 1) currentAnime = totalAnime;
 
-          
+
             slides[currentAnime - 1].classList.add('active');
             thumbnails[currentAnime - 1].classList.add('active');
             dots[currentAnime - 1].classList.add('active');
 
-         
+
             const progressFill = document.getElementById('progressFill');
             progressFill.style.width = (currentAnime / totalAnime * 100) + '%';
 
-          
+
             resetAutoSlide();
         }
 
@@ -5564,15 +5651,15 @@
             }, 7000);
         }
 
-   
+
         resetAutoSlide();
 
-   
+
         document.addEventListener('keydown', (e) => {
             if (e.key === 'ArrowRight') changeAnime(1);
             if (e.key === 'ArrowLeft') changeAnime(-1);
         });
-    
+
         let isTransitioning = false;
 
         function triggerPageTransition(callback) {
@@ -5581,18 +5668,18 @@
 
             const transition = document.getElementById('pageTransition');
 
-         
+
             transition.style.display = 'block';
             transition.style.pointerEvents = 'auto';
 
-     
+
             const elements = transition.querySelectorAll('.shoji-door-left, .shoji-door-right, .door-seal, .energy-line, .kanji, .door-mascot');
             elements.forEach(element => {
                 element.style.animation = 'none';
-                element.offsetHeight; 
+                element.offsetHeight;
             });
 
-         
+
             setTimeout(() => {
                 document.querySelector('.shoji-door-left').style.animation = 'shojiSlideLeft 1s cubic-bezier(0.645, 0.045, 0.355, 1) forwards';
                 document.querySelector('.shoji-door-right').style.animation = 'shojiSlideRight 1s cubic-bezier(0.645, 0.045, 0.355, 1) forwards';
@@ -5605,7 +5692,7 @@
                     }, index * 50);
                 });
 
-              
+
                 document.querySelectorAll('.kanji').forEach((kanji, index) => {
                     setTimeout(() => {
                         kanji.style.animation = 'kanjiFloat 1.2s ease-out forwards';
@@ -5613,12 +5700,12 @@
                 });
             }, 10);
 
-          
+
             setTimeout(() => {
                 if (callback) callback();
             }, 300);
 
-           
+
             setTimeout(() => {
                 transition.style.display = 'none';
                 transition.style.pointerEvents = 'none';
@@ -5626,7 +5713,7 @@
             }, 1200);
         }
 
-      
+
         let currentMonthIndex = 0;
         const months = [
             {
@@ -5715,10 +5802,94 @@
             });
         }
 
-     
+
+        class AudioManager {
+            constructor() {
+                this.volume = 0.5;
+                this.sounds = {
+                    swoosh: null,
+                    click: null
+                };
+                this.init();
+            }
+
+            init() {
+                this.sounds.swoosh = new Audio('audio/swoosh.mp3');
+                this.sounds.click = new Audio('audio/click.mp3');
+
+                Object.values(this.sounds).forEach(sound => {
+                    if (sound) {
+                        sound.volume = this.volume;
+                        sound.preload = 'auto';
+                    }
+                });
+
+                this.setupVolumeControl();
+                this.addSoundEvents();
+            }
+
+            setupVolumeControl() {
+                const volumeSlider = document.getElementById('volumeSlider');
+                const volumePercentage = document.querySelector('.volume-percentage');
+                const audioIcon = document.querySelector('.audio-icon');
+
+                if (volumeSlider && volumePercentage) {
+                    volumeSlider.addEventListener('input', (e) => {
+                        this.volume = e.target.value / 100;
+                        volumePercentage.textContent = e.target.value + '%';
+
+                        Object.values(this.sounds).forEach(sound => {
+                            if (sound) sound.volume = this.volume;
+                        });
+
+                        if (this.volume === 0) {
+                            audioIcon.textContent = '🔇';
+                        } else if (this.volume < 0.3) {
+                            audioIcon.textContent = '🔈';
+                        } else if (this.volume < 0.7) {
+                            audioIcon.textContent = '🔉';
+                        } else {
+                            audioIcon.textContent = '🔊';
+                        }
+
+                        this.playSound('click', this.volume * 0.3);
+                    });
+                }
+            }
+
+            addSoundEvents() {
+                const buttons = document.querySelectorAll('.btn, .volunteer-btn, .apply-btn, .submit-btn, .rsvp-btn, .season-tab, .watch-trailer-btn');
+                buttons.forEach(button => {
+                    button.addEventListener('click', () => {
+                        this.playSound('click');
+                    });
+                });
+
+                const interactiveElements = document.querySelectorAll('.thumbnail, .slide-nav, .dot, .mobile-toggle, .cosplay-item');
+                interactiveElements.forEach(element => {
+                    element.addEventListener('click', () => {
+                        this.playSound('click');
+                    });
+                });
+            }
+
+            playSound(soundName, customVolume = null) {
+                const sound = this.sounds[soundName];
+                if (sound && this.volume > 0) {
+                    sound.currentTime = 0;
+                    sound.volume = customVolume !== null ? customVolume : this.volume;
+                    sound.play().catch(error => {
+                        console.log('Audio play failed:', error);
+                    });
+                }
+            }
+        }
+
+        const audioManager = new AudioManager();
         function navigateToEvents() {
+            audioManager.playSound('swoosh');
             triggerPageTransition(() => {
-               
+
                 const sections = document.querySelectorAll('.page-section');
                 sections.forEach(section => {
                     section.classList.remove('active');
@@ -5726,22 +5897,23 @@
                     section.classList.remove('transitioning-out');
                 });
 
-             
+
                 const eventsSection = document.getElementById('events');
                 if (eventsSection) {
                     eventsSection.classList.add('active');
                     eventsSection.classList.add('transitioning-in');
                 }
 
-             
+
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             });
         }
 
-     
+
         function navigateToPromotions() {
+            audioManager.playSound('swoosh');
             triggerPageTransition(() => {
-                
+
                 const sections = document.querySelectorAll('.page-section');
                 sections.forEach(section => {
                     section.classList.remove('active');
@@ -5749,19 +5921,19 @@
                     section.classList.remove('transitioning-out');
                 });
 
-              
+
                 const promotionsSection = document.getElementById('promotions');
                 if (promotionsSection) {
                     promotionsSection.classList.add('active');
                     promotionsSection.classList.add('transitioning-in');
                 }
 
-           
+
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             });
         }
 
-     
+
         window.addEventListener('scroll', () => {
             const navbar = document.getElementById('navbar');
             if (window.scrollY > 50) {
@@ -5773,7 +5945,7 @@
             }
         });
 
-     
+
         const mobileToggle = document.getElementById('mobileToggle');
         const navMenu = document.getElementById('navMenu');
 
@@ -5781,7 +5953,7 @@
             navMenu.classList.toggle('active');
         });
 
-      
+
         const navLinks = document.querySelectorAll('.nav-link');
         const sections = document.querySelectorAll('.page-section');
 
@@ -5789,16 +5961,16 @@
             link.addEventListener('click', (e) => {
                 e.preventDefault();
                 const targetId = link.getAttribute('href').substring(1);
-
+                audioManager.playSound('swoosh');
                 triggerPageTransition(() => {
-                
+
                     sections.forEach(section => {
                         section.classList.remove('active');
                         section.classList.remove('transitioning-in');
                         section.classList.remove('transitioning-out');
                     });
 
-                   
+
                     const targetSection = document.getElementById(targetId);
                     if (targetSection) {
                         targetSection.classList.add('active');
@@ -5823,7 +5995,7 @@
                             }, 800);
                         }
 
-                     
+
                         const staggerElements = targetSection.querySelectorAll('.card, .member-card, .subgroup-item, .anime-card, .genre-card');
                         staggerElements.forEach((el, index) => {
                             el.style.opacity = '0';
@@ -5836,16 +6008,16 @@
                         });
                     }
 
-            
+
                     navMenu.classList.remove('active');
 
-             
+
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                 });
             });
         });
 
-     
+
         const glitchElements = document.querySelectorAll('.logo, .section-header h2');
 
         glitchElements.forEach(element => {
@@ -5857,7 +6029,7 @@
             });
         });
 
- 
+
         const forms = document.querySelectorAll('form');
         forms.forEach(form => {
             form.addEventListener('submit', (e) => {
@@ -5866,20 +6038,20 @@
             });
         });
 
-        
+
         const seasonTabs = document.querySelectorAll('#resources .season-tab');
         const animeGrids = document.querySelectorAll('#resources .anime-grid');
 
         seasonTabs.forEach(tab => {
             tab.addEventListener('click', () => {
-           
+
                 seasonTabs.forEach(t => t.classList.remove('active'));
                 animeGrids.forEach(grid => grid.classList.remove('active'));
 
-              
+
                 tab.classList.add('active');
 
-             
+
                 const season = tab.getAttribute('data-season');
                 const targetGrid = document.querySelector(`#resources #${season}`);
                 if (targetGrid) {
@@ -5888,27 +6060,27 @@
             });
         });
 
-   
+
         function createBlossomPetal() {
             const blossomContainer = document.querySelector('.blossom-container');
             const petal = document.createElement('div');
             petal.className = 'blossom-petal';
 
-     
+
             const img = document.createElement('img');
             img.src = 'images/blossom.png';
             img.alt = 'Blossom';
             petal.appendChild(img);
 
-            
+
             petal.style.left = Math.random() * 100 + '%';
-            petal.style.top = '-50px'; 
+            petal.style.top = '-50px';
             petal.style.animationDuration = (Math.random() * 10 + 12) + 's, ' + (Math.random() * 3 + 3) + 's';
             petal.style.animationDelay = '0s';
             petal.style.width = (Math.random() * 10 + 16) + 'px';
             petal.style.height = petal.style.width;
 
-  
+
             petal.addEventListener('click', function (e) {
                 e.stopPropagation();
                 createBlossomBurst(e.pageX, e.pageY);
@@ -5931,14 +6103,14 @@
             }, 25000);
         }
 
-   
+
         function createBlossomBurst(x, y) {
             const burst = document.createElement('div');
             burst.className = 'blossom-burst';
             burst.style.left = x + 'px';
             burst.style.top = y + 'px';
 
-       
+
             for (let i = 0; i < 12; i++) {
                 const particle = document.createElement('div');
                 particle.className = 'burst-particle';
@@ -5954,7 +6126,7 @@
                 particle.style.animation = `burstOut 0.8s ease-out forwards`;
                 particle.style.setProperty('animation', `burstOut 0.8s ease-out forwards`);
 
-              
+
                 const keyframes = [
                     { transform: 'translate(0, 0) scale(1)', opacity: 1 },
                     { transform: `translate(${endX}px, ${endY}px) scale(0)`, opacity: 0 }
@@ -5971,13 +6143,13 @@
 
             document.body.appendChild(burst);
 
-           
+
             setTimeout(() => {
                 burst.remove();
             }, 1000);
         }
 
-   
+
         function createRipple(x, y) {
             const ripple = document.createElement('div');
             ripple.className = 'blossom-ripple';
@@ -5991,7 +6163,7 @@
             }, 600);
         }
 
-   
+
         setInterval(createBlossomPetal, 2000);
 
 
@@ -5999,7 +6171,7 @@
             setTimeout(createBlossomPetal, i * 500);
         }
 
-    
+
         window.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
                 const hero = document.querySelector('.hero-content');
@@ -6018,5 +6190,3 @@
 </body>
 
 </html>
-
-
