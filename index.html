@@ -928,7 +928,7 @@
             }
         }
 
-
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Bebas+Neue&family=Space+Grotesk:wght@300..700&display=swap');
 
         * {
             margin: 0;
@@ -954,7 +954,7 @@
             color: var(--text-primary);
             overflow-x: hidden;
             position: relative;
-
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><circle cx="10" cy="10" r="8" fill="none" stroke="%23DC143C" stroke-width="2"/></svg>'), auto;
         }
 
         .animated-background {
@@ -4194,7 +4194,7 @@
 </div>
 
 <script>
-
+   
     document.addEventListener('DOMContentLoaded', function () {
         const animatedBg = document.getElementById('animatedBg');
         const bgPulse = document.getElementById('bgPulse');
@@ -4204,7 +4204,7 @@
         let currentY = 0;
         const speed = 0.05;
 
-
+      
         window.addEventListener('scroll', () => {
             const scrolled = window.pageYOffset;
             const parallaxSpeed = 0.5;
@@ -4214,14 +4214,14 @@
             }
         });
 
-
+      
         document.addEventListener('mousemove', (e) => {
             mouseX = e.clientX;
             mouseY = e.clientY;
         });
 
         function animatePulse() {
-
+         
             currentX += (mouseX - currentX) * speed;
             currentY += (mouseY - currentY) * speed;
 
@@ -4234,21 +4234,21 @@
         }
         animatePulse();
 
-
+      
         setTimeout(() => {
             animatedBg.classList.add('loaded');
         }, 100);
 
-
+     
         const navLinks = document.querySelectorAll('.nav-link');
         navLinks.forEach(link => {
             link.addEventListener('click', function () {
-
+               
                 createBackgroundRipple(window.innerWidth / 2, window.innerHeight / 2);
             });
         });
 
-
+      
         function createBackgroundRipple(x, y) {
             const ripple = document.createElement('div');
             ripple.className = 'bg-ripple';
@@ -4267,20 +4267,20 @@
 
             document.body.appendChild(ripple);
 
-
+            
             requestAnimationFrame(() => {
                 ripple.style.transition = 'transform 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 1.5s ease-out';
                 ripple.style.transform = 'translate(-50%, -50%) scale(20)';
                 ripple.style.opacity = '0';
             });
 
-
+        
             setTimeout(() => {
                 ripple.remove();
             }, 1500);
         }
 
-
+      
         const heroSection = document.querySelector('#home');
         if (heroSection) {
             heroSection.addEventListener('mouseenter', () => {
@@ -4292,7 +4292,7 @@
             });
         }
 
-
+       
         const sections = document.querySelectorAll('.page-section');
         const observerOptions = {
             threshold: 0.5
@@ -4303,7 +4303,7 @@
                 if (entry.isIntersecting) {
                     const sectionId = entry.target.id;
 
-
+                 
                     switch (sectionId) {
                         case 'home':
                             animatedBg.style.opacity = '1';
@@ -4329,7 +4329,7 @@
         });
     });
 
-
+ 
     document.addEventListener('click', function (e) {
         if (e.target.closest('.blossom-petal')) {
             const animatedBg = document.getElementById('animatedBg');
@@ -4344,7 +4344,7 @@
 </script>
 
 <body>
-
+    
     <div class="page-transition" id="pageTransition">
         <div class="shoji-door-left">
             <div class="shoji-grid"></div>
@@ -4376,7 +4376,7 @@
         </div>
     </div>
 
-
+    
     <div class="blossom-container">
         <div class="blossom-petal"><img src="images/blossom.png" alt="Blossom"></div>
         <div class="blossom-petal"><img src="images/blossom.png" alt="Blossom"></div>
@@ -4390,7 +4390,7 @@
         <div class="blossom-petal"><img src="images/blossom.png" alt="Blossom"></div>
     </div>
 
-
+    
     <div class="testudo-container">
         <div class="testudo-text">Drawn by u/Vivaldi44<br>our little Testudo-chan mascot at UMD!</div>
         <div class="testudo-bubbles">
@@ -4402,7 +4402,7 @@
         </div>
     </div>
 
-
+    
     <div class="floating-mascot-container">
         <div class="mascot-text">Click me for special promotions!</div>
         <div class="thought-bubbles">
@@ -4415,7 +4415,7 @@
         </div>
     </div>
 
-
+    
     <nav id="navbar">
         <div class="nav-container">
             <a href="#home" class="logo">
@@ -4445,7 +4445,7 @@
         </div>
     </nav>
 
-
+    
     <section id="home" class="page-section active">
         <div class="hero">
             <div class="hero-mascot">
@@ -4455,9 +4455,9 @@
                 <h1 class="stagger-element">TERRAPIN ANIME SOCIETY</h1>
                 <p class="subtitle stagger-element">テラピン・アニメ・ソサエティ</p>
                 <div class="hero-buttons stagger-element">
-
-
-                    class="btn">TERPLINK</a>
+                    <a href="https://discord.gg/fzKBsnS" target="_blank" class="btn">JOIN DISCORD</a>
+                    <a href="https://terplink.umd.edu/organization/terrapin-anime-society" target="_blank"
+                        class="btn">TERPLINK</a>
                 </div>
             </div>
         </div>
@@ -4481,8 +4481,8 @@
         </div>
     </section>
 
-
-
+    
+    
     <section id="meetings" class="page-section">
         <div class="section-header">
             <h2>WEEKLY MEETINGS</h2>
@@ -4510,7 +4510,7 @@
             </div>
         </div>
 
-
+        
         <div class="screening-container">
             <div class="screening-header">
                 <h3>THIS WEEK'S SCREENING</h3>
@@ -4523,7 +4523,7 @@
             <div class="anime-showcase">
                 <div class="showcase-main">
                     <div class="anime-slider" id="animeSlider">
-
+                        
                         <div class="anime-slide active" data-anime="1">
                             <div class="anime-poster">
                                 <img src="images/anime1.png" alt="Excel Saga">
@@ -4550,7 +4550,7 @@
                             </div>
                         </div>
 
-
+                        
                         <div class="anime-slide" data-anime="2">
                             <div class="anime-poster">
                                 <img src="images/anime2.png" alt="School-Live!">
@@ -4577,7 +4577,7 @@
                             </div>
                         </div>
 
-
+                        
                         <div class="anime-slide" data-anime="3">
                             <div class="anime-poster">
                                 <img src="images/anime3.png" alt="Talentless Nana">
@@ -4604,7 +4604,7 @@
                             </div>
                         </div>
 
-
+                        
                         <div class="anime-slide" data-anime="4">
                             <div class="anime-poster">
                                 <img src="images/anime4.png" alt="The Executioner and Her Way of Life">
@@ -4631,7 +4631,7 @@
                             </div>
                         </div>
 
-
+                        
                         <div class="anime-slide" data-anime="5">
                             <div class="anime-poster">
                                 <img src="images/anime5.png" alt="Turkey! Time to Strike">
@@ -4658,12 +4658,12 @@
                         </div>
                     </div>
 
-
+                    
                     <button class="slide-nav prev-slide" onclick="changeAnime(-1)">‹</button>
                     <button class="slide-nav next-slide" onclick="changeAnime(1)">›</button>
                 </div>
 
-
+                
                 <div class="anime-thumbnails">
                     <div class="thumbnail active" data-anime="1" onclick="goToAnime(1)">
                         <img src="images/anime1.png" alt="Excel Saga">
@@ -4687,7 +4687,7 @@
                     </div>
                 </div>
 
-
+                
                 <div class="screening-progress">
                     <div class="progress-bar">
                         <div class="progress-fill" id="progressFill"></div>
@@ -4719,14 +4719,14 @@
         </div>
     </section>
 
-
+    
     <section id="events" class="page-section">
         <div class="section-header">
             <h2>EVENTS</h2>
             <p class="section-subtitle">Special occasions throughout the year</p>
         </div>
 
-
+        
         <div class="event-section maid-cafe-section">
             <div class="event-header">
                 <h3>MAID CAFE</h3>
@@ -4766,7 +4766,7 @@
             </div>
         </div>
 
-
+        
         <div class="event-section kamecon-section">
             <div class="event-header">
                 <h3>KAMECON</h3>
@@ -4806,7 +4806,7 @@
             </div>
         </div>
 
-
+        
         <div class="event-section chainsaw-section">
             <div class="event-header">
                 <h3>CHAINSAW MAN PROMOTIONS</h3>
@@ -4872,8 +4872,8 @@
         </div>
     </section>
 
-
-
+    
+    
     <section id="promotions" class="page-section">
         <div class="promotions-hero">
             <div class="floating-particles">
@@ -4894,8 +4894,8 @@
                     <div class="movie-poster-container">
                         <img src="images/demonslayer.png" alt="Demon Slayer: Infinity Castle" class="movie-poster">
                         <div class="movie-overlay">
-
-                            class="watch-trailer-btn">WATCH TRAILER</a>
+                            <a href="https://www.youtube.com/watch?v=x7uLutVRBfI" target="_blank"
+                                class="watch-trailer-btn">WATCH TRAILER</a>
                         </div>
                     </div>
                     <div class="movie-info">
@@ -4915,8 +4915,8 @@
                     <div class="movie-poster-container">
                         <img src="images/chainsawman.png" alt="Chainsaw Man – The Movie: Reze Arc" class="movie-poster">
                         <div class="movie-overlay">
-
-                            class="watch-trailer-btn">WATCH TRAILER</a>
+                            <a href="https://www.youtube.com/watch?v=GJ1jrCnm-t8" target="_blank"
+                                class="watch-trailer-btn">WATCH TRAILER</a>
                         </div>
                     </div>
                     <div class="movie-info">
@@ -4928,7 +4928,7 @@
         </div>
     </section>
 
-
+    
     <section id="eboard" class="page-section">
         <div class="section-header">
             <h2>EXECUTIVE BOARD</h2>
@@ -4969,7 +4969,7 @@
                 <div class="member-name">Michele Mason</div>
             </div>
         </div>
-
+        
         <div class="president-section">
             <div class="pres-header">
                 <span class="pres-label">MEET THE PRESIDENT</span>
@@ -5038,7 +5038,7 @@
                         <span class="code-line"><span class="code-tag">&lt;div</span> <span
                                 class="code-attr">class=</span><span class="code-string">"terrapin-anime"</span><span
                                 class="code-tag">&gt;</span></span>
-
+                        <span class="code-line"> <span class="code-comment">// i ran into too many issues</span></span>
                         <span class="code-line"> <span class="code-property">bugs</span>: <span
                                 class="code-value">infinite</span>;</span>
                         <span class="code-line"><span class="code-tag">&lt;/div&gt;</span></span>
@@ -5051,7 +5051,7 @@
         </div>
     </section>
 
-
+    
     <section id="join" class="page-section">
         <div class="section-header">
             <h2>JOIN TAS</h2>
@@ -5068,15 +5068,15 @@
             </div>
 
             <div style="text-align: center; margin-top: 60px;">
-
-                DISCORD</a>
-
-                class="btn">TERPLINK PAGE</a>
+                <a href="https://discord.gg/fzKBsnS" target="_blank" class="btn" style="margin-right: 20px;">JOIN
+                    DISCORD</a>
+                <a href="https://terplink.umd.edu/organization/terrapin-anime-society" target="_blank"
+                    class="btn">TERPLINK PAGE</a>
             </div>
         </div>
     </section>
 
-
+    
     <section id="subgroups" class="page-section">
         <div class="section-header">
             <h2>SUBGROUPS</h2>
@@ -5107,34 +5107,34 @@
         </div>
     </section>
 
-
+    
     <section id="resources" class="page-section">
         <div class="section-header">
             <h2>ANIME RESOURCES</h2>
             <p class="section-subtitle">Curated recommendations & streaming sites</p>
         </div>
 
-
+        
         <div class="resources-section">
             <h3 class="resources-subtitle">STREAMING PLATFORMS</h3>
             <div class="resources-list">
-
-                <div class="resource-icon">WATCH</div>
-                <div class="resource-text">
-                    <h4>AniWatch</h4>
-                    <p>Stream anime online - Free with huge library</p>
-                </div>
+                <a href="https://aniwatchtv.to/" target="_blank" class="resource-item">
+                    <div class="resource-icon">WATCH</div>
+                    <div class="resource-text">
+                        <h4>AniWatch</h4>
+                        <p>Stream anime online - Free with huge library</p>
+                    </div>
                 </a>
-
-                <div class="resource-icon">READ</div>
-                <div class="resource-text">
-                    <h4>Manga Mirai</h4>
-                    <p>Read manga online - Latest chapters updated daily</p>
-                </div>
+                <a href="https://mangamirai.com/" target="_blank" class="resource-item">
+                    <div class="resource-icon">READ</div>
+                    <div class="resource-text">
+                        <h4>Manga Mirai</h4>
+                        <p>Read manga online - Latest chapters updated daily</p>
+                    </div>
                 </a>
             </div>
         </div>
-
+        
         <div class="recommendations-section">
             <h3 class="resources-subtitle">SEASONAL RECOMMENDATIONS</h3>
             <div class="season-tabs">
@@ -5144,7 +5144,7 @@
                 <button class="season-tab" data-season="winter">WINTER 2025</button>
             </div>
 
-
+            
             <div class="anime-grid active" id="fall">
                 <div class="anime-card">
                     <div class="anime-rank">#1</div>
@@ -5325,7 +5325,7 @@
                 </div>
             </div>
         </div>
-
+        
         <div class="genre-guide">
             <h3 class="resources-subtitle">GENRE STARTER GUIDE</h3>
             <div class="genre-grid">
@@ -5376,7 +5376,7 @@
             </div>
         </div>
 
-
+        
         <div class="watch-order">
             <h3 class="resources-subtitle">WATCH ORDER GUIDES</h3>
             <div class="order-cards">
@@ -5408,7 +5408,7 @@
         </div>
     </section>
 
-
+    
     <section id="donate" class="page-section">
         <div class="section-header">
             <h2>SUPPORT TAS</h2>
@@ -5424,7 +5424,7 @@
         </div>
     </section>
 
-
+    
     <section id="contact" class="page-section">
         <div class="section-header">
             <h2>CONTACT US</h2>
@@ -5450,12 +5450,12 @@
         </div>
     </section>
 
-
+    
     <footer>
         <div class="footer-content">
             <ul class="footer-links">
-
-
+                <li><a href="https://discord.gg/fzKBsnS" target="_blank">Discord</a></li>
+                <li><a href="https://terplink.umd.edu/organization/terrapin-anime-society" target="_blank">TerpLink</a>
                 </li>
                 <li><a href="#contact">Contact</a></li>
                 <li><a href="#donate">Donate</a></li>
@@ -5468,24 +5468,21 @@
     </footer>
 
     <script>
-
-
-
-
+       
         (function () {
             const seasonTabs = document.querySelectorAll('#resources .season-tab');
             const animeGrids = document.querySelectorAll('#resources .anime-grid');
 
             seasonTabs.forEach(tab => {
                 tab.addEventListener('click', function () {
-
+             
                     seasonTabs.forEach(t => t.classList.remove('active'));
                     animeGrids.forEach(grid => grid.classList.remove('active'));
 
-
+               
                     this.classList.add('active');
 
-
+               
                     const season = this.getAttribute('data-season');
                     const targetGrid = document.querySelector(`#resources #${season}`);
                     if (targetGrid) {
@@ -5494,7 +5491,7 @@
                 });
             });
         })();
-
+     
         const cosplayItems = document.querySelectorAll('.cosplay-item');
         const cosplayViewer = document.getElementById('cosplayViewer');
         const cosplayImage = document.getElementById('cosplayImage');
@@ -5514,13 +5511,13 @@
             });
         }
 
-
+    
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && cosplayViewer.classList.contains('active')) {
                 cosplayViewer.classList.remove('active');
             }
         });
-
+     
         let currentAnime = 1;
         const totalAnime = 5;
         let autoSlideInterval;
@@ -5530,26 +5527,26 @@
             const thumbnails = document.querySelectorAll('.thumbnail');
             const dots = document.querySelectorAll('.dot');
 
-
+          
             slides[currentAnime - 1].classList.remove('active');
             thumbnails[currentAnime - 1].classList.remove('active');
             dots[currentAnime - 1].classList.remove('active');
 
-
+           
             currentAnime += direction;
             if (currentAnime > totalAnime) currentAnime = 1;
             if (currentAnime < 1) currentAnime = totalAnime;
 
-
+          
             slides[currentAnime - 1].classList.add('active');
             thumbnails[currentAnime - 1].classList.add('active');
             dots[currentAnime - 1].classList.add('active');
 
-
+         
             const progressFill = document.getElementById('progressFill');
             progressFill.style.width = (currentAnime / totalAnime * 100) + '%';
 
-
+          
             resetAutoSlide();
         }
 
@@ -5567,15 +5564,15 @@
             }, 7000);
         }
 
-
+   
         resetAutoSlide();
 
-
+   
         document.addEventListener('keydown', (e) => {
             if (e.key === 'ArrowRight') changeAnime(1);
             if (e.key === 'ArrowLeft') changeAnime(-1);
         });
-
+    
         let isTransitioning = false;
 
         function triggerPageTransition(callback) {
@@ -5584,24 +5581,23 @@
 
             const transition = document.getElementById('pageTransition');
 
-
+         
             transition.style.display = 'block';
             transition.style.pointerEvents = 'auto';
 
-
+     
             const elements = transition.querySelectorAll('.shoji-door-left, .shoji-door-right, .door-seal, .energy-line, .kanji, .door-mascot');
             elements.forEach(element => {
                 element.style.animation = 'none';
-
+                element.offsetHeight; 
             });
 
-
+         
             setTimeout(() => {
                 document.querySelector('.shoji-door-left').style.animation = 'shojiSlideLeft 1s cubic-bezier(0.645, 0.045, 0.355, 1) forwards';
                 document.querySelector('.shoji-door-right').style.animation = 'shojiSlideRight 1s cubic-bezier(0.645, 0.045, 0.355, 1) forwards';
                 document.querySelector('.door-seal').style.animation = 'sealRotateBreak 1s ease-out forwards';
                 document.querySelector('.door-mascot').style.animation = 'mascotDoorAppear 1s ease-in-out forwards';
-
 
                 document.querySelectorAll('.energy-line').forEach((line, index) => {
                     setTimeout(() => {
@@ -5609,7 +5605,7 @@
                     }, index * 50);
                 });
 
-
+              
                 document.querySelectorAll('.kanji').forEach((kanji, index) => {
                     setTimeout(() => {
                         kanji.style.animation = 'kanjiFloat 1.2s ease-out forwards';
@@ -5617,12 +5613,12 @@
                 });
             }, 10);
 
-
+          
             setTimeout(() => {
                 if (callback) callback();
             }, 300);
 
-
+           
             setTimeout(() => {
                 transition.style.display = 'none';
                 transition.style.pointerEvents = 'none';
@@ -5630,7 +5626,7 @@
             }, 1200);
         }
 
-
+      
         let currentMonthIndex = 0;
         const months = [
             {
@@ -5719,10 +5715,10 @@
             });
         }
 
-
+     
         function navigateToEvents() {
             triggerPageTransition(() => {
-
+               
                 const sections = document.querySelectorAll('.page-section');
                 sections.forEach(section => {
                     section.classList.remove('active');
@@ -5730,22 +5726,22 @@
                     section.classList.remove('transitioning-out');
                 });
 
-
+             
                 const eventsSection = document.getElementById('events');
                 if (eventsSection) {
                     eventsSection.classList.add('active');
                     eventsSection.classList.add('transitioning-in');
                 }
 
-
+             
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             });
         }
 
-
+     
         function navigateToPromotions() {
             triggerPageTransition(() => {
-
+                
                 const sections = document.querySelectorAll('.page-section');
                 sections.forEach(section => {
                     section.classList.remove('active');
@@ -5753,19 +5749,19 @@
                     section.classList.remove('transitioning-out');
                 });
 
-
+              
                 const promotionsSection = document.getElementById('promotions');
                 if (promotionsSection) {
                     promotionsSection.classList.add('active');
                     promotionsSection.classList.add('transitioning-in');
                 }
 
-
+           
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             });
         }
 
-
+     
         window.addEventListener('scroll', () => {
             const navbar = document.getElementById('navbar');
             if (window.scrollY > 50) {
@@ -5777,7 +5773,7 @@
             }
         });
 
-
+     
         const mobileToggle = document.getElementById('mobileToggle');
         const navMenu = document.getElementById('navMenu');
 
@@ -5785,7 +5781,7 @@
             navMenu.classList.toggle('active');
         });
 
-
+      
         const navLinks = document.querySelectorAll('.nav-link');
         const sections = document.querySelectorAll('.page-section');
 
@@ -5795,19 +5791,18 @@
                 const targetId = link.getAttribute('href').substring(1);
 
                 triggerPageTransition(() => {
-
+                
                     sections.forEach(section => {
                         section.classList.remove('active');
                         section.classList.remove('transitioning-in');
                         section.classList.remove('transitioning-out');
                     });
 
-
+                   
                     const targetSection = document.getElementById(targetId);
                     if (targetSection) {
                         targetSection.classList.add('active');
                         targetSection.classList.add('transitioning-in');
-
 
 
                         if (targetId === 'eboard') {
@@ -5828,7 +5823,7 @@
                             }, 800);
                         }
 
-
+                     
                         const staggerElements = targetSection.querySelectorAll('.card, .member-card, .subgroup-item, .anime-card, .genre-card');
                         staggerElements.forEach((el, index) => {
                             el.style.opacity = '0';
@@ -5841,16 +5836,16 @@
                         });
                     }
 
-
+            
                     navMenu.classList.remove('active');
 
-
+             
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                 });
             });
         });
 
-
+     
         const glitchElements = document.querySelectorAll('.logo, .section-header h2');
 
         glitchElements.forEach(element => {
@@ -5862,7 +5857,7 @@
             });
         });
 
-
+ 
         const forms = document.querySelectorAll('form');
         forms.forEach(form => {
             form.addEventListener('submit', (e) => {
@@ -5871,21 +5866,20 @@
             });
         });
 
-
-
+        
         const seasonTabs = document.querySelectorAll('#resources .season-tab');
         const animeGrids = document.querySelectorAll('#resources .anime-grid');
 
         seasonTabs.forEach(tab => {
             tab.addEventListener('click', () => {
-
+           
                 seasonTabs.forEach(t => t.classList.remove('active'));
                 animeGrids.forEach(grid => grid.classList.remove('active'));
 
-
+              
                 tab.classList.add('active');
 
-
+             
                 const season = tab.getAttribute('data-season');
                 const targetGrid = document.querySelector(`#resources #${season}`);
                 if (targetGrid) {
@@ -5894,28 +5888,27 @@
             });
         });
 
-
-
+   
         function createBlossomPetal() {
             const blossomContainer = document.querySelector('.blossom-container');
             const petal = document.createElement('div');
             petal.className = 'blossom-petal';
 
-
+     
             const img = document.createElement('img');
             img.src = 'images/blossom.png';
             img.alt = 'Blossom';
             petal.appendChild(img);
 
-
+            
             petal.style.left = Math.random() * 100 + '%';
-
+            petal.style.top = '-50px'; 
             petal.style.animationDuration = (Math.random() * 10 + 12) + 's, ' + (Math.random() * 3 + 3) + 's';
             petal.style.animationDelay = '0s';
             petal.style.width = (Math.random() * 10 + 16) + 'px';
             petal.style.height = petal.style.width;
 
-
+  
             petal.addEventListener('click', function (e) {
                 e.stopPropagation();
                 createBlossomBurst(e.pageX, e.pageY);
@@ -5931,7 +5924,6 @@
 
             blossomContainer.appendChild(petal);
 
-
             setTimeout(() => {
                 if (petal.parentElement) {
                     petal.remove();
@@ -5939,14 +5931,14 @@
             }, 25000);
         }
 
-
+   
         function createBlossomBurst(x, y) {
             const burst = document.createElement('div');
             burst.className = 'blossom-burst';
             burst.style.left = x + 'px';
             burst.style.top = y + 'px';
 
-
+       
             for (let i = 0; i < 12; i++) {
                 const particle = document.createElement('div');
                 particle.className = 'burst-particle';
@@ -5962,7 +5954,7 @@
                 particle.style.animation = `burstOut 0.8s ease-out forwards`;
                 particle.style.setProperty('animation', `burstOut 0.8s ease-out forwards`);
 
-
+              
                 const keyframes = [
                     { transform: 'translate(0, 0) scale(1)', opacity: 1 },
                     { transform: `translate(${endX}px, ${endY}px) scale(0)`, opacity: 0 }
@@ -5979,13 +5971,13 @@
 
             document.body.appendChild(burst);
 
-
+           
             setTimeout(() => {
                 burst.remove();
             }, 1000);
         }
 
-
+   
         function createRipple(x, y) {
             const ripple = document.createElement('div');
             ripple.className = 'blossom-ripple';
@@ -5999,7 +5991,7 @@
             }, 600);
         }
 
-
+   
         setInterval(createBlossomPetal, 2000);
 
 
@@ -6007,7 +5999,7 @@
             setTimeout(createBlossomPetal, i * 500);
         }
 
-
+    
         window.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
                 const hero = document.querySelector('.hero-content');
