@@ -1,0 +1,6029 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terrapin Anime Society</title>
+    <style>
+        .anime-card {
+            display: flex;
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+            overflow: hidden;
+            align-items: center;
+        }
+
+        .anime-poster-small {
+            width: 100px;
+            height: 140px;
+            overflow: hidden;
+            border-right: 1px solid var(--border);
+            flex-shrink: 0;
+        }
+
+        .anime-poster-small img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .anime-card:hover .anime-poster-small img {
+            transform: scale(1.1);
+        }
+
+        .anime-grid {
+            display: none !important;
+        }
+
+        .anime-grid.active {
+            display: grid !important;
+            gap: 25px;
+        }
+
+
+        .eboard-grid .member-card {
+            opacity: 0;
+            transform: translateY(50px) scale(0.8) rotateX(-10deg);
+            transform-origin: center bottom;
+        }
+
+        .eboard-grid.animated .member-card {
+            animation: cardAppearDramatic 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+        @keyframes cardAppearDramatic {
+            0% {
+                opacity: 0;
+                transform: translateY(50px) scale(0.8) rotateX(-10deg);
+                filter: blur(5px);
+            }
+
+            50% {
+                transform: translateY(-10px) scale(1.05) rotateX(5deg);
+                filter: blur(0px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1) rotateX(0deg);
+                filter: blur(0px);
+            }
+        }
+
+
+        .eboard-grid.animated .member-card:nth-child(1) {
+            animation-delay: 0s;
+        }
+
+        .eboard-grid.animated .member-card:nth-child(2) {
+            animation-delay: 0.15s;
+        }
+
+        .eboard-grid.animated .member-card:nth-child(3) {
+            animation-delay: 0.30s;
+        }
+
+        .eboard-grid.animated .member-card:nth-child(4) {
+            animation-delay: 0.45s;
+        }
+
+        .eboard-grid.animated .member-card:nth-child(5) {
+            animation-delay: 0.60s;
+        }
+
+        .eboard-grid.animated .member-card:nth-child(6) {
+            animation-delay: 0.75s;
+        }
+
+        .eboard-grid.animated .member-card:nth-child(7) {
+            animation-delay: 0.90s;
+        }
+
+        .eboard-grid.animated .member-card:nth-child(8) {
+            animation-delay: 1.05s;
+        }
+
+
+        .subgroups-container .subgroup-item {
+            opacity: 0;
+            transform: translateX(-60px) translateY(20px);
+        }
+
+        .subgroups-container.animated .subgroup-item {
+            animation: subgroupSlide 0.7s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+        }
+
+        @keyframes subgroupSlide {
+            0% {
+                opacity: 0;
+                transform: translateX(-60px) translateY(20px);
+                filter: blur(3px);
+            }
+
+            60% {
+                transform: translateX(10px) translateY(0);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateX(0) translateY(0);
+                filter: blur(0px);
+            }
+        }
+
+
+        .subgroups-container.animated .subgroup-item:nth-child(1) {
+            animation-delay: 0s;
+        }
+
+        .subgroups-container.animated .subgroup-item:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .subgroups-container.animated .subgroup-item:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        .subgroups-container.animated .subgroup-item:nth-child(4) {
+            animation-delay: 0.6s;
+        }
+
+        .subgroups-container.animated .subgroup-item:nth-child(5) {
+            animation-delay: 0.8s;
+        }
+
+
+        .president-section {
+            margin-top: 80px;
+            padding: 60px;
+            background: linear-gradient(135deg, rgba(220, 20, 60, 0.03), rgba(0, 0, 0, 0.8));
+            border: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .president-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(220, 20, 60, 0.1), transparent);
+            animation: float 15s ease-in-out infinite;
+        }
+
+        .pres-header {
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        .pres-label {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.9rem;
+            color: var(--crimson);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+
+        .pres-divider {
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--crimson), transparent);
+            margin: 15px auto;
+        }
+
+        .pres-container {
+            position: relative;
+            z-index: 2;
+        }
+
+        .pres-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: start;
+        }
+
+        .pres-text {
+            animation: slideInLeft 0.8s ease;
+        }
+
+
+        .resources-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .resource-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 25px;
+            background: linear-gradient(135deg, rgba(139, 0, 0, 0.1), transparent);
+            border: 1px solid var(--border);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .resource-item:hover {
+            transform: translateX(10px);
+            border-color: var(--crimson);
+            box-shadow: 0 5px 20px rgba(220, 20, 60, 0.2);
+        }
+
+        .resource-icon {
+            padding: 10px 20px;
+            background: var(--crimson);
+            color: var(--dark-bg);
+            font-family: 'Bebas Neue', cursive;
+            font-size: 1rem;
+            letter-spacing: 2px;
+        }
+
+        .resource-text h4 {
+            color: var(--text-primary);
+            margin-bottom: 5px;
+            font-size: 1.2rem;
+        }
+
+        .resource-text p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .pres-name {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 3rem;
+            color: var(--text-primary);
+            margin-bottom: 5px;
+            letter-spacing: 2px;
+        }
+
+        .pres-title {
+            color: var(--crimson);
+            font-size: 1.1rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 30px;
+        }
+
+        .pres-bio {
+            color: var(--text-primary);
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+
+        .pres-bio p {
+            margin-bottom: 15px;
+            font-size: 1.05rem;
+        }
+
+        .fun-fact {
+            background: linear-gradient(90deg, rgba(220, 20, 60, 0.1), transparent);
+            padding: 15px;
+            border-left: 3px solid var(--crimson);
+            margin-top: 20px;
+        }
+
+        .fact-label {
+            color: var(--crimson);
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .pres-stats {
+            display: flex;
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .stat-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            background: rgba(220, 20, 60, 0.05);
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .stat-box:hover {
+            transform: translateY(-5px);
+            border-color: var(--crimson);
+            box-shadow: 0 10px 30px rgba(220, 20, 60, 0.2);
+        }
+
+        .stat-value {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 2rem;
+            color: var(--crimson);
+            margin-bottom: 5px;
+        }
+
+        .stat-desc {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .pres-cosplay {
+            animation: slideInRight 0.8s ease;
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .cosplay-gallery {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .cosplay-item {
+            position: relative;
+            overflow: hidden;
+            border: 2px solid var(--border);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            aspect-ratio: 3/4;
+        }
+
+        .cosplay-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .cosplay-item:hover {
+            border-color: var(--crimson);
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(220, 20, 60, 0.3);
+        }
+
+        .cosplay-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .cosplay-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
+            padding: 20px;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .cosplay-item:hover .cosplay-overlay {
+            transform: translateY(0);
+        }
+
+        .cosplay-label {
+            color: var(--text-primary);
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .cosplay-viewer {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1000;
+            max-width: 80%;
+            max-height: 80%;
+        }
+
+        .cosplay-viewer.active {
+            display: block;
+            animation: viewerZoom 0.3s ease;
+        }
+
+        @keyframes viewerZoom {
+            from {
+                transform: translate(-50%, -50%) scale(0.8);
+                opacity: 0;
+            }
+
+            to {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
+        }
+
+        .cosplay-viewer img {
+            max-width: 100%;
+            max-height: 80vh;
+            border: 3px solid var(--crimson);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+        }
+
+        .close-viewer {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            color: var(--crimson);
+            font-size: 2rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .close-viewer:hover {
+            transform: rotate(90deg);
+        }
+
+        .pres-decoration {
+            position: absolute;
+            bottom: 40px;
+            right: 40px;
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        .code-snippet {
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            line-height: 1.6;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid var(--border);
+        }
+
+        .code-line {
+            display: block;
+            white-space: pre;
+        }
+
+        .code-tag {
+            color: var(--crimson);
+        }
+
+        .code-attr {
+            color: #ff9d00;
+        }
+
+        .code-string {
+            color: #8cff00;
+        }
+
+        .code-comment {
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+
+        .code-property {
+            color: #00d9ff;
+        }
+
+        .code-value {
+            color: #ff00ff;
+        }
+
+        @media (max-width: 968px) {
+            .pres-content {
+                grid-template-columns: 1fr;
+            }
+
+            .pres-decoration {
+                display: none;
+            }
+
+            .pres-stats {
+                justify-content: center;
+            }
+        }
+
+
+        .screening-container {
+            margin-top: 80px;
+            padding: 40px;
+            background: linear-gradient(135deg, rgba(139, 0, 0, 0.05), rgba(0, 0, 0, 0.8));
+            border: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .screening-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--crimson), transparent);
+            animation: scan 3s linear infinite;
+        }
+
+        .screening-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .screening-header h3 {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 2.5rem;
+            color: var(--crimson);
+            letter-spacing: 2px;
+        }
+
+        .screening-date {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        .date-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            letter-spacing: 2px;
+        }
+
+        .date-number {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 1.8rem;
+            color: var(--crimson);
+        }
+
+        .anime-showcase {
+            position: relative;
+        }
+
+        .showcase-main {
+            position: relative;
+            height: 500px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .anime-slider {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .anime-slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: grid;
+            grid-template-columns: 400px 1fr;
+            gap: 40px;
+            opacity: 0;
+            transform: translateX(100px);
+            transition: all 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
+            pointer-events: none;
+        }
+
+        .anime-slide.active {
+            opacity: 1;
+            transform: translateX(0);
+            pointer-events: all;
+        }
+
+        .anime-slide.prev {
+            transform: translateX(-100px);
+        }
+
+        .anime-poster {
+            position: relative;
+            height: 100%;
+            overflow: hidden;
+            border: 2px solid var(--border);
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .anime-poster img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .anime-slide.active .anime-poster img {
+            animation: posterZoom 20s ease-in-out infinite;
+        }
+
+        @keyframes posterZoom {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .poster-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, transparent, rgba(220, 20, 60, 0.1));
+            pointer-events: none;
+        }
+
+        .anime-details {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding-right: 20px;
+            animation: detailsFadeIn 0.8s ease 0.3s both;
+        }
+
+        @keyframes detailsFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .anime-title {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 3rem;
+            color: var(--text-primary);
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .anime-title::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100px;
+            height: 2px;
+            background: var(--crimson);
+        }
+
+        .anime-tags {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .tag {
+            padding: 5px 15px;
+            background: transparent;
+            border: 1px solid var(--crimson);
+            color: var(--crimson);
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+
+        .tag:hover {
+            background: var(--crimson);
+            color: var(--dark-bg);
+        }
+
+        .anime-description {
+            color: var(--text-primary);
+            line-height: 1.8;
+            font-size: 1.05rem;
+            margin-bottom: 25px;
+            max-height: 200px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        .anime-description::-webkit-scrollbar {
+            width: 3px;
+        }
+
+        .anime-description::-webkit-scrollbar-track {
+            background: rgba(220, 20, 60, 0.1);
+        }
+
+        .anime-description::-webkit-scrollbar-thumb {
+            background: var(--crimson);
+        }
+
+        .anime-meta {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .episode-count {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            letter-spacing: 1px;
+        }
+
+        .rating {
+            color: var(--crimson);
+            font-size: 1.1rem;
+        }
+
+        .slide-nav {
+            position: absolute;
+            top: 50px;
+
+            background: rgba(220, 20, 60, 0.1);
+            border: 2px solid var(--crimson);
+            color: var(--crimson);
+            width: 50px;
+            height: 50px;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .slide-nav:hover {
+            background: var(--crimson);
+            color: var(--dark-bg);
+            transform: scale(1.1);
+        }
+
+        .prev-slide {
+            right: 70px;
+
+        }
+
+        .next-slide {
+            right: 10px;
+
+        }
+
+
+        .anime-thumbnails {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            justify-content: center;
+        }
+
+        .thumbnail {
+            width: 120px;
+            height: 80px;
+            cursor: pointer;
+            position: relative;
+            border: 2px solid var(--border);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .thumbnail.active {
+            border-color: var(--crimson);
+            transform: scale(1.1);
+            box-shadow: 0 5px 20px rgba(220, 20, 60, 0.4);
+        }
+
+        .thumbnail:hover {
+            transform: scale(1.05);
+            border-color: var(--crimson);
+        }
+
+        .thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .thumbnail:hover img {
+            transform: scale(1.1);
+        }
+
+        .thumb-title {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
+            color: var(--text-primary);
+            padding: 5px;
+            font-size: 0.7rem;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .thumbnail:hover .thumb-title,
+        .thumbnail.active .thumb-title {
+            opacity: 1;
+        }
+
+
+        .screening-progress {
+            margin-top: 20px;
+        }
+
+        .progress-bar {
+            height: 2px;
+            background: rgba(220, 20, 60, 0.2);
+            position: relative;
+            margin-bottom: 15px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--crimson);
+            width: 20%;
+            transition: width 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
+        }
+
+        .progress-dots {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(220, 20, 60, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .dot.active {
+            background: var(--crimson);
+            transform: scale(1.5);
+            box-shadow: 0 0 20px rgba(220, 20, 60, 0.5);
+        }
+
+        @media (max-width: 1200px) {
+            .anime-slide {
+                grid-template-columns: 300px 1fr;
+            }
+
+            .anime-title {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 968px) {
+            .showcase-main {
+                height: auto;
+            }
+
+            .anime-slide {
+                grid-template-columns: 1fr;
+                height: auto;
+            }
+
+            .anime-poster {
+                height: 300px;
+            }
+
+            .anime-thumbnails {
+                overflow-x: auto;
+                justify-content: flex-start;
+                padding: 10px 0;
+            }
+
+            .thumbnail {
+                flex-shrink: 0;
+            }
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Bebas+Neue&family=Space+Grotesk:wght@300..700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --blood-red: #8B0000;
+            --crimson: #DC143C;
+            --dark-bg: #000000;
+            --darker: #000000;
+            --red-glow: #ff0040;
+            --text-primary: #ffffff;
+            --text-secondary: #999999;
+            --accent: #ff0000;
+            --border: rgba(255, 0, 0, 0.3);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            position: relative;
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><circle cx="10" cy="10" r="8" fill="none" stroke="%23DC143C" stroke-width="2"/></svg>'), auto;
+        }
+
+        .animated-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            opacity: 0;
+            animation: backgroundFadeIn 2.5s ease-out forwards;
+            animation-delay: 0.5s;
+            overflow: hidden;
+        }
+
+        .animated-background::before {
+            content: '';
+            position: absolute;
+            top: -10%;
+            left: -10%;
+            width: 120%;
+            height: 120%;
+            background: url('images/background.png') no-repeat center center;
+            background-size: cover;
+            opacity: 0.35;
+
+            animation: backgroundFloat 30s ease-in-out infinite;
+            filter: contrast(1.2) brightness(0.8);
+        }
+
+
+        .animated-background::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at center, transparent 0%, rgba(0, 0, 0, 0.4) 40%, rgba(0, 0, 0, 0.8) 100%);
+            pointer-events: none;
+        }
+
+
+        .animated-background.parallax {
+            transform: translateY(0);
+            transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+
+        .background-interactive-layer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+            opacity: 0;
+            animation: pulseLayerIn 1.5s ease-out forwards;
+            animation-delay: 1s;
+        }
+
+        .background-pulse {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(220, 20, 60, 0.1) 0%, transparent 70%);
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+
+        @keyframes backgroundFadeIn {
+            0% {
+                opacity: 0;
+                transform: scale(1.1);
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes backgroundFloat {
+
+            0%,
+            100% {
+                transform: scale(1) translateX(0) translateY(0);
+            }
+
+            25% {
+                transform: scale(1.05) translateX(-20px) translateY(-20px);
+            }
+
+            50% {
+                transform: scale(1.02) translateX(20px) translateY(10px);
+            }
+
+            75% {
+                transform: scale(1.08) translateX(-10px) translateY(20px);
+            }
+        }
+
+        @keyframes pulseLayerIn {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+
+        .page-section.active .animated-background::before {
+            animation: backgroundReveal 1.5s ease-out forwards;
+        }
+
+        @keyframes backgroundReveal {
+            0% {
+                filter: contrast(1.2) brightness(0.8) blur(10px);
+                transform: scale(1.2);
+            }
+
+            100% {
+                filter: contrast(1.2) brightness(0.8) blur(0px);
+                transform: scale(1);
+            }
+        }
+
+
+        #home .animated-background::before {
+            animation: homeBackgroundPulse 20s ease-in-out infinite;
+        }
+
+        @keyframes homeBackgroundPulse {
+
+            0%,
+            100% {
+                opacity: 0.15;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 0.2;
+                transform: scale(1.05);
+            }
+        }
+
+
+        @media (max-width: 768px) {
+            .animated-background::before {
+                background-attachment: scroll;
+                animation-duration: 40s;
+            }
+
+            .background-pulse {
+                width: 400px;
+                height: 400px;
+            }
+        }
+
+
+        .page-transition {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 10000;
+            pointer-events: none;
+            display: none;
+            overflow: hidden;
+        }
+
+        .shoji-door-left,
+        .shoji-door-right {
+            position: absolute;
+            top: 0;
+            width: 50%;
+            height: 100%;
+            background-color: var(--dark-bg);
+            box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.5);
+        }
+
+        .shoji-door-left {
+            left: 0;
+            transform: translateX(0);
+            animation: shojiSlideLeft 1s cubic-bezier(0.645, 0.045, 0.355, 1) forwards;
+            border-right: 3px solid var(--crimson);
+        }
+
+        .shoji-door-right {
+            right: 0;
+            transform: translateX(0);
+            animation: shojiSlideRight 1s cubic-bezier(0.645, 0.045, 0.355, 1) forwards;
+            border-left: 3px solid var(--crimson);
+        }
+
+
+
+        .door-seal {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10002;
+            width: 150px;
+            height: 150px;
+            animation: sealRotateBreak 1s ease-out forwards;
+        }
+
+        .seal-circle {
+            width: 100%;
+            height: 100%;
+            border: 4px solid #000000;
+            border-radius: 50%;
+            position: relative;
+            background: radial-gradient(circle, var(--blood-red), var(--dark-bg));
+            box-shadow: 0 0 40px var(--red-glow), inset 0 0 40px rgba(220, 20, 60, 0.3);
+        }
+
+        .seal-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Bebas Neue', cursive;
+            font-size: 3rem;
+            color: var(--dark-bg);
+            text-shadow: 0 0 10px var(--crimson);
+            letter-spacing: 4px;
+        }
+
+
+        .energy-lines {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 200%;
+            height: 200%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 10001;
+        }
+
+        .energy-line {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent, var(--crimson), transparent);
+            transform-origin: center;
+            opacity: 0;
+            animation: energyBurst 1s ease-out forwards;
+        }
+
+        .energy-line:nth-child(1) {
+            transform: rotate(0deg);
+            animation-delay: 0.1s;
+        }
+
+        .energy-line:nth-child(2) {
+            transform: rotate(30deg);
+            animation-delay: 0.15s;
+        }
+
+        .energy-line:nth-child(3) {
+            transform: rotate(60deg);
+            animation-delay: 0.2s;
+        }
+
+        .energy-line:nth-child(4) {
+            transform: rotate(90deg);
+            animation-delay: 0.25s;
+        }
+
+        .energy-line:nth-child(5) {
+            transform: rotate(120deg);
+            animation-delay: 0.3s;
+        }
+
+        .energy-line:nth-child(6) {
+            transform: rotate(150deg);
+            animation-delay: 0.35s;
+        }
+
+
+        .door-mascot {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10003;
+            opacity: 0;
+            animation: mascotDoorAppear 1s ease-in-out forwards;
+        }
+
+        .door-mascot img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.5));
+        }
+
+
+        .kanji-particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 10001;
+        }
+
+        .kanji {
+            position: absolute;
+            font-family: 'Bebas Neue', cursive;
+            color: var(--crimson);
+            opacity: 0;
+            font-size: 2rem;
+            text-shadow: 0 0 10px var(--red-glow);
+            animation: kanjiFloat 1.2s ease-out forwards;
+        }
+
+        .kanji:nth-child(1) {
+            top: 20%;
+            left: 10%;
+            animation-delay: 0.1s;
+        }
+
+        .kanji:nth-child(2) {
+            top: 30%;
+            right: 15%;
+            animation-delay: 0.2s;
+        }
+
+        .kanji:nth-child(3) {
+            bottom: 25%;
+            left: 20%;
+            animation-delay: 0.3s;
+        }
+
+        .kanji:nth-child(4) {
+            bottom: 35%;
+            right: 10%;
+            animation-delay: 0.4s;
+        }
+
+        @keyframes shojiSlideLeft {
+            0% {
+                transform: translateX(100%);
+                filter: brightness(0.5);
+            }
+
+            30% {
+                transform: translateX(0);
+                filter: brightness(1);
+            }
+
+            60% {
+                transform: translateX(0);
+                filter: brightness(1.2);
+            }
+
+            100% {
+                transform: translateX(-105%);
+                filter: brightness(0.8);
+            }
+        }
+
+        @keyframes shojiSlideRight {
+            0% {
+                transform: translateX(-100%);
+                filter: brightness(0.5);
+            }
+
+            30% {
+                transform: translateX(0);
+                filter: brightness(1);
+            }
+
+            60% {
+                transform: translateX(0);
+                filter: brightness(1.2);
+            }
+
+            100% {
+                transform: translateX(105%);
+                filter: brightness(0.8);
+            }
+        }
+
+        @keyframes sealRotateBreak {
+            0% {
+                transform: translate(-50%, -50%) scale(0) rotate(0deg);
+                opacity: 0;
+            }
+
+            30% {
+                transform: translate(-50%, -50%) scale(1.2) rotate(180deg);
+                opacity: 1;
+            }
+
+            60% {
+                transform: translate(-50%, -50%) scale(1) rotate(360deg);
+                opacity: 1;
+            }
+
+            80% {
+                transform: translate(-50%, -50%) scale(1.5) rotate(380deg);
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: translate(-50%, -50%) scale(0) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes energyBurst {
+            0% {
+                opacity: 0;
+                height: 0;
+            }
+
+            50% {
+                opacity: 1;
+                height: 100%;
+            }
+
+            100% {
+                opacity: 0;
+                height: 200%;
+            }
+        }
+
+        @keyframes mascotDoorAppear {
+            0% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0) rotate(-180deg);
+            }
+
+            40% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1.3) rotate(20deg);
+            }
+
+            70% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1) rotate(0deg);
+            }
+
+            100% {
+                opacity: 0;
+                transform: translate(-50%, 100vh) scale(0.5) rotate(180deg);
+            }
+        }
+
+        @keyframes kanjiFloat {
+            0% {
+                opacity: 0;
+                transform: translateY(50px) rotate(0deg) scale(0);
+            }
+
+            50% {
+                opacity: 0.7;
+                transform: translateY(-20px) rotate(180deg) scale(1.2);
+            }
+
+            100% {
+                opacity: 0;
+                transform: translateY(-100px) rotate(360deg) scale(0);
+            }
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(circle at 20% 80%, rgba(220, 20, 60, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(139, 0, 0, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(255, 0, 64, 0.05) 0%, transparent 50%);
+            animation: float 20s ease-in-out infinite;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+
+        .blossom-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .blossom-petal {
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            cursor: pointer;
+            pointer-events: auto;
+            opacity: 0;
+            animation: blossomFall linear infinite;
+            transform-origin: center;
+            transition: all 0.3s ease;
+        }
+
+        .blossom-petal img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 0 4px rgba(220, 20, 60, 0.3));
+        }
+
+        .blossom-petal:hover {
+            transform: scale(1.3) rotate(180deg);
+            filter: drop-shadow(0 0 15px var(--crimson));
+        }
+
+        .blossom-burst {
+            position: fixed;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .burst-particle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: radial-gradient(circle, var(--crimson), var(--blood-red));
+            border-radius: 50%;
+            animation: burstOut 0.8s ease-out forwards;
+        }
+
+        @keyframes burstOut {
+            0% {
+                transform: translate(0, 0) scale(1);
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+            }
+        }
+
+        @keyframes blossomFall {
+            0% {
+                transform: translateY(-10vh) translateX(0) rotate(0deg) scale(1);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 0.7;
+            }
+
+            90% {
+                opacity: 0.7;
+            }
+
+            100% {
+                transform: translateY(110vh) translateX(80px) rotate(720deg) scale(0.9);
+                opacity: 0;
+            }
+        }
+
+
+        @keyframes blossomSway {
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            25% {
+                transform: translateX(30px);
+            }
+
+            75% {
+                transform: translateX(-30px);
+            }
+        }
+
+        .blossom-petal:nth-child(1) {
+            left: 5%;
+            animation-duration: 18s, 4s;
+            animation-name: blossomFall, blossomSway;
+            animation-delay: 0s;
+            width: 22px;
+            height: 22px;
+        }
+
+        .blossom-petal:nth-child(2) {
+            left: 15%;
+            animation-duration: 20s, 5s;
+            animation-name: blossomFall, blossomSway;
+            animation-delay: 2s;
+            width: 26px;
+            height: 26px;
+        }
+
+        .blossom-petal:nth-child(3) {
+            left: 25%;
+            animation-duration: 16s, 3.5s;
+            animation-name: blossomFall, blossomSway;
+            animation-delay: 1s;
+            width: 20px;
+            height: 20px;
+        }
+
+        .blossom-petal:nth-child(4) {
+            left: 35%;
+            animation-duration: 17s, 4.5s;
+            animation-name: blossomFall, blossomSway;
+            animation-delay: 3s;
+            width: 24px;
+            height: 24px;
+        }
+
+        .blossom-petal:nth-child(5) {
+            left: 45%;
+            animation-duration: 22s, 6s;
+            animation-name: blossomFall, blossomSway;
+            animation-delay: 0.5s;
+            width: 28px;
+            height: 28px;
+        }
+
+        .blossom-petal:nth-child(6) {
+            left: 55%;
+            animation-duration: 15s, 3.8s;
+            animation-name: blossomFall, blossomSway;
+            animation-delay: 2.5s;
+            width: 21px;
+            height: 21px;
+        }
+
+        .blossom-petal:nth-child(7) {
+            left: 65%;
+            animation-duration: 19s, 5.2s;
+            animation-name: blossomFall, blossomSway;
+            animation-delay: 1.5s;
+            width: 25px;
+            height: 25px;
+        }
+
+        .blossom-petal:nth-child(8) {
+            left: 75%;
+            animation-duration: 16s, 4.3s;
+            animation-name: blossomFall, blossomSway;
+            animation-delay: 4s;
+            width: 23px;
+            height: 23px;
+        }
+
+        .blossom-petal:nth-child(9) {
+            left: 85%;
+            animation-duration: 21s, 5.5s;
+            animation-name: blossomFall, blossomSway;
+            animation-delay: 0.8s;
+            width: 22px;
+            height: 22px;
+        }
+
+        .blossom-petal:nth-child(10) {
+            left: 95%;
+            animation-duration: 17s, 4.7s;
+            animation-name: blossomFall, blossomSway;
+            animation-delay: 3.5s;
+            width: 27px;
+            height: 27px;
+        }
+
+        @keyframes rippleOut {
+            0% {
+                width: 20px;
+                height: 20px;
+                opacity: 1;
+            }
+
+            100% {
+                width: 100px;
+                height: 100px;
+                opacity: 0;
+            }
+        }
+
+        .blossom-ripple {
+            position: fixed;
+            border: 2px solid var(--crimson);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: rippleOut 0.6s ease-out forwards;
+            transform: translate(-50%, -50%);
+            z-index: 999;
+        }
+
+        .testudo-container {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            z-index: 998;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 5px;
+        }
+
+        .testudo-text {
+            background: linear-gradient(135deg, var(--crimson), var(--blood-red));
+            color: var(--dark-bg);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            box-shadow: 0 5px 20px rgba(220, 20, 60, 0.3);
+            animation: pulse-text 2s ease-in-out infinite;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+            margin-left: 90px;
+            margin-bottom: 0px;
+            max-width: 200px;
+            line-height: 1.3;
+        }
+
+        .testudo-text::after {
+            content: '';
+            position: absolute;
+            bottom: -25px;
+            left: 10px;
+            width: 12px;
+            height: 12px;
+            background: var(--blood-red);
+            border-radius: 50%;
+            box-shadow: 0 2px 10px rgba(220, 20, 60, 0.3);
+        }
+
+        .testudo-text::before {
+            content: '';
+            position: absolute;
+            bottom: -40px;
+            left: -10px;
+            width: 8px;
+            height: 8px;
+            background: var(--crimson);
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(220, 20, 60, 0.3);
+        }
+
+        .testudo-bubbles {
+            position: absolute;
+            bottom: 100px;
+            left: 110px;
+            pointer-events: none;
+        }
+
+        .testudo-bubbles span {
+            position: absolute;
+            background: linear-gradient(135deg, var(--crimson), var(--blood-red));
+            border-radius: 50%;
+            opacity: 0.6;
+            animation: bubble-rise 3s ease-in-out infinite;
+        }
+
+        .testudo-bubbles span:nth-child(1) {
+            width: 4px;
+            height: 4px;
+            bottom: -20px;
+            left: -15px;
+            animation-delay: 0.3s;
+        }
+
+        .testudo-bubbles span:nth-child(2) {
+            width: 5px;
+            height: 5px;
+            bottom: -25px;
+            left: -30px;
+            animation-delay: 0.8s;
+        }
+
+        .testudo-mascot {
+            width: 120px;
+            height: 120px;
+            animation: bob 3s ease-in-out infinite;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            opacity: 0.9;
+        }
+
+        .testudo-mascot:hover {
+            transform: scale(1.1);
+            opacity: 1;
+        }
+
+        .testudo-mascot img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 10px 20px rgba(220, 20, 60, 0.3));
+        }
+
+        .testudo-container:hover .testudo-text {
+            animation: pulse-text 0.5s ease-in-out infinite;
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 768px) {
+            .testudo-container {
+                display: none;
+            }
+        }
+
+        .floating-mascot-container {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 5px;
+        }
+
+        .mascot-text {
+            background: linear-gradient(135deg, var(--crimson), var(--blood-red));
+            color: var(--dark-bg);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            box-shadow: 0 5px 20px rgba(220, 20, 60, 0.3);
+            animation: pulse-text 2s ease-in-out infinite;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+            margin-right: 90px;
+            margin-bottom: 0px;
+        }
+
+
+        .mascot-text::after {
+            content: '';
+            position: absolute;
+            bottom: -25px;
+            right: 10px;
+            width: 12px;
+            height: 12px;
+            background: var(--blood-red);
+            border-radius: 50%;
+            box-shadow: 0 2px 10px rgba(220, 20, 60, 0.3);
+        }
+
+        .mascot-text::before {
+            content: '';
+            position: absolute;
+            bottom: -40px;
+            right: -10px;
+            width: 8px;
+            height: 8px;
+            background: var(--crimson);
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(220, 20, 60, 0.3);
+            animation: bubble-float 2s ease-in-out infinite;
+        }
+
+        @keyframes bubble-float {
+
+            0%,
+            100% {
+                transform: translateY(0) scale(1);
+            }
+
+            50% {
+                transform: translateY(-2px) scale(1.1);
+            }
+        }
+
+
+        .thought-bubbles {
+            position: absolute;
+            bottom: 60px;
+            right: 15px;
+            pointer-events: none;
+        }
+
+        .thought-bubbles span {
+            position: absolute;
+            background: linear-gradient(135deg, var(--crimson), var(--blood-red));
+            border-radius: 50%;
+            opacity: 0.7;
+            animation: bubble-rise 3s ease-in-out infinite;
+        }
+
+        .thought-bubbles span:nth-child(1) {
+            width: 5px;
+            height: 5px;
+            bottom: -25px;
+            right: 10px;
+            animation-delay: 0.5s;
+        }
+
+        .thought-bubbles span:nth-child(2) {
+            width: 4px;
+            height: 4px;
+            bottom: -35px;
+            right: 25px;
+            animation-delay: 1s;
+        }
+
+        .thought-bubbles span:nth-child(3) {
+            width: 6px;
+            height: 6px;
+            bottom: -30px;
+            right: 40px;
+            animation-delay: 0.2s;
+        }
+
+        @keyframes bubble-rise {
+
+            0%,
+            100% {
+                transform: translateY(0) scale(1);
+                opacity: 0.7;
+            }
+
+            50% {
+                transform: translateY(-5px) scale(1.2);
+                opacity: 0.9;
+            }
+        }
+
+        @keyframes shine {
+            0% {
+                transform: translateX(-100%) translateY(-100%) rotate(45deg);
+            }
+
+            100% {
+                transform: translateX(100%) translateY(100%) rotate(45deg);
+            }
+        }
+
+        @keyframes pulse-text {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .mascot-text:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 30px rgba(220, 20, 60, 0.5);
+        }
+
+
+        .floating-mascot {
+            width: 80px;
+            height: 80px;
+            animation: bob 3s ease-in-out infinite;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            opacity: 0.9;
+        }
+
+        .floating-mascot:hover {
+            transform: scale(1.1);
+            opacity: 1;
+        }
+
+        .floating-mascot::before,
+        .floating-mascot::after {
+            display: none;
+        }
+
+        .floating-mascot img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 10px 20px rgba(220, 20, 60, 0.3));
+        }
+
+        .floating-mascot-container:hover .mascot-text {
+            animation: pulse-text 0.5s ease-in-out infinite;
+        }
+
+        @keyframes bob {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+
+            33% {
+                transform: translate(30px, -30px) rotate(120deg);
+            }
+
+            66% {
+                transform: translate(-20px, 20px) rotate(240deg);
+            }
+        }
+
+
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 60px;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--border);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        nav.scrolled {
+            padding: 15px 60px;
+            background: rgba(5, 5, 5, 0.98);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 2rem;
+            color: var(--crimson);
+            text-decoration: none;
+            letter-spacing: 2px;
+            position: relative;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo img {
+            width: 30px;
+            height: 30px;
+            object-fit: contain;
+            filter: drop-shadow(0 0 5px rgba(220, 20, 60, 0.5));
+            animation: petal-spin 6s ease-in-out infinite;
+        }
+
+        @keyframes petal-spin {
+
+            0%,
+            100% {
+                transform: rotate(0deg);
+            }
+
+            50% {
+                transform: rotate(45deg);
+            }
+        }
+
+        .logo:hover {
+            text-shadow: 0 0 20px var(--red-glow);
+        }
+
+        .logo:hover img {
+            filter: drop-shadow(0 0 10px rgba(220, 20, 60, 0.8));
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 40px;
+        }
+
+        .nav-menu a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-menu a::before {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--crimson), transparent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-menu a:hover {
+            color: var(--crimson);
+        }
+
+        .nav-menu a:hover::before {
+            width: 100%;
+        }
+
+
+        .page-section {
+            min-height: 100vh;
+            padding: 120px 60px 60px;
+            max-width: 1400px;
+            margin: 0 auto;
+            display: none;
+            position: relative;
+            z-index: 2;
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        .page-section.transitioning-in {
+            display: block;
+            animation: sectionSlideIn 0.8s cubic-bezier(0.645, 0.045, 0.355, 1) forwards;
+        }
+
+        .page-section.transitioning-out {
+            animation: sectionSlideOut 0.8s cubic-bezier(0.645, 0.045, 0.355, 1) forwards;
+        }
+
+        @keyframes sectionSlideIn {
+            0% {
+                opacity: 0;
+                transform: translateX(100px) scale(0.95);
+                filter: blur(5px);
+            }
+
+            50% {
+                filter: blur(2px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateX(0) scale(1);
+                filter: blur(0);
+            }
+        }
+
+        @keyframes sectionSlideOut {
+            0% {
+                opacity: 1;
+                transform: translateX(0) scale(1);
+                filter: blur(0);
+            }
+
+            50% {
+                filter: blur(2px);
+            }
+
+            100% {
+                opacity: 0;
+                transform: translateX(-100px) scale(0.95);
+                filter: blur(5px);
+            }
+        }
+
+        .page-section.active .stagger-element {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: staggerIn 0.6s ease forwards;
+        }
+
+        .page-section.active .stagger-element:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .page-section.active .stagger-element:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .page-section.active .stagger-element:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .page-section.active .stagger-element:nth-child(4) {
+            animation-delay: 0.4s;
+        }
+
+        .page-section.active .stagger-element:nth-child(5) {
+            animation-delay: 0.5s;
+        }
+
+        @keyframes staggerIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-mascot {
+            position: absolute;
+            right: -150px;
+            bottom: -100px;
+            width: 600px;
+            height: 600px;
+            opacity: 0.3;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .hero-mascot img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            animation: subtle-float 8s ease-in-out infinite;
+        }
+
+        @keyframes subtle-float {
+
+            0%,
+            100% {
+                transform: translateY(0) scale(1);
+            }
+
+            50% {
+                transform: translateY(-20px) scale(1.02);
+            }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 3;
+        }
+
+        .hero-content h1 {
+            font-family: 'Bebas Neue', cursive;
+            font-size: clamp(4rem, 12vw, 10rem);
+            line-height: 0.9;
+            background: linear-gradient(135deg, var(--crimson), var(--blood-red));
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -2px;
+            margin-bottom: 20px;
+            animation: glitch 3s ease-in-out infinite;
+        }
+
+        @keyframes glitch {
+
+            0%,
+            100% {
+                text-shadow: 2px 2px 0 var(--red-glow), -2px -2px 0 var(--blood-red);
+            }
+
+            50% {
+                text-shadow: -2px 2px 0 var(--red-glow), 2px -2px 0 var(--blood-red);
+            }
+        }
+
+        .hero-content .subtitle {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            letter-spacing: 4px;
+            margin-bottom: 40px;
+            opacity: 0.8;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+
+
+        .btn {
+            padding: 15px 40px;
+            border: 1px solid var(--crimson);
+            background: transparent;
+            color: var(--crimson);
+            text-decoration: none;
+            font-weight: 600;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(220, 20, 60, 0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .btn:hover {
+            color: var(--text-primary);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(220, 20, 60, 0.2);
+            border-color: var(--accent);
+        }
+
+        .btn:hover::before {
+            opacity: 1;
+        }
+
+
+
+        .volunteer-btn,
+        .apply-btn,
+        .submit-btn,
+        .rsvp-btn {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .volunteer-btn::before,
+        .apply-btn::before,
+        .submit-btn::before,
+        .rsvp-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(220, 20, 60, 0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .volunteer-btn:hover,
+        .apply-btn:hover,
+        .submit-btn:hover,
+        .rsvp-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(220, 20, 60, 0.2);
+        }
+
+        .volunteer-btn:hover::before,
+        .apply-btn:hover::before,
+        .submit-btn:hover::before,
+        .rsvp-btn:hover::before {
+            opacity: 1;
+        }
+
+
+        .submit-btn:hover {
+            color: var(--text-primary);
+            border-color: var(--accent);
+        }
+
+
+        .section-header {
+            margin-bottom: 60px;
+            position: relative;
+            text-align: center;
+        }
+
+        .section-header h2 {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 4rem;
+            color: var(--crimson);
+            letter-spacing: 2px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--crimson), transparent);
+        }
+
+        .section-subtitle {
+            color: var(--text-secondary);
+            margin-top: 20px;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+        }
+
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 60px;
+        }
+
+        .card {
+            background: linear-gradient(135deg, rgba(139, 0, 0, 0.1), rgba(220, 20, 60, 0.05));
+            border: 1px solid var(--border);
+            padding: 40px 30px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--crimson), transparent);
+            animation: scan 3s linear infinite;
+        }
+
+        @keyframes scan {
+            0% {
+                transform: translateX(-100%);
+            }
+
+            100% {
+                transform: translateX(100%);
+            }
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--crimson);
+            box-shadow: 0 10px 40px rgba(220, 20, 60, 0.2);
+        }
+
+        .card h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5rem;
+            color: var(--text-primary);
+            margin-bottom: 15px;
+        }
+
+        .card p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+
+        .meeting-info {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 60px;
+            margin-top: 60px;
+            align-items: start;
+        }
+
+        .meeting-details {
+            background: rgba(139, 0, 0, 0.1);
+            border-left: 3px solid var(--crimson);
+            padding: 30px;
+        }
+
+        .meeting-details h3 {
+            color: var(--crimson);
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+
+        .meeting-details p {
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+            line-height: 1.8;
+        }
+
+
+        .meeting-location {
+            background: rgba(139, 0, 0, 0.1);
+            border: 1px solid var(--border);
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            position: relative;
+        }
+
+        .building-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.9) contrast(1.1);
+            transition: all 0.3s ease;
+        }
+
+        .meeting-location:hover .building-image {
+            filter: brightness(1) contrast(1.2);
+            transform: scale(1.05);
+        }
+
+        .location-info {
+            padding: 30px;
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.9), rgba(139, 0, 0, 0.2));
+        }
+
+        .location-info h3 {
+            color: var(--crimson);
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+            font-family: 'Bebas Neue', cursive;
+            letter-spacing: 2px;
+        }
+
+        .building-name {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 1.1rem;
+            color: var(--text-primary);
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .address {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .room-info p {
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+        }
+
+        .room-label {
+            color: var(--crimson);
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+
+
+        .eboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 60px;
+        }
+
+        .member-card {
+            text-align: center;
+            padding: 30px 20px;
+            background: rgba(220, 20, 60, 0.05);
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .member-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(220, 20, 60, 0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .member-card:hover::before {
+            opacity: 1;
+        }
+
+        .member-card:hover {
+            transform: scale(1.05);
+            border-color: var(--crimson);
+        }
+
+        .member-role {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 1.2rem;
+            color: var(--crimson);
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .member-name {
+            color: var(--text-primary);
+            font-size: 1.1rem;
+        }
+
+        .subgroups-container {
+            margin-top: 60px;
+        }
+
+        .subgroup-item {
+            padding: 25px;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, rgba(139, 0, 0, 0.1), transparent);
+            border-left: 3px solid var(--crimson);
+            transition: all 0.3s ease;
+        }
+
+        .subgroup-item:hover {
+            transform: translateX(10px);
+            background: linear-gradient(90deg, rgba(220, 20, 60, 0.15), transparent);
+        }
+
+        .subgroup-item h4 {
+            color: var(--crimson);
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+
+        .subgroup-item p {
+            color: var(--text-secondary);
+        }
+
+
+        .event-section {
+            margin-bottom: 80px;
+            padding: 60px;
+            background: linear-gradient(135deg, rgba(139, 0, 0, 0.08), rgba(0, 0, 0, 0.9));
+            border: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .event-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--crimson), transparent);
+            animation: scan 3s linear infinite;
+        }
+
+        .event-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .event-header h3 {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 3rem;
+            color: var(--crimson);
+            letter-spacing: 2px;
+        }
+
+        .event-badge {
+            background: var(--crimson);
+            color: var(--dark-bg);
+            padding: 8px 20px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+
+        .maid-cafe-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .maid-gallery {
+            display: grid;
+            gap: 20px;
+        }
+
+        .maid-image-main img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border: 2px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .maid-image-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .maid-image-grid img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .maid-gallery img:hover {
+            transform: scale(1.05);
+            border-color: var(--crimson);
+            box-shadow: 0 10px 30px rgba(220, 20, 60, 0.3);
+        }
+
+        .maid-info {
+            position: relative;
+        }
+
+        .maid-mascot {
+            position: absolute;
+            top: -40px;
+            right: -40px;
+            width: 120px;
+            height: 120px;
+            opacity: 0.8;
+            animation: bob 3s ease-in-out infinite;
+        }
+
+        .maid-mascot img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 5px 15px rgba(220, 20, 60, 0.3));
+        }
+
+        .event-stats {
+            display: flex;
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .stat-number {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 2.5rem;
+            color: var(--crimson);
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            letter-spacing: 2px;
+        }
+
+        .event-description {
+            color: var(--text-primary);
+            line-height: 1.8;
+            margin-bottom: 30px;
+            font-size: 1.05rem;
+        }
+
+        .volunteer-btn {
+            padding: 15px 40px;
+            background: transparent;
+            border: 2px solid var(--crimson);
+            color: var(--crimson);
+            font-weight: 700;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .volunteer-btn:hover {
+            background: var(--crimson);
+            color: var(--dark-bg);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(220, 20, 60, 0.3);
+        }
+
+
+        .kamecon-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .event-history {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-primary);
+            margin-bottom: 30px;
+        }
+
+        .highlight {
+            color: var(--crimson);
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        .kamecon-features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background: rgba(139, 0, 0, 0.1);
+            border-left: 3px solid var(--crimson);
+            transition: all 0.3s ease;
+        }
+
+        .feature-item:hover {
+            background: rgba(220, 20, 60, 0.1);
+            transform: translateX(5px);
+        }
+
+        .feature-icon {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 0.9rem;
+            color: var(--crimson);
+            font-weight: 700;
+            letter-spacing: 1px;
+            padding: 5px 10px;
+            background: rgba(220, 20, 60, 0.1);
+            border: 1px solid var(--border);
+        }
+
+        .apply-btn {
+            padding: 15px 40px;
+            background: var(--crimson);
+            border: none;
+            color: var(--dark-bg);
+            font-weight: 700;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .apply-btn:hover {
+            background: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255, 0, 0, 0.3);
+        }
+
+        .kamecon-poster {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .tilted-poster {
+            width: 100%;
+            max-width: 400px;
+            height: auto;
+            transform: rotate(3deg);
+            transition: all 0.3s ease;
+            filter: drop-shadow(0 10px 30px rgba(220, 20, 60, 0.3));
+        }
+
+        .tilted-poster:hover {
+            transform: rotate(0deg) scale(1.05);
+            filter: drop-shadow(0 15px 40px rgba(220, 20, 60, 0.5));
+        }
+
+
+        .csm-images-trio {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr 1fr;
+            gap: 20px;
+            margin-bottom: 50px;
+            align-items: center;
+        }
+
+        .csm-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border: 2px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .csm-center {
+            height: 250px;
+            transform: translateY(-20px);
+        }
+
+        .csm-img:hover {
+            transform: scale(1.05) translateY(-10px);
+            border-color: var(--crimson);
+            box-shadow: 0 15px 40px rgba(220, 20, 60, 0.3);
+        }
+
+        .csm-calendar {
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid var(--border);
+            padding: 40px;
+        }
+
+        .csm-weekend {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .csm-weekend h4 {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 2.5rem;
+            color: var(--crimson);
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .weekend-dates {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            letter-spacing: 3px;
+        }
+
+        .csm-events {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .csm-day {
+            background: linear-gradient(135deg, rgba(139, 0, 0, 0.1), transparent);
+            border: 1px solid var(--border);
+            overflow: hidden;
+        }
+
+        .day-header-csm {
+            background: var(--crimson);
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            color: var(--dark-bg);
+        }
+
+        .csm-date {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 1.3rem;
+            letter-spacing: 1px;
+        }
+
+        .csm-day-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .csm-event-details {
+            padding: 20px;
+        }
+
+        .csm-event-details h5 {
+            color: var(--crimson);
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .csm-event-details p {
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            padding-left: 10px;
+        }
+
+        .csm-workshops {
+            margin-bottom: 40px;
+        }
+
+        .csm-workshops h4 {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 2rem;
+            color: var(--crimson);
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .workshop-dates {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .workshop-card {
+            background: rgba(139, 0, 0, 0.1);
+            border: 1px solid var(--border);
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .workshop-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--crimson);
+            box-shadow: 0 10px 30px rgba(220, 20, 60, 0.2);
+        }
+
+        .workshop-date {
+            display: block;
+            font-family: 'Bebas Neue', cursive;
+            font-size: 1.8rem;
+            color: var(--crimson);
+            margin-bottom: 10px;
+        }
+
+        .workshop-title {
+            color: var(--text-primary);
+            font-size: 0.95rem;
+        }
+
+        .movie-trip-banner {
+            background: linear-gradient(135deg, var(--crimson), var(--blood-red));
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .movie-trip-banner::before {
+            content: 'HALLOWEEN';
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-family: 'Bebas Neue', cursive;
+            font-size: 1rem;
+            opacity: 0.2;
+            letter-spacing: 2px;
+        }
+
+        .movie-trip-banner::after {
+            content: 'SPECIAL';
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-family: 'Bebas Neue', cursive;
+            font-size: 1rem;
+            opacity: 0.2;
+            letter-spacing: 2px;
+        }
+
+        .movie-trip-banner h4 {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 2rem;
+            color: var(--dark-bg);
+            margin-bottom: 10px;
+        }
+
+        .trip-date {
+            display: block;
+            font-size: 1.5rem;
+            color: rgba(0, 0, 0, 0.8);
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .movie-trip-banner p {
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 25px;
+        }
+
+        .rsvp-btn {
+            padding: 15px 40px;
+            background: var(--dark-bg);
+            border: 2px solid var(--dark-bg);
+            color: var(--crimson);
+            font-weight: 700;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .rsvp-btn:hover {
+            background: transparent;
+            border-color: var(--dark-bg);
+            color: var(--dark-bg);
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 968px) {
+
+            .maid-cafe-content,
+            .kamecon-content,
+            .csm-events,
+            .workshop-dates {
+                grid-template-columns: 1fr;
+            }
+
+            .csm-images-trio {
+                grid-template-columns: 1fr;
+            }
+
+            .csm-center {
+                transform: none;
+                height: 200px;
+            }
+
+            .maid-mascot {
+                position: static;
+                margin: 0 auto 20px;
+            }
+        }
+
+
+        .form-container {
+            max-width: 600px;
+            margin: 60px auto;
+        }
+
+        .form-group {
+            margin-bottom: 30px;
+        }
+
+        .form-group label {
+            display: block;
+            color: var(--crimson);
+            margin-bottom: 10px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 15px;
+            background: rgba(139, 0, 0, 0.05);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--crimson);
+            background: rgba(220, 20, 60, 0.05);
+            box-shadow: 0 0 20px rgba(220, 20, 60, 0.1);
+        }
+
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 18px;
+            background: transparent;
+            border: 2px solid var(--crimson);
+            color: var(--crimson);
+            font-weight: 700;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: var(--crimson);
+            transition: all 0.3s ease;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+        }
+
+        .submit-btn:hover {
+            color: var(--dark-bg);
+        }
+
+        .submit-btn:hover::before {
+            width: 100%;
+            height: 100%;
+            padding: 20px;
+        }
+
+
+        .resources-section {
+            margin-bottom: 60px;
+        }
+
+        .resources-subtitle {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 2rem;
+            color: var(--crimson);
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border);
+            letter-spacing: 2px;
+        }
+
+
+        .recommendations-section {
+            background: linear-gradient(135deg, rgba(139, 0, 0, 0.05), rgba(0, 0, 0, 0.8));
+            border: 1px solid var(--border);
+            padding: 40px;
+            margin-bottom: 60px;
+
+            overflow: visible;
+
+            position: relative;
+        }
+
+
+        .anime-grid {
+            display: none;
+        }
+
+        .anime-grid.active {
+            display: flex !important;
+            flex-direction: column;
+            gap: 25px;
+
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        .anime-card {
+            display: flex;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+            overflow: hidden;
+
+            width: calc(100% - 20px);
+
+            margin: 0;
+        }
+
+        .season-tabs {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 40px;
+            justify-content: center;
+        }
+
+        .season-tab {
+            padding: 12px 30px;
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 600;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .season-tab.active,
+        .season-tab:hover {
+            background: var(--crimson);
+            color: var(--dark-bg);
+            border-color: var(--crimson);
+            transform: translateY(-2px);
+        }
+
+        .anime-grid {
+            display: grid;
+            gap: 25px;
+        }
+
+        .anime-card {
+            display: flex;
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+
+        .anime-card:hover {
+            border-color: var(--crimson);
+            transform: translateX(10px);
+            box-shadow: 0 5px 20px rgba(220, 20, 60, 0.3);
+        }
+
+        .anime-rank {
+            background: var(--crimson);
+            color: var(--dark-bg);
+            width: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Bebas Neue', cursive;
+            font-size: 2rem;
+            letter-spacing: 1px;
+        }
+
+        .anime-info {
+            padding: 20px 25px;
+            flex: 1;
+        }
+
+        .anime-info h4 {
+            color: var(--text-primary);
+            font-size: 1.3rem;
+            margin-bottom: 8px;
+        }
+
+        .anime-genre {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 12px;
+        }
+
+        .anime-rating {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .rating-stars {
+            color: var(--crimson);
+            font-size: 1.1rem;
+        }
+
+        .rating-text {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            background: rgba(220, 20, 60, 0.1);
+            padding: 4px 10px;
+            border: 1px solid var(--border);
+            letter-spacing: 1px;
+        }
+
+
+        .genre-guide {
+            margin-bottom: 60px;
+        }
+
+        .genre-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .genre-card {
+            background: linear-gradient(135deg, rgba(139, 0, 0, 0.1), transparent);
+            border: 1px solid var(--border);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .genre-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--crimson);
+            box-shadow: 0 10px 30px rgba(220, 20, 60, 0.2);
+        }
+
+        .genre-header {
+            background: var(--crimson);
+            color: var(--dark-bg);
+            padding: 15px;
+            font-family: 'Bebas Neue', cursive;
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+            text-align: center;
+        }
+
+        .genre-content {
+            padding: 25px;
+        }
+
+        .genre-desc {
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+            font-style: italic;
+        }
+
+        .genre-list {
+            list-style: none;
+        }
+
+        .genre-list li {
+            color: var(--text-primary);
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(220, 20, 60, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .genre-list li:hover {
+            color: var(--crimson);
+            padding-left: 10px;
+        }
+
+
+        .watch-order {
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid var(--border);
+            padding: 40px;
+        }
+
+        .order-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .order-card {
+            background: linear-gradient(135deg, rgba(139, 0, 0, 0.1), transparent);
+            border: 1px solid var(--border);
+            padding: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .order-card:hover {
+            transform: scale(1.05);
+            border-color: var(--crimson);
+            box-shadow: 0 10px 30px rgba(220, 20, 60, 0.2);
+        }
+
+        .order-card h4 {
+            color: var(--crimson);
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            text-align: center;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .order-list {
+            counter-reset: order;
+            list-style: none;
+        }
+
+        .order-list li {
+            counter-increment: order;
+            color: var(--text-primary);
+            padding: 10px 0;
+            position: relative;
+            padding-left: 35px;
+            transition: all 0.3s ease;
+        }
+
+        .order-list li::before {
+            content: counter(order);
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--crimson);
+            color: var(--dark-bg);
+            width: 25px;
+            height: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Bebas Neue', cursive;
+            font-size: 0.9rem;
+        }
+
+        .order-list li:hover {
+            color: var(--crimson);
+            transform: translateX(5px);
+        }
+
+
+        .partner-section {
+            margin-top: 80px;
+            padding: 60px;
+            background: linear-gradient(135deg, rgba(220, 20, 60, 0.05), transparent);
+            border: 1px solid var(--border);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .partner-section::before {
+            content: 'PARTNERED WITH';
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Bebas Neue', cursive;
+            font-size: 1rem;
+            letter-spacing: 4px;
+            color: var(--crimson);
+            opacity: 0.5;
+        }
+
+        .partner-logo {
+            font-family: 'Helvetica Neue', 'Arial', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 300;
+            color: var(--text-primary);
+            letter-spacing: 12px;
+            margin-top: 30px;
+            text-transform: uppercase;
+        }
+
+
+        footer {
+            padding: 60px;
+            background: var(--darker);
+            border-top: 1px solid var(--border);
+            text-align: center;
+            margin-top: 100px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 40px;
+            list-style: none;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--crimson);
+        }
+
+        .footer-bottom {
+            padding-top: 30px;
+            border-top: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        .footer-bottom .copyright {
+            color: var(--crimson);
+            font-weight: 600;
+        }
+
+
+        .mobile-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .mobile-toggle span {
+            width: 25px;
+            height: 2px;
+            background: var(--crimson);
+            transition: all 0.3s ease;
+        }
+
+        .menu-label {
+            display: none;
+            font-family: 'Bebas Neue', cursive;
+            font-size: 2rem;
+            color: var(--crimson);
+            letter-spacing: 2px;
+            margin-right: 15px;
+        }
+
+
+        .scroll-indicator {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+            animation: fadeInOut 4s ease-in-out infinite;
+        }
+
+        .scroll-wheel {
+            width: 30px;
+            height: 50px;
+            border: 2px solid var(--crimson);
+            border-radius: 20px;
+            position: relative;
+            opacity: 0.7;
+            transition: all 0.3s ease;
+        }
+
+        .scroll-wheel::before {
+            content: '';
+            position: absolute;
+            top: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 10px;
+            background: var(--crimson);
+            border-radius: 2px;
+            animation: scrollWheel 2s ease-in-out infinite;
+        }
+
+        .scroll-wheel::after {
+            content: 'SCROLL';
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Bebas Neue', cursive;
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            color: var(--crimson);
+            opacity: 0.6;
+        }
+
+        @keyframes scrollWheel {
+            0% {
+                transform: translateX(-50%) translateY(0);
+                opacity: 1;
+            }
+
+            50% {
+                transform: translateX(-50%) translateY(15px);
+                opacity: 0.3;
+            }
+
+            100% {
+                transform: translateX(-50%) translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInOut {
+
+            0%,
+            100% {
+                opacity: 0;
+            }
+
+            20%,
+            80% {
+                opacity: 1;
+            }
+        }
+
+        .scroll-indicator:hover .scroll-wheel {
+            border-color: var(--accent);
+            opacity: 1;
+            box-shadow: 0 0 20px rgba(220, 20, 60, 0.3);
+        }
+
+        .scroll-indicator:hover .scroll-wheel::before {
+            background: var(--accent);
+        }
+
+
+        body.scrolled .scroll-indicator {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+
+        .promotions-hero {
+            min-height: 100vh;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 120px 60px 60px;
+            overflow: hidden;
+        }
+
+        .promotions-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at center, rgba(220, 20, 60, 0.15), transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 0.5;
+            }
+
+            50% {
+                opacity: 1;
+            }
+        }
+
+        .promotions-title {
+            text-align: center;
+            margin-bottom: 80px;
+            z-index: 2;
+            position: relative;
+        }
+
+        .promotions-title h1 {
+            font-family: 'Bebas Neue', cursive;
+            font-size: clamp(3rem, 8vw, 6rem);
+            background: linear-gradient(135deg, var(--crimson), var(--accent), var(--crimson));
+            background-size: 200% 200%;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 3px;
+            animation: gradientShift 3s ease-in-out infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes gradientShift {
+
+            0%,
+            100% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+
+        .coming-soon {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.2rem;
+            color: var(--text-primary);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .coming-soon:hover {
+            color: var(--crimson);
+            transform: scale(1.05);
+        }
+
+        .coming-soon::before,
+        .coming-soon::after {
+            content: '→';
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--crimson);
+            animation: arrow-pulse 2s ease-in-out infinite;
+            font-size: 1.4rem;
+        }
+
+        .coming-soon::before {
+            left: -40px;
+        }
+
+        .coming-soon::after {
+            right: -40px;
+        }
+
+        @keyframes arrow-pulse {
+
+            0%,
+            100% {
+                opacity: 0.5;
+                transform: translateY(-50%) translateX(0);
+            }
+
+            50% {
+                opacity: 1;
+                transform: translateY(-50%) translateX(5px);
+            }
+        }
+
+        .release-date {
+            font-size: 2rem;
+            color: var(--crimson);
+            font-weight: 700;
+            text-shadow: 0 0 30px rgba(220, 20, 60, 0.5);
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+
+            0%,
+            100% {
+                text-shadow: 0 0 30px rgba(220, 20, 60, 0.5);
+            }
+
+            50% {
+                text-shadow: 0 0 50px rgba(220, 20, 60, 0.8), 0 0 70px rgba(220, 20, 60, 0.4);
+            }
+        }
+
+        .movie-showcase {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+            align-items: center;
+        }
+
+        .movie-card {
+            position: relative;
+            group: movie;
+        }
+
+        .movie-poster-container {
+            position: relative;
+            overflow: hidden;
+            border: 2px solid var(--border);
+            background: linear-gradient(135deg, rgba(139, 0, 0, 0.2), rgba(220, 20, 60, 0.1));
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-style: preserve-3d;
+            perspective: 1000px;
+            aspect-ratio: 2/3;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            max-width: 300px;
+            margin: 0 auto;
+        }
+
+        .partner-banner-center {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+            background: linear-gradient(135deg, rgba(220, 20, 60, 0.08), rgba(139, 0, 0, 0.05));
+            border: 1px solid var(--crimson);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 40px rgba(220, 20, 60, 0.1) inset;
+        }
+
+        .partner-text {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 0.9rem;
+            letter-spacing: 4px;
+            color: var(--crimson);
+            opacity: 0.8;
+            margin-bottom: 20px;
+        }
+
+        .partner-logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .partner-logo-img {
+            max-width: 180px;
+            height: auto;
+            filter: brightness(0.9);
+            transition: all 0.3s ease;
+        }
+
+        .partner-logo-img:hover {
+            filter: brightness(1.1) drop-shadow(0 0 30px rgba(220, 20, 60, 0.3));
+            transform: scale(1.05);
+        }
+
+
+        .partner-banner {
+            display: none;
+        }
+
+        .movie-poster-container::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, var(--crimson), transparent, var(--crimson));
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            z-index: -1;
+            animation: borderRotate 3s linear infinite;
+        }
+
+        @keyframes borderRotate {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .movie-poster-container:hover::before {
+            opacity: 1;
+        }
+
+        .movie-poster-container:hover {
+            transform: translateY(-10px) rotateX(5deg);
+            border-color: var(--crimson);
+            box-shadow:
+                0 30px 60px rgba(220, 20, 60, 0.4),
+                0 15px 30px rgba(139, 0, 0, 0.3),
+                inset 0 0 60px rgba(220, 20, 60, 0.1);
+        }
+
+        .movie-poster {
+            width: 100%;
+            height: 100%;
+            display: block;
+            transition: transform 0.5s ease;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        .movie-poster-container:hover .movie-poster {
+            transform: scale(1.05);
+        }
+
+        .movie-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to top, rgba(10, 10, 10, 0.9) 0%, transparent 50%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            padding: 30px;
+        }
+
+        .movie-poster-container:hover .movie-overlay {
+            opacity: 1;
+        }
+
+        .watch-trailer-btn {
+            padding: 12px 30px;
+            background: var(--crimson);
+            color: var(--dark-bg);
+            text-decoration: none;
+            font-weight: 700;
+            letter-spacing: 1px;
+            border: none;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .watch-trailer-btn::before {
+            content: '▶';
+            position: absolute;
+            left: -30px;
+            top: 50%;
+            transform: translateY(-50%);
+            transition: left 0.3s ease;
+        }
+
+        .watch-trailer-btn:hover::before {
+            left: 10px;
+        }
+
+        .watch-trailer-btn:hover {
+            padding-left: 40px;
+            background: var(--accent);
+        }
+
+        .movie-info {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .movie-title {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 2.5rem;
+            color: var(--text-primary);
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .movie-title::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--crimson), var(--accent));
+            transition: width 0.3s ease;
+        }
+
+        .movie-card:hover .movie-title::after {
+            width: 100%;
+        }
+
+        .movie-subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .floating-particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            background: var(--crimson);
+            border-radius: 50%;
+            opacity: 0.6;
+            animation: floatUp 10s linear infinite;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 0.6;
+            }
+
+            90% {
+                opacity: 0.6;
+            }
+
+            100% {
+                transform: translateY(-100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        .particle:nth-child(1) {
+            left: 10%;
+            width: 3px;
+            height: 3px;
+            animation-duration: 12s;
+            animation-delay: 0s;
+        }
+
+        .particle:nth-child(2) {
+            left: 30%;
+            width: 2px;
+            height: 2px;
+            animation-duration: 15s;
+            animation-delay: 2s;
+        }
+
+        .particle:nth-child(3) {
+            left: 50%;
+            width: 4px;
+            height: 4px;
+            animation-duration: 10s;
+            animation-delay: 1s;
+        }
+
+        .particle:nth-child(4) {
+            left: 70%;
+            width: 2px;
+            height: 2px;
+            animation-duration: 18s;
+            animation-delay: 3s;
+        }
+
+        .particle:nth-child(5) {
+            left: 90%;
+            width: 3px;
+            height: 3px;
+            animation-duration: 14s;
+            animation-delay: 4s;
+        }
+
+        @media (max-width: 968px) {
+            .movie-showcase {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .partner-banner-center {
+                order: -1;
+                margin-bottom: 20px;
+            }
+
+            .promotions-hero {
+                padding: 100px 20px 40px;
+            }
+
+            .coming-soon::before,
+            .coming-soon::after {
+                display: none;
+            }
+
+            .movie-title {
+                font-size: 2rem;
+            }
+
+            .partner-logo-img {
+                max-width: 150px;
+            }
+
+            .mobile-toggle {
+                display: flex;
+            }
+
+            .menu-label {
+                display: block;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 20px;
+            }
+
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: var(--darker);
+                flex-direction: column;
+                padding: 20px;
+                gap: 20px;
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .mobile-toggle {
+                display: flex;
+            }
+
+            .page-section {
+                padding: 100px 20px 40px;
+            }
+
+            .hero-content h1 {
+                font-size: 4rem;
+            }
+
+            .meeting-info {
+                grid-template-columns: 1fr;
+            }
+
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .sakura-petal {
+                width: 8px;
+                height: 8px;
+            }
+        }
+    </style>
+</head>
+<!-- Add this HTML right after your <body> tag (line 901) -->
+
+<!-- Animated Background Layer -->
+<div class="animated-background" id="animatedBg"></div>
+<div class="background-interactive-layer">
+    <div class="background-pulse" id="bgPulse"></div>
+</div>
+
+<!-- Add this JavaScript to your existing script section (around line 3900) -->
+<script>
+    // Animated Background Interactions
+    document.addEventListener('DOMContentLoaded', function () {
+        const animatedBg = document.getElementById('animatedBg');
+        const bgPulse = document.getElementById('bgPulse');
+        let mouseX = 0;
+        let mouseY = 0;
+        let currentX = 0;
+        let currentY = 0;
+        const speed = 0.05;
+
+        // Parallax effect on scroll
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const parallaxSpeed = 0.5;
+
+            if (animatedBg) {
+                animatedBg.style.transform = `translateY(${scrolled * parallaxSpeed}px)`;
+            }
+        });
+
+        // Interactive pulse follows mouse with smooth animation
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        function animatePulse() {
+            // Smooth following animation
+            currentX += (mouseX - currentX) * speed;
+            currentY += (mouseY - currentY) * speed;
+
+            if (bgPulse) {
+                bgPulse.style.left = currentX + 'px';
+                bgPulse.style.top = currentY + 'px';
+            }
+
+            requestAnimationFrame(animatePulse);
+        }
+        animatePulse();
+
+        // Background reveal animation on page load
+        setTimeout(() => {
+            animatedBg.classList.add('loaded');
+        }, 100);
+
+        // Special effects on navigation
+        const navLinks = document.querySelectorAll('.nav-link');
+        navLinks.forEach(link => {
+            link.addEventListener('click', function () {
+                // Create ripple effect on background
+                createBackgroundRipple(window.innerWidth / 2, window.innerHeight / 2);
+            });
+        });
+
+        // Create ripple effect on background
+        function createBackgroundRipple(x, y) {
+            const ripple = document.createElement('div');
+            ripple.className = 'bg-ripple';
+            ripple.style.cssText = `
+            position: fixed;
+            left: ${x}px;
+            top: ${y}px;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(220, 20, 60, 0.3) 0%, transparent 70%);
+            transform: translate(-50%, -50%) scale(0);
+            z-index: -1;
+            pointer-events: none;
+        `;
+
+            document.body.appendChild(ripple);
+
+            // Animate ripple
+            requestAnimationFrame(() => {
+                ripple.style.transition = 'transform 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 1.5s ease-out';
+                ripple.style.transform = 'translate(-50%, -50%) scale(20)';
+                ripple.style.opacity = '0';
+            });
+
+            // Remove after animation
+            setTimeout(() => {
+                ripple.remove();
+            }, 1500);
+        }
+
+        // Pulse effect on hero section
+        const heroSection = document.querySelector('#home');
+        if (heroSection) {
+            heroSection.addEventListener('mouseenter', () => {
+                animatedBg.style.filter = 'hue-rotate(10deg)';
+            });
+
+            heroSection.addEventListener('mouseleave', () => {
+                animatedBg.style.filter = 'hue-rotate(0deg)';
+            });
+        }
+
+        // Background intensity changes based on section
+        const sections = document.querySelectorAll('.page-section');
+        const observerOptions = {
+            threshold: 0.5
+        };
+
+        const sectionObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const sectionId = entry.target.id;
+
+                    // Adjust background based on section
+                    switch (sectionId) {
+                        case 'home':
+                            animatedBg.style.opacity = '1';
+                            break;
+                        case 'events':
+                            animatedBg.style.opacity = '0.8';
+                            animatedBg.style.filter = 'hue-rotate(15deg) saturate(1.2)';
+                            break;
+                        case 'promotions':
+                            animatedBg.style.opacity = '0.9';
+                            animatedBg.style.filter = 'hue-rotate(-10deg) contrast(1.2)';
+                            break;
+                        default:
+                            animatedBg.style.opacity = '0.7';
+                            animatedBg.style.filter = 'none';
+                    }
+                }
+            });
+        }, observerOptions);
+
+        sections.forEach(section => {
+            sectionObserver.observe(section);
+        });
+    });
+
+    // Add subtle animation to background on blossom petal clicks
+    document.addEventListener('click', function (e) {
+        if (e.target.closest('.blossom-petal')) {
+            const animatedBg = document.getElementById('animatedBg');
+            if (animatedBg) {
+                animatedBg.style.animation = 'none';
+                setTimeout(() => {
+                    animatedBg.style.animation = 'backgroundFloat 30s ease-in-out infinite';
+                }, 10);
+            }
+        }
+    });
+</script>
+
+<body>
+    <!-- Door Transition Overlay -->
+    <div class="page-transition" id="pageTransition">
+        <div class="shoji-door-left">
+            <div class="shoji-grid"></div>
+        </div>
+        <div class="shoji-door-right">
+            <div class="shoji-grid"></div>
+        </div>
+        <div class="door-seal">
+            <div class="seal-circle">
+                <div class="seal-text"></div>
+            </div>
+        </div>
+        <div class="energy-lines">
+            <div class="energy-line"></div>
+            <div class="energy-line"></div>
+            <div class="energy-line"></div>
+            <div class="energy-line"></div>
+            <div class="energy-line"></div>
+            <div class="energy-line"></div>
+        </div>
+        <div class="kanji-particles">
+            <span class="kanji">桜</span>
+            <span class="kanji">刀</span>
+            <span class="kanji">魂</span>
+            <span class="kanji">力</span>
+        </div>
+        <div class="door-mascot">
+            <img src="images/mascott2.png" alt="Chibi Mascot">
+        </div>
+    </div>
+
+    <!-- Blossom Container with Images -->
+    <div class="blossom-container">
+        <div class="blossom-petal"><img src="images/blossom.png" alt="Blossom"></div>
+        <div class="blossom-petal"><img src="images/blossom.png" alt="Blossom"></div>
+        <div class="blossom-petal"><img src="images/blossom.png" alt="Blossom"></div>
+        <div class="blossom-petal"><img src="images/blossom.png" alt="Blossom"></div>
+        <div class="blossom-petal"><img src="images/blossom.png" alt="Blossom"></div>
+        <div class="blossom-petal"><img src="images/blossom.png" alt="Blossom"></div>
+        <div class="blossom-petal"><img src="images/blossom.png" alt="Blossom"></div>
+        <div class="blossom-petal"><img src="images/blossom.png" alt="Blossom"></div>
+        <div class="blossom-petal"><img src="images/blossom.png" alt="Blossom"></div>
+        <div class="blossom-petal"><img src="images/blossom.png" alt="Blossom"></div>
+    </div>
+
+    <!-- Testudo Mascot -->
+    <div class="testudo-container">
+        <div class="testudo-text">Drawn by u/Vivaldi44<br>our little Testudo-chan mascot at UMD!</div>
+        <div class="testudo-bubbles">
+            <span></span>
+            <span></span>
+        </div>
+        <div class="testudo-mascot">
+            <img src="images/testudo.png" alt="Testudo-chan Mascot">
+        </div>
+    </div>
+
+    <!-- Floating Mascot -->
+    <div class="floating-mascot-container">
+        <div class="mascot-text">Click me for special promotions!</div>
+        <div class="thought-bubbles">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="floating-mascot" onclick="navigateToPromotions()">
+            <img src="images/mascott2.png" alt="TAS Chibi Mascot">
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <a href="#home" class="logo">
+                TAS
+                <img src="images/blossom.png" alt="Cherry Blossom">
+            </a>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#home" class="nav-link">HOME</a></li>
+                <li><a href="#meetings" class="nav-link">MEETINGS</a></li>
+                <li><a href="#events" class="nav-link">EVENTS</a></li>
+                <li><a href="#promotions" class="nav-link">PROMOTIONS</a></li>
+                <li><a href="#eboard" class="nav-link">E-BOARD</a></li>
+                <li><a href="#join" class="nav-link">JOIN</a></li>
+                <li><a href="#subgroups" class="nav-link">SUBGROUPS</a></li>
+                <li><a href="#resources" class="nav-link">RESOURCES</a></li>
+                <li><a href="#donate" class="nav-link">DONATE</a></li>
+                <li><a href="#contact" class="nav-link">CONTACT</a></li>
+            </ul>
+            <div style="display: flex; align-items: center;">
+                <span class="menu-label">MENU</span>
+                <div class="mobile-toggle" id="mobileToggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Home Page -->
+    <section id="home" class="page-section active">
+        <div class="hero">
+            <div class="hero-mascot">
+                <img src="images/mascott.png" alt="TAS Mascot">
+            </div>
+            <div class="hero-content">
+                <h1 class="stagger-element">TERRAPIN ANIME SOCIETY</h1>
+                <p class="subtitle stagger-element">テラピン・アニメ・ソサエティ</p>
+                <div class="hero-buttons stagger-element">
+                    <a href="https://discord.gg/fzKBsnS" target="_blank" class="btn">JOIN DISCORD</a>
+                    <a href="https://terplink.umd.edu/organization/terrapin-anime-society" target="_blank"
+                        class="btn">TERPLINK</a>
+                </div>
+            </div>
+        </div>
+
+        <div style="margin-top: 100px;">
+            <div class="section-header">
+                <h2>MISSION</h2>
+                <p class="section-subtitle">Our Purpose & Vision</p>
+            </div>
+            <div style="max-width: 800px; margin: 0 auto;">
+                <p style="font-size: 1.1rem; line-height: 2; color: var(--text-secondary);">
+                    The Terrapin Anime Society is established for the expressed purpose of encouraging the appreciation
+                    and discussion of anime, Japanese Animation, between its members and to bring a better awareness of
+                    anime to the general public.
+                </p>
+                <p style="font-size: 1.1rem; line-height: 2; color: var(--text-secondary); margin-top: 30px;">
+                    Anyone who is interested in anime is free to join. No applications, no fees, just show up to our
+                    meetings!
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ALL OTHER SECTIONS REMAIN EXACTLY THE SAME AS IN YOUR ORIGINAL CODE -->
+    <!-- Meetings Page -->
+    <section id="meetings" class="page-section">
+        <div class="section-header">
+            <h2>WEEKLY MEETINGS</h2>
+            <p class="section-subtitle">Join us every Sunday</p>
+        </div>
+
+        <div class="meeting-info">
+            <div class="meeting-details">
+                <h3>WHEN</h3>
+                <p>Every Sunday</p>
+                <p>5:00 PM - 7:00 PM</p>
+                <p>Late Afternoon & Evening Sessions</p>
+            </div>
+            <div class="meeting-location">
+                <img src="images/sociology.png" alt="Parren J Mitchell Building" class="building-image">
+                <div class="location-info">
+                    <h3>WHERE</h3>
+                    <p class="building-name">PARREN J MITCHELL ART-SOCIOLOGY</p>
+                    <p class="address">3834 Campus Dr, College Park, MD 20740</p>
+                    <div class="room-info">
+                        <p><span class="room-label">Regular Meetings:</span> Room 3207 (Classroom)</p>
+                        <p><span class="room-label">Special Events:</span> Room 2203 (Lecture Hall)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Anime Screening Interface -->
+        <div class="screening-container">
+            <div class="screening-header">
+                <h3>THIS WEEK'S SCREENING</h3>
+                <div class="screening-date">
+                    <span class="date-label">SUNDAY</span>
+                    <span class="date-number" id="screeningDate">SEPTEMBER 21</span>
+                </div>
+            </div>
+
+            <div class="anime-showcase">
+                <div class="showcase-main">
+                    <div class="anime-slider" id="animeSlider">
+                        <!-- Anime 1: Excel Saga -->
+                        <div class="anime-slide active" data-anime="1">
+                            <div class="anime-poster">
+                                <img src="images/anime1.png" alt="Excel Saga">
+                                <div class="poster-overlay"></div>
+                            </div>
+                            <div class="anime-details">
+                                <h4 class="anime-title">Excel Saga</h4>
+                                <div class="anime-tags">
+                                    <span class="tag">Comedy</span>
+                                    <span class="tag">Parody</span>
+                                    <span class="tag">Action</span>
+                                </div>
+                                <p class="anime-description">
+                                    A wild, over-the-top parody series that follows Excel, an enthusiastic but clueless
+                                    agent of the secret organization Across, as she tries to conquer the city under the
+                                    eccentric leadership of Il Palazzo. The show constantly breaks the fourth wall and
+                                    spoofs anime tropes, genres, and even itself. Its chaotic humor and absurd scenarios
+                                    make it a cult classic.
+                                </p>
+                                <div class="anime-meta">
+                                    <span class="episode-count">26 Episodes</span>
+                                    <span class="rating">★★★★☆</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Anime 2: School-Live! -->
+                        <div class="anime-slide" data-anime="2">
+                            <div class="anime-poster">
+                                <img src="images/anime2.png" alt="School-Live!">
+                                <div class="poster-overlay"></div>
+                            </div>
+                            <div class="anime-details">
+                                <h4 class="anime-title">School-Live! (Gakkou Gurashi!)</h4>
+                                <div class="anime-tags">
+                                    <span class="tag">Horror</span>
+                                    <span class="tag">Mystery</span>
+                                    <span class="tag">School</span>
+                                </div>
+                                <p class="anime-description">
+                                    At first, it seems like a slice-of-life anime about a group of cheerful girls living
+                                    at their school. However, it's revealed that they are actually survivors of a zombie
+                                    apocalypse, with one character maintaining a delusion of normal school life to cope
+                                    with the trauma. The series balances dark survival horror with bittersweet character
+                                    bonds.
+                                </p>
+                                <div class="anime-meta">
+                                    <span class="episode-count">12 Episodes</span>
+                                    <span class="rating">★★★★★</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Anime 3: Talentless Nana -->
+                        <div class="anime-slide" data-anime="3">
+                            <div class="anime-poster">
+                                <img src="images/anime3.png" alt="Talentless Nana">
+                                <div class="poster-overlay"></div>
+                            </div>
+                            <div class="anime-details">
+                                <h4 class="anime-title">Talentless Nana</h4>
+                                <div class="anime-tags">
+                                    <span class="tag">Psychological</span>
+                                    <span class="tag">Thriller</span>
+                                    <span class="tag">Supernatural</span>
+                                </div>
+                                <p class="anime-description">
+                                    On an island where children with superpowers are trained to fight humanity's
+                                    enemies, a new transfer student named Nana appears. Though she seems powerless,
+                                    she's secretly an assassin sent to eliminate her classmates, who are considered
+                                    dangerous. The series blends psychological thriller and mystery as Nana manipulates
+                                    and deceives those around her.
+                                </p>
+                                <div class="anime-meta">
+                                    <span class="episode-count">13 Episodes</span>
+                                    <span class="rating">★★★★☆</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Anime 4: The Executioner -->
+                        <div class="anime-slide" data-anime="4">
+                            <div class="anime-poster">
+                                <img src="images/anime4.png" alt="The Executioner and Her Way of Life">
+                                <div class="poster-overlay"></div>
+                            </div>
+                            <div class="anime-details">
+                                <h4 class="anime-title">The Executioner and Her Way of Life</h4>
+                                <div class="anime-tags">
+                                    <span class="tag">Fantasy</span>
+                                    <span class="tag">Adventure</span>
+                                    <span class="tag">Isekai</span>
+                                </div>
+                                <p class="anime-description">
+                                    In a world where people summoned from Japan often gain dangerous powers, priestess
+                                    Executioners are tasked with eliminating them. Menou, one such Executioner, hides
+                                    her true duty under a kind façade as she targets a newly summoned girl with
+                                    frightening abilities. The story mixes fantasy adventure with moral questions about
+                                    duty, trust, and the value of life.
+                                </p>
+                                <div class="anime-meta">
+                                    <span class="episode-count">12 Episodes</span>
+                                    <span class="rating">★★★★☆</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Anime 5: Turkey! -->
+                        <div class="anime-slide" data-anime="5">
+                            <div class="anime-poster">
+                                <img src="images/anime5.png" alt="Turkey! Time to Strike">
+                                <div class="poster-overlay"></div>
+                            </div>
+                            <div class="anime-details">
+                                <h4 class="anime-title">Turkey! Time to Strike</h4>
+                                <div class="anime-tags">
+                                    <span class="tag">Comedy</span>
+                                    <span class="tag">Action</span>
+                                    <span class="tag">Parody</span>
+                                </div>
+                                <p class="anime-description">
+                                    This is a comedic action short where anthropomorphic turkeys rise up against humans
+                                    just before Thanksgiving. The birds, armed with absurd weapons and overblown
+                                    dramatic flair, wage war in a parody of shōnen battle anime tropes. It's
+                                    tongue-in-cheek, chaotic, and meant as satire rather than a serious series.
+                                </p>
+                                <div class="anime-meta">
+                                    <span class="episode-count">12 Episodes</span>
+                                    <span class="rating">★★★☆☆</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Navigation Arrows -->
+                    <button class="slide-nav prev-slide" onclick="changeAnime(-1)">‹</button>
+                    <button class="slide-nav next-slide" onclick="changeAnime(1)">›</button>
+                </div>
+
+                <!-- Thumbnail Navigation -->
+                <div class="anime-thumbnails">
+                    <div class="thumbnail active" data-anime="1" onclick="goToAnime(1)">
+                        <img src="images/anime1.png" alt="Excel Saga">
+                        <div class="thumb-title">Excel Saga</div>
+                    </div>
+                    <div class="thumbnail" data-anime="2" onclick="goToAnime(2)">
+                        <img src="images/anime2.png" alt="School-Live!">
+                        <div class="thumb-title">School-Live!</div>
+                    </div>
+                    <div class="thumbnail" data-anime="3" onclick="goToAnime(3)">
+                        <img src="images/anime3.png" alt="Talentless Nana">
+                        <div class="thumb-title">Talentless Nana</div>
+                    </div>
+                    <div class="thumbnail" data-anime="4" onclick="goToAnime(4)">
+                        <img src="images/anime4.png" alt="The Executioner">
+                        <div class="thumb-title">The Executioner</div>
+                    </div>
+                    <div class="thumbnail" data-anime="5" onclick="goToAnime(5)">
+                        <img src="images/anime5.png" alt="Turkey!">
+                        <div class="thumb-title">Turkey!</div>
+                    </div>
+                </div>
+
+                <!-- Progress Indicators -->
+                <div class="screening-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <div class="progress-dots">
+                        <span class="dot active" data-anime="1"></span>
+                        <span class="dot" data-anime="2"></span>
+                        <span class="dot" data-anime="3"></span>
+                        <span class="dot" data-anime="4"></span>
+                        <span class="dot" data-anime="5"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-grid">
+            <div class="card">
+                <h3>LOW COMMITMENT</h3>
+                <p>Flexible time commitment: typically 1–5 hours weekly</p>
+            </div>
+            <div class="card">
+                <h3>OPEN MEETINGS</h3>
+                <p>General body meetings open to all potential new members</p>
+            </div>
+            <div class="card">
+                <h3>NO REQUIREMENTS</h3>
+                <p>No applications or prerequisites needed. Just show up!</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Events Page (continues with all the same content) -->
+    <section id="events" class="page-section">
+        <div class="section-header">
+            <h2>EVENTS</h2>
+            <p class="section-subtitle">Special occasions throughout the year</p>
+        </div>
+
+        <!-- Maid Cafe Section -->
+        <div class="event-section maid-cafe-section">
+            <div class="event-header">
+                <h3>MAID CAFE</h3>
+                <span class="event-badge">SPRING TRADITION</span>
+            </div>
+            <div class="maid-cafe-content">
+                <div class="maid-gallery">
+                    <div class="maid-image-main">
+                        <img src="images/maid1.png" alt="Maid Cafe Event">
+                    </div>
+                    <div class="maid-image-grid">
+                        <img src="images/maid2.png" alt="Maid Cafe Service">
+                        <img src="images/maid3.png" alt="Maid Cafe Atmosphere">
+                    </div>
+                </div>
+                <div class="maid-info">
+                    <div class="maid-mascot">
+                        <img src="images/maidmascott.png" alt="Maid Mascot">
+                    </div>
+                    <div class="event-stats">
+                        <div class="stat-item">
+                            <span class="stat-number">100+</span>
+                            <span class="stat-label">ATTENDEES</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">STAMP</span>
+                            <span class="stat-label">LOCATION</span>
+                        </div>
+                    </div>
+                    <p class="event-description">
+                        Our Maid Cafe was held in Stamp last spring semester and we had over 100 attendees!
+                        Experience authentic Japanese cafe culture with themed refreshments, entertainment,
+                        and cosplay. We're planning to make it even bigger and better!
+                    </p>
+                    <button class="volunteer-btn">VOLUNTEER FOR MAID CAFE</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Kamecon Section -->
+        <div class="event-section kamecon-section">
+            <div class="event-header">
+                <h3>KAMECON</h3>
+                <span class="event-badge">RETURNING FALL 2025</span>
+            </div>
+            <div class="kamecon-content">
+                <div class="kamecon-info">
+                    <p class="event-history">
+                        <span class="highlight">Our First Mini-Con!</span><br>
+                        The original Kamecon was held back in 2016. We're planning to slowly bring it back
+                        with a mini-convention featuring vendor booths, artist alley, panels, gaming partners,
+                        Concerts & cosplay, and more!
+                    </p>
+                    <div class="kamecon-features">
+                        <div class="feature-item">
+                            <span class="feature-icon">ART</span>
+                            <span>Artist Alley</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">GAME</span>
+                            <span>Gaming partners</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">COS</span>
+                            <span>Concerts & cosplay</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">SHOP</span>
+                            <span>Vendor Booths</span>
+                        </div>
+                    </div>
+                    <button class="apply-btn">APPLY AS VENDOR/ARTIST</button>
+                </div>
+                <div class="kamecon-poster">
+                    <img src="images/convention.png" alt="Kamecon Poster" class="tilted-poster">
+                </div>
+            </div>
+        </div>
+
+        <!-- Chainsaw Man Section -->
+        <div class="event-section chainsaw-section">
+            <div class="event-header">
+                <h3>CHAINSAW MAN PROMOTIONS</h3>
+                <span class="event-badge">SEPTEMBER - OCTOBER 2025</span>
+            </div>
+            <div class="csm-images-trio">
+                <img src="images/csm1.png" alt="Chainsaw Man 1" class="csm-img">
+                <img src="images/csm2.png" alt="Chainsaw Man 2" class="csm-img csm-center">
+                <img src="images/csm3.png" alt="Chainsaw Man 3" class="csm-img">
+            </div>
+            <div class="csm-calendar">
+                <div class="csm-weekend">
+                    <h4>CHAINSAW MAN WEEKEND</h4>
+                    <span class="weekend-dates">SEPTEMBER 27-28</span>
+                </div>
+                <div class="csm-events">
+                    <div class="csm-day">
+                        <div class="day-header-csm">
+                            <span class="csm-date">SEPT 27</span>
+                            <span class="csm-day-label">FRIDAY</span>
+                        </div>
+                        <div class="csm-event-details">
+                            <h5>Animusic Special</h5>
+                            <p>• Chainsaw Man Ending Song Tier List Party</p>
+                            <p>• Official Merch Raffle</p>
+                        </div>
+                    </div>
+                    <div class="csm-day">
+                        <div class="day-header-csm">
+                            <span class="csm-date">SEPT 28</span>
+                            <span class="csm-day-label">SATURDAY</span>
+                        </div>
+                        <div class="csm-event-details">
+                            <h5>Main Club Event</h5>
+                            <p>• Chainsaw Man Game Night</p>
+                            <p>• Official Merch Raffle</p>
+                            <p>• Streaming CSM S1 Episodes</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="csm-workshops">
+                    <h4>COSPLAY WORKSHOPS</h4>
+                    <div class="workshop-dates">
+                        <div class="workshop-card">
+                            <span class="workshop-date">OCT 19</span>
+                            <span class="workshop-title">Chainsaw Man Cosplay Workshop #1</span>
+                        </div>
+                        <div class="workshop-card">
+                            <span class="workshop-date">OCT 26</span>
+                            <span class="workshop-title">Chainsaw Man Cosplay Workshop #2</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="csm-movie-trip">
+                    <div class="movie-trip-banner">
+                        <h4>THEATER TRIP IN COSPLAY</h4>
+                        <span class="trip-date">OCTOBER 31ST - HALLOWEEN</span>
+                        <p>Join us for a club trip to see the Chainsaw Man movie in full cosplay!</p>
+                        <button class="rsvp-btn">RSVP FOR MOVIE TRIP</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Include all other sections exactly as they were -->
+    <!-- Promotions Page -->
+    <section id="promotions" class="page-section">
+        <div class="promotions-hero">
+            <div class="floating-particles">
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+            </div>
+
+            <div class="promotions-title">
+                <h1>EXCLUSIVE MOVIE PROMOTIONS</h1>
+                <p class="coming-soon" onclick="navigateToEvents()">Check out our Events tab for specific info</p>
+            </div>
+
+            <div class="movie-showcase">
+                <div class="movie-card">
+                    <div class="movie-poster-container">
+                        <img src="images/demonslayer.png" alt="Demon Slayer: Infinity Castle" class="movie-poster">
+                        <div class="movie-overlay">
+                            <a href="https://www.youtube.com/watch?v=x7uLutVRBfI" target="_blank"
+                                class="watch-trailer-btn">WATCH TRAILER</a>
+                        </div>
+                    </div>
+                    <div class="movie-info">
+                        <h2 class="movie-title">Demon Slayer</h2>
+                        <p class="movie-subtitle">Infinity Castle</p>
+                    </div>
+                </div>
+
+                <div class="partner-banner-center">
+                    <div class="partner-text">IN PARTNERSHIP WITH</div>
+                    <div class="partner-logo-container">
+                        <img src="images/sonypictures.png" alt="Sony Pictures Entertainment" class="partner-logo-img">
+                    </div>
+                </div>
+
+                <div class="movie-card">
+                    <div class="movie-poster-container">
+                        <img src="images/chainsawman.png" alt="Chainsaw Man – The Movie: Reze Arc" class="movie-poster">
+                        <div class="movie-overlay">
+                            <a href="https://www.youtube.com/watch?v=GJ1jrCnm-t8" target="_blank"
+                                class="watch-trailer-btn">WATCH TRAILER</a>
+                        </div>
+                    </div>
+                    <div class="movie-info">
+                        <h2 class="movie-title">Chainsaw Man</h2>
+                        <p class="movie-subtitle">The Movie: Reze Arc</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- E-Board Page -->
+    <section id="eboard" class="page-section">
+        <div class="section-header">
+            <h2>EXECUTIVE BOARD</h2>
+            <p class="section-subtitle">Meet our leadership team</p>
+        </div>
+
+        <div class="eboard-grid">
+            <div class="member-card">
+                <div class="member-role">PRESIDENT</div>
+                <div class="member-name">Kyle Goh</div>
+            </div>
+            <div class="member-card">
+                <div class="member-role">VICE PRESIDENT</div>
+                <div class="member-name">Annie Song</div>
+            </div>
+            <div class="member-card">
+                <div class="member-role">TREASURER</div>
+                <div class="member-name">Lucas Tao</div>
+            </div>
+            <div class="member-card">
+                <div class="member-role">WEBMISTRESS</div>
+                <div class="member-name">Corvidae Luz Dulcey</div>
+            </div>
+            <div class="member-card">
+                <div class="member-role">SCHEDULER</div>
+                <div class="member-name">Advait Vartak</div>
+            </div>
+            <div class="member-card">
+                <div class="member-role">SCHEDULER</div>
+                <div class="member-name">Joseph Tang</div>
+            </div>
+            <div class="member-card">
+                <div class="member-role">GAMEMASTER</div>
+                <div class="member-name">Brian Ma</div>
+            </div>
+            <div class="member-card">
+                <div class="member-role">FACULTY ADVISOR</div>
+                <div class="member-name">Michele Mason</div>
+            </div>
+        </div>
+        <!-- President's Bio Section -->
+        <div class="president-section">
+            <div class="pres-header">
+                <span class="pres-label">MEET THE PRESIDENT</span>
+                <div class="pres-divider"></div>
+            </div>
+
+            <div class="pres-container">
+                <div class="pres-content">
+                    <div class="pres-text">
+                        <h3 class="pres-name">Kyle Goh</h3>
+                        <span class="pres-title">President & Web Developer</span>
+
+                        <div class="pres-bio">
+                            <p>Hey! I'm the president and I'm the one who built this website. I'm a sophomore Immersive
+                                Media Design major and this is one of my projects I worked on all summer.</p>
+
+                            <p>This website is straight up purely HTML, CSS and JavaScript - no frameworks, just raw
+                                code and some creativity :3.</p>
+
+                            <p class="fun-fact">
+                                <span class="fact-label">FUN FACT:</span> I love to cosplay! Check out some of my work →
+                            </p>
+                        </div>
+
+                        <div class="pres-stats">
+                            <div class="stat-box">
+                                <span class="stat-value">500+</span>
+                                <span class="stat-desc">Lines of code</span>
+                            </div>
+                            <div class="stat-box">
+                                <span class="stat-value">120+</span>
+                                <span class="stat-desc">Hours</span>
+                            </div>
+                            <div class="stat-box">
+                                <span class="stat-value">Host</span>
+                                <span class="stat-desc">just git :></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pres-cosplay">
+                        <div class="cosplay-gallery">
+                            <div class="cosplay-item" data-index="1">
+                                <img src="images/pres1.png" alt="President Cosplay 1">
+                                <div class="cosplay-overlay">
+                                    <span class="cosplay-label">Cosplay #1</span>
+                                </div>
+                            </div>
+                            <div class="cosplay-item" data-index="2">
+                                <img src="images/pres2.png" alt="President Cosplay 2">
+                                <div class="cosplay-overlay">
+                                    <span class="cosplay-label">Cosplay #2</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="cosplay-viewer" id="cosplayViewer">
+                            <img src="" alt="Cosplay View" id="cosplayImage">
+                            <span class="close-viewer">✕</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pres-decoration">
+                    <div class="code-snippet">
+                        <span class="code-line"><span class="code-tag">&lt;div</span> <span
+                                class="code-attr">class=</span><span class="code-string">"terrapin-anime"</span><span
+                                class="code-tag">&gt;</span></span>
+                        <span class="code-line"> <span class="code-comment">// i ran into too many issues</span></span>
+                        <span class="code-line"> <span class="code-property">bugs</span>: <span
+                                class="code-value">infinite</span>;</span>
+                        <span class="code-line"><span class="code-tag">&lt;/div&gt;</span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="margin-top: 80px; text-align: center;">
+            <a href="#apply-eboard" class="btn">APPLY FOR E-BOARD</a>
+        </div>
+    </section>
+
+    <!-- Join Page -->
+    <section id="join" class="page-section">
+        <div class="section-header">
+            <h2>JOIN TAS</h2>
+            <p class="section-subtitle">Become part of our community</p>
+        </div>
+
+        <div style="max-width: 800px; margin: 0 auto;">
+            <div class="card" style="margin-bottom: 40px;">
+                <h3>HOW TO JOIN</h3>
+                <p style="margin-top: 20px;">1. Join our Discord server using the link below</p>
+                <p>2. Attend our weekly Sunday meetings</p>
+                <p>3. Participate in events and discussions</p>
+                <p>4. That's it! You're part of TAS</p>
+            </div>
+
+            <div style="text-align: center; margin-top: 60px;">
+                <a href="https://discord.gg/fzKBsnS" target="_blank" class="btn" style="margin-right: 20px;">JOIN
+                    DISCORD</a>
+                <a href="https://terplink.umd.edu/organization/terrapin-anime-society" target="_blank"
+                    class="btn">TERPLINK PAGE</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Subgroups Page -->
+    <section id="subgroups" class="page-section">
+        <div class="section-header">
+            <h2>SUBGROUPS</h2>
+            <p class="section-subtitle">Specialized interest groups within TAS</p>
+        </div>
+
+        <div class="subgroups-container">
+            <div class="subgroup-item">
+                <h4>ANIMUSIC</h4>
+                <p>Leader: Annie | VP: Louis | Secretary: Adam</p>
+            </div>
+            <div class="subgroup-item">
+                <h4>COSPLAY</h4>
+                <p>Leader: Nikolai</p>
+            </div>
+            <div class="subgroup-item">
+                <h4>MANGA</h4>
+                <p>Leader: Advait</p>
+            </div>
+            <div class="subgroup-item">
+                <h4>OLD SCHOOL ANIME</h4>
+                <p>Leader: Joseph</p>
+            </div>
+            <div class="subgroup-item">
+                <h4>RAINBOW</h4>
+                <p>Leader: Corvidae</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Resources Page -->
+    <section id="resources" class="page-section">
+        <div class="section-header">
+            <h2>ANIME RESOURCES</h2>
+            <p class="section-subtitle">Curated recommendations & streaming sites</p>
+        </div>
+
+        <!-- Streaming Resources -->
+        <div class="resources-section">
+            <h3 class="resources-subtitle">STREAMING PLATFORMS</h3>
+            <div class="resources-list">
+                <a href="https://aniwatchtv.to/" target="_blank" class="resource-item">
+                    <div class="resource-icon">WATCH</div>
+                    <div class="resource-text">
+                        <h4>AniWatch</h4>
+                        <p>Stream anime online - Free with huge library</p>
+                    </div>
+                </a>
+                <a href="https://mangamirai.com/" target="_blank" class="resource-item">
+                    <div class="resource-icon">READ</div>
+                    <div class="resource-text">
+                        <h4>Manga Mirai</h4>
+                        <p>Read manga online - Latest chapters updated daily</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <!-- Seasonal Recommendations -->
+        <div class="recommendations-section">
+            <h3 class="resources-subtitle">SEASONAL RECOMMENDATIONS</h3>
+            <div class="season-tabs">
+                <button class="season-tab active" data-season="fall">FALL 2025</button>
+                <button class="season-tab" data-season="summer">SUMMER 2025</button>
+                <button class="season-tab" data-season="spring">SPRING 2025</button>
+                <button class="season-tab" data-season="winter">WINTER 2025</button>
+            </div>
+
+            <!-- In the Seasonal Recommendations section, replace the anime-grid div with: -->
+            <div class="anime-grid active" id="fall">
+                <div class="anime-card">
+                    <div class="anime-rank">#1</div>
+                    <div class="anime-poster-small">
+                        <img src="images/a1.png" alt="One Punch Man 3">
+                    </div>
+                    <div class="anime-info">
+                        <h4>One Punch Man 3</h4>
+                        <p class="anime-genre">Action, Comedy, Superhero</p>
+                        <div class="anime-rating">
+                            <span class="rating-stars">★★★★★</span>
+                            <span class="rating-text">MUST WATCH</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="anime-card">
+                    <div class="anime-rank">#2</div>
+                    <div class="anime-poster-small">
+                        <img src="images/a2.png" alt="Spy x Family Season 3">
+                    </div>
+                    <div class="anime-info">
+                        <h4>Spy x Family Season 3</h4>
+                        <p class="anime-genre">Comedy, Action, Family</p>
+                        <div class="anime-rating">
+                            <span class="rating-stars">★★★★★</span>
+                            <span class="rating-text">MUST WATCH</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="anime-card">
+                    <div class="anime-rank">#3</div>
+                    <div class="anime-poster-small">
+                        <img src="images/a3.png" alt="My Hero Academia: Final Season">
+                    </div>
+                    <div class="anime-info">
+                        <h4>Boku no Hero Academia: Final Season</h4>
+                        <p class="anime-genre">Action, School, Superhero</p>
+                        <div class="anime-rating">
+                            <span class="rating-stars">★★★★☆</span>
+                            <span class="rating-text">HIGHLY RECOMMENDED</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="anime-grid" id="summer">
+                <div class="anime-card">
+                    <div class="anime-rank">#1</div>
+                    <div class="anime-poster-small">
+                        <img src="images/a4.png" alt="Dandadan 2nd Season">
+                    </div>
+                    <div class="anime-info">
+                        <h4>Dandadan 2nd Season</h4>
+                        <p class="anime-genre">Supernatural, Comedy, Romance</p>
+                        <div class="anime-rating">
+                            <span class="rating-stars">★★★★★</span>
+                            <span class="rating-text">MUST WATCH</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="anime-card">
+                    <div class="anime-rank">#2</div>
+                    <div class="anime-poster-small">
+                        <img src="images/a5.png" alt="Gachiakuta">
+                    </div>
+                    <div class="anime-info">
+                        <h4>Gachiakuta</h4>
+                        <p class="anime-genre">Action, Fantasy, Adventure</p>
+                        <div class="anime-rating">
+                            <span class="rating-stars">★★★★☆</span>
+                            <span class="rating-text">HIGHLY RECOMMENDED</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="anime-card">
+                    <div class="anime-rank">#3</div>
+                    <div class="anime-poster-small">
+                        <img src="images/a6.png" alt="The Fragrant Flower Blooms with Dignity">
+                    </div>
+                    <div class="anime-info">
+                        <h4>The Fragrant Flower Blooms with Dignity</h4>
+                        <p class="anime-genre">Romance, School, Drama</p>
+                        <div class="anime-rating">
+                            <span class="rating-stars">★★★★☆</span>
+                            <span class="rating-text">RECOMMENDED</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="anime-grid" id="spring">
+                <div class="anime-card">
+                    <div class="anime-rank">#1</div>
+                    <div class="anime-poster-small">
+                        <img src="images/a7.png" alt="Lazarus">
+                    </div>
+                    <div class="anime-info">
+                        <h4>Lazarus</h4>
+                        <p class="anime-genre">Action, Sci-Fi, Thriller</p>
+                        <div class="anime-rating">
+                            <span class="rating-stars">★★★★★</span>
+                            <span class="rating-text">MUST WATCH</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="anime-card">
+                    <div class="anime-rank">#2</div>
+                    <div class="anime-poster-small">
+                        <img src="images/a8.png" alt="Wind Breaker Season 2">
+                    </div>
+                    <div class="anime-info">
+                        <h4>Wind Breaker Season 2</h4>
+                        <p class="anime-genre">Action, School, Delinquents</p>
+                        <div class="anime-rating">
+                            <span class="rating-stars">★★★★☆</span>
+                            <span class="rating-text">HIGHLY RECOMMENDED</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="anime-card">
+                    <div class="anime-rank">#3</div>
+                    <div class="anime-poster-small">
+                        <img src="images/a9.png" alt="Fire Force Season 3">
+                    </div>
+                    <div class="anime-info">
+                        <h4>Fire Force Season 3</h4>
+                        <p class="anime-genre">Action, Supernatural, Shounen</p>
+                        <div class="anime-rating">
+                            <span class="rating-stars">★★★★☆</span>
+                            <span class="rating-text">RECOMMENDED</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="anime-grid" id="winter">
+                <div class="anime-card">
+                    <div class="anime-rank">#1</div>
+                    <div class="anime-poster-small">
+                        <img src="images/a10.png" alt="Solo Leveling Season 2">
+                    </div>
+                    <div class="anime-info">
+                        <h4>Solo Leveling Season 2: Arise from the Shadow</h4>
+                        <p class="anime-genre">Action, Fantasy, Adventure</p>
+                        <div class="anime-rating">
+                            <span class="rating-stars">★★★★★</span>
+                            <span class="rating-text">MUST WATCH</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="anime-card">
+                    <div class="anime-rank">#2</div>
+                    <div class="anime-poster-small">
+                        <img src="images/a11.png" alt="Sakamoto Days">
+                    </div>
+                    <div class="anime-info">
+                        <h4>Sakamoto Days</h4>
+                        <p class="anime-genre">Action, Comedy, Crime</p>
+                        <div class="anime-rating">
+                            <span class="rating-stars">★★★★★</span>
+                            <span class="rating-text">MUST WATCH</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="anime-card">
+                    <div class="anime-rank">#3</div>
+                    <div class="anime-poster-small">
+                        <img src="images/a12.png" alt="The Apothecary Diaries Season 2">
+                    </div>
+                    <div class="anime-info">
+                        <h4>The Apothecary Diaries Season 2</h4>
+                        <p class="anime-genre">Mystery, Historical, Romance</p>
+                        <div class="anime-rating">
+                            <span class="rating-stars">★★★★☆</span>
+                            <span class="rating-text">HIGHLY RECOMMENDED</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Genre Guide -->
+        <div class="genre-guide">
+            <h3 class="resources-subtitle">GENRE STARTER GUIDE</h3>
+            <div class="genre-grid">
+                <div class="genre-card">
+                    <div class="genre-header">SHONEN</div>
+                    <div class="genre-content">
+                        <p class="genre-desc">Action-packed adventures for newcomers</p>
+                        <ul class="genre-list">
+                            <li>My Hero Academia</li>
+                            <li>Jujutsu Kaisen</li>
+                            <li>Black Clover</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="genre-card">
+                    <div class="genre-header">SEINEN</div>
+                    <div class="genre-content">
+                        <p class="genre-desc">Mature themes & complex narratives</p>
+                        <ul class="genre-list">
+                            <li>Monster</li>
+                            <li>Vinland Saga</li>
+                            <li>Berserk</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="genre-card">
+                    <div class="genre-header">SLICE OF LIFE</div>
+                    <div class="genre-content">
+                        <p class="genre-desc">Relaxing & heartwarming stories</p>
+                        <ul class="genre-list">
+                            <li>Spy x Family</li>
+                            <li>Horimiya</li>
+                            <li>March Comes in Like a Lion</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="genre-card">
+                    <div class="genre-header">PSYCHOLOGICAL</div>
+                    <div class="genre-content">
+                        <p class="genre-desc">Mind-bending & thought-provoking</p>
+                        <ul class="genre-list">
+                            <li>Death Note</li>
+                            <li>Steins;Gate</li>
+                            <li>Psycho-Pass</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Watch Order Guide -->
+        <div class="watch-order">
+            <h3 class="resources-subtitle">WATCH ORDER GUIDES</h3>
+            <div class="order-cards">
+                <div class="order-card">
+                    <h4>FATE SERIES</h4>
+                    <ol class="order-list">
+                        <li>Fate/Zero</li>
+                        <li>Fate/Stay Night: UBW</li>
+                        <li>Fate/Stay Night: Heaven's Feel</li>
+                    </ol>
+                </div>
+                <div class="order-card">
+                    <h4>MONOGATARI SERIES</h4>
+                    <ol class="order-list">
+                        <li>Bakemonogatari</li>
+                        <li>Nisemonogatari</li>
+                        <li>Nekomonogatari: Kuro</li>
+                    </ol>
+                </div>
+                <div class="order-card">
+                    <h4>TOARU SERIES</h4>
+                    <ol class="order-list">
+                        <li>A Certain Magical Index</li>
+                        <li>A Certain Scientific Railgun</li>
+                        <li>A Certain Scientific Accelerator</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Donate Page -->
+    <section id="donate" class="page-section">
+        <div class="section-header">
+            <h2>SUPPORT TAS</h2>
+            <p class="section-subtitle">Help us grow our community</p>
+        </div>
+
+        <div style="max-width: 600px; margin: 0 auto; text-align: center;">
+            <p style="font-size: 1.1rem; line-height: 2; color: var(--text-secondary); margin-bottom: 40px;">
+                Your donations help us organize events, bring guest speakers, and create memorable experiences for our
+                members.
+            </p>
+            <a href="#" class="btn">DONATE NOW</a>
+        </div>
+    </section>
+
+    <!-- Contact Page -->
+    <section id="contact" class="page-section">
+        <div class="section-header">
+            <h2>CONTACT US</h2>
+            <p class="section-subtitle">Get in touch with TAS</p>
+        </div>
+
+        <div class="form-container">
+            <form>
+                <div class="form-group">
+                    <label>NAME</label>
+                    <input type="text" required>
+                </div>
+                <div class="form-group">
+                    <label>EMAIL</label>
+                    <input type="email" required>
+                </div>
+                <div class="form-group">
+                    <label>MESSAGE</label>
+                    <textarea required></textarea>
+                </div>
+                <button type="submit" class="submit-btn">SEND MESSAGE</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <ul class="footer-links">
+                <li><a href="https://discord.gg/fzKBsnS" target="_blank">Discord</a></li>
+                <li><a href="https://terplink.umd.edu/organization/terrapin-anime-society" target="_blank">TerpLink</a>
+                </li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="#donate">Donate</a></li>
+            </ul>
+            <div class="footer-bottom">
+                <span class="copyright">© 2025 TERRAPIN ANIME SOCIETY</span><br>
+                ALL RIGHTS RESERVED
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Season tabs functionality for resources
+        // Resources Season tabs functionality
+        // Season tabs functionality for resources
+        // Season tabs functionality for resources
+        (function () {
+            const seasonTabs = document.querySelectorAll('#resources .season-tab');
+            const animeGrids = document.querySelectorAll('#resources .anime-grid');
+
+            seasonTabs.forEach(tab => {
+                tab.addEventListener('click', function () {
+                    // Remove active from all
+                    seasonTabs.forEach(t => t.classList.remove('active'));
+                    animeGrids.forEach(grid => grid.classList.remove('active'));
+
+                    // Add active to clicked tab
+                    this.classList.add('active');
+
+                    // Show the corresponding grid
+                    const season = this.getAttribute('data-season');
+                    const targetGrid = document.querySelector(`#resources #${season}`);
+                    if (targetGrid) {
+                        targetGrid.classList.add('active');
+                    }
+                });
+            });
+        })();
+        // Cosplay Viewer
+        const cosplayItems = document.querySelectorAll('.cosplay-item');
+        const cosplayViewer = document.getElementById('cosplayViewer');
+        const cosplayImage = document.getElementById('cosplayImage');
+        const closeViewer = document.querySelector('.close-viewer');
+
+        cosplayItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const img = item.querySelector('img').src;
+                cosplayImage.src = img;
+                cosplayViewer.classList.add('active');
+            });
+        });
+
+        if (closeViewer) {
+            closeViewer.addEventListener('click', () => {
+                cosplayViewer.classList.remove('active');
+            });
+        }
+
+        // Close viewer on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && cosplayViewer.classList.contains('active')) {
+                cosplayViewer.classList.remove('active');
+            }
+        });
+        // Anime Screening Interface
+        let currentAnime = 1;
+        const totalAnime = 5;
+        let autoSlideInterval;
+
+        function changeAnime(direction) {
+            const slides = document.querySelectorAll('.anime-slide');
+            const thumbnails = document.querySelectorAll('.thumbnail');
+            const dots = document.querySelectorAll('.dot');
+
+            // Remove active classes
+            slides[currentAnime - 1].classList.remove('active');
+            thumbnails[currentAnime - 1].classList.remove('active');
+            dots[currentAnime - 1].classList.remove('active');
+
+            // Update current anime
+            currentAnime += direction;
+            if (currentAnime > totalAnime) currentAnime = 1;
+            if (currentAnime < 1) currentAnime = totalAnime;
+
+            // Add active classes
+            slides[currentAnime - 1].classList.add('active');
+            thumbnails[currentAnime - 1].classList.add('active');
+            dots[currentAnime - 1].classList.add('active');
+
+            // Update progress bar
+            const progressFill = document.getElementById('progressFill');
+            progressFill.style.width = (currentAnime / totalAnime * 100) + '%';
+
+            // Reset auto-slide timer
+            resetAutoSlide();
+        }
+
+        function goToAnime(animeNumber) {
+            const difference = animeNumber - currentAnime;
+            if (difference !== 0) {
+                changeAnime(difference);
+            }
+        }
+
+        function resetAutoSlide() {
+            clearInterval(autoSlideInterval);
+            autoSlideInterval = setInterval(() => {
+                changeAnime(1);
+            }, 7000);
+        }
+
+        // Initialize auto-slide
+        resetAutoSlide();
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') changeAnime(1);
+            if (e.key === 'ArrowLeft') changeAnime(-1);
+        });
+        // Enhanced Door Transition System
+        let isTransitioning = false;
+
+        function triggerPageTransition(callback) {
+            if (isTransitioning) return;
+            isTransitioning = true;
+
+            const transition = document.getElementById('pageTransition');
+
+            // Show transition overlay
+            transition.style.display = 'block';
+            transition.style.pointerEvents = 'auto';
+
+            // Reset all animations
+            const elements = transition.querySelectorAll('.shoji-door-left, .shoji-door-right, .door-seal, .energy-line, .kanji, .door-mascot');
+            elements.forEach(element => {
+                element.style.animation = 'none';
+                element.offsetHeight; // Trigger reflow
+            });
+
+            // Start door animations
+            setTimeout(() => {
+                document.querySelector('.shoji-door-left').style.animation = 'shojiSlideLeft 1s cubic-bezier(0.645, 0.045, 0.355, 1) forwards';
+                document.querySelector('.shoji-door-right').style.animation = 'shojiSlideRight 1s cubic-bezier(0.645, 0.045, 0.355, 1) forwards';
+                document.querySelector('.door-seal').style.animation = 'sealRotateBreak 1s ease-out forwards';
+                document.querySelector('.door-mascot').style.animation = 'mascotDoorAppear 1s ease-in-out forwards';
+
+                // Animate energy lines
+                document.querySelectorAll('.energy-line').forEach((line, index) => {
+                    setTimeout(() => {
+                        line.style.animation = 'energyBurst 1s ease-out forwards';
+                    }, index * 50);
+                });
+
+                // Animate kanji
+                document.querySelectorAll('.kanji').forEach((kanji, index) => {
+                    setTimeout(() => {
+                        kanji.style.animation = 'kanjiFloat 1.2s ease-out forwards';
+                    }, index * 100);
+                });
+            }, 10);
+
+            // Execute callback when doors close (midpoint)
+            setTimeout(() => {
+                if (callback) callback();
+            }, 300);
+
+            // Clean up after animation completes
+            setTimeout(() => {
+                transition.style.display = 'none';
+                transition.style.pointerEvents = 'none';
+                isTransitioning = false;
+            }, 1200);
+        }
+
+        // Calendar month navigation
+        let currentMonthIndex = 0;
+        const months = [
+            {
+                name: 'SEPTEMBER 2025',
+                sundays: [
+                    { date: 'SEP 7', day: '7' },
+                    { date: 'SEP 14', day: '14' },
+                    { date: 'SEP 21', day: '21' },
+                    { date: 'SEP 28', day: '28' }
+                ]
+            },
+            {
+                name: 'OCTOBER 2025',
+                sundays: [
+                    { date: 'OCT 5', day: '5' },
+                    { date: 'OCT 12', day: '12' },
+                    { date: 'OCT 19', day: '19' },
+                    { date: 'OCT 26', day: '26' }
+                ]
+            },
+            {
+                name: 'NOVEMBER 2025',
+                sundays: [
+                    { date: 'NOV 2', day: '2' },
+                    { date: 'NOV 9', day: '9' },
+                    { date: 'NOV 16', day: '16' },
+                    { date: 'NOV 23', day: '23' },
+                    { date: 'NOV 30', day: '30' }
+                ]
+            },
+            {
+                name: 'DECEMBER 2025',
+                sundays: [
+                    { date: 'DEC 7', day: '7' },
+                    { date: 'DEC 14', day: '14' },
+                    { date: 'DEC 21', day: '21' },
+                    { date: 'DEC 28', day: '28' }
+                ]
+            },
+            {
+                name: 'JANUARY 2026',
+                sundays: [
+                    { date: 'JAN 4', day: '4' },
+                    { date: 'JAN 11', day: '11' },
+                    { date: 'JAN 18', day: '18' },
+                    { date: 'JAN 25', day: '25' }
+                ]
+            },
+            {
+                name: 'FEBRUARY 2026',
+                sundays: [
+                    { date: 'FEB 1', day: '1' },
+                    { date: 'FEB 8', day: '8' },
+                    { date: 'FEB 15', day: '15' },
+                    { date: 'FEB 22', day: '22' }
+                ]
+            }
+        ];
+
+        function changeMonth(direction) {
+            currentMonthIndex += direction;
+            if (currentMonthIndex < 0) currentMonthIndex = months.length - 1;
+            if (currentMonthIndex >= months.length) currentMonthIndex = 0;
+
+            const month = months[currentMonthIndex];
+            document.getElementById('currentMonth').textContent = month.name;
+
+            const calendar = document.getElementById('monthlyCalendar');
+            calendar.innerHTML = '';
+
+            month.sundays.forEach(sunday => {
+                const dayDiv = document.createElement('div');
+                dayDiv.className = 'calendar-day';
+                dayDiv.innerHTML = `
+                    <div class="day-header">
+                        <span class="day-name">SUNDAY</span>
+                        <span class="day-date">${sunday.date}</span>
+                    </div>
+                    <div class="day-content">
+                        <div class="time-slot empty">
+                            <span class="add-event">+</span>
+                        </div>
+                    </div>
+                `;
+                calendar.appendChild(dayDiv);
+            });
+        }
+
+        // Navigate to events page when events link is clicked
+        function navigateToEvents() {
+            triggerPageTransition(() => {
+                // Hide all sections
+                const sections = document.querySelectorAll('.page-section');
+                sections.forEach(section => {
+                    section.classList.remove('active');
+                    section.classList.remove('transitioning-in');
+                    section.classList.remove('transitioning-out');
+                });
+
+                // Show events section with animation
+                const eventsSection = document.getElementById('events');
+                if (eventsSection) {
+                    eventsSection.classList.add('active');
+                    eventsSection.classList.add('transitioning-in');
+                }
+
+                // Scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        }
+
+        // Navigate to promotions page when chibi is clicked
+        function navigateToPromotions() {
+            triggerPageTransition(() => {
+                // Hide all sections
+                const sections = document.querySelectorAll('.page-section');
+                sections.forEach(section => {
+                    section.classList.remove('active');
+                    section.classList.remove('transitioning-in');
+                    section.classList.remove('transitioning-out');
+                });
+
+                // Show promotions section with animation
+                const promotionsSection = document.getElementById('promotions');
+                if (promotionsSection) {
+                    promotionsSection.classList.add('active');
+                    promotionsSection.classList.add('transitioning-in');
+                }
+
+                // Scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        }
+
+        // Hide/show scroll indicator based on scroll position
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+                document.body.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+                document.body.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile menu toggle
+        const mobileToggle = document.getElementById('mobileToggle');
+        const navMenu = document.getElementById('navMenu');
+
+        mobileToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+
+        // Enhanced Page navigation with transitions
+        const navLinks = document.querySelectorAll('.nav-link');
+        const sections = document.querySelectorAll('.page-section');
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href').substring(1);
+
+                triggerPageTransition(() => {
+                    // Hide all sections
+                    sections.forEach(section => {
+                        section.classList.remove('active');
+                        section.classList.remove('transitioning-in');
+                        section.classList.remove('transitioning-out');
+                    });
+
+                    // Show target section with animation
+                    const targetSection = document.getElementById(targetId);
+                    if (targetSection) {
+                        targetSection.classList.add('active');
+                        targetSection.classList.add('transitioning-in');
+
+                        // In your existing navigation click handler, update the section that handles targetId:
+
+                        if (targetId === 'eboard') {
+                            setTimeout(() => {
+                                const eboardGrid = document.querySelector('.eboard-grid');
+                                if (eboardGrid) {
+                                    eboardGrid.classList.add('animated');
+                                }
+                            }, 800);
+                        }
+
+                        if (targetId === 'subgroups') {
+                            setTimeout(() => {
+                                const subgroupsContainer = document.querySelector('.subgroups-container');
+                                if (subgroupsContainer) {
+                                    subgroupsContainer.classList.add('animated');
+                                }
+                            }, 800);
+                        }
+
+                        // Add stagger animation to elements
+                        const staggerElements = targetSection.querySelectorAll('.card, .member-card, .subgroup-item, .anime-card, .genre-card');
+                        staggerElements.forEach((el, index) => {
+                            el.style.opacity = '0';
+                            el.style.transform = 'translateY(30px)';
+                            setTimeout(() => {
+                                el.style.transition = 'all 0.6s ease';
+                                el.style.opacity = '1';
+                                el.style.transform = 'translateY(0)';
+                            }, index * 100);
+                        });
+                    }
+
+                    // Close mobile menu
+                    navMenu.classList.remove('active');
+
+                    // Scroll to top
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
+            });
+        });
+
+        // Glitch effect on hover for certain elements
+        const glitchElements = document.querySelectorAll('.logo, .section-header h2');
+
+        glitchElements.forEach(element => {
+            element.addEventListener('mouseenter', () => {
+                element.style.animation = 'glitch 0.3s ease-in-out';
+                setTimeout(() => {
+                    element.style.animation = '';
+                }, 300);
+            });
+        });
+
+        // Form submission
+        const forms = document.querySelectorAll('form');
+        forms.forEach(form => {
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                alert('Form submitted!');
+            });
+        });
+
+        // Season tabs functionality for resources
+        // Season tabs functionality for resources
+        const seasonTabs = document.querySelectorAll('#resources .season-tab');
+        const animeGrids = document.querySelectorAll('#resources .anime-grid');
+
+        seasonTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active from all
+                seasonTabs.forEach(t => t.classList.remove('active'));
+                animeGrids.forEach(grid => grid.classList.remove('active'));
+
+                // Add active to clicked tab
+                tab.classList.add('active');
+
+                // Show the corresponding anime grid
+                const season = tab.getAttribute('data-season');
+                const targetGrid = document.querySelector(`#resources #${season}`);
+                if (targetGrid) {
+                    targetGrid.classList.add('active');
+                }
+            });
+        });
+
+        // Generate more blossom petals dynamically from tree
+        // Generate more blossom petals dynamically
+        function createBlossomPetal() {
+            const blossomContainer = document.querySelector('.blossom-container');
+            const petal = document.createElement('div');
+            petal.className = 'blossom-petal';
+
+            // Create img element
+            const img = document.createElement('img');
+            img.src = 'images/blossom.png';
+            img.alt = 'Blossom';
+            petal.appendChild(img);
+
+            // Start from random position across entire width
+            petal.style.left = Math.random() * 100 + '%';
+            petal.style.top = '-50px'; // Start above viewport
+            petal.style.animationDuration = (Math.random() * 10 + 12) + 's, ' + (Math.random() * 3 + 3) + 's';
+            petal.style.animationDelay = '0s';
+            petal.style.width = (Math.random() * 10 + 16) + 'px';
+            petal.style.height = petal.style.width;
+
+            // Add click handler
+            petal.addEventListener('click', function (e) {
+                e.stopPropagation();
+                createBlossomBurst(e.pageX, e.pageY);
+                createRipple(e.pageX, e.pageY);
+                this.style.animation = 'none';
+                this.style.transform = 'scale(0) rotate(720deg)';
+                this.style.opacity = '0';
+                this.style.transition = 'all 0.5s cubic-bezier(0.645, 0.045, 0.355, 1)';
+                setTimeout(() => {
+                    this.remove();
+                }, 500);
+            });
+
+            blossomContainer.appendChild(petal);
+
+            // Remove petal after animation
+            setTimeout(() => {
+                if (petal.parentElement) {
+                    petal.remove();
+                }
+            }, 25000);
+        }
+
+        // Create burst effect when blossom is clicked
+        function createBlossomBurst(x, y) {
+            const burst = document.createElement('div');
+            burst.className = 'blossom-burst';
+            burst.style.left = x + 'px';
+            burst.style.top = y + 'px';
+
+            // Create multiple particles
+            for (let i = 0; i < 12; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'burst-particle';
+
+                const angle = (i / 12) * Math.PI * 2;
+                const distance = Math.random() * 80 + 40;
+                const endX = Math.cos(angle) * distance;
+                const endY = Math.sin(angle) * distance;
+
+                particle.style.setProperty('--endX', endX + 'px');
+                particle.style.setProperty('--endY', endY + 'px');
+
+                particle.style.animation = `burstOut 0.8s ease-out forwards`;
+                particle.style.setProperty('animation', `burstOut 0.8s ease-out forwards`);
+
+                // Custom animation for each particle
+                const keyframes = [
+                    { transform: 'translate(0, 0) scale(1)', opacity: 1 },
+                    { transform: `translate(${endX}px, ${endY}px) scale(0)`, opacity: 0 }
+                ];
+
+                particle.animate(keyframes, {
+                    duration: 800,
+                    easing: 'ease-out',
+                    fill: 'forwards'
+                });
+
+                burst.appendChild(particle);
+            }
+
+            document.body.appendChild(burst);
+
+            // Remove burst container after animation
+            setTimeout(() => {
+                burst.remove();
+            }, 1000);
+        }
+
+        // Create ripple effect
+        function createRipple(x, y) {
+            const ripple = document.createElement('div');
+            ripple.className = 'blossom-ripple';
+            ripple.style.left = x + 'px';
+            ripple.style.top = y + 'px';
+
+            document.body.appendChild(ripple);
+
+            setTimeout(() => {
+                ripple.remove();
+            }, 600);
+        }
+
+        // Create new petals periodically from tree
+        setInterval(createBlossomPetal, 2000);
+
+        // Initialize some blossoms on page load
+        for (let i = 0; i < 5; i++) {
+            setTimeout(createBlossomPetal, i * 500);
+        }
+
+        // Initial load animation
+        window.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                const hero = document.querySelector('.hero-content');
+                if (hero) {
+                    const elements = hero.querySelectorAll('.stagger-element');
+                    elements.forEach((el, index) => {
+                        setTimeout(() => {
+                            el.style.opacity = '1';
+                            el.style.transform = 'translateY(0)';
+                        }, index * 200);
+                    });
+                }
+            }, 100);
+        });
+    </script>
+</body>
+
+</html>
