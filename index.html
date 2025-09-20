@@ -73,6 +73,84 @@
             }
         }
 
+        .spatial-flower-outline {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 200px;
+            height: 200px;
+            z-index: -2;
+            pointer-events: none;
+            transform: translate(-50%, -50%) scale(0.5);
+            transition: transform 0.1s ease-out;
+        }
+
+        .flower-outline {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            animation: floatSpin 15s ease-in-out infinite;
+        }
+
+        .flower-petal {
+            position: absolute;
+            width: 60px;
+            height: 120px;
+            top: 50%;
+            left: 50%;
+            transform-origin: 30px 60px;
+            border: 2px solid rgba(220, 20, 60, 0.4);
+            border-radius: 50% 10% 50% 10%;
+            background: linear-gradient(45deg, transparent, rgba(220, 20, 60, 0.1), transparent);
+            box-shadow: 0 0 20px rgba(220, 20, 60, 0.2);
+        }
+
+        .flower-petal:nth-child(1) {
+            transform: translate(-50%, -50%) rotate(0deg) translateY(-40px);
+        }
+
+        .flower-petal:nth-child(2) {
+            transform: translate(-50%, -50%) rotate(72deg) translateY(-40px);
+        }
+
+        .flower-petal:nth-child(3) {
+            transform: translate(-50%, -50%) rotate(144deg) translateY(-40px);
+        }
+
+        .flower-petal:nth-child(4) {
+            transform: translate(-50%, -50%) rotate(216deg) translateY(-40px);
+        }
+
+        .flower-petal:nth-child(5) {
+            transform: translate(-50%, -50%) rotate(288deg) translateY(-40px);
+        }
+
+        .flower-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            background: rgba(220, 20, 60, 0.6);
+            border: 2px solid rgba(220, 20, 60, 0.8);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 15px rgba(220, 20, 60, 0.4);
+        }
+
+        @keyframes floatSpin {
+
+            0%,
+            100% {
+                transform: rotate(0deg);
+                opacity: 0.6;
+            }
+
+            50% {
+                transform: rotate(10deg);
+                opacity: 1;
+            }
+        }
 
         .audio-control-container {
             position: fixed;
@@ -4271,6 +4349,16 @@
 
 
 
+<div class="spatial-flower-outline" id="spatialFlowerOutline">
+    <div class="flower-outline">
+        <div class="flower-petal"></div>
+        <div class="flower-petal"></div>
+        <div class="flower-petal"></div>
+        <div class="flower-petal"></div>
+        <div class="flower-petal"></div>
+        <div class="flower-center"></div>
+    </div>
+</div>
 <div class="animated-background" id="animatedBg"></div>
 <div class="background-interactive-layer">
     <div class="background-pulse" id="bgPulse"></div>
@@ -5083,7 +5171,7 @@
 
                         <div class="pres-stats">
                             <div class="stat-box">
-                                <span class="stat-value">7000+</span>
+                                <span class="stat-value">6000+</span>
                                 <span class="stat-desc">Lines of code</span>
                             </div>
                             <div class="stat-box">
@@ -5579,6 +5667,22 @@
             });
         })();
 
+        function initSpatialFlower() {
+            const flower = document.getElementById('spatialFlowerOutline');
+
+            window.addEventListener('scroll', () => {
+                const scrollProgress = window.pageYOffset / (document.body.scrollHeight - window.innerHeight);
+                const scale = 0.5 + (scrollProgress * 3);
+                const rotation = scrollProgress * 360;
+                const opacity = 0.3 + (scrollProgress * 0.7);
+
+                flower.style.transform = `translate(-50%, -50%) scale(${scale}) rotate(${rotation}deg)`;
+                flower.style.opacity = opacity;
+            });
+        }
+
+
+        initSpatialFlower();
         const cosplayItems = document.querySelectorAll('.cosplay-item');
         const cosplayViewer = document.getElementById('cosplayViewer');
         const cosplayImage = document.getElementById('cosplayImage');
