@@ -278,6 +278,30 @@
             text-shadow: 0 0 5px rgba(220, 20, 60, 0.5);
         }
 
+        .join-buttons {
+            text-align: center;
+            margin-top: 60px;
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 768px) {
+            .join-buttons {
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+                margin-top: 40px;
+            }
+
+            .join-buttons .btn {
+                width: 100%;
+                max-width: 280px;
+                margin: 0;
+            }
+        }
+
         @media (max-width: 768px) {
             nav {
                 padding: 20px;
@@ -5368,9 +5392,8 @@
                 <p>4. That's it! You're part of TAS</p>
             </div>
 
-            <div style="text-align: center; margin-top: 60px;">
-                <a href="https://discord.gg/fzKBsnS" target="_blank" class="btn" style="margin-right: 20px;">JOIN
-                    DISCORD</a>
+            <div class="join-buttons">
+                <a href="https://discord.gg/fzKBsnS" target="_blank" class="btn">JOIN DISCORD</a>
                 <a href="https://terplink.umd.edu/organization/terrapin-anime-society" target="_blank"
                     class="btn">TERPLINK PAGE</a>
             </div>
