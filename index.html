@@ -119,7 +119,7 @@
             box-shadow: none !important;
         }
 
-        .spatial-flower-outline {
+        .spinning-blossom-center {
             position: fixed;
             top: 50%;
             left: 50%;
@@ -129,30 +129,29 @@
             pointer-events: none;
             transform: translate(-50%, -50%) scale(0.5);
             transition: transform 0.1s ease-out;
+            opacity: 0.4;
         }
 
-        .flower-outline {
+        .center-blossom-img {
             width: 100%;
             height: 100%;
-            position: relative;
-            animation: floatSpin 15s ease-in-out infinite;
+            object-fit: contain;
+            filter: drop-shadow(0 0 20px rgba(220, 20, 60, 0.3));
+            animation: blossomSpin 15s ease-in-out infinite;
         }
 
-        .flower-petal {
-            position: absolute;
-            width: 60px;
-            height: 120px;
-            top: 50%;
-            left: 50%;
-            transform-origin: 30px 60px;
-            border: 2px solid rgba(220, 20, 60, 0.4);
-            border-radius: 50% 10% 50% 10%;
-            background: linear-gradient(45deg, transparent, rgba(220, 20, 60, 0.1), transparent);
-            box-shadow: 0 0 20px rgba(220, 20, 60, 0.2);
-        }
+        @keyframes blossomSpin {
 
-        .flower-petal:nth-child(1) {
-            transform: translate(-50%, -50%) rotate(0deg) translateY(-40px);
+            0%,
+            100% {
+                transform: rotate(0deg);
+                opacity: 0.6;
+            }
+
+            50% {
+                transform: rotate(360deg);
+                opacity: 1;
+            }
         }
 
         .flower-petal:nth-child(2) {
@@ -4399,15 +4398,8 @@
 
 
 
-<div class="spatial-flower-outline" id="spatialFlowerOutline">
-    <div class="flower-outline">
-        <div class="flower-petal"></div>
-        <div class="flower-petal"></div>
-        <div class="flower-petal"></div>
-        <div class="flower-petal"></div>
-        <div class="flower-petal"></div>
-        <div class="flower-center"></div>
-    </div>
+<div class="spinning-blossom-center" id="spinningBlossomCenter">
+    <img src="images/blossom.png" alt="Center Blossom" class="center-blossom-img">
 </div>
 <div class="animated-background" id="animatedBg"></div>
 <div class="background-interactive-layer">
@@ -4656,8 +4648,6 @@
                 <li><a href="#join" class="nav-link">JOIN</a></li>
                 <li><a href="#subgroups" class="nav-link">SUBGROUPS</a></li>
                 <li><a href="#resources" class="nav-link">RESOURCES</a></li>
-                <li><a href="#donate" class="nav-link">DONATE</a></li>
-                <li><a href="#contact" class="nav-link">CONTACT</a></li>
             </ul>
             <div style="display: flex; align-items: center;">
                 <span class="menu-label">MENU</span>
@@ -5077,11 +5067,11 @@
                     <div class="workshop-dates">
                         <div class="workshop-card">
                             <span class="workshop-date">OCT 19</span>
-                            <span class="workshop-title">Store Bought Cosplay Fixup Workshop</span>
+                            <span class="workshop-title">Chainsaw Man Cosplay Workshop #1</span>
                         </div>
                         <div class="workshop-card">
                             <span class="workshop-date">OCT 26</span>
-                            <span class="workshop-title">Wigs and Makeup Workshop</span>
+                            <span class="workshop-title">Chainsaw Man Cosplay Workshop #2</span>
                         </div>
                     </div>
                 </div>
@@ -5717,22 +5707,23 @@
             });
         })();
 
-        function initSpatialFlower() {
-            const flower = document.getElementById('spatialFlowerOutline');
+        function initSpinningBlossom() {
+            const blossom = document.getElementById('spinningBlossomCenter');
 
             window.addEventListener('scroll', () => {
                 const scrollProgress = window.pageYOffset / (document.body.scrollHeight - window.innerHeight);
                 const scale = 0.5 + (scrollProgress * 3);
                 const rotation = scrollProgress * 360;
-                const opacity = 0.3 + (scrollProgress * 0.7);
+                const opacity = 0.3;
 
-                flower.style.transform = `translate(-50%, -50%) scale(${scale}) rotate(${rotation}deg)`;
-                flower.style.opacity = opacity;
+                blossom.style.transform = `translate(-50%, -50%) scale(${scale}) rotate(${rotation}deg)`;
+                blossom.style.opacity = opacity;
             });
         }
 
+        initSpinningBlossom();
 
-        initSpatialFlower();
+
         const cosplayItems = document.querySelectorAll('.cosplay-item');
         const cosplayViewer = document.getElementById('cosplayViewer');
         const cosplayImage = document.getElementById('cosplayImage');
@@ -6344,4 +6335,3 @@
 </body>
 
 </html>
-
