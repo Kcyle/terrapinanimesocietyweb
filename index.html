@@ -212,8 +212,13 @@
             padding: 20px 15px;
             border: 1px solid var(--border);
             border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(220, 20, 60, 0.2);
-            transition: all 0.3s ease;
+            transition: all 0.5s ease, opacity 0.8s ease, transform 0.8s ease;
+            opacity: 1;
+        }
+
+        .audio-control-container.hidden {
+            opacity: 0;
+            transform: translateY(-50%) translateX(100px);
         }
 
         .audio-control-container:hover {
@@ -274,13 +279,95 @@
         }
 
         @media (max-width: 768px) {
-            .audio-control-container {
-                right: 15px;
-                padding: 15px 10px;
+            nav {
+                padding: 20px;
             }
 
-            .audio-slider {
-                height: 80px;
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: var(--darker);
+                flex-direction: column;
+                padding: 20px;
+                gap: 20px;
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .mobile-toggle {
+                display: flex;
+            }
+
+            .page-section {
+                padding: 100px 20px 40px;
+            }
+
+            .hero-content h1 {
+                font-size: 4rem;
+            }
+
+            .meeting-info {
+                grid-template-columns: 1fr;
+            }
+
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .season-tabs {
+                flex-wrap: wrap;
+                gap: 10px;
+                justify-content: flex-start;
+                overflow-x: auto;
+                padding: 10px 0;
+            }
+
+            .season-tab {
+                flex-shrink: 0;
+                padding: 10px 20px;
+                font-size: 0.8rem;
+                min-width: fit-content;
+            }
+
+            .anime-card {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .anime-poster-small {
+                width: 100%;
+                height: 180px;
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+                margin-bottom: 15px;
+            }
+
+            .anime-rank {
+                width: 100%;
+                height: 40px;
+                order: -1;
+            }
+
+            .anime-info {
+                padding: 15px 20px;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 280px;
+                text-align: center;
+                padding: 15px 30px;
             }
         }
 
@@ -3217,6 +3304,16 @@
         .workshop-title {
             color: var(--text-primary);
             font-size: 0.95rem;
+            margin-bottom: 8px;
+        }
+
+        .workshop-location {
+            color: var(--crimson);
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            opacity: 0.9;
         }
 
         .movie-trip-banner {
@@ -4963,7 +5060,7 @@
                         Experience authentic Japanese cafe culture with themed refreshments, entertainment,
                         and cosplay. We're planning to make it even bigger and better!
                     </p>
-                    <button class="volunteer-btn">VOLUNTEER FOR MAID CAFE</button>
+                    <button class="volunteer-btn" onclick="showFormNotAvailable()">VOLUNTEER FOR MAID CAFE</button>
                 </div>
             </div>
         </div>
@@ -5000,7 +5097,7 @@
                             <span>Vendor Booths</span>
                         </div>
                     </div>
-                    <button class="apply-btn">APPLY AS VENDOR/ARTIST</button>
+                    <button class="apply-btn" onclick="showFormNotAvailable()">APPLY AS VENDOR/ARTIST</button>
                 </div>
                 <div class="kamecon-poster">
                     <img src="images/convention.png" alt="Kamecon Poster" class="tilted-poster">
@@ -5054,11 +5151,13 @@
                     <div class="workshop-dates">
                         <div class="workshop-card">
                             <span class="workshop-date">OCT 19</span>
-                            <span class="workshop-title">Chainsaw Man Cosplay Workshop #1</span>
+                            <span class="workshop-title">Store Bought Cosplay Fixup Workshop</span>
+                            <span class="workshop-location">JIMENEZ 0220</span>
                         </div>
                         <div class="workshop-card">
                             <span class="workshop-date">OCT 26</span>
-                            <span class="workshop-title">Chainsaw Man Cosplay Workshop #2</span>
+                            <span class="workshop-title">Wigs and Makeup Workshop</span>
+                            <span class="workshop-location">JIMENEZ 0220</span>
                         </div>
                     </div>
                 </div>
@@ -5249,7 +5348,7 @@
             </div>
         </div>
         <div style="margin-top: 80px; text-align: center;">
-            <a href="#apply-eboard" class="btn">APPLY FOR E-BOARD</a>
+            <a href="#apply-eboard" class="btn" onclick="showFormNotAvailable(); return false;">APPLY FOR E-BOARD</a>
         </div>
     </section>
 
@@ -6045,8 +6144,13 @@
         }
 
 
+        let lastScrollY = window.scrollY;
+        let hideTimeout;
+
         window.addEventListener('scroll', () => {
             const navbar = document.getElementById('navbar');
+            const audioContainer = document.querySelector('.audio-control-container');
+
             if (window.scrollY > 50) {
                 navbar.classList.add('scrolled');
                 document.body.classList.add('scrolled');
@@ -6054,7 +6158,28 @@
                 navbar.classList.remove('scrolled');
                 document.body.classList.remove('scrolled');
             }
+
+            if (audioContainer) {
+                audioContainer.classList.remove('hidden');
+
+        
+                clearTimeout(hideTimeout);
+
+     
+                hideTimeout = setTimeout(() => {
+                    if (window.scrollY > 100) { 
+                        audioContainer.classList.add('hidden');
+                    }
+                }, 3000);
+            }
+
+            lastScrollY = window.scrollY;
         });
+
+     
+        function showFormNotAvailable() {
+            alert('This form is not open/available yet.');
+        }
 
 
         const mobileToggle = document.getElementById('mobileToggle');
@@ -6301,5 +6426,3 @@
 </body>
 
 </html>
-
-
