@@ -6144,8 +6144,8 @@
         }
 
 
-        let lastScrollY = window.scrollY;
         let hideTimeout;
+        let isScrolling = false;
 
         window.addEventListener('scroll', () => {
             const navbar = document.getElementById('navbar');
@@ -6159,24 +6159,35 @@
                 document.body.classList.remove('scrolled');
             }
 
+
             if (audioContainer) {
+                isScrolling = true;
                 audioContainer.classList.remove('hidden');
 
-        
+
                 clearTimeout(hideTimeout);
 
-     
                 hideTimeout = setTimeout(() => {
-                    if (window.scrollY > 100) { 
+                    if (window.scrollY > 200) {
                         audioContainer.classList.add('hidden');
                     }
-                }, 3000);
+                    isScrolling = false;
+                }, 1000);
             }
-
-            lastScrollY = window.scrollY;
         });
 
-     
+
+        window.addEventListener('load', () => {
+            const audioContainer = document.querySelector('.audio-control-container');
+            if (audioContainer) {
+                setTimeout(() => {
+                    if (window.scrollY > 200) {
+                        audioContainer.classList.add('hidden');
+                    }
+                }, 1000);
+            }
+        });
+
         function showFormNotAvailable() {
             alert('This form is not open/available yet.');
         }
