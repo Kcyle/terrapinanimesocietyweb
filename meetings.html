@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weekly Meetings - Terrapin Anime Society | Every Sunday at UMD</title>
+    <meta name="description"
+        content="Join TAS weekly meetings every Sunday 5-7 PM at Parren J Mitchell Art-Sociology Building, UMD. Open to all students, no fees required.">
+    <meta name="keywords"
+        content="TAS meetings, UMD anime meetings, Sunday anime club, Parren Mitchell building, College Park anime screenings">
+
+    <link rel="canonical" href="https://terrapinanimesociety.org/meetings.html">
+    <link rel="stylesheet" href="css/styles.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Bebas+Neue&family=Space+Grotesk:wght@300..700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="spinning-blossom-center" id="spinningBlossomCenter">
+        <img src="images/blossom.png" alt="Center Blossom" class="center-blossom-img">
+    </div>
+    <div class="animated-background" id="animatedBg"></div>
+    <div class="background-interactive-layer">
+        <div class="background-pulse" id="bgPulse"></div>
+    </div>
+
+    <nav id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                TAS
+                <img src="images/blossom.png" alt="Cherry Blossom">
+            </a>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link">HOME</a></li>
+                <li><a href="meetings.html" class="nav-link active">MEETINGS</a></li>
+                <li><a href="events.html" class="nav-link">EVENTS</a></li>
+                <li><a href="promotions.html" class="nav-link">PROMOTIONS</a></li>
+                <li><a href="eboard.html" class="nav-link">E-BOARD</a></li>
+                <li><a href="join.html" class="nav-link">JOIN</a></li>
+                <li><a href="subgroups.html" class="nav-link">SUBGROUPS</a></li>
+                <li><a href="resources.html" class="nav-link">RESOURCES</a></li>
+            </ul>
+            <div style="display: flex; align-items: center;">
+                <span class="menu-label">MENU</span>
+                <div class="mobile-toggle" id="mobileToggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="page-content">
+        <section class="page-section active">
+            <div class="section-header">
+                <h1>WEEKLY MEETINGS</h1>
+                <p class="section-subtitle">Join us every Sunday</p>
+            </div>
+
+            <div class="meeting-info">
+                <div class="meeting-details">
+                    <h3>WHEN</h3>
+                    <p>Every Sunday</p>
+                    <p>5:00 PM - 7:00 PM</p>
+                    <p>Late Afternoon & Evening Sessions</p>
+                </div>
+                <div class="meeting-location">
+                    <img src="images/sociology.png" alt="Parren J Mitchell Building" class="building-image">
+                    <div class="location-info">
+                        <h3>WHERE</h3>
+                        <p class="building-name">PARREN J MITCHELL ART-SOCIOLOGY</p>
+                        <p class="address">3834 Campus Dr, College Park, MD 20740</p>
+                        <div class="room-info">
+                            <p><span class="room-label">Regular Meetings:</span> Room 3207 (Classroom)</p>
+                            <p><span class="room-label">Special Events:</span> Room 2203 (Lecture Hall)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="screening-container">
+                <div class="screening-header">
+                    <h3>THIS WEEK'S SCREENING</h3>
+                    <div class="screening-date">
+                        <span class="date-label">SUNDAY</span>
+                        <span class="date-number" id="screeningDate">SEPTEMBER 21</span>
+                    </div>
+                </div>
+
+                <div class="anime-showcase">
+                    <div class="showcase-main">
+                        <div class="anime-slider" id="animeSlider">
+
+                            <div class="anime-slide active" data-anime="1">
+                                <div class="anime-poster">
+                                    <img src="images/anime1.png" alt="Excel Saga">
+                                    <div class="poster-overlay"></div>
+                                </div>
+                                <div class="anime-details">
+                                    <h4 class="anime-title">Excel Saga</h4>
+                                    <div class="anime-tags">
+                                        <span class="tag">Comedy</span>
+                                        <span class="tag">Parody</span>
+                                        <span class="tag">Action</span>
+                                    </div>
+                                    <p class="anime-description">
+                                        A wild, over-the-top parody series that follows Excel, an enthusiastic but
+                                        clueless
+                                        agent of the secret organization Across, as she tries to conquer the city under
+                                        the
+                                        eccentric leadership of Il Palazzo. The show constantly breaks the fourth wall
+                                        and
+                                        spoofs anime tropes, genres, and even itself. Its chaotic humor and absurd
+                                        scenarios
+                                        make it a cult classic.
+                                    </p>
+                                    <div class="anime-meta">
+                                        <span class="episode-count">26 Episodes</span>
+                                        <span class="rating">★★★★☆</span>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="anime-slide" data-anime="2">
+                                <div class="anime-poster">
+                                    <img src="images/anime2.png" alt="School-Live!">
+                                    <div class="poster-overlay"></div>
+                                </div>
+                                <div class="anime-details">
+                                    <h4 class="anime-title">School-Live! (Gakkou Gurashi!)</h4>
+                                    <div class="anime-tags">
+                                        <span class="tag">Horror</span>
+                                        <span class="tag">Mystery</span>
+                                        <span class="tag">School</span>
+                                    </div>
+                                    <p class="anime-description">
+                                        At first, it seems like a slice-of-life anime about a group of cheerful girls
+                                        living
+                                        at their school. However, it's revealed that they are actually survivors of a
+                                        zombie
+                                        apocalypse, with one character maintaining a delusion of normal school life to
+                                        cope
+                                        with the trauma. The series balances dark survival horror with bittersweet
+                                        character
+                                        bonds.
+                                    </p>
+                                    <div class="anime-meta">
+                                        <span class="episode-count">12 Episodes</span>
+                                        <span class="rating">★★★★★</span>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                        <button class="slide-nav prev-slide" onclick="changeAnime(-1)">‹</button>
+                        <button class="slide-nav next-slide" onclick="changeAnime(1)">›</button>
+                    </div>
+
+                    <div class="anime-thumbnails">
+                        <div class="thumbnail active" data-anime="1" onclick="goToAnime(1)">
+                            <img src="images/anime1.png" alt="Excel Saga">
+                            <div class="thumb-title">Excel Saga</div>
+                        </div>
+                        <div class="thumbnail" data-anime="2" onclick="goToAnime(2)">
+                            <img src="images/anime2.png" alt="School-Live!">
+                            <div class="thumb-title">School-Live!</div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="screening-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill"></div>
+                        </div>
+                        <div class="progress-dots">
+                            <span class="dot active" data-anime="1"></span>
+                            <span class="dot" data-anime="2"></span>
+                            <span class="dot" data-anime="3"></span>
+                            <span class="dot" data-anime="4"></span>
+                            <span class="dot" data-anime="5"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-grid">
+                <div class="card">
+                    <h3>LOW COMMITMENT</h3>
+                    <p>Flexible time commitment: typically 1–5 hours weekly</p>
+                </div>
+                <div class="card">
+                    <h3>OPEN MEETINGS</h3>
+                    <p>General body meetings open to all potential new members</p>
+                </div>
+                <div class="card">
+                    <h3>NO REQUIREMENTS</h3>
+                    <p>No applications or prerequisites needed. Just show up!</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <ul class="footer-links">
+                <li><a href="https://discord.gg/fzKBsnS" target="_blank" rel="noopener">Discord</a></li>
+                <li><a href="https://terplink.umd.edu/organization/terrapin-anime-society" target="_blank"
+                        rel="noopener">TerpLink</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="#donate">Donate</a></li>
+            </ul>
+            <div class="footer-bottom">
+                <span class="copyright">© 2025 TERRAPIN ANIME SOCIETY</span><br>
+                ALL RIGHTS RESERVED
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+
+</html>
