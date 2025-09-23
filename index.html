@@ -7,6 +7,316 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Terrapin Anime Society</title>
     <style>
+        .music-carousel-container {
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 40px;
+            padding: 0 80px;
+
+        }
+
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: transparent;
+            border: 2px solid #ff00ff;
+            color: #ff00ff;
+            width: 50px;
+            height: 50px;
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10;
+            border-radius: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Bebas Neue', cursive;
+            font-weight: normal;
+        }
+
+        .carousel-nav:hover {
+            background: #ff00ff;
+            color: #000;
+            transform: translateY(-50%) translateX(0) scale(1.1);
+            border-color: #00ffff;
+        }
+
+        .prev-nav {
+            left: 10px;
+        }
+
+        .next-nav {
+            right: 10px;
+        }
+
+        .carousel-indicators {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 0;
+            background: transparent;
+            border: 2px solid #ff00ff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .indicator.active {
+            background: #ff00ff;
+            transform: scale(1.2);
+            border-color: #00ffff;
+        }
+
+        .indicator:hover {
+            background: #00ffff;
+            border-color: #00ffff;
+        }
+
+        .indicator::before {
+            display: none;
+        }
+
+        .carousel-slide {
+            position: absolute;
+            width: 100%;
+            opacity: 0;
+            transform: translateX(30px);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none;
+        }
+
+        .carousel-slide.active {
+            opacity: 1;
+            transform: translateX(0);
+            pointer-events: all;
+            position: relative;
+        }
+
+        .carousel-slide.prev {
+            transform: translateX(-30px);
+        }
+
+
+        .music-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 60px;
+            perspective: 1000px;
+        }
+
+        .music-card {
+            background: linear-gradient(135deg, rgba(255, 0, 255, 0.1), rgba(0, 255, 255, 0.05));
+            border: 1px solid #ff00ff;
+            padding: 30px 25px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(50px) rotateX(15deg);
+            animation: cardSlideIn 0.6s ease forwards;
+        }
+
+        .carousel-slide.active .music-card:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .carousel-slide.active .music-card:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .carousel-slide.active .music-card:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .carousel-slide.active .music-card:nth-child(4) {
+            animation-delay: 0.4s;
+        }
+
+        .carousel-slide.active .music-card:nth-child(5) {
+            animation-delay: 0.5s;
+        }
+
+        .carousel-slide.active .music-card:nth-child(6) {
+            animation-delay: 0.6s;
+        }
+
+        @keyframes cardSlideIn {
+            0% {
+                opacity: 0;
+                transform: translateY(50px) rotateX(15deg) scale(0.9);
+            }
+
+            60% {
+                transform: translateY(-5px) rotateX(-2deg) scale(1.02);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0) rotateX(0deg) scale(1);
+            }
+        }
+
+        .music-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 0, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .music-card:hover::before {
+            left: 100%;
+        }
+
+        .music-card:hover {
+            transform: translateY(-8px) scale(1.03);
+            border-color: #00ffff;
+            background: linear-gradient(135deg, rgba(255, 0, 255, 0.15), rgba(0, 255, 255, 0.1));
+        }
+
+        .song-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.2rem;
+            color: #ff00ff;
+            margin-bottom: 8px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            line-height: 1.3;
+        }
+
+        .anime-name {
+            color: #00ffff;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+            opacity: 0.8;
+        }
+
+        .play-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background: transparent;
+            border: 1px solid #ff00ff;
+            color: #ff00ff;
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 500;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .play-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: #ff00ff;
+            transition: left 0.3s ease;
+            z-index: -1;
+        }
+
+        .play-button:hover::before {
+            left: 0;
+        }
+
+        .play-button:hover {
+            color: #000;
+            border-color: #00ffff;
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 768px) {
+            .music-carousel-container {
+                padding: 0 60px;
+            }
+
+            .carousel-nav {
+                width: 40px;
+                height: 40px;
+                font-size: 1.5rem;
+            }
+
+            .prev-nav {
+                left: 5px;
+            }
+
+            .next-nav {
+                right: 5px;
+            }
+
+            .indicator {
+                width: 10px;
+                height: 10px;
+            }
+
+            .music-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+
+        .indicator.active::before {
+            opacity: 1;
+            animation: indicatorPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes indicatorPulse {
+
+            0%,
+            100% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 0.5;
+            }
+
+            50% {
+                transform: translate(-50%, -50%) scale(1.5);
+                opacity: 1;
+            }
+        }
+
+
+        @media (max-width: 768px) {
+            .carousel-nav {
+                width: 50px;
+                height: 50px;
+                font-size: 2rem;
+            }
+
+            .prev-nav {
+                left: -20px;
+            }
+
+            .next-nav {
+                right: -20px;
+            }
+
+            .indicator {
+                width: 12px;
+                height: 12px;
+            }
+        }
+
         .anime-card {
             display: flex;
             background: rgba(0, 0, 0, 0.6);
@@ -224,7 +534,6 @@
 
         .audio-control-container:hover {
             border-color: var(--crimson);
-            box-shadow: 0 15px 40px rgba(220, 20, 60, 0.4);
             transform: translateY(-50%) scale(1.02);
         }
 
@@ -260,13 +569,11 @@
             background: linear-gradient(135deg, var(--crimson), var(--accent));
             cursor: pointer;
             border-radius: 50%;
-            box-shadow: 0 0 15px rgba(220, 20, 60, 0.6);
             transition: all 0.3s ease;
         }
 
         .audio-slider::-webkit-slider-thumb:hover {
             transform: scale(1.2);
-            box-shadow: 0 0 25px rgba(220, 20, 60, 0.8);
         }
 
         .volume-percentage {
@@ -4178,7 +4485,7 @@
             overflow: hidden;
             box-shadow: 0 0 40px rgba(220, 20, 60, 0.1) inset;
         }
-        
+
         .partner-text {
             font-family: 'Bebas Neue', cursive;
             font-size: 1.1 rem;
@@ -4511,6 +4818,689 @@
                 height: 8px;
             }
         }
+
+
+        #animusic {
+            background: transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #animusic::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                linear-gradient(135deg, rgba(26, 0, 51, 0.8), rgba(0, 0, 0, 0.9), rgba(34, 0, 68, 0.8)),
+                url('images/bocchi.png');
+            background-size: cover, cover;
+            background-position: center, center;
+            background-repeat: no-repeat, no-repeat;
+            opacity: 1;
+            pointer-events: none;
+            animation: bocchiFloat 20s ease-in-out infinite;
+            z-index: 1;
+        }
+
+        @keyframes bocchiFloat {
+
+            0%,
+            100% {
+                transform: scale(1) translateY(0);
+                filter: brightness(0.8);
+            }
+
+            50% {
+                transform: scale(1.05) translateY(-20px);
+                filter: brightness(1);
+            }
+        }
+
+        .animusic-hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 10;
+            padding: 120px 60px 60px;
+        }
+
+        .submission-interface {
+            width: 100%;
+            max-width: 1200px;
+            margin: 60px auto;
+            padding: 40px;
+            background: linear-gradient(135deg, rgba(147, 0, 211, 0.2), rgba(0, 0, 0, 0.8));
+            border: 3px solid transparent;
+            border-image: linear-gradient(45deg, #ff00ff, #00ffff, #ff00ff) 1;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            position: relative;
+            animation: interfaceGlow 3s ease-in-out infinite;
+            z-index: 5;
+        }
+
+        .music-notes-container {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .music-note-animated {
+            position: absolute;
+            font-size: 2rem;
+            animation: floatUpNote 8s linear infinite;
+        }
+
+        @keyframes floatUpNote {
+            0% {
+                transform: translateY(100vh) rotate(0deg) scale(0);
+                opacity: 0;
+            }
+
+            10% {
+                transform: translateY(90vh) rotate(45deg) scale(1);
+                opacity: 1;
+            }
+
+            90% {
+                transform: translateY(10vh) rotate(360deg) scale(1);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-10vh) rotate(405deg) scale(0);
+                opacity: 0;
+            }
+        }
+
+        .note-1 {
+            left: 15%;
+            color: #ff00ff;
+            animation-delay: 0s;
+            font-size: 2.5rem;
+        }
+
+        .note-2 {
+            left: 25%;
+            color: #00ffff;
+            animation-delay: 1s;
+            font-size: 2rem;
+        }
+
+        .note-3 {
+            left: 35%;
+            color: #ff00ff;
+            animation-delay: 2s;
+            font-size: 3rem;
+        }
+
+        .note-4 {
+            left: 45%;
+            color: #00ffff;
+            animation-delay: 3s;
+            font-size: 2.2rem;
+        }
+
+        .note-5 {
+            left: 55%;
+            color: #ff00ff;
+            animation-delay: 4s;
+            font-size: 2.8rem;
+        }
+
+        .note-6 {
+            left: 65%;
+            color: #00ffff;
+            animation-delay: 5s;
+            font-size: 2rem;
+        }
+
+        .note-7 {
+            left: 75%;
+            color: #ff00ff;
+            animation-delay: 6s;
+            font-size: 2.5rem;
+        }
+
+        .note-8 {
+            left: 85%;
+            color: #00ffff;
+            animation-delay: 7s;
+            font-size: 2.3rem;
+        }
+
+        .music-visualizer {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            opacity: 0.4;
+            pointer-events: none;
+        }
+
+        .visualizer-bar {
+            width: 6px;
+            background: linear-gradient(to top, #9400d3, #ff00ff, #00ffff);
+            animation: musicPulse 1s ease-in-out infinite;
+            border-radius: 3px;
+        }
+
+        .visualizer-bar:nth-child(1) {
+            height: 60px;
+            animation-delay: 0s;
+        }
+
+        .visualizer-bar:nth-child(2) {
+            height: 90px;
+            animation-delay: 0.1s;
+        }
+
+        .visualizer-bar:nth-child(3) {
+            height: 65px;
+            animation-delay: 0.2s;
+        }
+
+        .visualizer-bar:nth-child(4) {
+            height: 100px;
+            animation-delay: 0.3s;
+        }
+
+        .visualizer-bar:nth-child(5) {
+            height: 70px;
+            animation-delay: 0.4s;
+        }
+
+        .visualizer-bar:nth-child(6) {
+            height: 95px;
+            animation-delay: 0.5s;
+        }
+
+        .visualizer-bar:nth-child(7) {
+            height: 60px;
+            animation-delay: 0.6s;
+        }
+
+        .visualizer-bar:nth-child(8) {
+            height: 105px;
+            animation-delay: 0.7s;
+        }
+
+        .visualizer-bar:nth-child(9) {
+            height: 75px;
+            animation-delay: 0.8s;
+        }
+
+        .visualizer-bar:nth-child(10) {
+            height: 65px;
+            animation-delay: 0.9s;
+        }
+
+        .visualizer-bar:nth-child(11) {
+            height: 85px;
+            animation-delay: 1s;
+        }
+
+        .visualizer-bar:nth-child(12) {
+            height: 70px;
+            animation-delay: 1.1s;
+        }
+
+        .visualizer-bar:nth-child(13) {
+            height: 90px;
+            animation-delay: 1.2s;
+        }
+
+        .visualizer-bar:nth-child(14) {
+            height: 60px;
+            animation-delay: 1.3s;
+        }
+
+        .visualizer-bar:nth-child(15) {
+            height: 80px;
+            animation-delay: 1.4s;
+        }
+
+        @keyframes musicPulse {
+
+            0%,
+            100% {
+                transform: scaleY(0.3);
+                opacity: 0.5;
+            }
+
+            50% {
+                transform: scaleY(1);
+                opacity: 1;
+            }
+        }
+
+
+        .anime-vibration-border {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            z-index: 3;
+        }
+
+        .anime-vibration-border::before,
+        .anime-vibration-border::after {
+            content: '';
+            position: absolute;
+            inset: 20px;
+            border: 2px solid transparent;
+            border-image: linear-gradient(45deg,
+                    #ff00ff,
+                    #00ffff,
+                    #ff00ff,
+                    #00ffff) 1;
+            animation: borderVibrate 0.5s ease-in-out infinite;
+        }
+
+        .anime-vibration-border::after {
+            inset: 30px;
+            animation-delay: 0.25s;
+            opacity: 0.5;
+        }
+
+        @keyframes borderVibrate {
+
+            0%,
+            100% {
+                transform: translate(0, 0);
+            }
+
+            25% {
+                transform: translate(2px, -2px);
+            }
+
+            50% {
+                transform: translate(-2px, 2px);
+            }
+
+            75% {
+                transform: translate(2px, 2px);
+            }
+        }
+
+        .animusic-title {
+            font-family: 'Bebas Neue', cursive;
+            font-size: clamp(4rem, 10vw, 8rem);
+            background: linear-gradient(45deg, #ff00ff, #00ffff, #ff00ff);
+            background-size: 200% 200%;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientFlow 3s ease-in-out infinite, titlePulse 2s ease-in-out infinite;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        @keyframes gradientFlow {
+
+            0%,
+            100% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+
+        @keyframes titlePulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .animusic-info {
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        .animusic-datetime {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 2.5rem;
+            color: #ff00ff;
+            margin-bottom: 10px;
+            letter-spacing: 3px;
+        }
+
+        .animusic-location {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5rem;
+            color: #00ffff;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .submission-interface {
+            width: 100%;
+            max-width: 1200px;
+            margin: 60px auto;
+            padding: 40px;
+            background: linear-gradient(135deg, rgba(147, 0, 211, 0.2), rgba(0, 0, 0, 0.8));
+            border: 3px solid transparent;
+            border-image: linear-gradient(45deg, #ff00ff, #00ffff, #ff00ff) 1;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            position: relative;
+            animation: interfaceGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes interfaceGlow {
+
+            0%,
+            100% {
+                filter: brightness(1);
+            }
+
+            50% {
+                filter: brightness(1.1);
+            }
+        }
+
+        .submission-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .submission-title {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 3rem;
+            color: #ff00ff;
+            letter-spacing: 3px;
+            margin-bottom: 10px;
+        }
+
+        .submission-rules {
+            background: rgba(0, 0, 0, 0.9);
+            border: 3px solid transparent;
+            border-image: linear-gradient(90deg, #ff00ff, #00ffff) 1;
+            padding: 30px;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .rules-title {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 2rem;
+            color: #00ffff;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+            text-align: center;
+        }
+
+        .rule-item {
+            color: #00ffff;
+            margin-bottom: 15px;
+            padding-left: 35px;
+            position: relative;
+            font-size: 1.2rem;
+            line-height: 1.8;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 600;
+            letter-spacing: 1px;
+            background: linear-gradient(90deg, rgba(0, 255, 255, 0.1), transparent);
+            padding: 12px 12px 12px 35px;
+            border-left: 3px solid #00ffff;
+        }
+
+    
+        @keyframes noteBounce {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-5px);
+            }
+        }
+
+        .important-rule {
+            background: linear-gradient(135deg, rgba(255, 0, 255, 0.3), rgba(0, 255, 255, 0.2));
+            padding: 20px;
+            border: 3px solid #ff00ff;
+            margin: 20px 0;
+            color: #ffffff;
+            font-weight: 700;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.3rem;
+            letter-spacing: 2px;
+            text-align: center;
+            animation: importantPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes importantPulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+                border-color: #ff00ff;
+            }
+
+            50% {
+                transform: scale(1.02);
+                border-color: #00ffff;
+            }
+        }
+
+        .music-examples {
+            margin-top: 60px;
+        }
+
+        .examples-title {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 2.5rem;
+            color: #00ffff;
+            text-align: center;
+            margin-bottom: 40px;
+            letter-spacing: 3px;
+        }
+
+        .music-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .music-card {
+            background: linear-gradient(135deg, rgba(147, 0, 211, 0.3), rgba(0, 255, 255, 0.2));
+            border: 2px solid transparent;
+            border-image: linear-gradient(45deg, #ff00ff, #00ffff) 1;
+            padding: 25px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .music-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 0, 255, 0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .music-card:hover::before {
+            left: 100%;
+        }
+
+        .music-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            border-color: #ff00ff;
+            background: linear-gradient(135deg, rgba(255, 0, 255, 0.4), rgba(0, 255, 255, 0.3));
+        }
+
+        .song-title {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 1.4rem;
+            color: #ff00ff;
+            margin-bottom: 8px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .anime-name {
+            color: #00ffff;
+            font-size: 1rem;
+            margin-bottom: 15px;
+            font-style: italic;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .play-button {
+            display: inline-block;
+            padding: 10px 25px;
+            background: linear-gradient(45deg, #9400d3, #ff00ff);
+            color: white;
+            text-decoration: none;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-family: 'Bebas Neue', cursive;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .play-button:hover {
+            transform: scale(1.1);
+            background: linear-gradient(45deg, #ff00ff, #00ffff);
+        }
+
+        .discord-link-section {
+            text-align: center;
+            margin-top: 60px;
+            padding: 40px;
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.9), rgba(147, 0, 211, 0.3));
+            border-radius: 20px;
+            border: 3px solid transparent;
+            border-image: linear-gradient(45deg, #00ffff, #ff00ff) 1;
+        }
+
+        .discord-title {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 2.5rem;
+            color: #ff00ff;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+        }
+
+        .discord-text {
+            color: #00ffff !important;
+            font-size: 1.4rem !important;
+            margin-bottom: 30px;
+            font-family: 'Bebas Neue', cursive !important;
+            letter-spacing: 2px !important;
+            text-transform: uppercase !important;
+            font-weight: 700 !important;
+        }
+
+        .discord-button {
+            display: inline-block;
+            padding: 15px 40px;
+            background: linear-gradient(45deg, #7289da, #9400d3);
+            color: white;
+            text-decoration: none;
+            font-family: 'Bebas Neue', cursive;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .discord-button:hover {
+            transform: translateY(-3px);
+            background: linear-gradient(45deg, #9400d3, #00ffff);
+        }
+
+
+        #animusic *,
+        #animusic *::before,
+        #animusic *::after {
+            box-shadow: none !important;
+            text-shadow: none !important;
+            filter: none !important;
+        }
+
+
+        #animusic .animusic-title,
+        #animusic .animusic-datetime,
+        #animusic .animusic-location,
+        #animusic .rules-title,
+        #animusic .examples-title,
+        #animusic .discord-title,
+        #animusic .song-title {
+            filter: none !important;
+        }
+
+        @media (max-width: 768px) {
+            .animusic-hero {
+                padding: 100px 20px 40px;
+            }
+
+            .animusic-title {
+                font-size: 3rem;
+            }
+
+            .animusic-datetime {
+                font-size: 1.8rem;
+            }
+
+            .animusic-location {
+                font-size: 1.2rem;
+            }
+
+            .music-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .music-visualizer {
+                gap: 4px;
+            }
+
+            .visualizer-bar {
+                width: 4px;
+            }
+        }
+    </style>
     </style>
 </head>
 
@@ -4526,6 +5516,94 @@
 
 <script>
 
+
+    let currentSlide = 0;
+    const totalSlides = 2;
+
+    function changeSlide(direction) {
+        const slides = document.querySelectorAll('.carousel-slide');
+        const indicators = document.querySelectorAll('.indicator');
+
+        slides[currentSlide].classList.remove('active');
+        indicators[currentSlide].classList.remove('active');
+
+
+        currentSlide += direction;
+        if (currentSlide >= totalSlides) currentSlide = 0;
+        if (currentSlide < 0) currentSlide = totalSlides - 1;
+
+
+        const newSlide = slides[currentSlide];
+        newSlide.classList.add('active');
+        indicators[currentSlide].classList.add('active');
+
+
+        const cards = newSlide.querySelectorAll('.music-card');
+        cards.forEach((card, index) => {
+            card.style.animation = 'none';
+            card.offsetHeight;
+            card.style.animation = `cardSlideIn 0.6s ease forwards`;
+            card.style.animationDelay = `${(index + 1) * 0.1}s`;
+        });
+
+
+        if (audioManager) {
+            audioManager.playSound('click');
+        }
+    }
+
+    function goToSlide(slideIndex) {
+        const slides = document.querySelectorAll('.carousel-slide');
+        const indicators = document.querySelectorAll('.indicator');
+
+
+        slides[currentSlide].classList.remove('active');
+        indicators[currentSlide].classList.remove('active');
+
+
+        currentSlide = slideIndex;
+
+
+        const newSlide = slides[currentSlide];
+        newSlide.classList.add('active');
+        indicators[currentSlide].classList.add('active');
+
+
+        const cards = newSlide.querySelectorAll('.music-card');
+        cards.forEach((card, index) => {
+            card.style.animation = 'none';
+            card.offsetHeight;
+            card.style.animation = `cardSlideIn 0.6s ease forwards`;
+            card.style.animationDelay = `${(index + 1) * 0.1}s`;
+        });
+
+
+        if (audioManager) {
+            audioManager.playSound('click');
+        }
+    }
+
+    function startAutoSlide() {
+        autoSlideInterval = setInterval(() => {
+            changeSlide(1);
+        }, 10000);
+    }
+
+    function resetAutoSlide() {
+        clearInterval(autoSlideInterval);
+        startAutoSlide();
+    }
+
+
+    document.addEventListener('DOMContentLoaded', () => {
+        startAutoSlide();
+    });
+
+
+
+    document.querySelectorAll('.carousel-nav, .indicator').forEach(element => {
+        element.addEventListener('click', resetAutoSlide);
+    });
     document.addEventListener('DOMContentLoaded', function () {
         const animatedBg = document.getElementById('animatedBg');
         const bgPulse = document.getElementById('bgPulse');
@@ -4758,6 +5836,7 @@
                 <li><a href="#eboard" class="nav-link">E-BOARD</a></li>
                 <li><a href="#join" class="nav-link">JOIN</a></li>
                 <li><a href="#subgroups" class="nav-link">SUBGROUPS</a></li>
+                <li><a href="#animusic" class="nav-link">ANIMUSIC</a></li>
                 <li><a href="#resources" class="nav-link">RESOURCES</a></li>
             </ul>
             <div style="display: flex; align-items: center;">
@@ -5151,7 +6230,7 @@
                 <div class="csm-events">
                     <div class="csm-day">
                         <div class="day-header-csm">
-                            <span class="csm-date">SEPT 27</span>
+                            <span class="csm-date">OCT 18</span>
                             <span class="csm-day-label">FRIDAY</span>
                         </div>
                         <div class="csm-event-details">
@@ -5162,7 +6241,7 @@
                     </div>
                     <div class="csm-day">
                         <div class="day-header-csm">
-                            <span class="csm-date">SEPT 28</span>
+                            <span class="csm-date">OCT 19</span>
                             <span class="csm-day-label">SATURDAY</span>
                         </div>
                         <div class="csm-event-details">
@@ -5294,7 +6373,7 @@
             </div>
             <div class="member-card">
                 <div class="member-role">FACULTY ADVISOR</div>
-                <div class="member-name">Michele Mason</div>
+                <div class="member-name">Michele M. Mason</div>
             </div>
         </div>
 
@@ -5434,7 +6513,164 @@
         </div>
     </section>
 
+    <section id="animusic" class="page-section">
+        <div class="music-notes-container">
+            <div class="music-note-animated note-1">♪</div>
+            <div class="music-note-animated note-2">♫</div>
+            <div class="music-note-animated note-3">♬</div>
+            <div class="music-note-animated note-4">♪</div>
+            <div class="music-note-animated note-5">♫</div>
+            <div class="music-note-animated note-6">♬</div>
+            <div class="music-note-animated note-7">♪</div>
+            <div class="music-note-animated note-8">♫</div>
+        </div>
 
+        <div class="anime-vibration-border"></div>
+
+        <div class="animusic-hero">
+            <div class="music-visualizer">
+                <div class="visualizer-bar"></div>
+                <div class="visualizer-bar"></div>
+                <div class="visualizer-bar"></div>
+                <div class="visualizer-bar"></div>
+                <div class="visualizer-bar"></div>
+                <div class="visualizer-bar"></div>
+                <div class="visualizer-bar"></div>
+                <div class="visualizer-bar"></div>
+                <div class="visualizer-bar"></div>
+                <div class="visualizer-bar"></div>
+                <div class="visualizer-bar"></div>
+                <div class="visualizer-bar"></div>
+                <div class="visualizer-bar"></div>
+                <div class="visualizer-bar"></div>
+                <div class="visualizer-bar"></div>
+            </div>
+
+            <h1 class="animusic-title">ANIMUSIC</h1>
+
+            <div class="animusic-info">
+                <div class="animusic-datetime">SATURDAY SEPTEMBER 6TH</div>
+                <div class="animusic-location">4:00 PM - 7:00 PM</div>
+            </div>
+
+            <div class="submission-interface">
+                <div class="submission-header">
+                    <h2 class="submission-title">WEEKLY MUSIC MEETINGS</h2>
+                </div>
+
+                <div class="submission-rules">
+                    <h3 class="rules-title">SUBMISSION RULES</h3>
+                    <div class="important-rule">
+                        TOTAL TIME OF ALL SONGS: MAXIMUM 4 MINUTES 30 SECONDS
+                    </div>
+                    <div class="rule-item">Do not submit anything from Fall 2024, Spring 2025, or Fall 2025</div>
+                    <div class="rule-item">Submit 1 to 5 songs per person</div>
+                    <div class="rule-item">First come, first served for duplicate submissions</div>
+                    <div class="rule-item">Must be present (in person or online) for songs to play</div>
+                    <div class="rule-item">Don't submit songs YOU have submitted before</div>
+                    <div class="rule-item">Check the spreadsheet for songs already played this year</div>
+                </div>
+
+                <div class="music-examples">
+                    <h3 class="examples-title">RECENT MEMBER SUBMISSIONS</h3>
+                    <div class="music-carousel-container">
+                        <button class="carousel-nav prev-nav" onclick="changeSlide(-1)">‹</button>
+                        <div class="music-carousel">
+                            <div class="music-grid carousel-slide active">
+                                <div class="music-card">
+                                    <div class="song-title">Seishun Complex</div>
+                                    <div class="anime-name">Bocchi the Rock!</div>
+                                    <a href="https://www.youtube.com/watch?v=gNn9NxZH2Vo" target="_blank"
+                                        class="play-button">▶ PLAY</a>
+                                </div>
+                                <div class="music-card">
+                                    <div class="song-title">Guitar, Loneliness and Blue Planet</div>
+                                    <div class="anime-name">Bocchi the Rock!</div>
+                                    <a href="https://www.youtube.com/watch?v=xXJdyx8BI9I" target="_blank"
+                                        class="play-button">▶ PLAY</a>
+                                </div>
+                                <div class="music-card">
+                                    <div class="song-title">Mixed Nuts</div>
+                                    <div class="anime-name">SPY x FAMILY</div>
+                                    <a href="https://www.youtube.com/watch?v=U_rWZK_8vUY" target="_blank"
+                                        class="play-button">▶ PLAY</a>
+                                </div>
+                                <div class="music-card">
+                                    <div class="song-title">Idol</div>
+                                    <div class="anime-name">Oshi no Ko</div>
+                                    <a href="https://www.youtube.com/watch?v=ZRtdQ81jPUQ" target="_blank"
+                                        class="play-button">▶ PLAY</a>
+                                </div>
+                                <div class="music-card">
+                                    <div class="song-title">Otonoke</div>
+                                    <div class="anime-name">Dandadan</div>
+                                    <a href="https://www.youtube.com/watch?v=1P9sYyAk8j4" target="_blank"
+                                        class="play-button">▶ PLAY</a>
+                                </div>
+                                <div class="music-card">
+                                    <div class="song-title">Giri Giri</div>
+                                    <div class="anime-name">Kaguya-sama: Love is War</div>
+                                    <a href="https://www.youtube.com/watch?v=uqDiRihGKN8" target="_blank"
+                                        class="play-button">▶ PLAY</a>
+                                </div>
+                            </div>
+
+                            <div class="music-grid carousel-slide">
+                                <div class="music-card">
+                                    <div class="song-title">Namae no Nai Kaibutsu</div>
+                                    <div class="anime-name">Psycho-Pass</div>
+                                    <a href="https://www.youtube.com/watch?v=sF0QLtk3YH0" target="_blank"
+                                        class="play-button">▶ PLAY</a>
+                                </div>
+                                <div class="music-card">
+                                    <div class="song-title">Bloody Stream</div>
+                                    <div class="anime-name">JoJo's Bizarre Adventure</div>
+                                    <a href="https://www.youtube.com/watch?v=KoY66lqmcYA" target="_blank"
+                                        class="play-button">▶ PLAY</a>
+                                </div>
+                                <div class="music-card">
+                                    <div class="song-title">Kawaki wo Ameku</div>
+                                    <div class="anime-name">Domestic Girlfriend</div>
+                                    <a href="https://www.youtube.com/watch?v=0YF8vecQWYs" target="_blank"
+                                        class="play-button">▶ PLAY</a>
+                                </div>
+                                <div class="music-card">
+                                    <div class="song-title">COLORS</div>
+                                    <div class="anime-name">Code Geass</div>
+                                    <a href="https://www.youtube.com/watch?v=FUH9S44D1BM" target="_blank"
+                                        class="play-button">▶ PLAY</a>
+                                </div>
+                                <div class="music-card">
+                                    <div class="song-title">Hikari no Machi</div>
+                                    <div class="anime-name">Girls Band Cry</div>
+                                    <a href="https://www.youtube.com/watch?v=UZWV9Lqb6m8" target="_blank"
+                                        class="play-button">▶ PLAY</a>
+                                </div>
+                                <div class="music-card">
+                                    <div class="song-title">Shikanoko Nokonoko</div>
+                                    <div class="anime-name">My Deer Friend Nokotan</div>
+                                    <a href="https://www.youtube.com/watch?v=JLPTrIGHJLg" target="_blank"
+                                        class="play-button">▶ PLAY</a>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="carousel-nav next-nav" onclick="changeSlide(1)">›</button>
+                    </div>
+
+                    <div class="carousel-indicators">
+                        <span class="indicator active" data-slide="0" onclick="goToSlide(0)"></span>
+                        <span class="indicator" data-slide="1" onclick="goToSlide(1)"></span>
+                    </div>
+                </div>
+                <div class="discord-link-section">
+                    <h3 class="discord-title">SUBMIT YOUR SONGS</h3>
+                    <p class="discord-text">JOIN OUR DISCORD AND SUBMIT YOUR SONGS IN THE #ANIMUSIC CHANNEL!</p>
+                    <a href="https://discord.gg/fzKBsnS" target="_blank" class="discord-button">JOIN DISCORD TO
+                        SUBMIT</a>
+                </div>
+            </div>
+        </div>
+    </section>
     <section id="resources" class="page-section">
         <div class="section-header">
             <h2>ANIME RESOURCES</h2>
@@ -6463,8 +7699,3 @@
 </body>
 
 </html>
-
-
-
-
-
