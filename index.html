@@ -7,6 +7,684 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Terrapin Anime Society</title>
     <style>
+        .spring-label {
+            position: absolute;
+            top: -10px;
+            right: -50px;
+            font-family: 'Bebas Neue', cursive;
+            font-size: 1.8rem;
+            color: var(--text-primary);
+            background: rgba(220, 20, 60, 0.1);
+            border: 2px solid var(--crimson);
+            padding: 8px 20px;
+            letter-spacing: 3px;
+            transform: rotate(15deg);
+            transform-origin: center;
+            z-index: 10;
+            transition: all 0.3s ease;
+        }
+
+        .spring-label:hover {
+            transform: rotate(15deg) scale(1.1);
+            background: rgba(220, 20, 60, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .spring-label {
+                right: 10px;
+                top: -5px;
+                font-size: 1.3rem;
+                transform: rotate(10deg);
+            }
+        }
+
+        #kamecon {
+            background: linear-gradient(135deg, rgba(139, 0, 0, 0.05), rgba(0, 0, 0, 0.95));
+            position: relative;
+            overflow: hidden;
+        }
+
+        .kamecon-hero {
+            position: relative;
+            z-index: 2;
+            padding: 40px;
+        }
+
+
+
+        .k-particle {
+            position: absolute;
+            font-size: 2rem;
+            opacity: 0.3;
+            animation: kameFloat 15s infinite ease-in-out;
+        }
+
+        .k-particle:nth-child(1) {
+            left: 10%;
+            top: 20%;
+            animation-delay: 0s;
+        }
+
+        .k-particle:nth-child(2) {
+            left: 80%;
+            top: 30%;
+            animation-delay: 3s;
+        }
+
+        .k-particle:nth-child(3) {
+            left: 30%;
+            top: 70%;
+            animation-delay: 6s;
+        }
+
+        .k-particle:nth-child(4) {
+            left: 60%;
+            top: 80%;
+            animation-delay: 9s;
+        }
+
+        .k-particle:nth-child(5) {
+            left: 50%;
+            top: 10%;
+            animation-delay: 12s;
+        }
+
+        @keyframes kameFloat {
+
+            0%,
+            100% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0.3;
+            }
+
+            50% {
+                transform: translateY(-30px) rotate(180deg);
+                opacity: 0.6;
+            }
+        }
+
+        .kamecon-main-title {
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+            z-index: 3;
+        }
+
+        .kamecon-logo {
+            font-family: 'Bebas Neue', cursive;
+            font-size: clamp(5rem, 15vw, 12rem);
+            background: linear-gradient(135deg, var(--crimson), var(--accent), var(--crimson));
+            background-size: 200% 200%;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 8px;
+            animation: kameconGlow 3s ease-in-out infinite;
+            margin-bottom: 10px;
+        }
+
+        @keyframes kameconGlow {
+
+            0%,
+            100% {
+                background-position: 0% 50%;
+                filter: brightness(1);
+            }
+
+            50% {
+                background-position: 100% 50%;
+                filter: brightness(1.2);
+            }
+        }
+
+        .kamecon-subtitle {
+            font-family: 'Space Grotesk', sans-serif;
+            color: var(--text-secondary);
+            letter-spacing: 6px;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+        }
+
+        .kamecon-event-info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .kamecon-date-display {
+            text-align: center;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .kamecon-date-display h2 {
+            font-family: 'Bebas Neue', cursive;
+            font-size: clamp(4rem, 8vw, 7rem);
+            color: var(--crimson);
+            letter-spacing: 5px;
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px rgba(220, 20, 60, 0.3);
+            animation: crimsonPulse 3s ease-in-out infinite;
+        }
+
+        .kamecon-day-label {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2rem;
+            color: var(--text-primary);
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            opacity: 0.8;
+        }
+
+        @keyframes crimsonPulse {
+
+            0%,
+            100% {
+                text-shadow: 0 0 20px rgba(220, 20, 60, 0.3);
+            }
+
+            50% {
+                text-shadow: 0 0 40px rgba(220, 20, 60, 0.6);
+            }
+        }
+
+        .kamecon-date-box {
+            background: rgba(0, 0, 0, 0.6);
+            padding: 30px 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 2px solid var(--border);
+            transform: none;
+            transition: all 0.3s ease;
+        }
+
+        .kamecon-date-box:hover {
+            transform: scale(1.05);
+            border-color: var(--crimson);
+            box-shadow: 0 10px 30px rgba(220, 20, 60, 0.2);
+        }
+
+        .kamecon-month {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 2rem;
+            color: var(--crimson);
+            letter-spacing: 3px;
+        }
+
+        .kamecon-year {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 3rem;
+            color: var(--text-primary);
+            font-weight: 900;
+        }
+
+        .kamecon-time-location {
+            text-align: center;
+            background: rgba(139, 0, 0, 0.1);
+            border: 2px solid var(--border);
+            padding: 50px 40px;
+            max-width: 1000px;
+            width: 90%;
+            margin: 0 auto;
+        }
+
+        .kamecon-time {
+            font-family: 'Bebas Neue', cursive;
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            color: var(--crimson);
+            margin-bottom: 25px;
+            letter-spacing: 12px;
+            text-shadow: 0 0 15px rgba(220, 20, 60, 0.4);
+            display: block;
+            width: 100%;
+        }
+
+        .kamecon-venue {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+            color: var(--text-primary);
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            font-weight: 700;
+            text-transform: uppercase;
+            line-height: 1.4;
+            padding: 0 20px;
+        }
+
+        .kamecon-address {
+            color: var(--text-secondary);
+            font-size: clamp(1rem, 1.8vw, 1.3rem);
+            letter-spacing: 2px;
+            word-spacing: 3px;
+        }
+
+        .kamecon-poster-section {
+            position: relative;
+            max-width: 2000px;
+            margin: 80px auto;
+            padding: 0 20px;
+        }
+
+        .kamecon-main-poster {
+            width: 100%;
+            max-width: 2000px;
+            height: auto;
+            border: none;
+            box-shadow: none;
+            position: relative;
+            z-index: 2;
+            display: block;
+            margin: 0 auto;
+            transition: transform 0.6s ease;
+            animation: gentleFloat 6s ease-in-out infinite;
+        }
+
+        .kamecon-poster-section:hover {
+            transform: perspective(1000px) rotateY(2deg);
+        }
+
+
+        .kamecon-main-poster:hover {
+            transform: scale(1.03);
+        }
+
+        .kamecon-main-poster {
+            animation: gentleFloat 6s ease-in-out infinite;
+        }
+
+        @keyframes gentleFloat {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @keyframes posterPulse {
+
+            0%,
+            100% {
+                opacity: 0.5;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 1;
+                transform: scale(1.05);
+            }
+        }
+
+        .kamecon-schedule-grid {
+            position: relative;
+            max-width: 900px;
+            margin: 80px auto;
+            padding: 0 20px;
+        }
+
+        .schedule-timeline {
+            position: relative;
+            padding: 40px 0;
+        }
+
+        .schedule-timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--crimson);
+            transform: translateX(-50%);
+        }
+
+        .schedule-block {
+            position: relative;
+            width: 45%;
+            padding: 30px;
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid var(--border);
+            margin-bottom: 60px;
+            transition: all 0.3s ease;
+        }
+
+        .schedule-block:nth-child(odd) {
+            left: 0;
+            text-align: right;
+        }
+
+        .schedule-block:nth-child(even) {
+            left: 55%;
+            text-align: left;
+        }
+
+        .schedule-block::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 20px;
+            height: 20px;
+            background: var(--crimson);
+            border: 3px solid var(--dark-bg);
+            border-radius: 50%;
+            z-index: 2;
+            transform: translateY(-50%);
+        }
+
+        .schedule-block:nth-child(odd)::after {
+            right: -60px;
+        }
+
+        .schedule-block:nth-child(even)::after {
+            left: -60px;
+        }
+
+        .schedule-block::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 40px;
+            height: 2px;
+            background: var(--crimson);
+            transform: translateY(-50%);
+        }
+
+        .schedule-block:nth-child(odd)::before {
+            right: -40px;
+        }
+
+        .schedule-block:nth-child(even)::before {
+            left: -40px;
+        }
+
+        .schedule-block::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--crimson), transparent);
+            animation: scan 3s linear infinite;
+        }
+
+
+        .schedule-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .schedule-block h3 {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 2rem;
+            color: var(--crimson);
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .schedule-time {
+            display: block;
+            color: var(--text-primary);
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .activity-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .activity-list li {
+            color: var(--text-secondary);
+            padding: 8px 0;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .schedule-block:hover {
+            transform: scale(1.02);
+            border-color: var(--crimson);
+            background: rgba(220, 20, 60, 0.05);
+        }
+
+        .activity-list li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: var(--crimson);
+        }
+
+        .org-tag,
+        .performer-tag {
+            color: var(--crimson);
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .kamecon-collaborators {
+            margin: 80px 0;
+            padding: 60px;
+            background: rgba(0, 0, 0, 0.6);
+            border: 2px solid var(--border);
+        }
+
+        .collab-title {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 3rem;
+            color: var(--crimson);
+            text-align: center;
+            margin-bottom: 50px;
+            letter-spacing: 3px;
+        }
+
+        .collab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .collab-card {
+            background: linear-gradient(135deg, rgba(220, 20, 60, 0.1), transparent);
+            border: 1px solid var(--border);
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .collab-card:hover {
+            transform: scale(1.05);
+            border-color: var(--crimson);
+            box-shadow: 0 10px 30px rgba(220, 20, 60, 0.3);
+        }
+
+        .collab-type {
+            font-family: 'Bebas Neue', cursive;
+            color: var(--crimson);
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .collab-name {
+            font-size: 1.3rem;
+            color: var(--text-primary);
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .collab-contact {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .kamecon-vendor-call {
+            margin: 80px 0;
+            padding: 60px;
+            background: rgba(0, 0, 0, 0.6);
+            border: 2px solid var(--border);
+        }
+
+        .vendor-box {
+            background: transparent;
+            padding: 0;
+            text-align: center;
+            position: relative;
+            overflow: visible;
+        }
+
+        .vendor-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(45deg,
+                    transparent,
+                    transparent 10px,
+                    rgba(0, 0, 0, 0.1) 10px,
+                    rgba(0, 0, 0, 0.1) 20px);
+        }
+
+        .vendor-title {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 3rem;
+            color: var(--crimson);
+            letter-spacing: 3px;
+            margin-bottom: 50px;
+            text-align: center;
+        }
+
+        .vendor-text {
+            font-size: 1.3rem;
+            color: var(--text-primary);
+            margin-bottom: 20px;
+        }
+
+        .vendor-subtext {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            margin-bottom: 40px;
+        }
+
+        .vendor-buttons {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .vendor-apply-btn,
+        .vendor-info-btn {
+            padding: 20px 50px;
+            font-family: 'Bebas Neue', cursive;
+            font-size: 1.3rem;
+            letter-spacing: 2px;
+            border: 2px solid var(--crimson);
+            background: transparent;
+            color: var(--crimson);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .vendor-apply-btn:hover,
+        .vendor-info-btn:hover {
+            background: var(--crimson);
+            color: var(--dark-bg);
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 968px) {
+            .kamecon-schedule-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .collab-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .vendor-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .kamecon-logo {
+                font-size: 4rem;
+            }
+        }
+
+        .has-dropdown {
+            position: relative;
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: rgba(10, 10, 10, 0.98);
+            border: 1px solid var(--border);
+            min-width: 180px;
+            list-style: none;
+            padding: 10px 0;
+            margin-top: 0;
+            z-index: 1001;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .has-dropdown:hover .dropdown-menu,
+        .dropdown-menu:hover {
+            display: block;
+            opacity: 1;
+        }
+
+        .has-dropdown::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            height: 10px;
+            background: transparent;
+        }
+
+        .dropdown-menu a {
+            padding: 10px 20px !important;
+            display: block;
+            font-size: 0.85rem !important;
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-menu a:hover {
+            background: rgba(220, 20, 60, 0.1);
+            padding-left: 25px !important;
+        }
+
+        @media (max-width: 768px) {
+            .dropdown-menu {
+                position: static;
+                display: block;
+                background: transparent;
+                border: none;
+                margin-left: 20px;
+                margin-top: 0;
+                opacity: 1;
+            }
+        }
+
         .music-carousel-container {
             position: relative;
             overflow: hidden;
@@ -3478,16 +4156,16 @@
 
         .tilted-poster {
             width: 100%;
-            max-width: 400px;
+            max-width: 500px;
             height: auto;
-            transform: rotate(3deg);
+            transform: rotate(0deg);
             transition: all 0.3s ease;
-            filter: drop-shadow(0 10px 30px rgba(220, 20, 60, 0.3));
+            filter: none;
         }
 
         .tilted-poster:hover {
-            transform: rotate(0deg) scale(1.05);
-            filter: drop-shadow(0 15px 40px rgba(220, 20, 60, 0.5));
+            transform: scale(1.03);
+            filter: none;
         }
 
 
@@ -3649,7 +4327,8 @@
         }
 
         .movie-trip-banner {
-            background: linear-gradient(135deg, var(--crimson), var(--blood-red));
+            background: rgba(0, 0, 0, 0.6);
+            border: 2px solid var(--border);
             padding: 40px;
             text-align: center;
             position: relative;
@@ -3682,28 +4361,29 @@
 
         .movie-trip-banner h4 {
             font-family: 'Bebas Neue', cursive;
-            font-size: 2rem;
-            color: var(--dark-bg);
+            font-size: 2.5rem;
+            color: var(--crimson);
             margin-bottom: 10px;
+            letter-spacing: 3px;
         }
 
         .trip-date {
             display: block;
-            font-size: 1.5rem;
-            color: rgba(0, 0, 0, 0.8);
+            font-size: 1.3rem;
+            color: var(--text-primary);
             margin-bottom: 15px;
             font-weight: 700;
         }
 
         .movie-trip-banner p {
-            color: rgba(255, 255, 255, 0.9);
+            color: var(--text-secondary);
             margin-bottom: 25px;
         }
 
         .rsvp-btn {
             padding: 15px 40px;
-            background: var(--dark-bg);
-            border: 2px solid var(--dark-bg);
+            background: transparent;
+            border: 2px solid var(--crimson);
             color: var(--crimson);
             font-weight: 700;
             letter-spacing: 2px;
@@ -3712,8 +4392,7 @@
         }
 
         .rsvp-btn:hover {
-            background: transparent;
-            border-color: var(--dark-bg);
+            background: var(--crimson);
             color: var(--dark-bg);
             transform: scale(1.05);
         }
@@ -4488,15 +5167,16 @@
 
         .partner-text {
             font-family: 'Bebas Neue', cursive;
-            font-size: 1.1 rem;
-            letter-spacing: 4px;
-            color: #000000;
+            font-size: 1.5rem;
+            letter-spacing: 1.5px;
+            color: var(--text-primary);
             font-weight: 900;
             opacity: 1;
             margin-bottom: 20px;
-            text-shadow: 1px 1px 0 #000000;
+            text-transform: uppercase;
         }
 
+       
         .partner-logo-container {
             display: flex;
             justify-content: center;
@@ -5274,7 +5954,7 @@
             border-left: 3px solid #00ffff;
         }
 
-    
+
         @keyframes noteBounce {
 
             0%,
@@ -5832,11 +6512,20 @@
                 <li><a href="#home" class="nav-link">HOME</a></li>
                 <li><a href="#meetings" class="nav-link">MEETINGS</a></li>
                 <li><a href="#events" class="nav-link">EVENTS</a></li>
+                <li><a href="#kamecon" class="nav-link">KAMECON</a></li>
                 <li><a href="#promotions" class="nav-link">PROMOTIONS</a></li>
                 <li><a href="#eboard" class="nav-link">E-BOARD</a></li>
                 <li><a href="#join" class="nav-link">JOIN</a></li>
-                <li><a href="#subgroups" class="nav-link">SUBGROUPS</a></li>
-                <li><a href="#animusic" class="nav-link">ANIMUSIC</a></li>
+                <li class="has-dropdown">
+                    <a href="#subgroups" class="nav-link">SUBGROUPS</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#animusic" class="nav-link sub-link">ANIMUSIC</a></li>
+                        <li><a href="#cosplay" class="nav-link sub-link">COSPLAY</a></li>
+                        <li><a href="#manga" class="nav-link sub-link">MANGA</a></li>
+                        <li><a href="#oldschool" class="nav-link sub-link">OLD SCHOOL</a></li>
+                        <li><a href="#rainbow" class="nav-link sub-link">RAINBOW</a></li>
+                    </ul>
+                </li>
                 <li><a href="#resources" class="nav-link">RESOURCES</a></li>
             </ul>
             <div style="display: flex; align-items: center;">
@@ -5854,7 +6543,6 @@
     <section id="home" class="page-section active">
         <div class="hero">
             <div class="hero-mascot">
-                <img src="images/mascott.png" alt="TAS Mascot">
             </div>
             <div class="hero-content">
                 <h1 class="stagger-element">TERRAPIN ANIME SOCIETY</h1>
@@ -6279,7 +6967,122 @@
         </div>
     </section>
 
+    <section id="kamecon" class="page-section">
+        <div class="kamecon-hero">
 
+
+            <div class="kamecon-main-title">
+                <h1 class="kamecon-logo">KAMECON</h1>
+                <div class="kamecon-subtitle">TERRAPIN ANIME SOCIETY MINI-CONVENTION</div>
+            </div>
+
+            <div class="kamecon-event-info">
+                <div class="kamecon-date-display">
+                    <span class="spring-label">FALL 2025</span>
+                    <h2>NOVEMBER 16TH</h2>
+                    <span class="kamecon-day-label">SUNDAY</span>
+                </div>
+
+                <div class="kamecon-time-location">
+                    <p class="kamecon-time">1:00 PM - 8:30 PM</p>
+                    <p class="kamecon-venue">THE ATRIUM • ADELE H. STAMP STUDENT UNION</p>
+                    <p class="kamecon-address">3972 Campus Dr, College Park, MD 20742</p>
+                </div>
+            </div>
+
+            <div class="kamecon-poster-section">
+                <div class="kamecon-poster-glow"></div>
+                <img src="images/convention.png" alt="KAMECON Poster" class="kamecon-main-poster">
+                <div class="kamecon-poster-frame"></div>
+            </div>
+
+
+            <div class="kamecon-vendor-call">
+                <div class="vendor-box">
+                    <h2 class="vendor-title">CALLING ALL VENDORS!</h2>
+                    <p class="vendor-text">We're actively seeking vendors for KAMECON 2025!</p>
+                    <p class="vendor-subtext">Join us for UMD's anime mini-convention</p>
+                    <div class="vendor-buttons">
+                        <button class="vendor-apply-btn" onclick="alert('Vendor applications opening soon!')">APPLY AS
+                            VENDOR</button>
+                        <button class="vendor-info-btn" onclick="alert('Contact us for more information!')">GET
+                            INFO</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="kamecon-schedule-grid">
+                <div class="schedule-timeline">
+                    <div class="schedule-block arcade-block">
+                        <h3>ARCADE & GAMING</h3>
+                        <span class="schedule-time">1:00 PM - 5:00 PM</span>
+                        <ul class="activity-list">
+                            <li>Rhythm Game Club Arcade Machines</li>
+                            <li>XR Club VR Beat Saber Experience</li>
+                            <li>Mario Kart Club Tournament Racing</li>
+                        </ul>
+                    </div>
+
+                    <div class="schedule-block artist-block">
+                        <h3>ARTIST ALLEY</h3>
+                        <span class="schedule-time">1:00 PM - 6:00 PM</span>
+                        <ul class="activity-list">
+                            <li>Local Artists & Creators</li>
+                            <li>Anime Merchandise</li>
+                            <li>Custom Commissions</li>
+                        </ul>
+                    </div>
+
+                    <div class="schedule-block concert-block">
+                        <h3>LIVE CONCERTS</h3>
+                        <span class="schedule-time">6:00 PM - 8:30 PM</span>
+                        <ul class="activity-list">
+                            <li>Peach Tea Punch Performance</li>
+                            <li>Leaana's Band Show</li>
+                            <li>Fish's Idol Group</li>
+                            <li>DJ Sam Anime Mix Set</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="kamecon-collaborators">
+                <h2 class="collab-title">FEATURING COLLABORATIONS WITH</h2>
+                <div class="collab-grid">
+                    <div class="collab-card">
+                        <div class="collab-type">GAMING</div>
+                        <div class="collab-name">Rhythm Game Club</div>
+                    </div>
+                    <div class="collab-card">
+                        <div class="collab-type">CONCERT</div>
+                        <div class="collab-name">Peach Tea Punch</div>
+                    </div>
+                    <div class="collab-card">
+                        <div class="collab-type">CONCERT</div>
+                        <div class="collab-name">Leaana's Band</div>
+                    </div>
+                    <div class="collab-card">
+                        <div class="collab-type">DJ SET</div>
+                        <div class="collab-name">DJ Sam</div>
+                    </div>
+                    <div class="collab-card">
+                        <div class="collab-type">VR EXPERIENCE</div>
+                        <div class="collab-name">XR Club</div>
+                    </div>
+                    <div class="collab-card">
+                        <div class="collab-type">IDOL SHOW</div>
+                        <div class="collab-name">Fish's Idol Group</div>
+                    </div>
+                    <div class="collab-card">
+                        <div class="collab-type">GAMING</div>
+                        <div class="collab-name">Mario Kart Club</div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
 
     <section id="promotions" class="page-section">
         <div class="promotions-hero">
@@ -6555,120 +7358,116 @@
 
             <div class="submission-interface">
                 <div class="submission-header">
-                    <h2 class="submission-title">WEEKLY MUSIC MEETINGS</h2>
+                    <h2 class="submission-title">SUBMIT YOUR FAVORITE ANIME MUSIC</h2>
+                    <p
+                        style="color: #00ffff; font-size: 1.2rem; margin-top: 10px; font-family: 'Space Grotesk', sans-serif; letter-spacing: 1px;">
+                        Share up to 5 songs • Max 4:30 total runtime
+                    </p>
                 </div>
 
-                <div class="submission-rules">
-                    <h3 class="rules-title">SUBMISSION RULES</h3>
-                    <div class="important-rule">
-                        TOTAL TIME OF ALL SONGS: MAXIMUM 4 MINUTES 30 SECONDS
-                    </div>
-                    <div class="rule-item">Do not submit anything from Fall 2024, Spring 2025, or Fall 2025</div>
-                    <div class="rule-item">Submit 1 to 5 songs per person</div>
-                    <div class="rule-item">First come, first served for duplicate submissions</div>
-                    <div class="rule-item">Must be present (in person or online) for songs to play</div>
-                    <div class="rule-item">Don't submit songs YOU have submitted before</div>
-                    <div class="rule-item">Check the spreadsheet for songs already played this year</div>
-                </div>
+                <div class="music-examples" style="margin-top: 40px;">
 
-                <div class="music-examples">
-                    <h3 class="examples-title">RECENT MEMBER SUBMISSIONS</h3>
-                    <div class="music-carousel-container">
-                        <button class="carousel-nav prev-nav" onclick="changeSlide(-1)">‹</button>
-                        <div class="music-carousel">
-                            <div class="music-grid carousel-slide active">
-                                <div class="music-card">
-                                    <div class="song-title">Seishun Complex</div>
-                                    <div class="anime-name">Bocchi the Rock!</div>
-                                    <a href="https://www.youtube.com/watch?v=gNn9NxZH2Vo" target="_blank"
-                                        class="play-button">▶ PLAY</a>
-                                </div>
-                                <div class="music-card">
-                                    <div class="song-title">Guitar, Loneliness and Blue Planet</div>
-                                    <div class="anime-name">Bocchi the Rock!</div>
-                                    <a href="https://www.youtube.com/watch?v=xXJdyx8BI9I" target="_blank"
-                                        class="play-button">▶ PLAY</a>
-                                </div>
-                                <div class="music-card">
-                                    <div class="song-title">Mixed Nuts</div>
-                                    <div class="anime-name">SPY x FAMILY</div>
-                                    <a href="https://www.youtube.com/watch?v=U_rWZK_8vUY" target="_blank"
-                                        class="play-button">▶ PLAY</a>
-                                </div>
-                                <div class="music-card">
-                                    <div class="song-title">Idol</div>
-                                    <div class="anime-name">Oshi no Ko</div>
-                                    <a href="https://www.youtube.com/watch?v=ZRtdQ81jPUQ" target="_blank"
-                                        class="play-button">▶ PLAY</a>
-                                </div>
-                                <div class="music-card">
-                                    <div class="song-title">Otonoke</div>
-                                    <div class="anime-name">Dandadan</div>
-                                    <a href="https://www.youtube.com/watch?v=1P9sYyAk8j4" target="_blank"
-                                        class="play-button">▶ PLAY</a>
-                                </div>
-                                <div class="music-card">
-                                    <div class="song-title">Giri Giri</div>
-                                    <div class="anime-name">Kaguya-sama: Love is War</div>
-                                    <a href="https://www.youtube.com/watch?v=uqDiRihGKN8" target="_blank"
-                                        class="play-button">▶ PLAY</a>
-                                </div>
-                            </div>
-
-                            <div class="music-grid carousel-slide">
-                                <div class="music-card">
-                                    <div class="song-title">Namae no Nai Kaibutsu</div>
-                                    <div class="anime-name">Psycho-Pass</div>
-                                    <a href="https://www.youtube.com/watch?v=sF0QLtk3YH0" target="_blank"
-                                        class="play-button">▶ PLAY</a>
-                                </div>
-                                <div class="music-card">
-                                    <div class="song-title">Bloody Stream</div>
-                                    <div class="anime-name">JoJo's Bizarre Adventure</div>
-                                    <a href="https://www.youtube.com/watch?v=KoY66lqmcYA" target="_blank"
-                                        class="play-button">▶ PLAY</a>
-                                </div>
-                                <div class="music-card">
-                                    <div class="song-title">Kawaki wo Ameku</div>
-                                    <div class="anime-name">Domestic Girlfriend</div>
-                                    <a href="https://www.youtube.com/watch?v=0YF8vecQWYs" target="_blank"
-                                        class="play-button">▶ PLAY</a>
-                                </div>
-                                <div class="music-card">
-                                    <div class="song-title">COLORS</div>
-                                    <div class="anime-name">Code Geass</div>
-                                    <a href="https://www.youtube.com/watch?v=FUH9S44D1BM" target="_blank"
-                                        class="play-button">▶ PLAY</a>
-                                </div>
-                                <div class="music-card">
-                                    <div class="song-title">Hikari no Machi</div>
-                                    <div class="anime-name">Girls Band Cry</div>
-                                    <a href="https://www.youtube.com/watch?v=UZWV9Lqb6m8" target="_blank"
-                                        class="play-button">▶ PLAY</a>
-                                </div>
-                                <div class="music-card">
-                                    <div class="song-title">Shikanoko Nokonoko</div>
-                                    <div class="anime-name">My Deer Friend Nokotan</div>
-                                    <a href="https://www.youtube.com/watch?v=JLPTrIGHJLg" target="_blank"
-                                        class="play-button">▶ PLAY</a>
-                                </div>
-                            </div>
-                        </div>
-                        <button class="carousel-nav next-nav" onclick="changeSlide(1)">›</button>
-                    </div>
-
-                    <div class="carousel-indicators">
-                        <span class="indicator active" data-slide="0" onclick="goToSlide(0)"></span>
-                        <span class="indicator" data-slide="1" onclick="goToSlide(1)"></span>
-                    </div>
-                </div>
-                <div class="discord-link-section">
-                    <h3 class="discord-title">SUBMIT YOUR SONGS</h3>
-                    <p class="discord-text">JOIN OUR DISCORD AND SUBMIT YOUR SONGS IN THE #ANIMUSIC CHANNEL!</p>
-                    <a href="https://discord.gg/fzKBsnS" target="_blank" class="discord-button">JOIN DISCORD TO
-                        SUBMIT</a>
                 </div>
             </div>
+
+            <div class="music-examples">
+                <h3 class="examples-title">RECENT MEMBER SUBMISSIONS</h3>
+                <div class="music-carousel-container">
+                    <button class="carousel-nav prev-nav" onclick="changeSlide(-1)">‹</button>
+                    <div class="music-carousel">
+                        <div class="music-grid carousel-slide active">
+                            <div class="music-card">
+                                <div class="song-title">Seishun Complex</div>
+                                <div class="anime-name">Bocchi the Rock!</div>
+                                <a href="https://www.youtube.com/watch?v=gNn9NxZH2Vo" target="_blank"
+                                    class="play-button">▶ PLAY</a>
+                            </div>
+                            <div class="music-card">
+                                <div class="song-title">Guitar, Loneliness and Blue Planet</div>
+                                <div class="anime-name">Bocchi the Rock!</div>
+                                <a href="https://www.youtube.com/watch?v=xXJdyx8BI9I" target="_blank"
+                                    class="play-button">▶ PLAY</a>
+                            </div>
+                            <div class="music-card">
+                                <div class="song-title">Mixed Nuts</div>
+                                <div class="anime-name">SPY x FAMILY</div>
+                                <a href="https://www.youtube.com/watch?v=U_rWZK_8vUY" target="_blank"
+                                    class="play-button">▶ PLAY</a>
+                            </div>
+                            <div class="music-card">
+                                <div class="song-title">Idol</div>
+                                <div class="anime-name">Oshi no Ko</div>
+                                <a href="https://www.youtube.com/watch?v=ZRtdQ81jPUQ" target="_blank"
+                                    class="play-button">▶ PLAY</a>
+                            </div>
+                            <div class="music-card">
+                                <div class="song-title">Otonoke</div>
+                                <div class="anime-name">Dandadan</div>
+                                <a href="https://www.youtube.com/watch?v=1P9sYyAk8j4" target="_blank"
+                                    class="play-button">▶ PLAY</a>
+                            </div>
+                            <div class="music-card">
+                                <div class="song-title">Giri Giri</div>
+                                <div class="anime-name">Kaguya-sama: Love is War</div>
+                                <a href="https://www.youtube.com/watch?v=uqDiRihGKN8" target="_blank"
+                                    class="play-button">▶ PLAY</a>
+                            </div>
+                        </div>
+
+                        <div class="music-grid carousel-slide">
+                            <div class="music-card">
+                                <div class="song-title">Namae no Nai Kaibutsu</div>
+                                <div class="anime-name">Psycho-Pass</div>
+                                <a href="https://www.youtube.com/watch?v=sF0QLtk3YH0" target="_blank"
+                                    class="play-button">▶ PLAY</a>
+                            </div>
+                            <div class="music-card">
+                                <div class="song-title">Bloody Stream</div>
+                                <div class="anime-name">JoJo's Bizarre Adventure</div>
+                                <a href="https://www.youtube.com/watch?v=KoY66lqmcYA" target="_blank"
+                                    class="play-button">▶ PLAY</a>
+                            </div>
+                            <div class="music-card">
+                                <div class="song-title">Kawaki wo Ameku</div>
+                                <div class="anime-name">Domestic Girlfriend</div>
+                                <a href="https://www.youtube.com/watch?v=0YF8vecQWYs" target="_blank"
+                                    class="play-button">▶ PLAY</a>
+                            </div>
+                            <div class="music-card">
+                                <div class="song-title">COLORS</div>
+                                <div class="anime-name">Code Geass</div>
+                                <a href="https://www.youtube.com/watch?v=FUH9S44D1BM" target="_blank"
+                                    class="play-button">▶ PLAY</a>
+                            </div>
+                            <div class="music-card">
+                                <div class="song-title">Hikari no Machi</div>
+                                <div class="anime-name">Girls Band Cry</div>
+                                <a href="https://www.youtube.com/watch?v=UZWV9Lqb6m8" target="_blank"
+                                    class="play-button">▶ PLAY</a>
+                            </div>
+                            <div class="music-card">
+                                <div class="song-title">Shikanoko Nokonoko</div>
+                                <div class="anime-name">My Deer Friend Nokotan</div>
+                                <a href="https://www.youtube.com/watch?v=JLPTrIGHJLg" target="_blank"
+                                    class="play-button">▶ PLAY</a>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="carousel-nav next-nav" onclick="changeSlide(1)">›</button>
+                </div>
+
+                <div class="carousel-indicators">
+                    <span class="indicator active" data-slide="0" onclick="goToSlide(0)"></span>
+                    <span class="indicator" data-slide="1" onclick="goToSlide(1)"></span>
+                </div>
+            </div>
+            <div class="discord-link-section">
+                <h3 class="discord-title">SUBMIT YOUR SONGS</h3>
+                <p class="discord-text">JOIN OUR DISCORD AND SUBMIT YOUR SONGS IN THE #ANIMUSIC CHANNEL!</p>
+                <a href="https://discord.gg/fzKBsnS" target="_blank" class="discord-button">JOIN DISCORD TO
+                    SUBMIT</a>
+            </div>
+        </div>
         </div>
     </section>
     <section id="resources" class="page-section">
