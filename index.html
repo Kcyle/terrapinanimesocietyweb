@@ -4077,10 +4077,9 @@
             box-shadow: 0 10px 20px rgba(220, 20, 60, 0.3);
         }
 
-
         .kamecon-content {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr 1.5fr;
             gap: 60px;
             align-items: center;
         }
@@ -5176,7 +5175,7 @@
             text-transform: uppercase;
         }
 
-       
+
         .partner-logo-container {
             display: flex;
             justify-content: center;
@@ -6263,27 +6262,11 @@
         }
     }
 
-    function startAutoSlide() {
-        autoSlideInterval = setInterval(() => {
-            changeSlide(1);
-        }, 10000);
-    }
-
-    function resetAutoSlide() {
-        clearInterval(autoSlideInterval);
-        startAutoSlide();
-    }
-
-
-    document.addEventListener('DOMContentLoaded', () => {
-        startAutoSlide();
-    });
 
 
 
-    document.querySelectorAll('.carousel-nav, .indicator').forEach(element => {
-        element.addEventListener('click', resetAutoSlide);
-    });
+
+
     document.addEventListener('DOMContentLoaded', function () {
         const animatedBg = document.getElementById('animatedBg');
         const bgPulse = document.getElementById('bgPulse');
@@ -6513,6 +6496,7 @@
                 <li><a href="#meetings" class="nav-link">MEETINGS</a></li>
                 <li><a href="#events" class="nav-link">EVENTS</a></li>
                 <li><a href="#kamecon" class="nav-link">KAMECON</a></li>
+                <li><a href="#promotions" class="nav-link">PROMOTIONS</a></li>
                 <li><a href="#eboard" class="nav-link">E-BOARD</a></li>
                 <li><a href="#join" class="nav-link">JOIN</a></li>
                 <li class="has-dropdown">
@@ -6602,42 +6586,51 @@
             </div>
         </div>
 
-
         <div class="screening-container">
             <div class="screening-header">
                 <h3>THIS WEEK'S SCREENING</h3>
                 <div class="screening-date">
                     <span class="date-label">SUNDAY</span>
-                    <span class="date-number" id="screeningDate">SEPTEMBER 21</span>
+                    <span class="date-number" id="screeningDate">SEPTEMBER 28</span>
                 </div>
+            </div>
+
+
+            <div
+                style="text-align: center; margin: 30px 0; padding: 20px; background: linear-gradient(135deg, rgba(139, 0, 0, 0.2), rgba(220, 20, 60, 0.1)); border: 2px solid var(--crimson);">
+                <h2
+                    style="font-family: 'Bebas Neue', cursive; font-size: 3rem; color: var(--crimson); letter-spacing: 4px; margin-bottom: 10px; text-shadow: 0 0 20px rgba(220, 20, 60, 0.5);">
+                    INDESTRUCTIBLE</h2>
+                <p
+                    style="color: var(--text-secondary); font-size: 1.1rem; letter-spacing: 2px; text-transform: uppercase;">
+                    This Week's Theme: Characters Who Can't Be Destroyed</p>
             </div>
 
             <div class="anime-showcase">
                 <div class="showcase-main">
                     <div class="anime-slider" id="animeSlider">
 
+
                         <div class="anime-slide active" data-anime="1">
                             <div class="anime-poster">
-                                <img src="images/anime1.png" alt="Excel Saga">
+                                <img src="images/anime1.png" alt="Ajin">
                                 <div class="poster-overlay"></div>
                             </div>
                             <div class="anime-details">
-                                <h4 class="anime-title">Excel Saga</h4>
+                                <h4 class="anime-title">Ajin</h4>
                                 <div class="anime-tags">
-                                    <span class="tag">Comedy</span>
-                                    <span class="tag">Parody</span>
-                                    <span class="tag">Action</span>
+                                    <span class="tag">Thriller</span>
+                                    <span class="tag">Supernatural</span>
+                                    <span class="tag">Horror</span>
                                 </div>
                                 <p class="anime-description">
-                                    A wild, over-the-top parody series that follows Excel, an enthusiastic but clueless
-                                    agent of the secret organization Across, as she tries to conquer the city under the
-                                    eccentric leadership of Il Palazzo. The show constantly breaks the fourth wall and
-                                    spoofs anime tropes, genres, and even itself. Its chaotic humor and absurd scenarios
-                                    make it a cult classic.
+                                    A dark thriller about humans called Ajin, who are immortal and hunted by the
+                                    government for experiments. Kei Nagai, a high school student who discovers he's one
+                                    of them, is forced into a world of fear, betrayal, and survival.
                                 </p>
                                 <div class="anime-meta">
                                     <span class="episode-count">26 Episodes</span>
-                                    <span class="rating">★★★★☆</span>
+                                    <span class="rating">★★★★★</span>
                                 </div>
                             </div>
                         </div>
@@ -6645,49 +6638,21 @@
 
                         <div class="anime-slide" data-anime="2">
                             <div class="anime-poster">
-                                <img src="images/anime2.png" alt="School-Live!">
+                                <img src="images/anime2.png" alt="Uncle from Another World">
                                 <div class="poster-overlay"></div>
                             </div>
                             <div class="anime-details">
-                                <h4 class="anime-title">School-Live! (Gakkou Gurashi!)</h4>
+                                <h4 class="anime-title">Isekai Ojisan (Uncle from Another World)</h4>
                                 <div class="anime-tags">
-                                    <span class="tag">Horror</span>
-                                    <span class="tag">Mystery</span>
-                                    <span class="tag">School</span>
+                                    <span class="tag">Comedy</span>
+                                    <span class="tag">Isekai</span>
+                                    <span class="tag">Fantasy</span>
                                 </div>
                                 <p class="anime-description">
-                                    At first, it seems like a slice-of-life anime about a group of cheerful girls living
-                                    at their school. However, it's revealed that they are actually survivors of a zombie
-                                    apocalypse, with one character maintaining a delusion of normal school life to cope
-                                    with the trauma. The series balances dark survival horror with bittersweet character
-                                    bonds.
-                                </p>
-                                <div class="anime-meta">
-                                    <span class="episode-count">12 Episodes</span>
-                                    <span class="rating">★★★★★</span>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div class="anime-slide" data-anime="3">
-                            <div class="anime-poster">
-                                <img src="images/anime3.png" alt="Talentless Nana">
-                                <div class="poster-overlay"></div>
-                            </div>
-                            <div class="anime-details">
-                                <h4 class="anime-title">Talentless Nana</h4>
-                                <div class="anime-tags">
-                                    <span class="tag">Psychological</span>
-                                    <span class="tag">Thriller</span>
-                                    <span class="tag">Supernatural</span>
-                                </div>
-                                <p class="anime-description">
-                                    On an island where children with superpowers are trained to fight humanity's
-                                    enemies, a new transfer student named Nana appears. Though she seems powerless,
-                                    she's secretly an assassin sent to eliminate her classmates, who are considered
-                                    dangerous. The series blends psychological thriller and mystery as Nana manipulates
-                                    and deceives those around her.
+                                    After waking up from a 17-year coma, Takafumi's uncle reveals he was living in a
+                                    fantasy world the whole time. Now back in modern Japan, he tries to balance his
+                                    outdated gamer knowledge, magic powers, and hilarious misunderstandings of modern
+                                    culture.
                                 </p>
                                 <div class="anime-meta">
                                     <span class="episode-count">13 Episodes</span>
@@ -6697,24 +6662,22 @@
                         </div>
 
 
-                        <div class="anime-slide" data-anime="4">
+                        <div class="anime-slide" data-anime="3">
                             <div class="anime-poster">
-                                <img src="images/anime4.png" alt="The Executioner and Her Way of Life">
+                                <img src="images/anime3.png" alt="Tonikawa">
                                 <div class="poster-overlay"></div>
                             </div>
                             <div class="anime-details">
-                                <h4 class="anime-title">The Executioner and Her Way of Life</h4>
+                                <h4 class="anime-title">Tonikawa: Over the Moon for You</h4>
                                 <div class="anime-tags">
-                                    <span class="tag">Fantasy</span>
-                                    <span class="tag">Adventure</span>
-                                    <span class="tag">Isekai</span>
+                                    <span class="tag">Romance</span>
+                                    <span class="tag">Comedy</span>
+                                    <span class="tag">Slice of Life</span>
                                 </div>
                                 <p class="anime-description">
-                                    In a world where people summoned from Japan often gain dangerous powers, priestess
-                                    Executioners are tasked with eliminating them. Menou, one such Executioner, hides
-                                    her true duty under a kind façade as she targets a newly summoned girl with
-                                    frightening abilities. The story mixes fantasy adventure with moral questions about
-                                    duty, trust, and the value of life.
+                                    A wholesome rom-com following Nasa Yuzaki, who marries a mysterious girl named
+                                    Tsukasa after a chance encounter. The story explores their sweet and quirky newlywed
+                                    life filled with lighthearted comedy and heartfelt romance.
                                 </p>
                                 <div class="anime-meta">
                                     <span class="episode-count">12 Episodes</span>
@@ -6724,61 +6687,83 @@
                         </div>
 
 
-                        <div class="anime-slide" data-anime="5">
+                        <div class="anime-slide" data-anime="4">
                             <div class="anime-poster">
-                                <img src="images/anime5.png" alt="Turkey! Time to Strike">
+                                <img src="images/anime4.png" alt="Yu Yu Hakusho">
                                 <div class="poster-overlay"></div>
                             </div>
                             <div class="anime-details">
-                                <h4 class="anime-title">Turkey! Time to Strike</h4>
+                                <h4 class="anime-title">Yu Yu Hakusho</h4>
                                 <div class="anime-tags">
-                                    <span class="tag">Comedy</span>
+                                    <span class="tag">Shonen</span>
+                                    <span class="tag">Supernatural</span>
                                     <span class="tag">Action</span>
-                                    <span class="tag">Parody</span>
                                 </div>
                                 <p class="anime-description">
-                                    This is a comedic action short where anthropomorphic turkeys rise up against humans
-                                    just before Thanksgiving. The birds, armed with absurd weapons and overblown
-                                    dramatic flair, wage war in a parody of shōnen battle anime tropes. It's
-                                    tongue-in-cheek, chaotic, and meant as satire rather than a serious series.
+                                    Classic shonen anime where Yusuke Urameshi, a delinquent teen, dies saving a child
+                                    and is brought back as a Spirit Detective. With friends like Kuwabara, Kurama, and
+                                    Hiei, he faces demons, tournaments, and battles that test his courage and heart.
                                 </p>
                                 <div class="anime-meta">
-                                    <span class="episode-count">12 Episodes</span>
-                                    <span class="rating">★★★☆☆</span>
+                                    <span class="episode-count">112 Episodes</span>
+                                    <span class="rating">★★★★★</span>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="anime-slide" data-anime="5">
+                            <div class="anime-poster">
+                                <img src="images/anime5.png" alt="Zombieland Saga">
+                                <div class="poster-overlay"></div>
+                            </div>
+                            <div class="anime-details">
+                                <h4 class="anime-title">Zombieland Saga</h4>
+                                <div class="anime-tags">
+                                    <span class="tag">Comedy</span>
+                                    <span class="tag">Music</span>
+                                    <span class="tag">Supernatural</span>
+                                </div>
+                                <p class="anime-description">
+                                    A group of legendary girls from different eras are resurrected as zombies to form an
+                                    idol group and save Saga Prefecture. Mixing slapstick comedy with heartfelt drama,
+                                    the series blends absurd humor with surprisingly emotional performances.
+                                </p>
+                                <div class="anime-meta">
+                                    <span class="episode-count">24 Episodes</span>
+                                    <span class="rating">★★★★☆</span>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-
                     <button class="slide-nav prev-slide" onclick="changeAnime(-1)">‹</button>
                     <button class="slide-nav next-slide" onclick="changeAnime(1)">›</button>
                 </div>
 
-
+                <!-- Update thumbnails -->
                 <div class="anime-thumbnails">
                     <div class="thumbnail active" data-anime="1" onclick="goToAnime(1)">
-                        <img src="images/anime1.png" alt="Excel Saga">
-                        <div class="thumb-title">Excel Saga</div>
+                        <img src="images/anime1.png" alt="Ajin">
+                        <div class="thumb-title">Ajin</div>
                     </div>
                     <div class="thumbnail" data-anime="2" onclick="goToAnime(2)">
-                        <img src="images/anime2.png" alt="School-Live!">
-                        <div class="thumb-title">School-Live!</div>
+                        <img src="images/anime2.png" alt="Isekai Ojisan">
+                        <div class="thumb-title">Isekai Ojisan</div>
                     </div>
                     <div class="thumbnail" data-anime="3" onclick="goToAnime(3)">
-                        <img src="images/anime3.png" alt="Talentless Nana">
-                        <div class="thumb-title">Talentless Nana</div>
+                        <img src="images/anime3.png" alt="Tonikawa">
+                        <div class="thumb-title">Tonikawa</div>
                     </div>
                     <div class="thumbnail" data-anime="4" onclick="goToAnime(4)">
-                        <img src="images/anime4.png" alt="The Executioner">
-                        <div class="thumb-title">The Executioner</div>
+                        <img src="images/anime4.png" alt="Yu Yu Hakusho">
+                        <div class="thumb-title">Yu Yu Hakusho</div>
                     </div>
                     <div class="thumbnail" data-anime="5" onclick="goToAnime(5)">
-                        <img src="images/anime5.png" alt="Turkey!">
-                        <div class="thumb-title">Turkey!</div>
+                        <img src="images/anime5.png" alt="Zombieland Saga">
+                        <div class="thumb-title">Zombieland Saga</div>
                     </div>
                 </div>
-
 
                 <div class="screening-progress">
                     <div class="progress-bar">
@@ -7877,7 +7862,7 @@
 
         let currentAnime = 1;
         const totalAnime = 5;
-        let autoSlideInterval;
+
 
         function changeAnime(direction) {
             const slides = document.querySelectorAll('.anime-slide');
@@ -7904,7 +7889,6 @@
             progressFill.style.width = (currentAnime / totalAnime * 100) + '%';
 
 
-            resetAutoSlide();
         }
 
         function goToAnime(animeNumber) {
@@ -7914,15 +7898,6 @@
             }
         }
 
-        function resetAutoSlide() {
-            clearInterval(autoSlideInterval);
-            autoSlideInterval = setInterval(() => {
-                changeAnime(1);
-            }, 7000);
-        }
-
-
-        resetAutoSlide();
 
 
         document.addEventListener('keydown', (e) => {
@@ -8497,4 +8472,3 @@
 </body>
 
 </html>
-
