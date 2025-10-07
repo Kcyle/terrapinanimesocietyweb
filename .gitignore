@@ -1,9 +1,0 @@
-node_modules/
-.DS_Store
-*.log
-reorganize.js
-reorganize.py
-index.html.original
-index.html.original.backup
-README-REORGANIZATION.md
-DEPLOYMENT-GUIDE.md
