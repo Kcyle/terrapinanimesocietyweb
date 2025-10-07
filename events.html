@@ -1,0 +1,297 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta name="google-site-verification" content="TB3tz3yB9u7jZFQgNRTqnEwV9irF2g_FDVb7TIKbzA4" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terrapin Anime Society - Events</title>
+    <link rel="stylesheet" href="styles/global.css">
+    <link rel="stylesheet" href="styles/navigation.css">
+    <link rel="stylesheet" href="styles/components.css">
+    <link rel="stylesheet" href="styles/footer.css">
+    <link rel="stylesheet" href="styles/mobile.css">
+    <link rel="stylesheet" href="styles/events.css">
+</head>
+<body>
+        <div class="page-transition" id="pageTransition">
+        <div class="shoji-door-left">
+            <div class="shoji-grid"></div>
+        </div>
+        <div class="shoji-door-right">
+            <div class="shoji-grid"></div>
+        </div>
+        <div class="door-seal">
+            <div class="seal-circle">
+                <div class="seal-text"></div>
+            </div>
+        </div>
+
+        <div class="kanji-particles">
+            <span class="kanji">桜</span>
+            <span class="kanji">刀</span>
+            <span class="kanji">魂</span>
+            <span class="kanji">力</span>
+        </div>
+        <div class="door-mascot">
+            <img src="images/mascott2.png" alt="Chibi Mascot">
+        </div>
+    </div>
+
+        <div class="blossom-container">
+        <div class="blossom-petal"><img src="images/blossom.png" alt="Blossom"></div>
+        <div class="blossom-petal"><img src="images/blossom.png" alt="Blossom"></div>
+        <div class="blossom-petal"><img src="images/blossom.png" alt="Blossom"></div>
+        <div class="blossom-petal"><img src="images/blossom.png" alt="Blossom"></div>
+        <div class="blossom-petal"><img src="images/blossom.png" alt="Blossom"></div>
+        <div class="blossom-petal"><img src="images/blossom.png" alt="Blossom"></div>
+        <div class="blossom-petal"><img src="images/blossom.png" alt="Blossom"></div>
+        <div class="blossom-petal"><img src="images/blossom.png" alt="Blossom"></div>
+        <div class="blossom-petal"><img src="images/blossom.png" alt="Blossom"></div>
+        <div class="blossom-petal"><img src="images/blossom.png" alt="Blossom"></div>
+    </div>
+
+        <div class="testudo-container">
+        <div class="testudo-text">Drawn by u/Vivaldi44<br>our little Testudo-chan mascot at UMD!</div>
+        <div class="testudo-bubbles">
+            <span></span>
+            <span></span>
+        </div>
+        <div class="testudo-mascot">
+            <img src="images/testudo.png" alt="Testudo-chan Mascot">
+        </div>
+    </div>
+
+
+    <div class="floating-mascot-container">
+        <div class="mascot-text">Click me for special promotions!</div>
+        <div class="thought-bubbles">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="floating-mascot" onclick="navigateToPromotions()">
+            <img src="images/mascott2.png" alt="TAS Chibi Mascot">
+        </div>
+    </div>
+
+    <div class="audio-control-container">
+        <input type="range" id="volumeSlider" class="audio-slider" min="0" max="100" value="50">
+        <div class="volume-percentage">50%</div>
+    </div>
+
+        <nav id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                TAS
+                <img src="images/blossom.png" alt="Cherry Blossom">
+            </a>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link">HOME</a></li>
+                <li><a href="meetings.html" class="nav-link">MEETINGS</a></li>
+                <li><a href="events.html" class="nav-link">EVENTS</a></li>
+                <li><a href="kamecon.html" class="nav-link">KAMECON</a></li>
+                <li><a href="promotions.html" class="nav-link">PROMOTIONS</a></li>
+                <li><a href="eboard.html" class="nav-link">E-BOARD</a></li>
+                <li><a href="join.html" class="nav-link">JOIN</a></li>
+                <li class="has-dropdown">
+                    <a href="subgroups.html" class="nav-link">SUBGROUPS</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="animusic.html" class="nav-link sub-link">ANIMUSIC</a></li>
+                        <li><a href="#cosplay" class="nav-link sub-link">COSPLAY</a></li>
+                        <li><a href="#manga" class="nav-link sub-link">MANGA</a></li>
+                        <li><a href="#oldschool" class="nav-link sub-link">OLD SCHOOL</a></li>
+                        <li><a href="#rainbow" class="nav-link sub-link">RAINBOW</a></li>
+                    </ul>
+                </li>
+                <li><a href="resources.html" class="nav-link">RESOURCES</a></li>
+            </ul>
+            <div style="display: flex; align-items: center;">
+                <span class="menu-label">MENU</span>
+                <div class="mobile-toggle" id="mobileToggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- PAGE CONTENT GOES HERE -->
+            </div>
+    </section>
+
+
+    <section id="events" class="page-section">
+        <div class="section-header">
+            <h2>EVENTS</h2>
+            <p class="section-subtitle">Special occasions throughout the year</p>
+        </div>
+
+
+        <div class="event-section maid-cafe-section">
+            <div class="event-header">
+                <h3>MAID CAFE</h3>
+                <span class="event-badge">SPRING TRADITION</span>
+            </div>
+            <div class="maid-cafe-content">
+                <div class="maid-gallery">
+                    <div class="maid-image-main">
+                        <img src="images/maid1.png" alt="Maid Cafe Event">
+                    </div>
+                    <div class="maid-image-grid">
+                        <img src="images/maid2.png" alt="Maid Cafe Service">
+                        <img src="images/maid3.png" alt="Maid Cafe Atmosphere">
+                    </div>
+                </div>
+                <div class="maid-info">
+                    <div class="maid-mascot">
+                        <img src="images/maidmascott.png" alt="Maid Mascot">
+                    </div>
+                    <div class="event-stats">
+                        <div class="stat-item">
+                            <span class="stat-number">100+</span>
+                            <span class="stat-label">ATTENDEES</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">STAMP</span>
+                            <span class="stat-label">LOCATION</span>
+                        </div>
+                    </div>
+                    <p class="event-description">
+                        Our Maid Cafe was held in Stamp last spring semester and we had over 100 attendees!
+                        Experience authentic Japanese cafe culture with themed refreshments, entertainment,
+                        and cosplay. We're planning to make it even bigger and better!
+                    </p>
+                    <button class="volunteer-btn" onclick="showFormNotAvailable()">VOLUNTEER FOR MAID CAFE</button>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="event-section kamecon-section">
+            <div class="event-header">
+                <h3>KAMECON</h3>
+                <span class="event-badge">RETURNING FALL 2025</span>
+            </div>
+            <div class="kamecon-content">
+                <div class="kamecon-info">
+                    <p class="event-history">
+                        <span class="highlight">Our First Mini-Con!</span><br>
+                        The original Kamecon was held back in 2016. We're planning to slowly bring it back
+                        with a mini-convention featuring vendor booths, artist alley, panels, gaming partners,
+                        Concerts & cosplay, and more!
+                    </p>
+                    <div class="kamecon-features">
+                        <div class="feature-item">
+                            <span class="feature-icon">ART</span>
+                            <span>Artist Alley</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">GAME</span>
+                            <span>Gaming partners</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">COS</span>
+                            <span>Concerts & cosplay</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">SHOP</span>
+                            <span>Vendor Booths</span>
+                        </div>
+                    </div>
+                    <button class="apply-btn" onclick="showFormNotAvailable()">APPLY AS VENDOR/ARTIST</button>
+                </div>
+                <div class="kamecon-poster">
+                    <img src="images/convention.png" alt="Kamecon Poster" class="tilted-poster">
+                </div>
+            </div>
+        </div>
+
+
+        <div class="event-section chainsaw-section">
+            <div class="event-header">
+                <h3>CHAINSAW MAN PROMOTIONS</h3>
+                <span class="event-badge">SEPTEMBER - OCTOBER 2025</span>
+            </div>
+            <div class="csm-images-trio">
+                <img src="images/csm1.png" alt="Chainsaw Man 1" class="csm-img">
+                <img src="images/csm2.png" alt="Chainsaw Man 2" class="csm-img csm-center">
+                <img src="images/csm3.png" alt="Chainsaw Man 3" class="csm-img">
+            </div>
+            <div class="csm-calendar">
+                <div class="csm-weekend">
+                    <h4>CHAINSAW MAN WEEKEND</h4>
+                    <span class="weekend-dates">SEPTEMBER 27-28</span>
+                </div>
+                <div class="csm-events">
+                    <div class="csm-day">
+                        <div class="day-header-csm">
+                            <span class="csm-date">OCT 18</span>
+                            <span class="csm-day-label">FRIDAY</span>
+                        </div>
+                        <div class="csm-event-details">
+                            <h5>Animusic Special</h5>
+                            <p>• Chainsaw Man Ending Song Tier List Party</p>
+                            <p>• Official Merch Raffle</p>
+                        </div>
+                    </div>
+                    <div class="csm-day">
+                        <div class="day-header-csm">
+                            <span class="csm-date">OCT 19</span>
+                            <span class="csm-day-label">SATURDAY</span>
+                        </div>
+                        <div class="csm-event-details">
+                            <h5>Main Club Event</h5>
+                            <p>• Chainsaw Man Game Night</p>
+                            <p>• Official Merch Raffle</p>
+                            <p>• Streaming CSM S1 Episodes</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="csm-workshops">
+                    <h4>COSPLAY WORKSHOPS</h4>
+                    <div class="workshop-dates">
+                        <div class="workshop-card">
+                            <span class="workshop-date">OCT 19</span>
+                            <span class="workshop-title">Store Bought Cosplay Fixup Workshop</span>
+                            <span class="workshop-location">JIMENEZ 0220</span>
+                        </div>
+                        <div class="workshop-card">
+                            <span class="workshop-date">OCT 26</span>
+                            <span class="workshop-title">Wigs and Makeup Workshop</span>
+                            <span class="workshop-location">JIMENEZ 0220</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="csm-movie-trip">
+                    <div class="movie-trip-banner">
+                        <h4>THEATER TRIP IN COSPLAY</h4>
+                        <span class="trip-date">OCTOBER 31ST - HALLOWEEN</span>
+                        <p>Join us for a club trip to see the Chainsaw Man movie in full cosplay!</p>
+                        <button class="rsvp-btn">RSVP FOR MOVIE TRIP</button>
+                    </div>
+
+            </div>
+    </section>
+
+
+    <footer>
+        <div class="footer-content">
+            <ul class="footer-links">
+                <li><a href="https://discord.gg/fzKBsnS" target="_blank">Discord</a></li>
+                <li><a href="https://terplink.umd.edu/organization/terrapin-anime-society" target="_blank">TerpLink</a>
+                </li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="#donate">Donate</a></li>
+            </ul>
+            <div class="footer-bottom">
+                <span class="copyright">© 2025 TERRAPIN ANIME SOCIETY</span><br>
+
+    <script src="js/background.js"></script>
+    <script src="js/navigation.js"></script>
+    <script src="js/audio.js"></script>
+    <script src="js/animations.js"></script>
+    <script src="js/scroll.js"></script>
+    <script src="js/init.js"></script>
+</body>
+</html>

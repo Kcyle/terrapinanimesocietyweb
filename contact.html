@@ -1,0 +1,168 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta name="google-site-verification" content="TB3tz3yB9u7jZFQgNRTqnEwV9irF2g_FDVb7TIKbzA4" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terrapin Anime Society - Contact</title>
+    <link rel="stylesheet" href="styles/global.css">
+    <link rel="stylesheet" href="styles/navigation.css">
+    <link rel="stylesheet" href="styles/components.css">
+    <link rel="stylesheet" href="styles/footer.css">
+    <link rel="stylesheet" href="styles/mobile.css">
+    <link rel="stylesheet" href="styles/forms.css">
+</head>
+<body>
+        <div class="page-transition" id="pageTransition">
+        <div class="shoji-door-left">
+            <div class="shoji-grid"></div>
+        </div>
+        <div class="shoji-door-right">
+            <div class="shoji-grid"></div>
+        </div>
+        <div class="door-seal">
+            <div class="seal-circle">
+                <div class="seal-text"></div>
+            </div>
+        </div>
+
+        <div class="kanji-particles">
+            <span class="kanji">桜</span>
+            <span class="kanji">刀</span>
+            <span class="kanji">魂</span>
+            <span class="kanji">力</span>
+        </div>
+        <div class="door-mascot">
+            <img src="images/mascott2.png" alt="Chibi Mascot">
+        </div>
+    </div>
+
+        <div class="blossom-container">
+        <div class="blossom-petal"><img src="images/blossom.png" alt="Blossom"></div>
+        <div class="blossom-petal"><img src="images/blossom.png" alt="Blossom"></div>
+        <div class="blossom-petal"><img src="images/blossom.png" alt="Blossom"></div>
+        <div class="blossom-petal"><img src="images/blossom.png" alt="Blossom"></div>
+        <div class="blossom-petal"><img src="images/blossom.png" alt="Blossom"></div>
+        <div class="blossom-petal"><img src="images/blossom.png" alt="Blossom"></div>
+        <div class="blossom-petal"><img src="images/blossom.png" alt="Blossom"></div>
+        <div class="blossom-petal"><img src="images/blossom.png" alt="Blossom"></div>
+        <div class="blossom-petal"><img src="images/blossom.png" alt="Blossom"></div>
+        <div class="blossom-petal"><img src="images/blossom.png" alt="Blossom"></div>
+    </div>
+
+        <div class="testudo-container">
+        <div class="testudo-text">Drawn by u/Vivaldi44<br>our little Testudo-chan mascot at UMD!</div>
+        <div class="testudo-bubbles">
+            <span></span>
+            <span></span>
+        </div>
+        <div class="testudo-mascot">
+            <img src="images/testudo.png" alt="Testudo-chan Mascot">
+        </div>
+    </div>
+
+
+    <div class="floating-mascot-container">
+        <div class="mascot-text">Click me for special promotions!</div>
+        <div class="thought-bubbles">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="floating-mascot" onclick="navigateToPromotions()">
+            <img src="images/mascott2.png" alt="TAS Chibi Mascot">
+        </div>
+    </div>
+
+    <div class="audio-control-container">
+        <input type="range" id="volumeSlider" class="audio-slider" min="0" max="100" value="50">
+        <div class="volume-percentage">50%</div>
+    </div>
+
+        <nav id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                TAS
+                <img src="images/blossom.png" alt="Cherry Blossom">
+            </a>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link">HOME</a></li>
+                <li><a href="meetings.html" class="nav-link">MEETINGS</a></li>
+                <li><a href="events.html" class="nav-link">EVENTS</a></li>
+                <li><a href="kamecon.html" class="nav-link">KAMECON</a></li>
+                <li><a href="promotions.html" class="nav-link">PROMOTIONS</a></li>
+                <li><a href="eboard.html" class="nav-link">E-BOARD</a></li>
+                <li><a href="join.html" class="nav-link">JOIN</a></li>
+                <li class="has-dropdown">
+                    <a href="subgroups.html" class="nav-link">SUBGROUPS</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="animusic.html" class="nav-link sub-link">ANIMUSIC</a></li>
+                        <li><a href="#cosplay" class="nav-link sub-link">COSPLAY</a></li>
+                        <li><a href="#manga" class="nav-link sub-link">MANGA</a></li>
+                        <li><a href="#oldschool" class="nav-link sub-link">OLD SCHOOL</a></li>
+                        <li><a href="#rainbow" class="nav-link sub-link">RAINBOW</a></li>
+                    </ul>
+                </li>
+                <li><a href="resources.html" class="nav-link">RESOURCES</a></li>
+            </ul>
+            <div style="display: flex; align-items: center;">
+                <span class="menu-label">MENU</span>
+                <div class="mobile-toggle" id="mobileToggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- PAGE CONTENT GOES HERE -->
+            </div>
+    </section>
+
+
+    <section id="contact" class="page-section">
+        <div class="section-header">
+            <h2>CONTACT US</h2>
+            <p class="section-subtitle">Get in touch with TAS</p>
+        </div>
+
+        <div class="form-container">
+            <form>
+                <div class="form-group">
+                    <label>NAME</label>
+                    <input type="text" required>
+                </div>
+                <div class="form-group">
+                    <label>EMAIL</label>
+                    <input type="email" required>
+                </div>
+                <div class="form-group">
+                    <label>MESSAGE</label>
+                    <textarea required></textarea>
+                </div>
+
+            </div>
+    </section>
+
+
+    <footer>
+        <div class="footer-content">
+            <ul class="footer-links">
+                <li><a href="https://discord.gg/fzKBsnS" target="_blank">Discord</a></li>
+                <li><a href="https://terplink.umd.edu/organization/terrapin-anime-society" target="_blank">TerpLink</a>
+                </li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="#donate">Donate</a></li>
+            </ul>
+            <div class="footer-bottom">
+                <span class="copyright">© 2025 TERRAPIN ANIME SOCIETY</span><br>
+
+    <script src="js/background.js"></script>
+    <script src="js/navigation.js"></script>
+    <script src="js/audio.js"></script>
+    <script src="js/animations.js"></script>
+    <script src="js/scroll.js"></script>
+    <script src="js/init.js"></script>
+</body>
+</html>
