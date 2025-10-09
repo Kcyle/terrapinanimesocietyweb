@@ -1,0 +1,6 @@
+node_modules/
+dist/
+.DS_Store
+*.log
+csm-drawing-app/node_modules/
+csm-drawing-app/dist/

@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(for file in events.html kamecon.html promotions.html eboard.html join.html subgroups.html animusic.html resources.html contact.html)",
+      "Bash(do grep -n \"const navLinks = document.querySelectorAll(''.nav-link'');\" \"$file\")",
+      "Bash(for file in meetings.html events.html kamecon.html promotions.html eboard.html join.html subgroups.html animusic.html resources.html contact.html)",
+      "Bash(for file in kamecon.html promotions.html eboard.html join.html subgroups.html animusic.html resources.html contact.html)",
+      "Bash(do)",
+      "Bash(echo \"Processed $file\")",
+      "Bash(npm create:*)",
+      "Bash(npm install)",
+      "Bash(npm install:*)",
+      "Bash(cat:*)",
+      "Bash(tree:*)",
+      "Bash(npm run build:*)",
+      "Bash(find:*)",
+      "Bash(wc:*)",
+      "Bash(npx vite:*)",
+      "Bash(git remote add:*)",
+      "Bash(git add:*)",
+      "Read(//c/Users/Kyle/**)",
+      "Bash(git init:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
