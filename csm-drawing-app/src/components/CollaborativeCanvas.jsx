@@ -10,7 +10,7 @@ function CollaborativeCanvas({ teamId, round, userName }) {
   const [tool, setTool] = useState('brush');
   const contextRef = useRef(null);
   const lastPosRef = useRef({ x: 0, y: 0 });
-  const isUpdatingRef = useRef(false);
+  const lastProcessedStrokeCount = useRef(0);
 
   const drawingKey = `round${round}-${teamId}`;
 
@@ -40,12 +40,22 @@ function CollaborativeCanvas({ teamId, round, userName }) {
     // Listen for remote updates
     const drawingRef = ref(database, `drawings/${drawingKey}/strokes`);
     const unsubscribe = onValue(drawingRef, (snapshot) => {
-      // Don't update if currently drawing locally
-      if (isDrawing) return;
-
       const strokes = snapshot.val();
-      if (strokes && !isUpdatingRef.current) {
-        redrawCanvas(Object.values(strokes));
+      if (strokes) {
+        const strokeArray = Object.values(strokes);
+        // Only redraw if we have new strokes
+        if (strokeArray.length !== lastProcessedStrokeCount.current) {
+          lastProcessedStrokeCount.current = strokeArray.length;
+          redrawCanvas(strokeArray);
+        }
+      } else {
+        // Canvas was cleared
+        lastProcessedStrokeCount.current = 0;
+        const ctx = contextRef.current;
+        if (ctx && canvas) {
+          ctx.fillStyle = '#ffffff';
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+        }
       }
     });
 
@@ -182,8 +192,6 @@ function CollaborativeCanvas({ teamId, round, userName }) {
 
   const saveStroke = async (points) => {
     try {
-      isUpdatingRef.current = true;
-
       const strokesRef = ref(database, `drawings/${drawingKey}/strokes`);
       const newStrokeRef = push(strokesRef);
 
@@ -200,11 +208,8 @@ function CollaborativeCanvas({ teamId, round, userName }) {
 
       // Also save the full image as backup
       await saveDrawing();
-
-      isUpdatingRef.current = false;
     } catch (err) {
       console.error('Error saving stroke:', err);
-      isUpdatingRef.current = false;
     }
   };
 
