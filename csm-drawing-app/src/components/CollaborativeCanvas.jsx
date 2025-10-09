@@ -373,8 +373,8 @@ function CollaborativeCanvas({ teamId, round, userName }) {
             title="Eraser"
           >
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="m7 21-4.3-4.3c-1-1-1-2.5 0-3.4l9.6-9.6c1-1 2.5-1 3.4 0l5.6 5.6c1 1 1 2.5 0 3.4L13 21"/>
-              <path d="m5 11 9 9"/>
+              <path d="M20 20H7L3 16 12 7l9 9v4z"/>
+              <path d="m5 14 7 7"/>
             </svg>
           </button>
           <button
@@ -383,8 +383,9 @@ function CollaborativeCanvas({ teamId, round, userName }) {
             title="Bucket Fill"
           >
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M19 11h-6l-4-7-3 7H2l8 10 9-10z"/>
-              <circle cx="17" cy="19" r="2"/>
+              <path d="M6 3 3 6v12l3 3h12l3-3V6l-3-3z"/>
+              <path d="M12 3v3"/>
+              <path d="M9 3h6"/>
             </svg>
           </button>
         </div>
