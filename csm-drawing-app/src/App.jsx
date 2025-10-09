@@ -140,10 +140,10 @@ function App() {
               <div className="game-info">
                 <h3>How it works:</h3>
                 <ol>
-                  <li>Form teams of 1-6 members</li>
+                  <li>Have a single person per team create a team</li>
                   <li>Draw collaboratively on a shared canvas</li>
                   <li>Vote for your favorite drawings</li>
-                  <li>Win glory and bragging rights!</li>
+                  <li>Top 3 finishers gets points!</li>
                 </ol>
                 <h3>Rounds:</h3>
                 <ul>

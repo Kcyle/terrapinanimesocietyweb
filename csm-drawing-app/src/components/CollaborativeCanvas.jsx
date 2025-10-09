@@ -4,11 +4,15 @@ import { database } from '../firebase';
 
 function CollaborativeCanvas({ teamId, round, userName }) {
   const canvasRef = useRef(null);
+  const cursorCanvasRef = useRef(null);
   const [isDrawing, setIsDrawing] = useState(false);
   const [color, setColor] = useState('#DC143C');
   const [brushSize, setBrushSize] = useState(5);
   const [tool, setTool] = useState('brush');
+  const [showColorPicker, setShowColorPicker] = useState(false);
+  const [cursorPos, setCursorPos] = useState({ x: -100, y: -100 });
   const contextRef = useRef(null);
+  const cursorContextRef = useRef(null);
   const lastPosRef = useRef({ x: 0, y: 0 });
   const lastProcessedStrokeCount = useRef(0);
 
@@ -160,11 +164,66 @@ function CollaborativeCanvas({ teamId, round, userName }) {
 
   const currentStrokeRef = useRef([]);
 
+  const floodFill = (startX, startY, fillColor) => {
+    const canvas = canvasRef.current;
+    const ctx = contextRef.current;
+    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    const pixels = imageData.data;
+
+    const startPos = (Math.floor(startY) * canvas.width + Math.floor(startX)) * 4;
+    const startR = pixels[startPos];
+    const startG = pixels[startPos + 1];
+    const startB = pixels[startPos + 2];
+    const startA = pixels[startPos + 3];
+
+    const fillR = parseInt(fillColor.slice(1, 3), 16);
+    const fillG = parseInt(fillColor.slice(3, 5), 16);
+    const fillB = parseInt(fillColor.slice(5, 7), 16);
+
+    if (startR === fillR && startG === fillG && startB === fillB) return;
+
+    const stack = [[Math.floor(startX), Math.floor(startY)]];
+    const visited = new Set();
+
+    while (stack.length > 0) {
+      const [x, y] = stack.pop();
+      const key = `${x},${y}`;
+
+      if (visited.has(key)) continue;
+      if (x < 0 || x >= canvas.width || y < 0 || y >= canvas.height) continue;
+
+      const pos = (y * canvas.width + x) * 4;
+      const r = pixels[pos];
+      const g = pixels[pos + 1];
+      const b = pixels[pos + 2];
+      const a = pixels[pos + 3];
+
+      if (r !== startR || g !== startG || b !== startB || a !== startA) continue;
+
+      visited.add(key);
+      pixels[pos] = fillR;
+      pixels[pos + 1] = fillG;
+      pixels[pos + 2] = fillB;
+      pixels[pos + 3] = 255;
+
+      stack.push([x + 1, y], [x - 1, y], [x, y + 1], [x, y - 1]);
+    }
+
+    ctx.putImageData(imageData, 0, 0);
+  };
+
   const startDrawing = (e) => {
     e.preventDefault();
-    setIsDrawing(true);
 
     const pos = getCanvasCoordinates(e);
+
+    if (tool === 'bucket') {
+      floodFill(pos.x, pos.y, color);
+      saveDrawing();
+      return;
+    }
+
+    setIsDrawing(true);
     lastPosRef.current = pos;
     currentStrokeRef.current = [pos];
 
@@ -175,6 +234,16 @@ function CollaborativeCanvas({ teamId, round, userName }) {
 
     ctx.beginPath();
     ctx.moveTo(pos.x, pos.y);
+  };
+
+  const handleMouseMove = (e) => {
+    if (tool === 'eraser' || tool === 'brush' || tool === 'bucket') {
+      const pos = getCanvasCoordinates(e);
+      setCursorPos(pos);
+    }
+
+    if (!isDrawing) return;
+    draw(e);
   };
 
   const draw = (e) => {
@@ -266,10 +335,20 @@ function CollaborativeCanvas({ teamId, round, userName }) {
     }
   };
 
+  // Chainsaw Man themed colors
   const colors = [
-    '#DC143C', '#000000', '#FFFFFF', '#FF6B6B',
-    '#4ECDC4', '#FFE66D', '#A8E6CF', '#FF8B94',
-    '#C7CEEA', '#FFDAC1'
+    '#DC143C', // Crimson red (Chainsaw Man's iconic color)
+    '#000000', // Black
+    '#FFFFFF', // White
+    '#8B0000', // Dark red (blood)
+    '#FFA500', // Orange (chainsaw blade)
+    '#FFD700', // Gold (Pochita)
+    '#4A4A4A', // Dark gray (chainsaw body)
+    '#FF4500', // Orange-red (fire/action)
+    '#8B4513', // Brown (wood handle)
+    '#FF69B4', // Pink (Power)
+    '#1E90FF', // Blue (Aki)
+    '#32CD32'  // Green (Denji's shirt)
   ];
 
   const brushSizes = [2, 5, 10, 20, 30];
@@ -284,10 +363,10 @@ function CollaborativeCanvas({ teamId, round, userName }) {
             onClick={() => setTool('brush')}
             title="Brush"
           >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-              <path d="M12 19l7-7 3 3-7 7-3-3z" />
-              <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z" />
-              <path d="M2 2l7.586 7.586" />
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M3 21v-4a4 4 0 0 1 4 -4h10a4 4 0 0 1 4 4v4z" />
+              <path d="M12 11v10" />
+              <path d="M6 3l6 8l6 -8" />
             </svg>
           </button>
           <button
@@ -295,9 +374,19 @@ function CollaborativeCanvas({ teamId, round, userName }) {
             onClick={() => setTool('eraser')}
             title="Eraser"
           >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-              <path d="M20 20H7L3 16L12 7L21 16V20Z" />
-              <path d="M7 20L12 15" />
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M19 20H8.5L3 14.5L9.5 8L21 19.5V20" />
+              <line x1="5" y1="13" x2="11" y2="19" />
+            </svg>
+          </button>
+          <button
+            className={`tool-button ${tool === 'bucket' ? 'active' : ''}`}
+            onClick={() => setTool('bucket')}
+            title="Bucket Fill"
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M19 11h-6l-4-8-4 8H2l10 11z" />
+              <circle cx="18" cy="19" r="2" fill="currentColor" />
             </svg>
           </button>
         </div>
@@ -314,6 +403,15 @@ function CollaborativeCanvas({ teamId, round, userName }) {
                 title={c}
               />
             ))}
+            <div className="color-picker-wrapper">
+              <input
+                type="color"
+                value={color}
+                onChange={(e) => setColor(e.target.value)}
+                className="color-picker-input"
+                title="Custom Color"
+              />
+            </div>
           </div>
         </div>
 
@@ -343,21 +441,38 @@ function CollaborativeCanvas({ teamId, round, userName }) {
         </div>
       </div>
 
-      <div className="canvas-wrapper">
+      <div className="canvas-wrapper" style={{ position: 'relative' }}>
         <canvas
           ref={canvasRef}
           onMouseDown={startDrawing}
-          onMouseMove={draw}
+          onMouseMove={handleMouseMove}
           onMouseUp={stopDrawing}
-          onMouseLeave={stopDrawing}
+          onMouseLeave={() => { stopDrawing; setCursorPos({ x: -100, y: -100 }); }}
           onTouchStart={startDrawing}
           onTouchMove={draw}
           onTouchEnd={stopDrawing}
           style={{
-            cursor: tool === 'eraser' ? 'crosshair' : 'crosshair',
+            cursor: tool === 'bucket' ? 'pointer' : 'none',
             touchAction: 'none'
           }}
         />
+        {tool === 'eraser' && cursorPos.x > 0 && (
+          <div
+            className="eraser-cursor"
+            style={{
+              position: 'absolute',
+              left: `${(cursorPos.x / 800) * 100}%`,
+              top: `${(cursorPos.y / 600) * 100}%`,
+              width: `${brushSize}px`,
+              height: `${brushSize}px`,
+              border: '2px solid #000',
+              borderRadius: '50%',
+              pointerEvents: 'none',
+              transform: 'translate(-50%, -50%)',
+              zIndex: 1000
+            }}
+          />
+        )}
       </div>
 
       <div className="canvas-info">
