@@ -692,6 +692,12 @@ body {
   background: white;
   padding: 1rem;
   border-radius: 5px;
+  min-height: 400px;
+  overflow: auto;
+}
+
+.canvas-wrapper canvas {
+  border: 1px solid #ddd;
 }
 
 .canvas-info {

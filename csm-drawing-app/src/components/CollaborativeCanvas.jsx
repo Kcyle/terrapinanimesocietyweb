@@ -1,168 +1,195 @@
 import { useEffect, useRef, useState } from 'react';
-import { ref, onValue, set, push, get } from 'firebase/database';
+import { ref, onValue, set, get } from 'firebase/database';
 import { database } from '../firebase';
-import * as fabric from 'fabric';
 
 function CollaborativeCanvas({ teamId, round, userName }) {
   const canvasRef = useRef(null);
-  const fabricCanvasRef = useRef(null);
+  const [isDrawing, setIsDrawing] = useState(false);
   const [color, setColor] = useState('#DC143C');
   const [brushSize, setBrushSize] = useState(5);
   const [tool, setTool] = useState('brush');
-  const [isDrawing, setIsDrawing] = useState(false);
-  const processingRemoteUpdate = useRef(false);
-  const localDrawingKey = useRef(null);
+  const contextRef = useRef(null);
+  const lastPosRef = useRef({ x: 0, y: 0 });
 
   const drawingKey = `round${round}-${teamId}`;
 
   useEffect(() => {
-    const canvas = new fabric.Canvas(canvasRef.current, {
-      width: window.innerWidth > 768 ? 800 : window.innerWidth - 40,
-      height: window.innerWidth > 768 ? 600 : 400,
-      backgroundColor: '#ffffff',
-      isDrawingMode: true
-    });
+    const canvas = canvasRef.current;
+    if (!canvas) return;
 
-    fabricCanvasRef.current = canvas;
+    // Set canvas size
+    const width = window.innerWidth > 768 ? 800 : Math.max(window.innerWidth - 80, 300);
+    const height = window.innerWidth > 768 ? 600 : 450;
 
-    canvas.freeDrawingBrush.color = color;
-    canvas.freeDrawingBrush.width = brushSize;
+    canvas.width = width;
+    canvas.height = height;
 
-    loadDrawing(canvas);
+    const context = canvas.getContext('2d');
+    context.lineCap = 'round';
+    context.lineJoin = 'round';
+    contextRef.current = context;
 
+    // Fill with white background
+    context.fillStyle = '#ffffff';
+    context.fillRect(0, 0, width, height);
+
+    // Load existing drawing
+    loadDrawing();
+
+    // Listen for remote updates
     const drawingRef = ref(database, `drawings/${drawingKey}/strokes`);
     const unsubscribe = onValue(drawingRef, (snapshot) => {
-      if (processingRemoteUpdate.current) return;
-
       const strokes = snapshot.val();
       if (strokes) {
-        processingRemoteUpdate.current = true;
-        updateCanvasFromStrokes(canvas, strokes);
-        processingRemoteUpdate.current = false;
+        redrawCanvas(Object.values(strokes));
       }
     });
 
-    const handlePathCreated = (e) => {
-      if (!isDrawing) {
-        saveStroke(e.path);
-      }
-    };
-
-    canvas.on('path:created', handlePathCreated);
-
+    // Handle resize
     const handleResize = () => {
-      const newWidth = window.innerWidth > 768 ? 800 : window.innerWidth - 40;
-      const newHeight = window.innerWidth > 768 ? 600 : 400;
-      canvas.setDimensions({ width: newWidth, height: newHeight });
-      canvas.renderAll();
+      const newWidth = window.innerWidth > 768 ? 800 : Math.max(window.innerWidth - 80, 300);
+      const newHeight = window.innerWidth > 768 ? 600 : 450;
+
+      if (canvas.width !== newWidth || canvas.height !== newHeight) {
+        const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+        canvas.width = newWidth;
+        canvas.height = newHeight;
+        context.putImageData(imageData, 0, 0);
+      }
     };
 
     window.addEventListener('resize', handleResize);
 
     return () => {
       unsubscribe();
-      canvas.off('path:created', handlePathCreated);
       window.removeEventListener('resize', handleResize);
-      canvas.dispose();
     };
   }, [drawingKey]);
 
-  useEffect(() => {
-    if (fabricCanvasRef.current) {
-      const canvas = fabricCanvasRef.current;
-      canvas.freeDrawingBrush.color = tool === 'eraser' ? '#ffffff' : color;
-      canvas.freeDrawingBrush.width = brushSize;
-    }
-  }, [color, brushSize, tool]);
-
-  useEffect(() => {
-    if (fabricCanvasRef.current) {
-      fabricCanvasRef.current.isDrawingMode = tool === 'brush' || tool === 'eraser';
-    }
-  }, [tool]);
-
-  const loadDrawing = async (canvas) => {
+  const loadDrawing = async () => {
     try {
-      const drawingRef = ref(database, `drawings/${drawingKey}`);
+      const drawingRef = ref(database, `drawings/${drawingKey}/imageData`);
       const snapshot = await get(drawingRef);
-      const data = snapshot.val();
+      const imageDataUrl = snapshot.val();
 
-      if (data && data.imageData) {
-        fabric.Image.fromURL(data.imageData, (img) => {
-          canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas), {
-            scaleX: canvas.width / img.width,
-            scaleY: canvas.height / img.height
-          });
-        });
+      if (imageDataUrl) {
+        const img = new Image();
+        img.onload = () => {
+          contextRef.current.drawImage(img, 0, 0);
+        };
+        img.src = imageDataUrl;
       }
     } catch (err) {
       console.error('Error loading drawing:', err);
     }
   };
 
-  const updateCanvasFromStrokes = (canvas, strokes) => {
-    const objects = canvas.getObjects();
-    objects.forEach(obj => canvas.remove(obj));
+  const redrawCanvas = (strokes) => {
+    const canvas = canvasRef.current;
+    const ctx = contextRef.current;
+    if (!ctx || !canvas) return;
 
-    Object.values(strokes).forEach((strokeData) => {
-      if (strokeData && strokeData.path) {
-        fabric.Path.fromObject(strokeData, (path) => {
-          canvas.add(path);
-          canvas.renderAll();
-        });
+    // Clear and reset
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Redraw all strokes
+    strokes.forEach(stroke => {
+      if (!stroke || !stroke.points || stroke.points.length < 2) return;
+
+      ctx.strokeStyle = stroke.color;
+      ctx.lineWidth = stroke.size;
+      ctx.globalCompositeOperation = stroke.tool === 'eraser' ? 'destination-out' : 'source-over';
+
+      ctx.beginPath();
+      ctx.moveTo(stroke.points[0].x, stroke.points[0].y);
+
+      for (let i = 1; i < stroke.points.length; i++) {
+        ctx.lineTo(stroke.points[i].x, stroke.points[i].y);
       }
+
+      ctx.stroke();
     });
+
+    // Reset composite operation
+    ctx.globalCompositeOperation = 'source-over';
   };
 
-  const saveStroke = async (path) => {
-    try {
-      const strokesRef = ref(database, `drawings/${drawingKey}/strokes`);
-      const newStrokeRef = push(strokesRef);
+  const getCanvasCoordinates = (e) => {
+    const canvas = canvasRef.current;
+    const rect = canvas.getBoundingClientRect();
 
-      const strokeData = {
-        path: path.path,
-        stroke: path.stroke,
-        strokeWidth: path.strokeWidth,
-        fill: path.fill,
-        left: path.left,
-        top: path.top,
-        timestamp: Date.now(),
-        user: userName
-      };
+    const x = (e.clientX || e.touches?.[0]?.clientX) - rect.left;
+    const y = (e.clientY || e.touches?.[0]?.clientY) - rect.top;
 
-      await set(newStrokeRef, strokeData);
-
-      saveImage();
-    } catch (err) {
-      console.error('Error saving stroke:', err);
-    }
+    return { x, y };
   };
 
-  const saveImage = async () => {
-    if (!fabricCanvasRef.current) return;
+  const startDrawing = (e) => {
+    e.preventDefault();
+    setIsDrawing(true);
 
+    const pos = getCanvasCoordinates(e);
+    lastPosRef.current = pos;
+
+    const ctx = contextRef.current;
+    ctx.strokeStyle = tool === 'eraser' ? '#ffffff' : color;
+    ctx.lineWidth = brushSize;
+    ctx.globalCompositeOperation = tool === 'eraser' ? 'destination-out' : 'source-over';
+
+    ctx.beginPath();
+    ctx.moveTo(pos.x, pos.y);
+  };
+
+  const draw = (e) => {
+    if (!isDrawing) return;
+    e.preventDefault();
+
+    const pos = getCanvasCoordinates(e);
+    const ctx = contextRef.current;
+
+    ctx.lineTo(pos.x, pos.y);
+    ctx.stroke();
+
+    lastPosRef.current = pos;
+  };
+
+  const stopDrawing = async (e) => {
+    if (!isDrawing) return;
+    e.preventDefault();
+
+    setIsDrawing(false);
+
+    const ctx = contextRef.current;
+    ctx.closePath();
+    ctx.globalCompositeOperation = 'source-over';
+
+    // Save to Firebase
+    await saveDrawing();
+  };
+
+  const saveDrawing = async () => {
     try {
-      const imageData = fabricCanvasRef.current.toDataURL({
-        format: 'png',
-        quality: 0.8
-      });
+      const canvas = canvasRef.current;
+      const imageData = canvas.toDataURL('image/png', 0.8);
 
       const drawingRef = ref(database, `drawings/${drawingKey}/imageData`);
       await set(drawingRef, imageData);
     } catch (err) {
-      console.error('Error saving image:', err);
+      console.error('Error saving drawing:', err);
     }
   };
 
   const handleClear = async () => {
-    if (!fabricCanvasRef.current) return;
     if (!confirm('Are you sure you want to clear the canvas? This affects all team members!')) return;
 
-    try {
-      fabricCanvasRef.current.clear();
-      fabricCanvasRef.current.backgroundColor = '#ffffff';
-      fabricCanvasRef.current.renderAll();
+    const canvas = canvasRef.current;
+    const ctx = contextRef.current;
 
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    try {
       const drawingRef = ref(database, `drawings/${drawingKey}`);
       await set(drawingRef, {
         strokes: {},
@@ -175,47 +202,10 @@ function CollaborativeCanvas({ teamId, round, userName }) {
     }
   };
 
-  const handleUndo = async () => {
-    if (!fabricCanvasRef.current) return;
-
-    try {
-      const canvas = fabricCanvasRef.current;
-      const objects = canvas.getObjects();
-
-      if (objects.length > 0) {
-        canvas.remove(objects[objects.length - 1]);
-        canvas.renderAll();
-
-        const drawingRef = ref(database, `drawings/${drawingKey}/strokes`);
-        const snapshot = await get(drawingRef);
-        const strokes = snapshot.val() || {};
-
-        const strokeKeys = Object.keys(strokes);
-        if (strokeKeys.length > 0) {
-          const lastKey = strokeKeys[strokeKeys.length - 1];
-          const updatedStrokes = { ...strokes };
-          delete updatedStrokes[lastKey];
-
-          await set(drawingRef, updatedStrokes);
-          saveImage();
-        }
-      }
-    } catch (err) {
-      console.error('Error undoing:', err);
-    }
-  };
-
   const colors = [
-    '#DC143C', // Crimson
-    '#000000', // Black
-    '#FFFFFF', // White
-    '#FF6B6B', // Red
-    '#4ECDC4', // Teal
-    '#FFE66D', // Yellow
-    '#A8E6CF', // Green
-    '#FF8B94', // Pink
-    '#C7CEEA', // Purple
-    '#FFDAC1', // Peach
+    '#DC143C', '#000000', '#FFFFFF', '#FF6B6B',
+    '#4ECDC4', '#FFE66D', '#A8E6CF', '#FF8B94',
+    '#C7CEEA', '#FFDAC1'
   ];
 
   const brushSizes = [2, 5, 10, 20, 30];
@@ -279,13 +269,6 @@ function CollaborativeCanvas({ teamId, round, userName }) {
         </div>
 
         <div className="tool-group">
-          <button className="action-button undo-button" onClick={handleUndo} title="Undo">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-              <path d="M3 7v6h6" />
-              <path d="M21 17a9 9 0 00-9-9 9 9 0 00-6 2.3L3 13" />
-            </svg>
-            Undo
-          </button>
           <button className="action-button clear-button" onClick={handleClear} title="Clear All">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
               <path d="M3 6h18" />
@@ -297,7 +280,20 @@ function CollaborativeCanvas({ teamId, round, userName }) {
       </div>
 
       <div className="canvas-wrapper">
-        <canvas ref={canvasRef} />
+        <canvas
+          ref={canvasRef}
+          onMouseDown={startDrawing}
+          onMouseMove={draw}
+          onMouseUp={stopDrawing}
+          onMouseLeave={stopDrawing}
+          onTouchStart={startDrawing}
+          onTouchMove={draw}
+          onTouchEnd={stopDrawing}
+          style={{
+            cursor: tool === 'eraser' ? 'crosshair' : 'crosshair',
+            touchAction: 'none'
+          }}
+        />
       </div>
 
       <div className="canvas-info">
