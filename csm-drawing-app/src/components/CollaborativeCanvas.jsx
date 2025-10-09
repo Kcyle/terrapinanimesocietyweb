@@ -18,17 +18,10 @@ function CollaborativeCanvas({ teamId, round, userName }) {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    // Set canvas size - SAME for everyone so mobile sees full canvas
-    const isMobile = window.innerWidth <= 768;
-    const width = isMobile
-      ? Math.min(window.innerWidth - 40, 600)
-      : 800;
-    const height = isMobile
-      ? Math.min((window.innerWidth - 40) * 0.75, 450)
-      : 600;
-
-    canvas.width = width;
-    canvas.height = height;
+    // Set canvas size - ALWAYS 800x600 for everyone
+    // CSS will scale it down on mobile so it fits
+    canvas.width = 800;
+    canvas.height = 600;
 
     const context = canvas.getContext('2d');
     context.lineCap = 'round';
@@ -64,22 +57,10 @@ function CollaborativeCanvas({ teamId, round, userName }) {
       }
     });
 
-    // Handle resize
+    // Handle resize - canvas stays 800x600, CSS handles display size
     const handleResize = () => {
-      const isMobile = window.innerWidth <= 768;
-      const newWidth = isMobile
-        ? Math.min(window.innerWidth - 40, 600)
-        : 800;
-      const newHeight = isMobile
-        ? Math.min((window.innerWidth - 40) * 0.75, 450)
-        : 600;
-
-      if (canvas.width !== newWidth || canvas.height !== newHeight) {
-        const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
-        canvas.width = newWidth;
-        canvas.height = newHeight;
-        context.putImageData(imageData, 0, 0);
-      }
+      // No need to resize canvas, it's always 800x600
+      // CSS will handle scaling for different screen sizes
     };
 
     window.addEventListener('resize', handleResize);

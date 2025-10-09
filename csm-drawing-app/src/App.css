@@ -670,6 +670,8 @@ body {
   border: 1px solid #ddd;
   max-width: 100%;
   height: auto;
+  display: block;
+  touch-action: none;
 }
 
 .canvas-info {
