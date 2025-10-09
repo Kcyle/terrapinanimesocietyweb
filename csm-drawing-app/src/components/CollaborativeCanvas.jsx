@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { ref, onValue, set, get } from 'firebase/database';
+import { ref, onValue, set, get, push } from 'firebase/database';
 import { database } from '../firebase';
 
 function CollaborativeCanvas({ teamId, round, userName }) {
@@ -10,6 +10,7 @@ function CollaborativeCanvas({ teamId, round, userName }) {
   const [tool, setTool] = useState('brush');
   const contextRef = useRef(null);
   const lastPosRef = useRef({ x: 0, y: 0 });
+  const isUpdatingRef = useRef(false);
 
   const drawingKey = `round${round}-${teamId}`;
 
@@ -39,8 +40,11 @@ function CollaborativeCanvas({ teamId, round, userName }) {
     // Listen for remote updates
     const drawingRef = ref(database, `drawings/${drawingKey}/strokes`);
     const unsubscribe = onValue(drawingRef, (snapshot) => {
+      // Don't update if currently drawing locally
+      if (isDrawing) return;
+
       const strokes = snapshot.val();
-      if (strokes) {
+      if (strokes && !isUpdatingRef.current) {
         redrawCanvas(Object.values(strokes));
       }
     });
@@ -125,12 +129,15 @@ function CollaborativeCanvas({ teamId, round, userName }) {
     return { x, y };
   };
 
+  const currentStrokeRef = useRef([]);
+
   const startDrawing = (e) => {
     e.preventDefault();
     setIsDrawing(true);
 
     const pos = getCanvasCoordinates(e);
     lastPosRef.current = pos;
+    currentStrokeRef.current = [pos];
 
     const ctx = contextRef.current;
     ctx.strokeStyle = tool === 'eraser' ? '#ffffff' : color;
@@ -151,6 +158,7 @@ function CollaborativeCanvas({ teamId, round, userName }) {
     ctx.lineTo(pos.x, pos.y);
     ctx.stroke();
 
+    currentStrokeRef.current.push(pos);
     lastPosRef.current = pos;
   };
 
@@ -164,8 +172,40 @@ function CollaborativeCanvas({ teamId, round, userName }) {
     ctx.closePath();
     ctx.globalCompositeOperation = 'source-over';
 
-    // Save to Firebase
-    await saveDrawing();
+    // Save stroke to Firebase for real-time sync
+    if (currentStrokeRef.current.length > 1) {
+      await saveStroke(currentStrokeRef.current);
+    }
+
+    currentStrokeRef.current = [];
+  };
+
+  const saveStroke = async (points) => {
+    try {
+      isUpdatingRef.current = true;
+
+      const strokesRef = ref(database, `drawings/${drawingKey}/strokes`);
+      const newStrokeRef = push(strokesRef);
+
+      const strokeData = {
+        points,
+        color: tool === 'eraser' ? '#ffffff' : color,
+        size: brushSize,
+        tool,
+        timestamp: Date.now(),
+        user: userName
+      };
+
+      await set(newStrokeRef, strokeData);
+
+      // Also save the full image as backup
+      await saveDrawing();
+
+      isUpdatingRef.current = false;
+    } catch (err) {
+      console.error('Error saving stroke:', err);
+      isUpdatingRef.current = false;
+    }
   };
 
   const saveDrawing = async () => {
