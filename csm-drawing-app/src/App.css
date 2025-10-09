@@ -668,10 +668,15 @@ body {
 
 .canvas-wrapper canvas {
   border: 1px solid #ddd;
-  max-width: 100%;
-  height: auto;
   display: block;
   touch-action: none;
+}
+
+@media (max-width: 768px) {
+  .canvas-wrapper canvas {
+    max-width: 100%;
+    height: auto;
+  }
 }
 
 .canvas-info {
