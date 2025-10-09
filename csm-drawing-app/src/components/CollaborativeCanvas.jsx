@@ -38,7 +38,7 @@ function CollaborativeCanvas({ teamId, round, userName }) {
 
     // Fill with white background
     context.fillStyle = '#ffffff';
-    context.fillRect(0, 0, width, height);
+    context.fillRect(0, 0, canvas.width, canvas.height);
 
     // Load existing drawing
     loadDrawing();
@@ -137,8 +137,16 @@ function CollaborativeCanvas({ teamId, round, userName }) {
     const canvas = canvasRef.current;
     const rect = canvas.getBoundingClientRect();
 
-    const x = (e.clientX || e.touches?.[0]?.clientX) - rect.left;
-    const y = (e.clientY || e.touches?.[0]?.clientY) - rect.top;
+    // Get the actual click position
+    const clientX = e.clientX || e.touches?.[0]?.clientX;
+    const clientY = e.clientY || e.touches?.[0]?.clientY;
+
+    // Scale coordinates from display size to canvas size
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
+
+    const x = (clientX - rect.left) * scaleX;
+    const y = (clientY - rect.top) * scaleY;
 
     return { x, y };
   };

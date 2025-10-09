@@ -3,7 +3,9 @@
     "allow": [
       "Bash(git revert:*)",
       "Bash(git log:*)",
-      "Bash(npm run dev:*)"
+      "Bash(npm run dev:*)",
+      "Bash(xcopy:*)",
+      "Bash(robocopy:*)"
     ],
     "deny": [],
     "ask": []
