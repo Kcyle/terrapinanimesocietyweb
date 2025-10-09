@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { ref, onValue, set, push, get } from 'firebase/database';
 import { database } from '../firebase';
-import { Canvas, Path, Image } from 'fabric';
+import { Canvas } from 'fabric';
 
 function CollaborativeCanvas({ teamId, round, userName }) {
   const canvasRef = useRef(null);
@@ -16,19 +16,29 @@ function CollaborativeCanvas({ teamId, round, userName }) {
   const drawingKey = `round${round}-${teamId}`;
 
   useEffect(() => {
-    const canvas = new Canvas(canvasRef.current, {
-      width: window.innerWidth > 768 ? 800 : window.innerWidth - 40,
-      height: window.innerWidth > 768 ? 600 : 400,
-      backgroundColor: '#ffffff',
-      isDrawingMode: true
-    });
+    if (!canvasRef.current) {
+      console.error('Canvas ref is null');
+      return;
+    }
 
-    fabricCanvasRef.current = canvas;
+    try {
+      const canvas = new Canvas(canvasRef.current, {
+        width: window.innerWidth > 768 ? 800 : window.innerWidth - 40,
+        height: window.innerWidth > 768 ? 600 : 400,
+        backgroundColor: '#ffffff',
+        isDrawingMode: true
+      });
 
-    canvas.freeDrawingBrush.color = color;
-    canvas.freeDrawingBrush.width = brushSize;
+      fabricCanvasRef.current = canvas;
 
-    loadDrawing(canvas);
+      canvas.freeDrawingBrush.color = color;
+      canvas.freeDrawingBrush.width = brushSize;
+
+      loadDrawing(canvas);
+    } catch (err) {
+      console.error('Error initializing canvas:', err);
+      return;
+    }
 
     const drawingRef = ref(database, `drawings/${drawingKey}/strokes`);
     const unsubscribe = onValue(drawingRef, (snapshot) => {
@@ -88,11 +98,8 @@ function CollaborativeCanvas({ teamId, round, userName }) {
       const data = snapshot.val();
 
       if (data && data.imageData) {
-        Image.fromURL(data.imageData, (img) => {
-          canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas), {
-            scaleX: canvas.width / img.width,
-            scaleY: canvas.height / img.height
-          });
+        canvas.loadFromJSON(data.canvasData || data.imageData).then(() => {
+          canvas.renderAll();
         });
       }
     } catch (err) {
@@ -100,18 +107,21 @@ function CollaborativeCanvas({ teamId, round, userName }) {
     }
   };
 
-  const updateCanvasFromStrokes = (canvas, strokes) => {
-    const objects = canvas.getObjects();
-    objects.forEach(obj => canvas.remove(obj));
+  const updateCanvasFromStrokes = async (canvas, strokes) => {
+    canvas.clear();
+    canvas.backgroundColor = '#ffffff';
 
-    Object.values(strokes).forEach((strokeData) => {
-      if (strokeData && strokeData.path) {
-        Path.fromObject(strokeData, (path) => {
-          canvas.add(path);
-          canvas.renderAll();
-        });
+    const strokeArray = Object.values(strokes).filter(s => s && s.path);
+
+    for (const strokeData of strokeArray) {
+      try {
+        const path = await canvas.add(strokeData);
+      } catch (err) {
+        console.error('Error adding stroke:', err);
       }
-    });
+    }
+
+    canvas.renderAll();
   };
 
   const saveStroke = async (path) => {
@@ -142,13 +152,18 @@ function CollaborativeCanvas({ teamId, round, userName }) {
     if (!fabricCanvasRef.current) return;
 
     try {
+      const canvasData = fabricCanvasRef.current.toJSON();
       const imageData = fabricCanvasRef.current.toDataURL({
         format: 'png',
         quality: 0.8
       });
 
-      const drawingRef = ref(database, `drawings/${drawingKey}/imageData`);
-      await set(drawingRef, imageData);
+      const drawingRef = ref(database, `drawings/${drawingKey}`);
+      await set(drawingRef, {
+        canvasData: canvasData,
+        imageData: imageData,
+        updatedAt: Date.now()
+      });
     } catch (err) {
       console.error('Error saving image:', err);
     }
