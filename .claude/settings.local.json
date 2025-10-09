@@ -5,7 +5,8 @@
       "Bash(git log:*)",
       "Bash(npm run dev:*)",
       "Bash(xcopy:*)",
-      "Bash(robocopy:*)"
+      "Bash(robocopy:*)",
+      "Bash(powershell:*)"
     ],
     "deny": [],
     "ask": []
