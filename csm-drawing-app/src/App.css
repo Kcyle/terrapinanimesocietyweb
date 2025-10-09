@@ -52,7 +52,7 @@ body {
   position: sticky;
   top: 0;
   z-index: 100;
-  box-shadow: 0 4px 20px rgba(220, 20, 60, 0.2);
+  
 }
 
 .header-content h1 {
@@ -60,7 +60,7 @@ body {
   font-size: 2.5rem;
   letter-spacing: 3px;
   color: var(--crimson);
-  text-shadow: 0 0 20px rgba(220, 20, 60, 0.5);
+  
 }
 
 .subtitle {
@@ -84,7 +84,7 @@ body {
 
 .admin-button:hover {
   background: #ff1744;
-  box-shadow: 0 0 20px rgba(220, 20, 60, 0.5);
+  
   transform: translateY(-2px);
 }
 
@@ -205,7 +205,7 @@ body {
   padding: 2rem;
   max-width: 800px;
   margin: 0 auto;
-  box-shadow: 0 10px 40px rgba(220, 20, 60, 0.2);
+  
 }
 
 .welcome-card h2 {
@@ -295,7 +295,7 @@ body {
 .mode-button.active {
   background: var(--crimson);
   border-color: var(--crimson);
-  box-shadow: 0 0 20px rgba(220, 20, 60, 0.3);
+  
 }
 
 .mode-button:hover:not(.active) {
@@ -375,7 +375,7 @@ body {
 .submit-button:hover:not(:disabled) {
   background: #ff1744;
   transform: translateY(-2px);
-  box-shadow: 0 5px 20px rgba(220, 20, 60, 0.4);
+  
 }
 
 .submit-button:disabled {
@@ -525,7 +525,7 @@ body {
 .team-card:hover {
   border-color: var(--crimson);
   transform: translateY(-5px);
-  box-shadow: 0 5px 20px rgba(220, 20, 60, 0.2);
+  
 }
 
 .team-card h4 {
@@ -859,7 +859,7 @@ body {
 .submit-votes-button:hover:not(:disabled) {
   background: #ff1744;
   transform: translateY(-2px);
-  box-shadow: 0 5px 20px rgba(220, 20, 60, 0.4);
+  
 }
 
 .submit-votes-button:disabled {
@@ -889,22 +889,22 @@ body {
 
 .drawing-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 5px 20px rgba(255, 255, 255, 0.1);
+  
 }
 
 .drawing-card.selected-first {
   border-color: var(--gold);
-  box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+  
 }
 
 .drawing-card.selected-second {
   border-color: var(--silver);
-  box-shadow: 0 0 20px rgba(192, 192, 192, 0.3);
+  
 }
 
 .drawing-card.selected-third {
   border-color: var(--bronze);
-  box-shadow: 0 0 20px rgba(205, 127, 50, 0.3);
+  
 }
 
 .drawing-header {
@@ -1034,21 +1034,21 @@ body {
   background: var(--gold);
   border-color: #FFE55C;
   color: var(--dark-bg);
-  box-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+  
 }
 
 .silver-medal {
   background: var(--silver);
   border-color: #E0E0E0;
   color: var(--dark-bg);
-  box-shadow: 0 0 30px rgba(192, 192, 192, 0.5);
+  
 }
 
 .bronze-medal {
   background: var(--bronze);
   border-color: #E6A868;
   color: var(--dark-bg);
-  box-shadow: 0 0 30px rgba(205, 127, 50, 0.5);
+  
 }
 
 .podium-info {
@@ -1359,10 +1359,11 @@ body {
 
 .phase-badge {
   background: var(--crimson);
-  color: white;
+  color: white !important;
   padding: 0.25rem 0.75rem;
   border-radius: 20px;
   font-size: 1rem !important;
+  font-weight: 600 !important;
   text-transform: uppercase;
 }
 
@@ -1396,7 +1397,7 @@ body {
 .admin-action-button.primary:hover:not(:disabled) {
   background: #ff1744;
   transform: translateY(-2px);
-  box-shadow: 0 5px 20px rgba(220, 20, 60, 0.4);
+  
 }
 
 .admin-action-button.warning {
