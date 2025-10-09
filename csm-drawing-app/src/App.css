@@ -672,13 +672,6 @@ body {
   touch-action: none;
 }
 
-@media (max-width: 768px) {
-  .canvas-wrapper canvas {
-    max-width: 100%;
-    height: auto;
-  }
-}
-
 .canvas-info {
   margin-top: 1rem;
   text-align: center;

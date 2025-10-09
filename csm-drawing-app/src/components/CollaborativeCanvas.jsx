@@ -18,10 +18,18 @@ function CollaborativeCanvas({ teamId, round, userName }) {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    // Set canvas size - ALWAYS 800x600 for everyone
-    // CSS will scale it down on mobile so it fits
+    // Set canvas size - fixed size that works on both desktop and mobile
     canvas.width = 800;
     canvas.height = 600;
+
+    // Set CSS display size for mobile
+    if (window.innerWidth <= 768) {
+      canvas.style.width = '100%';
+      canvas.style.height = 'auto';
+    } else {
+      canvas.style.width = '800px';
+      canvas.style.height = '600px';
+    }
 
     const context = canvas.getContext('2d');
     context.lineCap = 'round';
@@ -57,10 +65,15 @@ function CollaborativeCanvas({ teamId, round, userName }) {
       }
     });
 
-    // Handle resize - canvas stays 800x600, CSS handles display size
+    // Handle resize - canvas stays 800x600, adjust CSS display size
     const handleResize = () => {
-      // No need to resize canvas, it's always 800x600
-      // CSS will handle scaling for different screen sizes
+      if (window.innerWidth <= 768) {
+        canvas.style.width = '100%';
+        canvas.style.height = 'auto';
+      } else {
+        canvas.style.width = '800px';
+        canvas.style.height = '600px';
+      }
     };
 
     window.addEventListener('resize', handleResize);
