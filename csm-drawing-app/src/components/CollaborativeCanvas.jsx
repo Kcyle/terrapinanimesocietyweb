@@ -18,14 +18,14 @@ function CollaborativeCanvas({ teamId, round, userName }) {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    // Set canvas size - use almost full screen width
+    // Set canvas size - SAME for everyone so mobile sees full canvas
     const isMobile = window.innerWidth <= 768;
     const width = isMobile
-      ? Math.max(window.innerWidth - 40, 280)
-      : Math.min(window.innerWidth - 100, 1200);
+      ? Math.min(window.innerWidth - 40, 600)
+      : 800;
     const height = isMobile
-      ? Math.max(window.innerHeight * 0.5, 400)
-      : Math.min(window.innerHeight * 0.6, 800);
+      ? Math.min((window.innerWidth - 40) * 0.75, 450)
+      : 600;
 
     canvas.width = width;
     canvas.height = height;
@@ -68,11 +68,11 @@ function CollaborativeCanvas({ teamId, round, userName }) {
     const handleResize = () => {
       const isMobile = window.innerWidth <= 768;
       const newWidth = isMobile
-        ? Math.max(window.innerWidth - 40, 280)
-        : Math.min(window.innerWidth - 100, 1200);
+        ? Math.min(window.innerWidth - 40, 600)
+        : 800;
       const newHeight = isMobile
-        ? Math.max(window.innerHeight * 0.5, 400)
-        : Math.min(window.innerHeight * 0.6, 800);
+        ? Math.min((window.innerWidth - 40) * 0.75, 450)
+        : 600;
 
       if (canvas.width !== newWidth || canvas.height !== newHeight) {
         const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
