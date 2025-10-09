@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { ref, onValue, set, push, get } from 'firebase/database';
 import { database } from '../firebase';
-import * as fabric from 'fabric';
+import { Canvas, Path, Image } from 'fabric';
 
 function CollaborativeCanvas({ teamId, round, userName }) {
   const canvasRef = useRef(null);
@@ -16,7 +16,7 @@ function CollaborativeCanvas({ teamId, round, userName }) {
   const drawingKey = `round${round}-${teamId}`;
 
   useEffect(() => {
-    const canvas = new fabric.Canvas(canvasRef.current, {
+    const canvas = new Canvas(canvasRef.current, {
       width: window.innerWidth > 768 ? 800 : window.innerWidth - 40,
       height: window.innerWidth > 768 ? 600 : 400,
       backgroundColor: '#ffffff',
@@ -88,7 +88,7 @@ function CollaborativeCanvas({ teamId, round, userName }) {
       const data = snapshot.val();
 
       if (data && data.imageData) {
-        fabric.Image.fromURL(data.imageData, (img) => {
+        Image.fromURL(data.imageData, (img) => {
           canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas), {
             scaleX: canvas.width / img.width,
             scaleY: canvas.height / img.height
@@ -106,7 +106,7 @@ function CollaborativeCanvas({ teamId, round, userName }) {
 
     Object.values(strokes).forEach((strokeData) => {
       if (strokeData && strokeData.path) {
-        fabric.Path.fromObject(strokeData, (path) => {
+        Path.fromObject(strokeData, (path) => {
           canvas.add(path);
           canvas.renderAll();
         });
