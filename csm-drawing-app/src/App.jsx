@@ -66,10 +66,17 @@ function App() {
     const savedTeam = localStorage.getItem('csm_user_team');
     const savedName = localStorage.getItem('csm_user_name');
     if (savedTeam && savedName) {
-      setUserTeam(savedTeam);
-      setUserName(savedName);
+      // Check if the team still exists in Firebase
+      if (teams[savedTeam]) {
+        setUserTeam(savedTeam);
+        setUserName(savedName);
+      } else {
+        // Team no longer exists, clear localStorage
+        localStorage.removeItem('csm_user_team');
+        localStorage.removeItem('csm_user_name');
+      }
     }
-  }, []);
+  }, [teams]);
 
   const handleJoinTeam = (teamId, name) => {
     setUserTeam(teamId);
