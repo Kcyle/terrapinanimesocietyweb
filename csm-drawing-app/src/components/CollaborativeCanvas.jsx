@@ -384,10 +384,11 @@ function CollaborativeCanvas({ teamId, round, userName }) {
             title="Bucket Fill"
           >
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="m4 12 8-8 8 8"/>
-              <path d="m16 6-4-4-4 4"/>
-              <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/>
-              <circle cx="17" cy="19" r="1"/>
+              <path d="m4 22 8-8"/>
+              <path d="m13 13 4.5 4.5"/>
+              <path d="m15 7-1.5-1.5c-.55-.55-1.45-.55-2 0L4 13l4 4 7.5-7.5c.55-.55.55-1.45 0-2L15 7z"/>
+              <path d="M21 11V6a2 2 0 0 0-2-2h-5"/>
+              <path d="m15 7 4-4"/>
             </svg>
           </button>
         </div>
