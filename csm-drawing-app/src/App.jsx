@@ -279,7 +279,7 @@ function App() {
             <Leaderboard teams={teams} isFinal={true} />
             <div className="celebration">
               <p>Thank you for participating!</p>
-              <p>Powered by Terrapin Anime Society</p>
+              <p>This entire web app was made by the president</p>
             </div>
           </div>
         )}

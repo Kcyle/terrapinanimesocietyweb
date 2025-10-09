@@ -357,16 +357,14 @@ function CollaborativeCanvas({ teamId, round, userName }) {
     <div className="collaborative-canvas-container">
       <div className="canvas-toolbar">
         <div className="tool-group">
-          <label>Tool:</label>
           <button
             className={`tool-button ${tool === 'brush' ? 'active' : ''}`}
             onClick={() => setTool('brush')}
             title="Brush"
           >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M3 21v-4a4 4 0 0 1 4 -4h10a4 4 0 0 1 4 4v4z" />
-              <path d="M12 11v10" />
-              <path d="M6 3l6 8l6 -8" />
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="m9.06 11.9 8.07-8.06a2.85 2.85 0 1 1 4.03 4.03l-8.06 8.08"/>
+              <path d="M7.07 14.94c-1.66 0-3 1.35-3 3.02 0 1.33-2.5 1.52-2 2.02 1.08 1.1 2.49 2.02 4 2.02 2.2 0 4-1.8 4-4.04a3.01 3.01 0 0 0-3-3.02z"/>
             </svg>
           </button>
           <button
@@ -374,9 +372,10 @@ function CollaborativeCanvas({ teamId, round, userName }) {
             onClick={() => setTool('eraser')}
             title="Eraser"
           >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M19 20H8.5L3 14.5L9.5 8L21 19.5V20" />
-              <line x1="5" y1="13" x2="11" y2="19" />
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="m7 21-4.3-4.3c-1-1-1-2.5 0-3.4l9.6-9.6c1-1 2.5-1 3.4 0l5.6 5.6c1 1 1 2.5 0 3.4L13 21"/>
+              <path d="M22 21H7"/>
+              <path d="m5 11 9 9"/>
             </svg>
           </button>
           <button
@@ -384,9 +383,11 @@ function CollaborativeCanvas({ teamId, round, userName }) {
             onClick={() => setTool('bucket')}
             title="Bucket Fill"
           >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M19 11h-6l-4-8-4 8H2l10 11z" />
-              <circle cx="18" cy="19" r="2" fill="currentColor" />
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="m4 12 8-8 8 8"/>
+              <path d="m16 6-4-4-4 4"/>
+              <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/>
+              <circle cx="17" cy="19" r="1"/>
             </svg>
           </button>
         </div>
@@ -403,15 +404,27 @@ function CollaborativeCanvas({ teamId, round, userName }) {
                 title={c}
               />
             ))}
-            <div className="color-picker-wrapper">
+            <button
+              className="color-picker-wrapper"
+              onClick={() => document.getElementById('color-picker-input').click()}
+              title="Custom Color Picker"
+            >
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="13.5" cy="6.5" r=".5"/>
+                <circle cx="17.5" cy="10.5" r=".5"/>
+                <circle cx="8.5" cy="7.5" r=".5"/>
+                <circle cx="6.5" cy="12.5" r=".5"/>
+                <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/>
+              </svg>
               <input
+                id="color-picker-input"
                 type="color"
                 value={color}
                 onChange={(e) => setColor(e.target.value)}
-                className="color-picker-input"
+                className="color-picker-input-hidden"
                 title="Custom Color"
               />
-            </div>
+            </button>
           </div>
         </div>
 

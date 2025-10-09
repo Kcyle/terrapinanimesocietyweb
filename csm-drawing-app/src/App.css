@@ -642,21 +642,36 @@ body {
 }
 
 .color-picker-wrapper {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   width: 30px;
   height: 30px;
   border-radius: 5px;
   border: 2px solid #666;
-  overflow: hidden;
+  background: transparent;
   cursor: pointer;
+  position: relative;
+  padding: 0;
 }
 
-.color-picker-input {
-  width: 40px;
-  height: 40px;
-  border: none;
-  cursor: pointer;
-  margin: -5px;
+.color-picker-wrapper:hover {
+  border-color: white;
+  transform: scale(1.1);
+}
+
+.color-picker-wrapper svg {
+  width: 20px;
+  height: 20px;
+  pointer-events: none;
+}
+
+.color-picker-input-hidden {
+  position: absolute;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  pointer-events: none;
 }
 
 .size-selector {
