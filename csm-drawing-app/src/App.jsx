@@ -169,18 +169,18 @@ function App() {
               <p className="url-display">{currentUrl}</p>
             </div>
 
-            {!userTeam ? (
+            {!userTeam || !teams[userTeam] ? (
               <TeamJoin onJoinTeam={handleJoinTeam} teams={teams} />
             ) : (
               <div className="team-joined-card">
                 <h3>You're in!</h3>
                 <div className="team-info">
-                  <p className="team-name">{teams[userTeam]?.name || userTeam}</p>
+                  <p className="team-name">{teams[userTeam].name}</p>
                   <p className="user-name">Playing as: {userName}</p>
                   <div className="team-members">
                     <h4>Team Members:</h4>
                     <ul>
-                      {teams[userTeam]?.members?.map((member, idx) => (
+                      {teams[userTeam].members?.map((member, idx) => (
                         <li key={idx} className={member === userName ? 'current-user' : ''}>
                           {member}
                         </li>
