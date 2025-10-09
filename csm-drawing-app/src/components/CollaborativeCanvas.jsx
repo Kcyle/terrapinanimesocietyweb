@@ -16,6 +16,8 @@ function CollaborativeCanvas({ teamId, round, userName }) {
 
   useEffect(() => {
     const canvas = canvasRef.current;
+    if (!canvas) return;
+
     const width = window.innerWidth > 768 ? 800 : window.innerWidth - 40;
     const height = window.innerWidth > 768 ? 600 : 400;
 
@@ -27,18 +29,27 @@ function CollaborativeCanvas({ teamId, round, userName }) {
     const context = canvas.getContext('2d');
     context.lineCap = 'round';
     context.lineJoin = 'round';
+    context.fillStyle = '#ffffff';
+    context.fillRect(0, 0, width, height);
     contextRef.current = context;
 
-    const drawingRef = ref(database, `drawings/${drawingKey}/strokes`);
+    const drawingRef = ref(database, `drawings/${drawingKey}`);
     const unsubscribe = onValue(drawingRef, (snapshot) => {
       if (ignoreNextUpdate.current) {
         ignoreNextUpdate.current = false;
         return;
       }
 
-      const strokes = snapshot.val();
-      if (strokes) {
-        redrawCanvas(strokes);
+      const data = snapshot.val();
+      if (data && data.imageData) {
+        const img = new Image();
+        img.onload = () => {
+          context.clearRect(0, 0, canvas.width, canvas.height);
+          context.fillStyle = '#ffffff';
+          context.fillRect(0, 0, canvas.width, canvas.height);
+          context.drawImage(img, 0, 0, canvas.width, canvas.height);
+        };
+        img.src = data.imageData;
       }
     });
 
@@ -81,6 +92,7 @@ function CollaborativeCanvas({ teamId, round, userName }) {
 
   const draw = (e) => {
     if (!isDrawing) return;
+    e.preventDefault();
 
     const { offsetX, offsetY } = getMousePos(e);
     const context = contextRef.current;
@@ -103,7 +115,8 @@ function CollaborativeCanvas({ teamId, round, userName }) {
     setIsDrawing(false);
 
     const canvas = canvasRef.current;
-    const imageData = canvas.toDataURL('image/png');
+    const context = contextRef.current;
+    const imageData = canvas.toDataURL('image/png', 0.8);
 
     try {
       ignoreNextUpdate.current = true;
@@ -113,13 +126,6 @@ function CollaborativeCanvas({ teamId, round, userName }) {
         imageData: imageData,
         updatedAt: Date.now(),
         updatedBy: userName
-      });
-
-      const strokesRef = ref(database, `drawings/${drawingKey}/strokes`);
-      const newStrokeRef = push(strokesRef);
-      await set(newStrokeRef, {
-        timestamp: Date.now(),
-        user: userName
       });
     } catch (err) {
       console.error('Error saving drawing:', err);
