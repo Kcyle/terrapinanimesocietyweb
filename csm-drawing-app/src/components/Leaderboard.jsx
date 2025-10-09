@@ -37,7 +37,6 @@ function Leaderboard({ teams, isFinal = false }) {
 
           {topThree.length >= 1 && (
             <div className="podium-position first">
-              <div className="podium-crown">👑</div>
               <div className="podium-medal gold-medal">1</div>
               <div className="podium-info">
                 <h3>{topThree[0].name}</h3>
@@ -77,10 +76,7 @@ function Leaderboard({ teams, isFinal = false }) {
               }`}
             >
               <div className="rank-number">
-                {index === 0 && isFinal ? '🥇' :
-                 index === 1 && isFinal ? '🥈' :
-                 index === 2 && isFinal ? '🥉' :
-                 `#${index + 1}`}
+                #{index + 1}
               </div>
               <div className="team-info-leaderboard">
                 <h4>{team.name}</h4>
