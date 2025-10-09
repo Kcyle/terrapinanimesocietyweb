@@ -39,7 +39,7 @@ body {
 
 .app {
   min-height: 100vh;
-  background: linear-gradient(135deg, #0a0a0a 0%, #1a0a0a 100%);
+  background: var(--dark-bg);
 }
 
 .app-header {
@@ -52,7 +52,6 @@ body {
   position: sticky;
   top: 0;
   z-index: 100;
-  box-shadow: 0 4px 20px rgba(220, 20, 60, 0.2);
 }
 
 .header-content h1 {
@@ -60,7 +59,6 @@ body {
   font-size: 2.5rem;
   letter-spacing: 3px;
   color: var(--crimson);
-  text-shadow: 0 0 20px rgba(220, 20, 60, 0.5);
 }
 
 .subtitle {
@@ -84,8 +82,6 @@ body {
 
 .admin-button:hover {
   background: #ff1744;
-  box-shadow: 0 0 20px rgba(220, 20, 60, 0.5);
-  transform: translateY(-2px);
 }
 
 .app-main {
@@ -94,63 +90,7 @@ body {
   margin: 0 auto;
 }
 
-/* ============================================
-   GLITCH TEXT EFFECT
-   ============================================ */
-
-.glitch-text {
-  position: relative;
-  display: inline-block;
-  animation: glitch 2s infinite;
-}
-
-.glitch-text::before,
-.glitch-text::after {
-  content: attr(data-text);
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.glitch-text::before {
-  animation: glitch-1 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
-  color: #00ffff;
-  z-index: -1;
-}
-
-.glitch-text::after {
-  animation: glitch-2 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite reverse;
-  color: #ff00ff;
-  z-index: -2;
-}
-
-@keyframes glitch {
-  0%, 100% { transform: translate(0); }
-  20% { transform: translate(-2px, 2px); }
-  40% { transform: translate(-2px, -2px); }
-  60% { transform: translate(2px, 2px); }
-  80% { transform: translate(2px, -2px); }
-}
-
-@keyframes glitch-1 {
-  0% { clip-path: inset(40% 0 61% 0); }
-  20% { clip-path: inset(92% 0 1% 0); }
-  40% { clip-path: inset(43% 0 1% 0); }
-  60% { clip-path: inset(25% 0 58% 0); }
-  80% { clip-path: inset(54% 0 7% 0); }
-  100% { clip-path: inset(58% 0 43% 0); }
-}
-
-@keyframes glitch-2 {
-  0% { clip-path: inset(25% 0 58% 0); }
-  20% { clip-path: inset(54% 0 7% 0); }
-  40% { clip-path: inset(58% 0 43% 0); }
-  60% { clip-path: inset(40% 0 61% 0); }
-  80% { clip-path: inset(92% 0 1% 0); }
-  100% { clip-path: inset(43% 0 1% 0); }
-}
+/* Glitch effect removed */
 
 /* ============================================
    LOADING SPINNER
@@ -205,7 +145,6 @@ body {
   padding: 2rem;
   max-width: 800px;
   margin: 0 auto;
-  box-shadow: 0 10px 40px rgba(220, 20, 60, 0.2);
 }
 
 .welcome-card h2 {
@@ -295,7 +234,6 @@ body {
 .mode-button.active {
   background: var(--crimson);
   border-color: var(--crimson);
-  box-shadow: 0 0 20px rgba(220, 20, 60, 0.3);
 }
 
 .mode-button:hover:not(.active) {
@@ -374,8 +312,6 @@ body {
 
 .submit-button:hover:not(:disabled) {
   background: #ff1744;
-  transform: translateY(-2px);
-  box-shadow: 0 5px 20px rgba(220, 20, 60, 0.4);
 }
 
 .submit-button:disabled {
@@ -488,7 +424,6 @@ body {
 
 .leave-button:hover {
   background: #ff5252;
-  transform: translateY(-2px);
 }
 
 .waiting-message {
@@ -524,8 +459,6 @@ body {
 
 .team-card:hover {
   border-color: var(--crimson);
-  transform: translateY(-5px);
-  box-shadow: 0 5px 20px rgba(220, 20, 60, 0.2);
 }
 
 .team-card h4 {
@@ -665,7 +598,6 @@ body {
 .color-button:hover,
 .color-button.active {
   border-color: white;
-  transform: scale(1.1);
 }
 
 .size-selector {
@@ -852,8 +784,6 @@ body {
 
 .submit-votes-button:hover:not(:disabled) {
   background: #ff1744;
-  transform: translateY(-2px);
-  box-shadow: 0 5px 20px rgba(220, 20, 60, 0.4);
 }
 
 .submit-votes-button:disabled {
@@ -882,23 +812,19 @@ body {
 }
 
 .drawing-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 5px 20px rgba(255, 255, 255, 0.1);
+  border-color: var(--crimson);
 }
 
 .drawing-card.selected-first {
   border-color: var(--gold);
-  box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
 }
 
 .drawing-card.selected-second {
   border-color: var(--silver);
-  box-shadow: 0 0 20px rgba(192, 192, 192, 0.3);
 }
 
 .drawing-card.selected-third {
   border-color: var(--bronze);
-  box-shadow: 0 0 20px rgba(205, 127, 50, 0.3);
 }
 
 .drawing-header {
@@ -1028,21 +954,18 @@ body {
   background: var(--gold);
   border-color: #FFE55C;
   color: var(--dark-bg);
-  box-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
 }
 
 .silver-medal {
   background: var(--silver);
   border-color: #E0E0E0;
   color: var(--dark-bg);
-  box-shadow: 0 0 30px rgba(192, 192, 192, 0.5);
 }
 
 .bronze-medal {
   background: var(--bronze);
   border-color: #E6A868;
   color: var(--dark-bg);
-  box-shadow: 0 0 30px rgba(205, 127, 50, 0.5);
 }
 
 .podium-info {
@@ -1072,19 +995,19 @@ body {
 
 .gold-stand {
   height: 200px;
-  background: linear-gradient(to bottom, var(--gold), #B8860B);
+  background: var(--gold);
   color: var(--dark-bg);
 }
 
 .silver-stand {
   height: 150px;
-  background: linear-gradient(to bottom, var(--silver), #909090);
+  background: var(--silver);
   color: var(--dark-bg);
 }
 
 .bronze-stand {
   height: 120px;
-  background: linear-gradient(to bottom, var(--bronze), #8B6914);
+  background: var(--bronze);
   color: var(--dark-bg);
 }
 
@@ -1118,23 +1041,19 @@ body {
 }
 
 .ranking-item:hover {
-  transform: translateX(10px);
   border-color: var(--crimson);
 }
 
 .ranking-item.rank-1 {
   border-color: var(--gold);
-  background: linear-gradient(to right, rgba(255, 215, 0, 0.1), var(--card-bg));
 }
 
 .ranking-item.rank-2 {
   border-color: var(--silver);
-  background: linear-gradient(to right, rgba(192, 192, 192, 0.1), var(--card-bg));
 }
 
 .ranking-item.rank-3 {
   border-color: var(--bronze);
-  background: linear-gradient(to right, rgba(205, 127, 50, 0.1), var(--card-bg));
 }
 
 .rank-number {
@@ -1389,8 +1308,6 @@ body {
 
 .admin-action-button.primary:hover:not(:disabled) {
   background: #ff1744;
-  transform: translateY(-2px);
-  box-shadow: 0 5px 20px rgba(220, 20, 60, 0.4);
 }
 
 .admin-action-button.warning {
