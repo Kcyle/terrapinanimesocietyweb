@@ -61,11 +61,11 @@ body {
 }
 
 .header-content h1 {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Bebas Neue', sans-serif;
   font-size: 2.5rem;
-  letter-spacing: normal;
+  letter-spacing: 2px;
   color: var(--crimson);
-  font-weight: 600;
+  font-weight: normal;
   margin-bottom: 0;
 }
 
@@ -1328,6 +1328,7 @@ body {
   font-family: 'Bebas Neue', sans-serif;
   font-size: 2rem;
   color: var(--crimson);
+  margin: 0;
 }
 
 .admin-info {
