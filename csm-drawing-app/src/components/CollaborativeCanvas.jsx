@@ -90,10 +90,12 @@ function CollaborativeCanvas({ teamId, round, userName }) {
       const snapshot = await get(drawingRef);
       const imageDataUrl = snapshot.val();
 
-      if (imageDataUrl) {
+      if (imageDataUrl && contextRef.current) {
         const img = new Image();
         img.onload = () => {
-          contextRef.current.drawImage(img, 0, 0);
+          if (contextRef.current) {
+            contextRef.current.drawImage(img, 0, 0);
+          }
         };
         img.src = imageDataUrl;
       }
