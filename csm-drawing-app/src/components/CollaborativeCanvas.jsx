@@ -22,10 +22,13 @@ function CollaborativeCanvas({ teamId, round, userName }) {
     canvas.width = 800;
     canvas.height = 600;
 
-    // Set CSS display size for mobile
+    // Set CSS display size
     if (window.innerWidth <= 768) {
-      canvas.style.width = '100%';
-      canvas.style.height = 'auto';
+      // Mobile: scale to fit screen width while maintaining aspect ratio
+      const maxWidth = window.innerWidth - 50; // Account for padding
+      const scale = maxWidth / 800;
+      canvas.style.width = maxWidth + 'px';
+      canvas.style.height = (600 * scale) + 'px';
     } else {
       canvas.style.width = '800px';
       canvas.style.height = '600px';
@@ -68,8 +71,10 @@ function CollaborativeCanvas({ teamId, round, userName }) {
     // Handle resize - canvas stays 800x600, adjust CSS display size
     const handleResize = () => {
       if (window.innerWidth <= 768) {
-        canvas.style.width = '100%';
-        canvas.style.height = 'auto';
+        const maxWidth = window.innerWidth - 50;
+        const scale = maxWidth / 800;
+        canvas.style.width = maxWidth + 'px';
+        canvas.style.height = (600 * scale) + 'px';
       } else {
         canvas.style.width = '800px';
         canvas.style.height = '600px';
