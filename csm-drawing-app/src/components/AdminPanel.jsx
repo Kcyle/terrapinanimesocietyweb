@@ -81,12 +81,24 @@ function AdminPanel({ gameState, teams, onClose }) {
       const snapshot = await get(votesRef);
       const roundVotes = snapshot.val() || {};
 
-      const points = {};
+      // Calculate vote tallies for each team
+      const voteTallies = {};
       Object.values(roundVotes).forEach((vote) => {
-        if (vote.first) points[vote.first] = (points[vote.first] || 0) + 3;
-        if (vote.second) points[vote.second] = (points[vote.second] || 0) + 2;
-        if (vote.third) points[vote.third] = (points[vote.third] || 0) + 1;
+        if (vote.teamId) {
+          voteTallies[vote.teamId] = (voteTallies[vote.teamId] || 0) + 1;
+        }
       });
+
+      // Sort teams by vote count to find top 3
+      const sortedTeams = Object.entries(voteTallies)
+        .sort(([, aVotes], [, bVotes]) => bVotes - aVotes)
+        .map(([teamId]) => teamId);
+
+      // Assign points: 1st place = 3 points, 2nd = 2, 3rd = 1
+      const points = {};
+      if (sortedTeams[0]) points[sortedTeams[0]] = 3;
+      if (sortedTeams[1]) points[sortedTeams[1]] = 2;
+      if (sortedTeams[2]) points[sortedTeams[2]] = 1;
 
       const teamsRef = ref(database, 'teams');
       const teamsSnapshot = await get(teamsRef);
@@ -334,18 +346,33 @@ function AdminPanel({ gameState, teams, onClose }) {
         {/* Votes Overview */}
         {gameState.phase === 'voting' && voteCount > 0 && (
           <div className="votes-overview">
-            <h4>Votes Received ({voteCount})</h4>
+            <h4>Live Vote Tallies</h4>
             <div className="votes-list">
-              {Object.entries(votes).map(([deviceId, vote]) => (
-                <div key={deviceId} className="vote-item-admin">
-                  <small>Device: {deviceId.substring(0, 12)}...</small>
-                  <div>
-                    1st: {teams[vote.first]?.name || 'Unknown'} |
-                    2nd: {teams[vote.second]?.name || 'Unknown'} |
-                    3rd: {teams[vote.third]?.name || 'Unknown'}
-                  </div>
-                </div>
-              ))}
+              {(() => {
+                const voteTallies = {};
+                Object.values(votes).forEach((vote) => {
+                  if (vote.teamId) {
+                    voteTallies[vote.teamId] = (voteTallies[vote.teamId] || 0) + 1;
+                  }
+                });
+
+                return Object.entries(voteTallies)
+                  .sort(([, aVotes], [, bVotes]) => bVotes - aVotes)
+                  .map(([teamId, count], index) => (
+                    <div key={teamId} className="vote-item-admin">
+                      <div className="vote-rank">
+                        {index === 0 && '🥇'}
+                        {index === 1 && '🥈'}
+                        {index === 2 && '🥉'}
+                        #{index + 1}
+                      </div>
+                      <div className="vote-team-info">
+                        <strong>{teams[teamId]?.name || 'Unknown'}</strong>
+                        <span>{count} vote{count !== 1 ? 's' : ''}</span>
+                      </div>
+                    </div>
+                  ));
+              })()}
             </div>
           </div>
         )}
