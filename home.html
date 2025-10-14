@@ -6199,6 +6199,48 @@
         .page-loaded .page-section.active .stagger-element:nth-child(5) {
             animation-delay: 0.5s;
         }
+
+        /* Mobile Optimization - Prevent Cut-off */
+        @media (max-width: 768px) {
+            * {
+                max-width: 100%;
+            }
+
+            body {
+                overflow-x: hidden;
+            }
+
+            img {
+                max-width: 100%;
+                height: auto;
+            }
+
+            .hero-content, .section-content, .content-wrapper {
+                padding: 20px 15px !important;
+                box-sizing: border-box;
+            }
+
+            h1, h2, h3, h4, h5, h6 {
+                word-wrap: break-word;
+                overflow-wrap: break-word;
+            }
+
+            p, span, div {
+                word-wrap: break-word;
+                overflow-wrap: break-word;
+            }
+
+            .hero-mascot, .mascot-container {
+                max-width: 100%;
+                overflow: hidden;
+            }
+
+            .hero-mascot img {
+                max-width: 100%;
+                height: auto;
+                object-fit: contain;
+            }
+        }
     </style>
 </head>
 
