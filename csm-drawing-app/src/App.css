@@ -1115,7 +1115,7 @@ body {
   border: 2px solid var(--border-color);
   border-radius: 10px;
   overflow: hidden;
-  transition: all 0.3s ease;
+  transition: border-color 0.2s ease;
 }
 
 .drawing-card.voting-card {
@@ -1123,15 +1123,11 @@ body {
 }
 
 .drawing-card.voting-card:hover:not(.my-vote) {
-  transform: translateY(-5px);
   border-color: var(--crimson);
-  box-shadow: 0 8px 16px rgba(220, 20, 60, 0.3);
 }
 
 .drawing-card.my-vote {
   border-color: var(--success);
-  box-shadow: 0 4px 12px rgba(78, 205, 196, 0.3);
-  transform: none;
 }
 
 .my-vote-overlay {
