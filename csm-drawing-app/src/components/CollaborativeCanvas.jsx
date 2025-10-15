@@ -556,7 +556,7 @@ function CollaborativeCanvas({ teamId, round, userName, startTime, duration }) {
         </div>
       </div>
 
-      <div className="canvas-wrapper">
+      <div className="canvas-wrapper" style={{ position: 'relative' }}>
         <canvas
           ref={canvasRef}
           className={tool === 'bucket' ? 'cursor-bucket' : 'cursor-none'}

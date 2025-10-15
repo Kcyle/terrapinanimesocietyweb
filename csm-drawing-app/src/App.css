@@ -763,9 +763,8 @@ body {
 
 .popup-character {
   position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  top: 80px;
+  left: 10px;
   z-index: 9999;
   animation: popupBounce 0.5s ease-out;
   pointer-events: none;
@@ -836,15 +835,27 @@ body {
 }
 
 @media (max-width: 768px) {
+  .popup-character {
+    top: 70px;
+    left: 5px;
+    right: auto;
+  }
+
   .popup-image {
-    width: 100px;
+    width: 80px;
   }
 
   .popup-bubble {
-    font-size: 1rem;
-    padding: 10px 16px;
-    max-width: calc(100vw - 220px);
+    left: 90px;
+    font-size: 0.9rem;
+    padding: 8px 12px;
+    max-width: calc(100vw - 120px);
     white-space: normal;
+  }
+
+  .popup-bubble::before {
+    left: -8px;
+    border-right-width: 10px;
   }
 }
 
