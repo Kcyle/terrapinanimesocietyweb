@@ -24,7 +24,7 @@ function Leaderboard({ teams, isFinal = false }) {
         <>
           <div className="final-message">
             <h2>Thank you for participating!</h2>
-            <p className="fun-note">This web app took over 50 hours to make... hope you liked it! 😅</p>
+            <p className="fun-note">This web app took over 20 hours to make... hope you liked it!</p>
           </div>
           <div className="podium">
             {topThree.length >= 2 && (

@@ -280,10 +280,6 @@ function App() {
           <div className="phase-container final-phase">
             <h2 className="glitch-text" data-text="FINAL RESULTS">FINAL RESULTS</h2>
             <Leaderboard teams={teams} isFinal={true} />
-            <div className="celebration">
-              <p>Thank you for participating!</p>
-              <p>This entire web app was made by the president</p>
-            </div>
           </div>
         )}
       </main>
