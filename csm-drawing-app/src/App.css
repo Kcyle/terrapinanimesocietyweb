@@ -174,13 +174,14 @@ body {
 
 /* Setup Phase */
 .welcome-card {
-  background: var(--card-bg);
+  background: rgba(26, 26, 26, 0.7);
+  backdrop-filter: blur(10px);
   border: 2px solid var(--crimson);
   border-radius: 10px;
   padding: 2rem;
   max-width: 800px;
   margin: 0 auto;
-  
+
 }
 
 .welcome-card h2 {
