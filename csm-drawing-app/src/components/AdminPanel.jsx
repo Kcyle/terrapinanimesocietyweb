@@ -99,23 +99,27 @@ function AdminPanel({ gameState, teams, onClose }) {
       const points = {};
       const pointValues = [3, 2, 1]; // 1st, 2nd, 3rd
 
-      let currentPlace = 0; // Index in pointValues array
+      let currentPlaceIndex = 0; // Current position in the sorted list (0-based)
       let i = 0;
 
-      while (i < sortedEntries.length && currentPlace < pointValues.length) {
+      while (i < sortedEntries.length && currentPlaceIndex < pointValues.length) {
         const currentVotes = sortedEntries[i][1];
-        const currentPoints = pointValues[currentPlace];
+        const currentPoints = pointValues[currentPlaceIndex];
 
-        // Give all teams with the same vote count the same points
+        // Count how many teams have this vote count (tied teams)
+        let tiedTeamsCount = 0;
         let j = i;
         while (j < sortedEntries.length && sortedEntries[j][1] === currentVotes) {
           points[sortedEntries[j][0]] = currentPoints;
+          tiedTeamsCount++;
           j++;
         }
 
-        // Move to next placement
-        currentPlace++;
+        // Move to next position in sorted list
         i = j;
+        // Skip placements based on number of tied teams
+        // Example: 3 teams tie for 1st, next placement is 4th (index 3)
+        currentPlaceIndex += tiedTeamsCount;
       }
 
       const teamsRef = ref(database, 'teams');
