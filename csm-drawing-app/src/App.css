@@ -804,9 +804,7 @@ body {
   font-size: 1.3rem;
   letter-spacing: 1px;
   white-space: nowrap;
-  box-shadow: 0 4px 12px rgba(220, 20, 60, 0.5);
   border: 2px solid white;
-  animation: bubbleWiggle 0.3s ease-in-out;
 }
 
 .popup-bubble::before {
@@ -820,18 +818,6 @@ body {
   border-top: 10px solid transparent;
   border-bottom: 10px solid transparent;
   border-right: 12px solid var(--crimson);
-}
-
-@keyframes bubbleWiggle {
-  0%, 100% {
-    transform: rotate(0deg);
-  }
-  25% {
-    transform: rotate(2deg);
-  }
-  75% {
-    transform: rotate(-2deg);
-  }
 }
 
 @media (max-width: 768px) {
