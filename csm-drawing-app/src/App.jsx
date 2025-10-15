@@ -140,20 +140,20 @@ function App() {
               <p>Admin: Click the Admin button and start registration to begin.</p>
               <div className="game-info">
                 <h3>How it works:</h3>
-                <div className="info-text">
-                  <p>Have a single person per team create a team</p>
-                  <p>Draw collaboratively on a shared canvas</p>
-                  <p>Vote for your favorite drawings</p>
-                  <p>Top 3 finishers gets points!</p>
-                </div>
+                <ol>
+                  <li>Have a single person per team create a team</li>
+                  <li>Draw collaboratively on a shared canvas</li>
+                  <li>Vote for your favorite drawings</li>
+                  <li>Top 3 finishers gets points!</li>
+                </ol>
                 <h3>Rounds:</h3>
-                <div className="rounds-text">
+                <ul>
                   {ROUND_PROMPTS.map((round, idx) => (
-                    <p key={idx}>
-                      {round.title} ({round.duration / 60} minutes)
-                    </p>
+                    <li key={idx}>
+                      <strong>{round.title}</strong> ({round.duration / 60} minutes)
+                    </li>
                   ))}
-                </div>
+                </ul>
               </div>
             </div>
           </div>
