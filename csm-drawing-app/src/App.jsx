@@ -287,6 +287,11 @@ function App() {
           </div>
         )}
       </main>
+
+      <footer className="app-footer">
+        <p>© 2025 TERRAPIN ANIME SOCIETY</p>
+        <p>ALL RIGHTS RESERVED</p>
+      </footer>
     </div>
   );
 }
