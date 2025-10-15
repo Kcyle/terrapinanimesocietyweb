@@ -124,7 +124,16 @@ function CollaborativeCanvas({ teamId, round, userName }) {
 
     // Redraw all strokes
     strokes.forEach(stroke => {
-      if (!stroke || !stroke.points || stroke.points.length < 2) return;
+      if (!stroke) return;
+
+      // Handle bucket fill strokes
+      if (stroke.tool === 'bucket' && stroke.fillPoint) {
+        floodFill(stroke.fillPoint.x, stroke.fillPoint.y, stroke.color);
+        return;
+      }
+
+      // Handle brush/eraser strokes
+      if (!stroke.points || stroke.points.length < 2) return;
 
       ctx.strokeStyle = stroke.color;
       ctx.lineWidth = stroke.size;
@@ -213,14 +222,31 @@ function CollaborativeCanvas({ teamId, round, userName }) {
     ctx.putImageData(imageData, 0, 0);
   };
 
-  const startDrawing = (e) => {
+  const startDrawing = async (e) => {
     e.preventDefault();
 
     const pos = getCanvasCoordinates(e);
 
     if (tool === 'bucket') {
       floodFill(pos.x, pos.y, color);
-      saveDrawing();
+
+      // Save bucket fill as a stroke so it syncs to other users
+      const bucketStroke = {
+        tool: 'bucket',
+        fillPoint: { x: pos.x, y: pos.y },
+        color: color,
+        timestamp: Date.now(),
+        user: userName
+      };
+
+      try {
+        const strokesRef = ref(database, `drawings/${drawingKey}/strokes`);
+        const newStrokeRef = push(strokesRef);
+        await set(newStrokeRef, { ...bucketStroke, strokeId: newStrokeRef.key });
+        await saveDrawing();
+      } catch (err) {
+        console.error('Error saving bucket fill:', err);
+      }
       return;
     }
 
