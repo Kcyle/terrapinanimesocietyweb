@@ -229,6 +229,8 @@ function App() {
                 teamId={userTeam}
                 round={gameState.currentRound}
                 userName={userName}
+                startTime={gameState.roundStartTime}
+                duration={currentRoundData.duration}
               />
             ) : (
               <div className="not-joined-message">
