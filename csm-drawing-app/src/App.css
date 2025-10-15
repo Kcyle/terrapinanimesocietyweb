@@ -519,7 +519,8 @@ body {
    ============================================ */
 
 .round-header {
-  background: var(--card-bg);
+  background: rgba(26, 26, 26, 0.3);
+  backdrop-filter: blur(10px);
   border: 2px solid var(--crimson);
   border-radius: 10px;
   padding: 2rem;
@@ -570,7 +571,8 @@ body {
 
 /* Collaborative Canvas */
 .collaborative-canvas-container {
-  background: var(--card-bg);
+  background: rgba(26, 26, 26, 0.3);
+  backdrop-filter: blur(10px);
   border: 2px solid var(--border-color);
   border-radius: 10px;
   padding: 1rem;
