@@ -123,14 +123,14 @@ function VotingScreen({ round, teams, userTeam, deviceId }) {
   return (
     <div className="voting-screen">
       <div className="voting-header">
-        <h2>Vote for the Best Drawings!</h2>
+        <h2>Vote for the Best Drawing!</h2>
         <p className="voting-instructions">
-          Select your top 3 favorite drawings (you cannot vote for your own team)
+          Click on your favorite drawing to vote. You can change your vote anytime. (You cannot vote for your own team)
         </p>
         <div className="voting-points-info">
           <p className="points-heading">The top 3 drawings with the most votes will receive points:</p>
           <ul className="points-list">
-            <li className="gold">1st Place: 3 points</li>
+            <li className="gold">1st Place (Most Votes): 3 points</li>
             <li className="silver">2nd Place: 2 points</li>
             <li className="bronze">3rd Place: 1 point</li>
           </ul>
