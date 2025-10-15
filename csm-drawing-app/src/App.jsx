@@ -19,9 +19,10 @@ const getDeviceId = () => {
 };
 
 const ROUND_PROMPTS = [
-  { title: "Round 1: Favorite Character", prompt: "Draw your favorite Chainsaw Man character", duration: 600 },
-  { title: "Round 2: Design a Devil", prompt: "Design your own Devil", duration: 600 },
-  { title: "Round 3: Iconic Scene", prompt: "Recreate an iconic Chainsaw Man scene", duration: 900 }
+  { title: "Round 1: Disease Devil", prompt: "Disease Devil", duration: 300 },
+  { title: "Round 2: Waiting Devil (Fear of Waiting)", prompt: "Waiting Devil (Fear of Waiting)", duration: 300 },
+  { title: "Round 3: Long Words Devil (Fear of Long Words)", prompt: "Long Words Devil (Fear of Long Words)", duration: 300 },
+  { title: "Round 4: Testudo Devil", prompt: "Testudo Devil", duration: 300 }
 ];
 
 function App() {
@@ -139,20 +140,20 @@ function App() {
               <p>Admin: Click the Admin button and start registration to begin.</p>
               <div className="game-info">
                 <h3>How it works:</h3>
-                <ol>
-                  <li>Have a single person per team create a team</li>
-                  <li>Draw collaboratively on a shared canvas</li>
-                  <li>Vote for your favorite drawings</li>
-                  <li>Top 3 finishers gets points!</li>
-                </ol>
+                <div className="info-text">
+                  <p>Have a single person per team create a team</p>
+                  <p>Draw collaboratively on a shared canvas</p>
+                  <p>Vote for your favorite drawings</p>
+                  <p>Top 3 finishers gets points!</p>
+                </div>
                 <h3>Rounds:</h3>
-                <ul>
+                <div className="rounds-text">
                   {ROUND_PROMPTS.map((round, idx) => (
-                    <li key={idx}>
-                      <strong>{round.title}:</strong> {round.prompt} ({round.duration / 60} minutes)
-                    </li>
+                    <p key={idx}>
+                      {round.title} ({round.duration / 60} minutes)
+                    </p>
                   ))}
-                </ul>
+                </div>
               </div>
             </div>
           </div>

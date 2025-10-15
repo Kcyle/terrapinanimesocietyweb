@@ -1,14 +1,7 @@
 {
   "permissions": {
     "allow": [
-      "Bash(cat:*)",
-      "Bash(git add:*)",
-      "Bash(git commit:*)",
-      "Bash(git push:*)",
-      "Bash(git config:*)",
-      "Bash(git pull:*)",
-      "Bash(ls \"C:\\Users\\Kyle\\Pictures\\terrapinanimesocietyweb-main\\images\"\" | grep -E \"scene)",
-      "Bash(poster \")"
+      "Bash(npm run build)"
     ],
     "deny": [],
     "ask": []
