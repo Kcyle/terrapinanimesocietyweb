@@ -89,16 +89,34 @@ function AdminPanel({ gameState, teams, onClose }) {
         }
       });
 
-      // Sort teams by vote count to find top 3
-      const sortedTeams = Object.entries(voteTallies)
-        .sort(([, aVotes], [, bVotes]) => bVotes - aVotes)
-        .map(([teamId]) => teamId);
+      // Sort teams by vote count (descending)
+      const sortedEntries = Object.entries(voteTallies)
+        .sort(([, aVotes], [, bVotes]) => bVotes - aVotes);
 
-      // Assign points: 1st place = 3 points, 2nd = 2, 3rd = 1
+      // Assign points with tie handling
+      // 1st place = 3 points, 2nd = 2, 3rd = 1
+      // If teams tie, they all get the same points for that placement
       const points = {};
-      if (sortedTeams[0]) points[sortedTeams[0]] = 3;
-      if (sortedTeams[1]) points[sortedTeams[1]] = 2;
-      if (sortedTeams[2]) points[sortedTeams[2]] = 1;
+      const pointValues = [3, 2, 1]; // 1st, 2nd, 3rd
+
+      let currentPlace = 0; // Index in pointValues array
+      let i = 0;
+
+      while (i < sortedEntries.length && currentPlace < pointValues.length) {
+        const currentVotes = sortedEntries[i][1];
+        const currentPoints = pointValues[currentPlace];
+
+        // Give all teams with the same vote count the same points
+        let j = i;
+        while (j < sortedEntries.length && sortedEntries[j][1] === currentVotes) {
+          points[sortedEntries[j][0]] = currentPoints;
+          j++;
+        }
+
+        // Move to next placement
+        currentPlace++;
+        i = j;
+      }
 
       const teamsRef = ref(database, 'teams');
       const teamsSnapshot = await get(teamsRef);
