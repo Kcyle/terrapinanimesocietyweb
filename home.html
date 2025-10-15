@@ -3692,6 +3692,214 @@
             letter-spacing: 1px;
         }
 
+        .club-carousel-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .carousel-scene-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            overflow: hidden;
+            border: 2px solid var(--border);
+            background: rgba(0, 0, 0, 0.8);
+            box-shadow: 0 20px 60px rgba(220, 20, 60, 0.2);
+        }
+
+        .scene-carousel {
+            position: relative;
+            width: 100%;
+            height: 700px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .scene-slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out, transform 1s ease;
+            transform: scale(0.95);
+        }
+
+        .scene-slide.active {
+            opacity: 1;
+            transform: scale(1);
+            z-index: 1;
+        }
+
+        .scene-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.9) contrast(1.1);
+        }
+
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(220, 20, 60, 0.8);
+            border: 2px solid var(--crimson);
+            color: var(--dark-bg);
+            width: 60px;
+            height: 60px;
+            font-size: 2.5rem;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .carousel-btn:hover {
+            background: var(--crimson);
+            transform: translateY(-50%) scale(1.1);
+            box-shadow: 0 0 30px rgba(220, 20, 60, 0.6);
+        }
+
+        .prev-btn {
+            left: 20px;
+        }
+
+        .next-btn {
+            right: 20px;
+        }
+
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .carousel-dot {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: rgba(220, 20, 60, 0.3);
+            border: 2px solid var(--crimson);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .carousel-dot.active {
+            background: var(--crimson);
+            transform: scale(1.3);
+            box-shadow: 0 0 20px rgba(220, 20, 60, 0.6);
+        }
+
+        .carousel-dot:hover {
+            background: rgba(220, 20, 60, 0.6);
+            transform: scale(1.2);
+        }
+
+        .poster-showcase {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 50px;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .poster-card {
+            position: relative;
+            transition: all 0.4s ease;
+        }
+
+        .poster-card:hover {
+            transform: translateY(-15px);
+        }
+
+        .poster-frame {
+            position: relative;
+            padding: 20px;
+            background: linear-gradient(135deg, rgba(139, 0, 0, 0.2), rgba(0, 0, 0, 0.9));
+            border: 2px solid var(--border);
+            box-shadow: 0 15px 40px rgba(220, 20, 60, 0.2);
+            transition: all 0.4s ease;
+        }
+
+        .poster-card:hover .poster-frame {
+            border-color: var(--crimson);
+            box-shadow: 0 20px 60px rgba(220, 20, 60, 0.4);
+            background: linear-gradient(135deg, rgba(220, 20, 60, 0.2), rgba(0, 0, 0, 0.95));
+        }
+
+        .poster-frame::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            border: 1px solid rgba(220, 20, 60, 0.3);
+            pointer-events: none;
+        }
+
+        .poster-frame img {
+            width: 100%;
+            height: auto;
+            display: block;
+            position: relative;
+            z-index: 1;
+            filter: brightness(0.95);
+            transition: filter 0.3s ease;
+        }
+
+        .poster-card:hover .poster-frame img {
+            filter: brightness(1.05);
+        }
+
+        @media (max-width: 968px) {
+            .poster-showcase {
+                grid-template-columns: 1fr;
+                gap: 40px;
+                padding: 0 20px;
+            }
+
+            .scene-carousel {
+                height: 400px;
+            }
+
+            .carousel-btn {
+                width: 45px;
+                height: 45px;
+                font-size: 2rem;
+            }
+
+            .prev-btn {
+                left: 10px;
+            }
+
+            .next-btn {
+                right: 10px;
+            }
+
+            .club-carousel-container {
+                padding: 0 20px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .scene-carousel {
+                height: 300px;
+            }
+
+            .carousel-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 1.5rem;
+            }
+        }
 
         .card-grid {
             display: grid;
@@ -6388,6 +6596,67 @@
                 </p>
             </div>
         </div>
+
+        <div style="margin-top: 120px;">
+            <div class="section-header">
+                <h2>CLUB MEMORIES</h2>
+                <p class="section-subtitle">Moments From Our Events</p>
+            </div>
+            <div class="club-carousel-container">
+                <div class="carousel-scene-wrapper">
+                    <div class="scene-carousel">
+                        <div class="scene-slide active">
+                            <img src="images/scene1.jpg" alt="Club Event 1">
+                        </div>
+                        <div class="scene-slide">
+                            <img src="images/scene2.jpg" alt="Club Event 2">
+                        </div>
+                        <div class="scene-slide">
+                            <img src="images/scene3.jpg" alt="Club Event 3">
+                        </div>
+                        <div class="scene-slide">
+                            <img src="images/scene4.jpg" alt="Club Event 4">
+                        </div>
+                        <div class="scene-slide">
+                            <img src="images/scene5.jpg" alt="Club Event 5">
+                        </div>
+                    </div>
+                    <button class="carousel-btn prev-btn" onclick="changeSceneSlide(-1)">‹</button>
+                    <button class="carousel-btn next-btn" onclick="changeSceneSlide(1)">›</button>
+                </div>
+                <div class="carousel-dots">
+                    <span class="carousel-dot active" onclick="setSceneSlide(0)"></span>
+                    <span class="carousel-dot" onclick="setSceneSlide(1)"></span>
+                    <span class="carousel-dot" onclick="setSceneSlide(2)"></span>
+                    <span class="carousel-dot" onclick="setSceneSlide(3)"></span>
+                    <span class="carousel-dot" onclick="setSceneSlide(4)"></span>
+                </div>
+            </div>
+        </div>
+
+        <div style="margin-top: 120px; margin-bottom: 100px;">
+            <div class="section-header">
+                <h2>FEATURED EVENTS</h2>
+                <p class="section-subtitle">Upcoming Highlights</p>
+            </div>
+            <div class="poster-showcase">
+                <div class="poster-card">
+                    <div class="poster-frame">
+                        <img src="images/poster1.png" alt="Event Poster 1">
+                    </div>
+                </div>
+                <div class="poster-card">
+                    <div class="poster-frame">
+                        <img src="images/poster2.png" alt="Event Poster 2">
+                    </div>
+                </div>
+                <div class="poster-card">
+                    <div class="poster-frame">
+                        <img src="images/poster3.png" alt="Event Poster 3">
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 
 <footer>
@@ -6447,6 +6716,33 @@
 
         initSpinningBlossom();
 
+        // Scene Carousel Functionality
+        let currentSceneSlide = 0;
+        const sceneSlides = document.querySelectorAll('.scene-slide');
+        const sceneDots = document.querySelectorAll('.carousel-dot');
+
+        function showSceneSlide(n) {
+            sceneSlides.forEach(slide => slide.classList.remove('active'));
+            sceneDots.forEach(dot => dot.classList.remove('active'));
+
+            currentSceneSlide = (n + sceneSlides.length) % sceneSlides.length;
+
+            sceneSlides[currentSceneSlide].classList.add('active');
+            sceneDots[currentSceneSlide].classList.add('active');
+        }
+
+        function changeSceneSlide(direction) {
+            showSceneSlide(currentSceneSlide + direction);
+        }
+
+        function setSceneSlide(n) {
+            showSceneSlide(n);
+        }
+
+        // Auto-advance carousel every 5 seconds
+        setInterval(() => {
+            changeSceneSlide(1);
+        }, 5000);
 
         const cosplayItems = document.querySelectorAll('.cosplay-item');
         const cosplayViewer = document.getElementById('cosplayViewer');
