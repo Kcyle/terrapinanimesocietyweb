@@ -98,6 +98,28 @@ body {
   padding: 2rem;
   width: 100%;
   margin: 0 auto;
+  min-height: calc(100vh - 200px);
+}
+
+.app-footer {
+  background: var(--card-bg);
+  border-top: 2px solid var(--crimson);
+  padding: 1.5rem;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.app-footer p {
+  margin: 0.25rem 0;
+  font-family: 'Bebas Neue', sans-serif;
+  letter-spacing: 1px;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.app-footer p:first-child {
+  color: var(--crimson);
+  font-size: 1rem;
 }
 
 /* ============================================
