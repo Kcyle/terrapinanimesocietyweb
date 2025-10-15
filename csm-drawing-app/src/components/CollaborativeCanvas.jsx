@@ -289,7 +289,8 @@ function CollaborativeCanvas({ teamId, round, userName }) {
         size: brushSize,
         tool,
         timestamp: Date.now(),
-        user: userName
+        user: userName,
+        strokeId: newStrokeRef.key
       };
 
       await set(newStrokeRef, strokeData);
@@ -298,6 +299,38 @@ function CollaborativeCanvas({ teamId, round, userName }) {
       await saveDrawing();
     } catch (err) {
       console.error('Error saving stroke:', err);
+    }
+  };
+
+  const handleUndo = async () => {
+    try {
+      const strokesRef = ref(database, `drawings/${drawingKey}/strokes`);
+      const snapshot = await get(strokesRef);
+      const strokes = snapshot.val();
+
+      if (!strokes) return;
+
+      // Find the last stroke by current user
+      const strokesArray = Object.entries(strokes)
+        .map(([key, stroke]) => ({ ...stroke, key }))
+        .sort((a, b) => b.timestamp - a.timestamp);
+
+      const lastUserStroke = strokesArray.find(stroke => stroke.user === userName);
+
+      if (lastUserStroke) {
+        // Remove this stroke from Firebase
+        const strokeToDeleteRef = ref(database, `drawings/${drawingKey}/strokes/${lastUserStroke.key}`);
+        await set(strokeToDeleteRef, null);
+
+        // Redraw canvas without this stroke
+        const remainingStrokes = strokesArray.filter(s => s.key !== lastUserStroke.key);
+        redrawCanvas(remainingStrokes);
+
+        // Save the updated canvas
+        await saveDrawing();
+      }
+    } catch (err) {
+      console.error('Error undoing stroke:', err);
     }
   };
 
@@ -426,6 +459,13 @@ function CollaborativeCanvas({ teamId, round, userName }) {
         </div>
 
         <div className="tool-group">
+          <button className="action-button undo-button" onClick={handleUndo} title="Undo Your Last Stroke">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M3 7v6h6" />
+              <path d="M21 17a9 9 0 00-9-9 9 9 0 00-6 2.3L3 13" />
+            </svg>
+            Undo
+          </button>
           <button className="action-button clear-button" onClick={handleClear} title="Clear All">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
               <path d="M3 6h18" />
