@@ -730,13 +730,19 @@ body {
   color: var(--dark-bg);
 }
 
+.canvas-wrapper-outer {
+  position: relative;
+  width: fit-content;
+  margin: 0 auto;
+}
+
 .canvas-wrapper {
   display: flex;
   justify-content: center;
   background: white;
   padding: 0;
   border-radius: 5px;
-  overflow: visible;
+  overflow: hidden;
   width: fit-content;
   margin: 0 auto;
   box-sizing: border-box;

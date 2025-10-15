@@ -556,48 +556,50 @@ function CollaborativeCanvas({ teamId, round, userName, startTime, duration }) {
         </div>
       </div>
 
-      <div className="canvas-wrapper" style={{ position: 'relative' }}>
-        <canvas
-          ref={canvasRef}
-          className={tool === 'bucket' ? 'cursor-bucket' : 'cursor-none'}
-          onMouseDown={startDrawing}
-          onMouseMove={handleMouseMove}
-          onMouseUp={stopDrawing}
-          onMouseLeave={() => { stopDrawing; setCursorPos({ x: -100, y: -100 }); }}
-          onTouchStart={startDrawing}
-          onTouchMove={draw}
-          onTouchEnd={stopDrawing}
-          style={{
-            touchAction: 'none'
-          }}
-        />
-        {(tool === 'brush' || tool === 'eraser') && cursorPos.x > 0 && (
-          <div
-            className={`custom-cursor ${tool === 'eraser' ? 'cursor-eraser-ring' : 'cursor-brush-ring'}`}
+      <div className="canvas-wrapper-outer" style={{ position: 'relative' }}>
+        <div className="canvas-wrapper">
+          <canvas
+            ref={canvasRef}
+            className={tool === 'bucket' ? 'cursor-bucket' : 'cursor-none'}
+            onMouseDown={startDrawing}
+            onMouseMove={handleMouseMove}
+            onMouseUp={stopDrawing}
+            onMouseLeave={() => { stopDrawing; setCursorPos({ x: -100, y: -100 }); }}
+            onTouchStart={startDrawing}
+            onTouchMove={draw}
+            onTouchEnd={stopDrawing}
             style={{
-              position: 'absolute',
-              left: `${(cursorPos.x / 800) * 100}%`,
-              top: `${(cursorPos.y / 600) * 100}%`,
-              width: `${brushSize}px`,
-              height: `${brushSize}px`,
-              border: tool === 'eraser' ? '2px solid #000' : `2px solid ${color}`,
-              borderRadius: '50%',
-              pointerEvents: 'none',
-              transform: 'translate(-50%, -50%)',
-              zIndex: 1000
+              touchAction: 'none'
             }}
           />
+          {(tool === 'brush' || tool === 'eraser') && cursorPos.x > 0 && (
+            <div
+              className={`custom-cursor ${tool === 'eraser' ? 'cursor-eraser-ring' : 'cursor-brush-ring'}`}
+              style={{
+                position: 'absolute',
+                left: `${(cursorPos.x / 800) * 100}%`,
+                top: `${(cursorPos.y / 600) * 100}%`,
+                width: `${brushSize}px`,
+                height: `${brushSize}px`,
+                border: tool === 'eraser' ? '2px solid #000' : `2px solid ${color}`,
+                borderRadius: '50%',
+                pointerEvents: 'none',
+                transform: 'translate(-50%, -50%)',
+                zIndex: 1000
+              }}
+            />
+          )}
+        </div>
+
+        {showPopup && (
+          <div className="popup-character">
+            <img src="/images/popup.png" alt="Pochita" className="popup-image" />
+            <div className="popup-bubble">
+              {popupMessage}
+            </div>
+          </div>
         )}
       </div>
-
-      {showPopup && (
-        <div className="popup-character">
-          <img src="/images/popup.png" alt="Pochita" className="popup-image" />
-          <div className="popup-bubble">
-            {popupMessage}
-          </div>
-        </div>
-      )}
 
       <div className="canvas-info">
         <p className="team-drawing-info">
