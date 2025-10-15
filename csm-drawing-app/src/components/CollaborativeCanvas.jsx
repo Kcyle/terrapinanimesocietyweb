@@ -515,7 +515,7 @@ function CollaborativeCanvas({ teamId, round, userName }) {
           onTouchMove={draw}
           onTouchEnd={stopDrawing}
           style={{
-            touchAction: 'pan-x pan-y pinch-zoom'
+            touchAction: 'none'
           }}
         />
         {(tool === 'brush' || tool === 'eraser') && cursorPos.x > 0 && (
