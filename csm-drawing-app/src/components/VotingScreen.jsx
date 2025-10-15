@@ -123,11 +123,21 @@ function VotingScreen({ round, teams, userTeam, deviceId }) {
   return (
     <div className="voting-screen">
       <div className="voting-header">
-        <h2>Vote for Your Favorite Drawing!</h2>
-        <p className="voting-instructions">Click on a drawing to vote. You can change your vote anytime.</p>
+        <h2>Vote for the Best Drawings!</h2>
+        <p className="voting-instructions">
+          Select your top 3 favorite drawings (you cannot vote for your own team)
+        </p>
+        <div className="voting-points-info">
+          <p className="points-heading">The top 3 drawings with the most votes will receive points:</p>
+          <ul className="points-list">
+            <li className="gold">1st Place: 3 points</li>
+            <li className="silver">2nd Place: 2 points</li>
+            <li className="bronze">3rd Place: 1 point</li>
+          </ul>
+        </div>
         {myVote && (
           <p className="current-vote-status">
-            ✓ You voted for <strong>{teams[myVote]?.name}</strong>
+            You voted for <strong>{teams[myVote]?.name}</strong>
           </p>
         )}
       </div>
@@ -149,8 +159,7 @@ function VotingScreen({ round, teams, userTeam, deviceId }) {
                 <div className="drawing-header">
                   <h4>{drawing.teamName}</h4>
                   <div className="vote-count">
-                    <span className="vote-icon">❤️</span>
-                    <span className="count">{voteCount}</span>
+                    <span className="count">{voteCount} votes</span>
                   </div>
                 </div>
                 <div className="drawing-image">
@@ -166,16 +175,6 @@ function VotingScreen({ round, teams, userTeam, deviceId }) {
             );
           })}
         </div>
-      </div>
-
-      <div className="voting-info">
-        <h3>Live Standings</h3>
-        <p>The top 3 drawings with the most votes will receive points:</p>
-        <ul className="points-list">
-          <li className="gold">🥇 1st Place: 3 points</li>
-          <li className="silver">🥈 2nd Place: 2 points</li>
-          <li className="bronze">🥉 3rd Place: 1 point</li>
-        </ul>
       </div>
     </div>
   );
