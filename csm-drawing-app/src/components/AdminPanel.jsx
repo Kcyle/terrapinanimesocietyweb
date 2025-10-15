@@ -124,7 +124,7 @@ function AdminPanel({ gameState, teams, onClose }) {
 
   const handleNextRound = () => {
     const nextRound = gameState.currentRound + 1;
-    if (nextRound < 3) {
+    if (nextRound < 4) {
       updateGameState({
         phase: 'drawing',
         currentRound: nextRound,
@@ -208,7 +208,7 @@ function AdminPanel({ gameState, teams, onClose }) {
           </div>
           <div className="info-card">
             <label>Current Round:</label>
-            <span>{gameState.currentRound + 1} / 3</span>
+            <span>{gameState.currentRound + 1} / 4</span>
           </div>
           <div className="info-card">
             <label>Teams:</label>
@@ -275,7 +275,7 @@ function AdminPanel({ gameState, teams, onClose }) {
 
           {gameState.phase === 'results' && (
             <>
-              {gameState.currentRound < 2 ? (
+              {gameState.currentRound < 3 ? (
                 <button
                   className="admin-action-button primary"
                   onClick={handleNextRound}
