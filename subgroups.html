@@ -684,20 +684,33 @@
                 opacity: 1;
             }
 
-            .subgroups-container .subgroup-item {
-                transform: translateX(0) translateY(0);
+            .subgroups-container {
+                padding: 0 20px;
                 margin-left: 0;
                 margin-right: 0;
             }
 
+            .subgroups-container .subgroup-item {
+                transform: translateX(0) !important;
+                margin-left: 0;
+                margin-right: 0;
+                border-left: 3px solid var(--crimson);
+                padding-left: 20px;
+            }
+
             .subgroup-item {
-                padding: 20px 15px;
+                padding: 20px 20px;
                 margin-left: 0;
                 margin-right: 0;
             }
 
             .subgroup-item:hover {
-                transform: translateX(5px);
+                transform: translateX(5px) !important;
+            }
+
+            #subgroups {
+                padding-left: 0 !important;
+                padding-right: 0 !important;
             }
         }
 
