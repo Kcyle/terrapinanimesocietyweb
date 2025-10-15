@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { ref, onValue, set, get, push } from 'firebase/database';
 import { database } from '../firebase';
 
-function CollaborativeCanvas({ teamId, round, userName }) {
+function CollaborativeCanvas({ teamId, round, userName, startTime, duration }) {
   const canvasRef = useRef(null);
   const cursorCanvasRef = useRef(null);
   const [isDrawing, setIsDrawing] = useState(false);
@@ -11,12 +11,49 @@ function CollaborativeCanvas({ teamId, round, userName }) {
   const [tool, setTool] = useState('brush');
   const [showColorPicker, setShowColorPicker] = useState(false);
   const [cursorPos, setCursorPos] = useState({ x: -100, y: -100 });
+  const [showPopup, setShowPopup] = useState(false);
+  const [popupMessage, setPopupMessage] = useState('');
   const contextRef = useRef(null);
   const cursorContextRef = useRef(null);
   const lastPosRef = useRef({ x: 0, y: 0 });
   const lastProcessedStrokeCount = useRef(0);
+  const halfTimeShown = useRef(false);
+  const thirtySecShown = useRef(false);
 
   const drawingKey = `round${round}-${teamId}`;
+
+  // Popup timer effect
+  useEffect(() => {
+    if (!startTime || !duration) return;
+
+    const checkTime = setInterval(() => {
+      const elapsed = Math.floor((Date.now() - startTime) / 1000);
+      const remaining = duration - elapsed;
+      const halfTime = duration / 2;
+
+      // Show popup at half time
+      if (remaining <= halfTime && remaining > (halfTime - 1) && !halfTimeShown.current) {
+        halfTimeShown.current = true;
+        setPopupMessage("Halfway there! Keep drawing!");
+        setShowPopup(true);
+        setTimeout(() => setShowPopup(false), 2000);
+      }
+
+      // Show popup at 30 seconds remaining
+      if (remaining <= 30 && remaining > 29 && !thirtySecShown.current) {
+        thirtySecShown.current = true;
+        setPopupMessage("30 seconds left! Finish up!");
+        setShowPopup(true);
+        setTimeout(() => setShowPopup(false), 2000);
+      }
+    }, 1000);
+
+    return () => {
+      clearInterval(checkTime);
+      halfTimeShown.current = false;
+      thirtySecShown.current = false;
+    };
+  }, [startTime, duration]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -542,6 +579,15 @@ function CollaborativeCanvas({ teamId, round, userName }) {
           />
         )}
       </div>
+
+      {showPopup && (
+        <div className="popup-character">
+          <img src="/images/popup.png" alt="Pochita" className="popup-image" />
+          <div className="popup-bubble">
+            {popupMessage}
+          </div>
+        </div>
+      )}
 
       <div className="canvas-info">
         <p className="team-drawing-info">
