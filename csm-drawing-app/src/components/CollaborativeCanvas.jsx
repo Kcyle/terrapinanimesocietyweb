@@ -506,7 +506,7 @@ function CollaborativeCanvas({ teamId, round, userName }) {
       <div className="canvas-wrapper" style={{ position: 'relative' }}>
         <canvas
           ref={canvasRef}
-          className={`cursor-${tool}`}
+          className={tool === 'bucket' ? 'cursor-bucket' : 'cursor-none'}
           onMouseDown={startDrawing}
           onMouseMove={handleMouseMove}
           onMouseUp={stopDrawing}
@@ -518,6 +518,23 @@ function CollaborativeCanvas({ teamId, round, userName }) {
             touchAction: 'none'
           }}
         />
+        {(tool === 'brush' || tool === 'eraser') && cursorPos.x > 0 && (
+          <div
+            className={`custom-cursor ${tool === 'eraser' ? 'cursor-eraser-ring' : 'cursor-brush-ring'}`}
+            style={{
+              position: 'absolute',
+              left: `${(cursorPos.x / 800) * 100}%`,
+              top: `${(cursorPos.y / 600) * 100}%`,
+              width: `${brushSize}px`,
+              height: `${brushSize}px`,
+              border: tool === 'eraser' ? '2px solid #000' : `2px solid ${color}`,
+              borderRadius: '50%',
+              pointerEvents: 'none',
+              transform: 'translate(-50%, -50%)',
+              zIndex: 1000
+            }}
+          />
+        )}
       </div>
 
       <div className="canvas-info">
