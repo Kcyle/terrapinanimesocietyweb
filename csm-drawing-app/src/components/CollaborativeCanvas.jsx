@@ -138,10 +138,11 @@ function CollaborativeCanvas({ teamId, round, userName }) {
       }
 
       ctx.stroke();
-    });
 
-    // Reset composite operation
-    ctx.globalCompositeOperation = 'source-over';
+      // IMPORTANT: Reset composite operation after each stroke
+      // This prevents eraser strokes from affecting subsequent strokes
+      ctx.globalCompositeOperation = 'source-over';
+    });
   };
 
   const getCanvasCoordinates = (e) => {
