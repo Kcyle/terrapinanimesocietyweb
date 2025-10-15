@@ -207,6 +207,11 @@ body {
   margin-left: 1.5rem;
 }
 
+.game-info ul {
+  list-style: none;
+  margin-left: 0;
+}
+
 .game-info li {
   margin: 0.5rem 0;
 }
