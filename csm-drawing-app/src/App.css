@@ -43,7 +43,7 @@ body {
   min-height: 100vh;
   width: 100%;
   background: linear-gradient(135deg, rgba(10, 10, 10, 0.4) 0%, rgba(26, 10, 10, 0.4) 100%),
-              url(../public/awesome.jpg) center center / cover no-repeat fixed;
+              url(/images/awesome.jpg) center center / cover no-repeat fixed;
   background-blend-mode: multiply;
   position: relative;
   overflow-x: hidden;
@@ -1784,7 +1784,7 @@ body {
 @media (max-width: 768px) {
   .app {
     background: linear-gradient(135deg, rgba(10, 10, 10, 0.4) 0%, rgba(26, 10, 10, 0.4) 100%),
-                url(../public/awesome.jpg) center center / cover no-repeat;
+                url(/images/awesome.jpg) center center / cover no-repeat;
     background-attachment: scroll;
   }
 
