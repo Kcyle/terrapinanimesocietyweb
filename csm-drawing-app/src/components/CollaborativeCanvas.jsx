@@ -280,6 +280,12 @@ function CollaborativeCanvas({ teamId, round, userName }) {
     const pos = getCanvasCoordinates(e);
     const ctx = contextRef.current;
 
+    // Ensure stroke properties are maintained during drawing
+    // This prevents interference from other users' strokes
+    ctx.strokeStyle = tool === 'eraser' ? '#ffffff' : color;
+    ctx.lineWidth = brushSize;
+    ctx.globalCompositeOperation = tool === 'eraser' ? 'destination-out' : 'source-over';
+
     ctx.lineTo(pos.x, pos.y);
     ctx.stroke();
 
