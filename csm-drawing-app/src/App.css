@@ -963,6 +963,18 @@ body {
   color: white;
   border-radius: 5px;
   font-weight: 600;
+  animation: fadeInSlide 0.3s ease-out;
+}
+
+@keyframes fadeInSlide {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .voting-screen {
