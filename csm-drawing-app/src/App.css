@@ -730,12 +730,6 @@ body {
   color: var(--dark-bg);
 }
 
-.canvas-wrapper-outer {
-  position: relative;
-  width: fit-content;
-  margin: 0 auto;
-}
-
 .canvas-wrapper {
   display: flex;
   justify-content: center;
@@ -746,7 +740,6 @@ body {
   width: fit-content;
   margin: 0 auto;
   box-sizing: border-box;
-  position: relative;
 }
 
 .canvas-wrapper canvas {
@@ -769,9 +762,10 @@ body {
 }
 
 .popup-character {
-  position: absolute;
-  top: 10px;
-  left: 10px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   z-index: 9999;
   animation: popupBounce 0.5s ease-out;
   pointer-events: none;
@@ -842,26 +836,15 @@ body {
 }
 
 @media (max-width: 768px) {
-  .popup-character {
-    top: 5px;
-    left: 5px;
-  }
-
   .popup-image {
-    width: 80px;
+    width: 100px;
   }
 
   .popup-bubble {
-    left: 90px;
-    font-size: 0.9rem;
-    padding: 8px 12px;
-    max-width: calc(100vw - 120px);
+    font-size: 1rem;
+    padding: 10px 16px;
+    max-width: calc(100vw - 220px);
     white-space: normal;
-  }
-
-  .popup-bubble::before {
-    left: -8px;
-    border-right-width: 10px;
   }
 }
 
