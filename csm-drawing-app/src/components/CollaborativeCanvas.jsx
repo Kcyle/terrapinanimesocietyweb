@@ -19,12 +19,21 @@ function CollaborativeCanvas({ teamId, round, userName, startTime, duration }) {
   const lastProcessedStrokeCount = useRef(0);
   const halfTimeShown = useRef(false);
   const thirtySecShown = useRef(false);
+  const startShown = useRef(false);
 
   const drawingKey = `round${round}-${teamId}`;
 
   // Popup timer effect
   useEffect(() => {
     if (!startTime || !duration) return;
+
+    // Show starting popup
+    if (!startShown.current) {
+      startShown.current = true;
+      setPopupMessage("Good luck drawing!");
+      setShowPopup(true);
+      setTimeout(() => setShowPopup(false), 5000);
+    }
 
     const checkTime = setInterval(() => {
       const elapsed = Math.floor((Date.now() - startTime) / 1000);
@@ -36,7 +45,7 @@ function CollaborativeCanvas({ teamId, round, userName, startTime, duration }) {
         halfTimeShown.current = true;
         setPopupMessage("Halfway there! Keep drawing!");
         setShowPopup(true);
-        setTimeout(() => setShowPopup(false), 4000);
+        setTimeout(() => setShowPopup(false), 5000);
       }
 
       // Show popup at 30 seconds remaining
@@ -44,7 +53,7 @@ function CollaborativeCanvas({ teamId, round, userName, startTime, duration }) {
         thirtySecShown.current = true;
         setPopupMessage("30 seconds left! Finish up!");
         setShowPopup(true);
-        setTimeout(() => setShowPopup(false), 4000);
+        setTimeout(() => setShowPopup(false), 5000);
       }
     }, 1000);
 
@@ -52,6 +61,7 @@ function CollaborativeCanvas({ teamId, round, userName, startTime, duration }) {
       clearInterval(checkTime);
       halfTimeShown.current = false;
       thirtySecShown.current = false;
+      startShown.current = false;
     };
   }, [startTime, duration]);
 
