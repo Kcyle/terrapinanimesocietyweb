@@ -31,7 +31,8 @@ body {
   color: var(--text-primary);
   line-height: 1.6;
   overflow-x: hidden;
-  width: 100vw;
+  width: 100%;
+  -webkit-overflow-scrolling: touch;
 }
 
 /* ============================================
@@ -40,11 +41,12 @@ body {
 
 .app {
   min-height: 100vh;
-  width: 100vw;
+  width: 100%;
   background: linear-gradient(135deg, rgba(10, 10, 10, 0.4) 0%, rgba(26, 10, 10, 0.4) 100%),
               url(../public/awesome.jpg) center center / cover no-repeat fixed;
   background-blend-mode: multiply;
   position: relative;
+  overflow-x: hidden;
 }
 
 .app-header {
@@ -761,10 +763,11 @@ body {
 
 .popup-character {
   position: fixed;
-  top: 20px;
-  left: 20px;
-  z-index: 2000;
+  top: 80px;
+  left: 10px;
+  z-index: 9999;
   animation: popupBounce 0.5s ease-out;
+  pointer-events: none;
 }
 
 @keyframes popupBounce {
@@ -833,18 +836,26 @@ body {
 
 @media (max-width: 768px) {
   .popup-character {
-    top: 10px;
-    left: 10px;
+    top: 70px;
+    left: 5px;
+    right: auto;
   }
 
   .popup-image {
-    width: 100px;
+    width: 80px;
   }
 
   .popup-bubble {
-    left: 110px;
-    font-size: 1rem;
-    padding: 8px 14px;
+    left: 90px;
+    font-size: 0.9rem;
+    padding: 8px 12px;
+    max-width: calc(100vw - 120px);
+    white-space: normal;
+  }
+
+  .popup-bubble::before {
+    left: -8px;
+    border-right-width: 10px;
   }
 }
 
