@@ -1248,6 +1248,30 @@ body {
   padding: 2rem;
 }
 
+.final-message {
+  background: var(--card-bg);
+  border: 2px solid var(--crimson);
+  border-radius: 10px;
+  padding: 2rem;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.final-message h2 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.5rem;
+  color: var(--crimson);
+  margin-bottom: 1rem;
+  letter-spacing: 2px;
+}
+
+.fun-note {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  font-style: italic;
+  margin: 0;
+}
+
 .podium {
   display: flex;
   justify-content: center;

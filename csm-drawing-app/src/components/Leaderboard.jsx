@@ -21,46 +21,49 @@ function Leaderboard({ teams, isFinal = false }) {
   return (
     <div className="leaderboard">
       {isFinal && (
-        <div className="podium">
-          {topThree.length >= 2 && (
-            <div className="podium-position second">
-              <div className="podium-medal silver-medal">2</div>
-              <div className="podium-info">
-                <h3>{topThree[1].name}</h3>
-                <p className="score">{topThree[1].score || 0} points</p>
+        <>
+          <div className="final-message">
+            <h2>Thank you for participating!</h2>
+            <p className="fun-note">This web app took over 50 hours to make... hope you liked it! 😅</p>
+          </div>
+          <div className="podium">
+            {topThree.length >= 2 && (
+              <div className="podium-position second">
+                <div className="podium-info">
+                  <h3>{topThree[1].name}</h3>
+                  <p className="score">{topThree[1].score || 0} points</p>
+                </div>
+                <div className="podium-stand silver-stand">
+                  <span className="stand-label">2nd</span>
+                </div>
               </div>
-              <div className="podium-stand silver-stand">
-                <span className="stand-label">2nd</span>
-              </div>
-            </div>
-          )}
+            )}
 
-          {topThree.length >= 1 && (
-            <div className="podium-position first">
-              <div className="podium-medal gold-medal">1</div>
-              <div className="podium-info">
-                <h3>{topThree[0].name}</h3>
-                <p className="score">{topThree[0].score || 0} points</p>
+            {topThree.length >= 1 && (
+              <div className="podium-position first">
+                <div className="podium-info">
+                  <h3>{topThree[0].name}</h3>
+                  <p className="score">{topThree[0].score || 0} points</p>
+                </div>
+                <div className="podium-stand gold-stand">
+                  <span className="stand-label">1st</span>
+                </div>
               </div>
-              <div className="podium-stand gold-stand">
-                <span className="stand-label">1st</span>
-              </div>
-            </div>
-          )}
+            )}
 
-          {topThree.length >= 3 && (
-            <div className="podium-position third">
-              <div className="podium-medal bronze-medal">3</div>
-              <div className="podium-info">
-                <h3>{topThree[2].name}</h3>
-                <p className="score">{topThree[2].score || 0} points</p>
+            {topThree.length >= 3 && (
+              <div className="podium-position third">
+                <div className="podium-info">
+                  <h3>{topThree[2].name}</h3>
+                  <p className="score">{topThree[2].score || 0} points</p>
+                </div>
+                <div className="podium-stand bronze-stand">
+                  <span className="stand-label">3rd</span>
+                </div>
               </div>
-              <div className="podium-stand bronze-stand">
-                <span className="stand-label">3rd</span>
-              </div>
-            </div>
-          )}
-        </div>
+            )}
+          </div>
+        </>
       )}
 
       <div className="leaderboard-list">
