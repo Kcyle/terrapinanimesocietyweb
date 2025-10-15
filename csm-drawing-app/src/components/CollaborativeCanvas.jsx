@@ -36,7 +36,7 @@ function CollaborativeCanvas({ teamId, round, userName, startTime, duration }) {
         halfTimeShown.current = true;
         setPopupMessage("Halfway there! Keep drawing!");
         setShowPopup(true);
-        setTimeout(() => setShowPopup(false), 2000);
+        setTimeout(() => setShowPopup(false), 4000);
       }
 
       // Show popup at 30 seconds remaining
@@ -44,7 +44,7 @@ function CollaborativeCanvas({ teamId, round, userName, startTime, duration }) {
         thirtySecShown.current = true;
         setPopupMessage("30 seconds left! Finish up!");
         setShowPopup(true);
-        setTimeout(() => setShowPopup(false), 2000);
+        setTimeout(() => setShowPopup(false), 4000);
       }
     }, 1000);
 
