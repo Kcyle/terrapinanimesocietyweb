@@ -263,36 +263,72 @@
 
         .kamecon-poster-section {
             position: relative;
-            max-width: 3000px;
-            margin: 80px auto;
-            padding: 0 20px;
+            max-width: 600px;
+            margin: 60px auto;
+            padding: 20px;
+            perspective: 1000px;
+        }
+
+        .kamecon-poster-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 120%;
+            height: 120%;
+            background: radial-gradient(circle, rgba(220, 20, 60, 0.3) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.6s ease;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .kamecon-poster-section:hover .kamecon-poster-glow {
+            opacity: 1;
         }
 
         .kamecon-main-poster {
             width: 100%;
-            max-width: 3000px;
             height: auto;
-            border: none;
-            box-shadow: none;
+            border: 3px solid var(--crimson);
+            box-shadow:
+                0 10px 40px rgba(220, 20, 60, 0.4),
+                0 0 60px rgba(220, 20, 60, 0.2),
+                inset 0 0 20px rgba(220, 20, 60, 0.1);
             position: relative;
             z-index: 2;
             display: block;
-            margin: 0 auto;
-            transition: transform 0.6s ease;
+            transition: all 0.6s ease;
             animation: gentleFloat 6s ease-in-out infinite;
+            transform-style: preserve-3d;
         }
 
-        .kamecon-poster-section:hover {
-            transform: perspective(1000px) rotateY(2deg);
+        .kamecon-poster-frame {
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            border: 2px solid rgba(220, 20, 60, 0.3);
+            pointer-events: none;
+            z-index: 3;
+            transition: all 0.6s ease;
         }
 
-
-        .kamecon-main-poster:hover {
-            transform: scale(1.03);
+        .kamecon-poster-section:hover .kamecon-main-poster {
+            transform: translateY(-10px) rotateY(3deg) scale(1.05);
+            box-shadow:
+                0 20px 60px rgba(220, 20, 60, 0.6),
+                0 0 80px rgba(220, 20, 60, 0.3),
+                inset 0 0 30px rgba(220, 20, 60, 0.2);
         }
 
-        .kamecon-main-poster {
-            animation: gentleFloat 6s ease-in-out infinite;
+        .kamecon-poster-section:hover .kamecon-poster-frame {
+            border-color: rgba(220, 20, 60, 0.6);
+            top: -15px;
+            left: -15px;
+            right: -15px;
+            bottom: -15px;
         }
 
         @keyframes gentleFloat {
@@ -609,27 +645,6 @@
         }
 
         /* NEW KAMECON REDESIGN STYLES */
-
-        /* Poster Hero Section */
-        .kamecon-poster-hero {
-            position: relative;
-            max-width: 1200px;
-            margin: 60px auto;
-            padding: 0 20px;
-        }
-
-        .kamecon-poster-hero .kamecon-main-poster {
-            width: 100%;
-            height: auto;
-            border: 2px solid var(--border);
-            box-shadow: 0 10px 40px rgba(220, 20, 60, 0.3);
-            transition: transform 0.3s ease;
-        }
-
-        .kamecon-poster-hero .kamecon-main-poster:hover {
-            transform: scale(1.02);
-            box-shadow: 0 15px 50px rgba(220, 20, 60, 0.5);
-        }
 
         /* Section Titles */
         .section-title {
@@ -1020,6 +1035,16 @@
             .section-title {
                 font-size: 2rem;
                 margin-bottom: 30px;
+            }
+
+            .kamecon-poster-section {
+                max-width: 100%;
+                margin: 40px auto;
+                padding: 10px;
+            }
+
+            .kamecon-poster-section:hover .kamecon-main-poster {
+                transform: translateY(-5px) scale(1.02);
             }
         }
 
@@ -6808,9 +6833,31 @@
 <section id="kamecon" class="page-section active">
         <div class="kamecon-hero">
 
-            <!-- 1. POSTER SECTION -->
-            <div class="kamecon-poster-hero">
+            <!-- KAMECON HEADER -->
+            <div class="kamecon-main-title">
+                <h1 class="kamecon-logo">KAMECON</h1>
+                <div class="kamecon-subtitle">TERRAPIN ANIME SOCIETY MINI-CONVENTION</div>
+            </div>
+
+            <div class="kamecon-event-info">
+                <div class="kamecon-date-display">
+                    <span class="spring-label">FALL 2025</span>
+                    <h2>NOVEMBER 16TH</h2>
+                    <span class="kamecon-day-label">SUNDAY</span>
+                </div>
+
+                <div class="kamecon-time-location">
+                    <p class="kamecon-time">1:00 PM - 8:30 PM</p>
+                    <p class="kamecon-venue">THE ATRIUM • ADELE H. STAMP STUDENT UNION</p>
+                    <p class="kamecon-address">3972 Campus Dr, College Park, MD 20742</p>
+                </div>
+            </div>
+
+            <!-- POSTER SECTION - Smaller and Aesthetic -->
+            <div class="kamecon-poster-section">
+                <div class="kamecon-poster-glow"></div>
                 <img src="images/theposter.png" alt="KAMECON 2025 Poster" class="kamecon-main-poster">
+                <div class="kamecon-poster-frame"></div>
             </div>
 
             <!-- 2. SCHEDULE SECTION -->
