@@ -995,7 +995,12 @@
 
         @media (max-width: 768px) {
             .vendor-cards-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+
+            .vendor-card {
+                min-width: 0;
             }
 
             .section-title {
@@ -2760,6 +2765,10 @@
             --border: rgba(255, 0, 0, 0.3);
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: 'Inter', sans-serif;
             background: var(--dark-bg);
@@ -2767,6 +2776,12 @@
             overflow-x: hidden;
             position: relative;
             cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><circle cx="10" cy="10" r="8" fill="none" stroke="%23DC143C" stroke-width="2"/></svg>'), auto;
+        }
+
+        @media (orientation: landscape) and (max-height: 500px) {
+            html {
+                scroll-padding-top: 0;
+            }
         }
 
         .animated-background {
@@ -6796,27 +6811,14 @@
     </div>
 
 
-    <div class="testudo-container">
-        <div class="testudo-text">Drawn by u/Vivaldi44<br>our little Testudo-chan mascot at UMD!</div>
+    <div class="testudo-container" onclick="window.location.href='kamecon.html'">
+        <div class="testudo-text">CLICK ME FOR KAMECON INFO!</div>
         <div class="testudo-bubbles">
             <span></span>
             <span></span>
         </div>
         <div class="testudo-mascot">
-            <img src="images/testudo.png" alt="Testudo-chan Mascot">
-        </div>
-    </div>
-
-
-    <div class="floating-mascot-container">
-        <div class="mascot-text">Click me for special promotions!</div>
-        <div class="thought-bubbles">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-        <div class="floating-mascot" onclick="navigateWithTransition(event, 'promotions')">
-            <img src="images/mascott2.png" alt="TAS Chibi Mascot">
+            <img src="images/kamecon.png" alt="KAMECON Mascot">
         </div>
     </div>
 
