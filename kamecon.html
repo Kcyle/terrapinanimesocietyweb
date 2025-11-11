@@ -111,7 +111,7 @@
         }
 
         .kamecon-logo {
-            font-family: 'Bebas Neue', cursive;
+            font-family: 'Bebas Neue', 'Arial Narrow', 'Impact', sans-serif;
             font-size: clamp(5rem, 15vw, 12rem);
             background: linear-gradient(135deg, var(--crimson), var(--accent), var(--crimson));
             background-size: 200% 200%;
@@ -121,6 +121,7 @@
             letter-spacing: 8px;
             animation: kameconGlow 3s ease-in-out infinite;
             margin-bottom: 10px;
+            font-display: swap;
         }
 
         @keyframes kameconGlow {
@@ -1059,10 +1060,15 @@
 
             .parking-content {
                 flex-direction: column;
+                gap: 30px;
             }
 
             .parking-info, .parking-map {
                 max-width: 100%;
+            }
+
+            .parking-map {
+                margin-top: 20px;
             }
 
             .venue-content {
