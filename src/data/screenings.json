@@ -1,0 +1,50 @@
+{
+  "screenings": [
+    {
+      "malId": 21,
+      "title": "ONE PUNCH MAN",
+      "synopsis": "The seemingly unimpressive Saitama has a rather unique hobby: being a hero. In order to pursue his childhood dream, Saitama relentlessly trained for three years, losing all of his hair in the process. Now, Saitama is so powerful that no enemy can defeat him in battle.",
+      "image": "https://cdn.myanimelist.net/images/anime/12/76049.jpg",
+      "episodes": 12,
+      "score": 8.5
+    },
+    {
+      "malId": 1735,
+      "title": "Naruto: Shippuuden",
+      "synopsis": "Two and a half years have passed since the end of Naruto's old adventures. He has trained hard with Jiraiya and has returned to Konoha to reunite with his friends; but Akatsuki, the organization that threatened Naruto years before, is on the move again.",
+      "image": "https://cdn.myanimelist.net/images/anime/1565/111305.jpg",
+      "episodes": 500,
+      "score": 8.3
+    },
+    {
+      "malId": 44511,
+      "title": "Chainsaw Man",
+      "synopsis": "Denji is a teenage boy living with a Chainsaw Devil named Pochita. Due to the debt his father left behind, he has been living a rock-bottom life while repaying his debt by harvesting devil corpses.",
+      "image": "https://cdn.myanimelist.net/images/anime/1806/126216.jpg",
+      "episodes": 12,
+      "score": 8.5
+    },
+    {
+      "malId": 51009,
+      "title": "Jujutsu Kaisen Season 2",
+      "synopsis": "The second season of Jujutsu Kaisen. Hidden Inventory arc and Shibuya Incident arc.",
+      "image": "https://cdn.myanimelist.net/images/anime/1792/138022.jpg",
+      "episodes": 23,
+      "score": 8.6
+    },
+    {
+      "malId": 38000,
+      "title": "Demon Slayer: Kimetsu no Yaiba",
+      "synopsis": "Ever since the death of his father, Tanjirou has taken it upon himself to support his family. One day, Tanjirou decides to go down to the local village to make some money selling charcoal. On his way back, night falls, forcing him to take shelter.",
+      "image": "https://cdn.myanimelist.net/images/anime/1286/99889.jpg",
+      "episodes": 26,
+      "score": 8.5
+    }
+  ],
+  "startDate": "2025-02-08",
+  "meetingTime": "5-7 PM",
+  "location": {
+    "buildingCode": "STP",
+    "roomNumber": "0200"
+  }
+}

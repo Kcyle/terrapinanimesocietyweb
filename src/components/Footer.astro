@@ -1,0 +1,73 @@
+---
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="footer" data-footer>
+  <div class="footer__left">
+    <p class="footer__copyright">
+      &copy; {currentYear} TERRAPIN ANIME SOCIETY
+    </p>
+    <p class="footer__rights">ALL RIGHTS RESERVED</p>
+  </div>
+
+  <div class="footer__right">
+    <p class="footer__location">University of Maryland</p>
+    <p class="footer__college">College Park, MD</p>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: var(--z-base);
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding: var(--space-lg) var(--page-padding);
+    pointer-events: none;
+  }
+
+  .footer__left,
+  .footer__right {
+    pointer-events: auto;
+  }
+
+  .footer__copyright,
+  .footer__rights,
+  .footer__location,
+  .footer__college {
+    font-size: 1rem;
+    font-weight: var(--font-weight-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    line-height: 1.6;
+  }
+
+  .footer__copyright {
+    color: var(--color-text-secondary);
+  }
+
+  .footer__rights {
+    color: var(--color-text-muted);
+  }
+
+  .footer__location {
+    color: var(--color-text-secondary);
+    text-align: right;
+  }
+
+  .footer__college {
+    color: var(--color-text-muted);
+    text-align: right;
+  }
+
+  @media (max-width: 480px) {
+    .footer__rights,
+    .footer__college {
+      display: none;
+    }
+  }
+</style>

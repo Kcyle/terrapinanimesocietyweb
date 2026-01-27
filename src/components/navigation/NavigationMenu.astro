@@ -1,0 +1,207 @@
+---
+import CloseIcon from '../icons/CloseIcon.astro';
+
+interface NavItem {
+  label: string;
+  href: string;
+}
+
+const navItems: NavItem[] = [
+  { label: 'Home', href: '/' },
+  { label: 'Events', href: '/events' },
+  { label: 'About', href: '/about' },
+  { label: 'Join', href: '/join' },
+  { label: 'Contact', href: '/contact' },
+];
+---
+
+<nav
+  class="navigation-menu"
+  id="navigation-menu"
+  aria-label="Main navigation"
+  data-menu
+>
+  <div class="navigation-menu__backdrop" data-menu-backdrop></div>
+
+  <div class="navigation-menu__panel" data-menu-panel>
+    <div class="navigation-menu__header">
+      <div class="navigation-menu__title-wrapper">
+        <img src="/images/Icons/chibi.webp" alt="" class="navigation-menu__icon" />
+        <span class="navigation-menu__title">Navigation</span>
+      </div>
+      <button
+        class="navigation-menu__close"
+        type="button"
+        aria-label="Close navigation menu"
+        data-menu-close
+      >
+        <CloseIcon size={24} />
+      </button>
+    </div>
+
+    <ul class="navigation-menu__list">
+      {navItems.map((item, index) => (
+        <li class="navigation-menu__item" style={`--item-index: ${index}`}>
+          <a class="navigation-menu__link" href={item.href} data-menu-link>
+            <span class="navigation-menu__link-index">
+              {String(index + 1).padStart(2, '0')}
+            </span>
+            <span class="navigation-menu__link-label">{item.label}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <div class="navigation-menu__footer">
+      <p class="navigation-menu__footer-text">University of Maryland</p>
+    </div>
+  </div>
+</nav>
+
+<style>
+  .navigation-menu {
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-navigation);
+    pointer-events: none;
+    visibility: hidden;
+  }
+
+  .navigation-menu[data-open="true"] {
+    pointer-events: auto;
+    visibility: visible;
+  }
+
+  .navigation-menu__backdrop {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    opacity: 0;
+    transition: opacity var(--transition-base);
+  }
+
+  .navigation-menu[data-open="true"] .navigation-menu__backdrop {
+    opacity: 1;
+  }
+
+  .navigation-menu__panel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: min(400px, 90vw);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--color-bg-secondary);
+    border-right: 1px solid var(--color-border);
+    transform: translateX(-100%);
+    transition: transform var(--transition-slow);
+  }
+
+  .navigation-menu[data-open="true"] .navigation-menu__panel {
+    transform: translateX(0);
+  }
+
+  .navigation-menu__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-lg) var(--space-xl);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .navigation-menu__title-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .navigation-menu__icon {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+  }
+
+  .navigation-menu__title {
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-medium);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-text-muted);
+  }
+
+  .navigation-menu__close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    color: var(--color-text-secondary);
+    transition: color var(--transition-fast);
+  }
+
+  .navigation-menu__close:hover {
+    color: var(--color-text-primary);
+  }
+
+  .navigation-menu__list {
+    flex: 1;
+    padding: var(--space-xl);
+    overflow-y: auto;
+  }
+
+  .navigation-menu__item {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+
+  .navigation-menu[data-open="true"] .navigation-menu__item {
+    opacity: 1;
+    transform: translateX(0);
+    transition: opacity var(--transition-base), transform var(--transition-base);
+    transition-delay: calc(var(--item-index) * 50ms + 100ms);
+  }
+
+  .navigation-menu__link {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-lg);
+    padding: var(--space-md) 0;
+    border-bottom: 1px solid var(--color-border);
+    transition: border-color var(--transition-fast);
+  }
+
+  .navigation-menu__link:hover {
+    border-color: var(--color-text-primary);
+  }
+
+  .navigation-menu__link-index {
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .navigation-menu__link-label {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+    transition: color var(--transition-fast);
+  }
+
+  .navigation-menu__link:hover .navigation-menu__link-label {
+    color: var(--color-text-secondary);
+  }
+
+  .navigation-menu__footer {
+    padding: var(--space-xl);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .navigation-menu__footer-text {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+</style>

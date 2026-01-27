@@ -1,0 +1,675 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/navigation/Header.astro';
+import Footer from '../components/Footer.astro';
+
+interface Vendor {
+  name: string;
+  social?: string;
+  socialDisplay?: string;
+  description: string;
+  image?: string;
+}
+
+const vendors: Vendor[] = [
+  { name: "BowLaces", social: "https://bsky.app/profile/bowlaces.bsky.social", socialDisplay: "@bowlaces.bsky.social", description: "Prints (postcard size), full size prints and stickers", image: "/images/Vendors/1.webp" },
+  { name: "Inywiny", social: "https://inywiny.carrd.co", socialDisplay: "inywiny.carrd.co", description: "Acrylic keychains and trinkets, prints, jewelry, stickers, stationary", image: "/images/Vendors/2.webp" },
+  { name: "Zeph", social: "https://x.com/YouInsolentFool", socialDisplay: "x.com/YouInsolentFool", description: "HSR Merch, small prints, cards, and acrylic keychains", image: "/images/Vendors/3.webp" },
+  { name: "Nagihiko_dayo", social: "https://nagihikodayo.carrd.co/", socialDisplay: "nagihikodayo.carrd.co", description: "Prints, stickers, acrylic charms, in-person chibi commissions, photocards", image: "/images/Vendors/4.webp" },
+  { name: "Mezurashii", description: "Anime, and other Japanese trinkets" },
+  { name: "Liramic", description: "Art prints, bookmarks, keychains, pins, and deskmats. Fanart of Chinese novels (danmei) and Genshin Impact." },
+  { name: "akuunosuke", social: "https://akuunosuke.carrd.co", socialDisplay: "akuunosuke.carrd.co", description: "Charms, standees, enamel pins, stickers, sticker sheets, prints", image: "/images/Vendors/5.webp" },
+  { name: "Otaku553", social: "https://otaku553.carrd.co", socialDisplay: "otaku553.carrd.co", description: "Prints and keychains of anime and game characters, including One Piece, Demon Slayer, Genshin Impact, and Cookie Run Kingdom", image: "/images/Vendors/6.webp" },
+  { name: "rivertylart", social: "https://linktr.ee/rivertyl", socialDisplay: "linktr.ee/rivertyl", description: "Prints and stickers (genshin, hsr, original)", image: "/images/Vendors/7.webp" },
+  { name: "Bonemealed", social: "https://bonemealed.carrd.co/", socialDisplay: "bonemealed.carrd.co", description: "Prints, charms, stickers, shirts, and stationary", image: "/images/Vendors/8.webp" },
+  { name: "sincerelydanidesign", social: "https://sincerelydanidesign.etsy.com/", socialDisplay: "sincerelydanidesign.etsy.com", description: "Handmade Crochet Items and Beaded Bracelets", image: "/images/Vendors/9.webp" },
+  { name: "GinkgoMART", social: "https://ginkgomart.bigcartel.com/", socialDisplay: "ginkgomart.bigcartel.com", description: "Prints, keychains, stickers, buttons, and original comics", image: "/images/Vendors/10.webp" },
+  { name: "Dracolegus Art", social: "https://linktr.ee/dracolegus", socialDisplay: "linktr.ee/dracolegus", description: "Prints, stickers, buttons, keychains", image: "/images/Vendors/11.webp" },
+  { name: "Ari Inkart", social: "https://sites.google.com/view/ari-inkart-portfolio/home", socialDisplay: "ari-inkart-portfolio", description: "Keychains, pin buttons, and art prints", image: "/images/Vendors/12.webp" },
+  { name: "Smogfrogg", social: "https://smogfrogg.com/", socialDisplay: "smogfrogg.com", description: "Digital prints, original block prints, stickers, pins, keychains, tote bags, and comics/zines", image: "/images/Vendors/13.webp" },
+  { name: "Tea Shot", social: "https://linktr.ee/teashot", socialDisplay: "linktr.ee/teashot", description: "Fan and original stickers, keychains, prints, zines, stationary, patches, tote bags, and shirts", image: "/images/Vendors/14.webp" },
+  { name: "Chiimeshop", social: "https://svu-illustration.com", socialDisplay: "svu-illustration.com", description: "Fanart and original works. Prints, keychains, buttons and shirts", image: "/images/Vendors/15.webp" },
+  { name: "Vertebra Confit", description: "Art prints, stickers, live sketch commissions, and regular (digital art) commissions" },
+  { name: "marclouart", social: "https://instagram.com/marclouart", socialDisplay: "instagram.com/marclouart", description: "Anime and gacha games large and small poster illustrations, miniature clay figures, clay keychains", image: "/images/Vendors/16.webp" },
+  { name: "Novi Mochi", social: "https://novimochi.carrd.co/", socialDisplay: "novimochi.carrd.co", description: "Charms, prints, buttons, and stickers", image: "/images/Vendors/17.webp" },
+  { name: "cy-chin", social: "https://cychin.carrd.co/", socialDisplay: "cychin.carrd.co", description: "Digitally drawn anime-style merch (stickers, keychains, prints, buttons, etc)", image: "/images/Vendors/18.webp" },
+  { name: "SnarkFish T-Shirts", social: "https://www.snarkfishtshirts.com", socialDisplay: "snarkfishtshirts.com", description: "Geeky T-shirts, anime plushies, pins, prints, art, gaming wares, and retro video games", image: "/images/Vendors/19.webp" },
+  { name: "Artisfired Studio", social: "https://artisfired.carrd.co/", socialDisplay: "artisfired.carrd.co", description: "Video game and anime inspired merchandise consisting of charms, prints, and stickers", image: "/images/Vendors/20.webp" },
+  { name: "Biodegradable Scribble Worms", description: "Stickers, prints, maybe keychains" },
+  { name: "soapshoe", social: "https://linktr.ee/soapshoe", socialDisplay: "linktr.ee/soapshoe", description: "Prints, stickers and keychains. Featuring anime and gacha game characters", image: "/images/Vendors/21.webp" },
+  { name: "Canaryhare", description: "Bird stickers & prints" },
+  { name: "Meshi Market", social: "https://meshimarket.carrd.co/", socialDisplay: "meshimarket.carrd.co", description: "Stickers, charms, pins, magnets, and prints", image: "/images/Vendors/22.webp" },
+  { name: "Holly Mitchell", social: "https://www.instagram.com/plzhollystop", socialDisplay: "instagram.com/plzhollystop", description: "Live charcoal portraits with a handful of watercolor originals", image: "/images/Vendors/23.webp" },
+  { name: "Mewychu", social: "https://mewychu.carrd.co/", socialDisplay: "mewychu.carrd.co", description: "Prints, Stickers, Stickerbooks, Commission, Anime Plush / Figures", image: "/images/Vendors/24.webp" },
+  { name: "worstkiddotcom", social: "https://linktr.ee/worstkiddotcom", socialDisplay: "linktr.ee/worstkiddotcom", description: "Prints, stickers, acrylic charms, totes, and magnets of fan art", image: "/images/Vendors/25.webp" },
+  { name: "Quzzyland", social: "https://quzzyplayground.carrd.com", socialDisplay: "quzzyplayground.carrd.com", description: "Plush keychains, prints, mini zines", image: "/images/Vendors/26.webp" },
+  { name: "Kyomi Star", social: "https://www.instagram.com/kyomi_star", socialDisplay: "instagram.com/kyomi_star", description: "Original art product in stickers, prints, button pins, keychains and hair clips", image: "/images/Vendors/27.webp" },
+  { name: "Luniarci", description: "Art Prints, stickers, laser cut keychains and earrings" },
+  { name: "Jayce the Creature Creator", social: "https://www.instagram.com/jaycethecreaturecreator", socialDisplay: "instagram.com/jaycethecreaturecreator", description: "Stickers, Prints, and Original small illustrations", image: "/images/Vendors/28.webp" },
+  { name: "Deca", social: "https://x.com/122deca__art", socialDisplay: "x.com/122deca__art", description: "Smaller sized prints, posters, photocards, acrylic charms and keychains, hand-drawn art pieces including postcards with original art", image: "/images/Vendors/29.webp" },
+  { name: "SparkLemon", description: "Bookmarks, bracelets, greeting cards, artwork, and necklaces" },
+  { name: "Chengt", social: "https://www.instagram.com/chengt_art", socialDisplay: "instagram.com/chengt_art", description: "Art prints large, art prints small, 2 inch keychains, art goods", image: "/images/Vendors/30.webp" },
+  { name: "Koifishin", description: "Prints and stickers and jewelry" },
+  { name: "jsunnyart", social: "https://twitter.com/jsunnyart", socialDisplay: "twitter.com/jsunnyart", description: "Prints, charms, stickers, sticker sheets", image: "/images/Vendors/31.webp" },
+  { name: "Somintso", social: "https://www.instagram.com/somintso/", socialDisplay: "instagram.com/somintso", description: "Anime prints and keychains, fanart, anime styled oc prints, gacha tarot cards, stickers, and zines", image: "/images/Vendors/32.webp" },
+  { name: "Soft Peach art", social: "https://www.etsy.com/shop/SoftpeachArt", socialDisplay: "etsy.com/shop/SoftpeachArt", description: "Keychains, stickers and art prints", image: "/images/Vendors/33.webp" },
+  { name: "Astrateia Art", description: "Prints, stickers, quick live portrait commissions" },
+];
+
+const defaultImage = "/images/Icons/chibi.webp";
+---
+
+<BaseLayout title="TerpCon 2026 | Terrapin Anime Society">
+  <Header />
+
+  <main class="terpcon">
+    <!-- Background -->
+    <div class="terpcon__bg"></div>
+    <!-- Dark overlay -->
+    <div class="terpcon__overlay"></div>
+
+    <!-- Main Content - Two Column Layout -->
+    <div class="terpcon__layout">
+      <!-- LEFT SIDE - Event Info -->
+      <div class="terpcon__left">
+        <div class="terpcon__left-content">
+          <!-- Title -->
+          <div class="terpcon__hero">
+            <h1 class="terpcon__title">TERPCON 2026</h1>
+            <p class="terpcon__subtitle">Vendor & Artist Alley</p>
+          </div>
+
+          <!-- Description -->
+          <p class="terpcon__description">
+            The Terrapin Anime Society will be hosting a Vendor & Artist Alley for TERPCON 2026
+          </p>
+
+          <!-- Event Details -->
+          <div class="terpcon__details">
+            <div class="terpcon__detail">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+              </svg>
+              <div class="terpcon__detail-text">
+                <span class="terpcon__detail-label">Date</span>
+                <span class="terpcon__detail-value">Friday, February 6th</span>
+              </div>
+            </div>
+
+            <div class="terpcon__detail">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+              <div class="terpcon__detail-text">
+                <span class="terpcon__detail-label">Time</span>
+                <span class="terpcon__detail-value">5pm – 12am</span>
+              </div>
+            </div>
+
+            <div class="terpcon__detail">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                <circle cx="12" cy="10" r="3"></circle>
+              </svg>
+              <div class="terpcon__detail-text">
+                <span class="terpcon__detail-label">Location</span>
+                <span class="terpcon__detail-value">Stamp Student Union</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- CTA Button -->
+          <a href="https://stamp.umd.edu/AllNiter" target="_blank" rel="noopener noreferrer" class="terpcon__cta-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+              <polyline points="15 3 21 3 21 9"></polyline>
+              <line x1="10" y1="14" x2="21" y2="3"></line>
+            </svg>
+            All Info at UMD Official Site
+          </a>
+
+          <!-- Social Links -->
+          <div class="terpcon__socials">
+            <a href="https://discord.gg/umdanime" target="_blank" rel="noopener" class="terpcon__social terpcon__social--discord">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
+              </svg>
+              Discord
+            </a>
+            <a href="https://www.instagram.com/terrapinanimesociety/" target="_blank" rel="noopener" class="terpcon__social terpcon__social--instagram">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+              </svg>
+              Instagram
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT SIDE - Vendor List -->
+      <div class="terpcon__right">
+        <div class="terpcon__vendors-header">
+          <h2 class="terpcon__vendors-title">Vendors</h2>
+          <span class="terpcon__vendors-count">{vendors.length} Artists & Creators</span>
+        </div>
+
+        <div class="terpcon__vendors-scroll">
+          <div class="terpcon__vendors-grid">
+            {vendors.map((vendor) => (
+              <div class="vendor-card">
+                <div class="vendor-card__image-wrapper">
+                  <img
+                    src={vendor.image || defaultImage}
+                    alt={vendor.name}
+                    class="vendor-card__image"
+                    loading="lazy"
+                  />
+                </div>
+                <h3 class="vendor-card__name">{vendor.name}</h3>
+                {vendor.social ? (
+                  <a href={vendor.social} target="_blank" rel="noopener noreferrer" class="vendor-card__social">
+                    {vendor.socialDisplay}
+                  </a>
+                ) : (
+                  <span class="vendor-card__social vendor-card__social--none">No social link</span>
+                )}
+                <p class="vendor-card__description">{vendor.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  .terpcon {
+    position: relative;
+    min-height: 100vh;
+    background-color: #0a0a0a;
+    overflow: hidden;
+  }
+
+  .terpcon__bg {
+    position: fixed;
+    inset: 0;
+    background-image: url('/images/Backgrounds/background.webp');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.15;
+    z-index: 0;
+  }
+
+  .terpcon__overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 10, 10, 0.75);
+    z-index: 1;
+  }
+
+  /* Two Column Layout */
+  .terpcon__layout {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: 45% 55%;
+    min-height: 100vh;
+  }
+
+  /* LEFT SIDE */
+  .terpcon__left {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 3rem;
+    padding-top: calc(80px + 3rem);
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .terpcon__left-content {
+    width: 100%;
+    max-width: 500px;
+    margin-left: auto;
+    animation: slideUp 0.8s ease-out forwards;
+    opacity: 0;
+  }
+
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(40px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .terpcon__hero {
+    margin-bottom: 2rem;
+  }
+
+  .terpcon__title {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(48px, 6vw, 72px);
+    font-weight: 800;
+    line-height: 0.95;
+    color: #fff;
+    letter-spacing: -0.03em;
+    margin: 0 0 0.5rem 0;
+  }
+
+  .terpcon__subtitle {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(24px, 3vw, 36px);
+    font-weight: 700;
+    color: #e53935;
+    margin: 0;
+  }
+
+  .terpcon__description {
+    font-family: 'Inter', sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.6;
+    margin: 0 0 2.5rem 0;
+  }
+
+  .terpcon__details {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .terpcon__detail {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+  }
+
+  .terpcon__detail svg {
+    color: #e53935;
+    flex-shrink: 0;
+  }
+
+  .terpcon__detail-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+  }
+
+  .terpcon__detail-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  .terpcon__detail-value {
+    font-family: 'Inter', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: #ffffff;
+  }
+
+  .terpcon__cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    width: 100%;
+    justify-content: center;
+    padding: 1.25rem 2rem;
+    font-family: 'Inter', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: #ffffff;
+    background: #e53935;
+    border: none;
+    border-radius: 14px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    margin-bottom: 2rem;
+  }
+
+  .terpcon__cta-btn:hover {
+    background: #c62828;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(229, 57, 53, 0.4);
+  }
+
+  .terpcon__socials {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .terpcon__social {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+  }
+
+  .terpcon__social--discord {
+    background: rgba(88, 101, 242, 0.15);
+    color: #5865F2;
+    border: 1px solid rgba(88, 101, 242, 0.3);
+  }
+
+  .terpcon__social--discord:hover {
+    background: #5865F2;
+    color: #ffffff;
+  }
+
+  .terpcon__social--instagram {
+    background: rgba(225, 48, 108, 0.15);
+    color: #E1306C;
+    border: 1px solid rgba(225, 48, 108, 0.3);
+  }
+
+  .terpcon__social--instagram:hover {
+    background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+    color: #ffffff;
+    border-color: transparent;
+  }
+
+  /* RIGHT SIDE */
+  .terpcon__right {
+    padding: 3rem 3rem 3rem 2rem;
+    padding-top: calc(80px + 3rem);
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
+
+  .terpcon__vendors-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+    padding-right: 1rem;
+    animation: slideUp 0.8s ease-out 0.1s forwards;
+    opacity: 0;
+  }
+
+  .terpcon__vendors-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0;
+  }
+
+  .terpcon__vendors-count {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  .terpcon__vendors-scroll {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-right: 1rem;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+    animation: slideUp 0.8s ease-out 0.2s forwards;
+    opacity: 0;
+  }
+
+  .terpcon__vendors-scroll::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .terpcon__vendors-scroll::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .terpcon__vendors-scroll::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
+  }
+
+  .terpcon__vendors-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 1rem;
+    padding-bottom: 2rem;
+  }
+
+  /* Vendor Cards */
+  .vendor-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 1.25rem 1rem;
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    transition: all 0.3s ease;
+    aspect-ratio: 1 / 1;
+  }
+
+  .vendor-card:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.15);
+    transform: translateY(-4px);
+  }
+
+  .vendor-card__image-wrapper {
+    flex-shrink: 0;
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.15);
+    margin-bottom: 0.75rem;
+  }
+
+  .vendor-card__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .vendor-card__name {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: #ffffff;
+    margin: 0 0 0.25rem 0;
+    line-height: 1.2;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .vendor-card__social {
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    color: #64b4ff;
+    text-decoration: none;
+    transition: color 0.2s ease;
+    margin-bottom: 0.5rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .vendor-card__social:hover {
+    color: #8ecaff;
+  }
+
+  .vendor-card__social--none {
+    color: rgba(255, 255, 255, 0.25);
+  }
+
+  .vendor-card__description {
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.5);
+    margin: 0;
+    line-height: 1.35;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    flex: 1;
+  }
+
+  /* Responsive */
+  @media (max-width: 1200px) {
+    .terpcon__layout {
+      grid-template-columns: 40% 60%;
+    }
+  }
+
+  @media (max-width: 1000px) {
+    .terpcon__layout {
+      grid-template-columns: 1fr;
+    }
+
+    .terpcon__left {
+      position: relative;
+      height: auto;
+      padding: 2rem;
+      padding-top: calc(80px + 2rem);
+      border-right: none;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .terpcon__left-content {
+      max-width: 100%;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .terpcon__details {
+      max-width: 400px;
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom: 2rem;
+    }
+
+    .terpcon__socials {
+      justify-content: center;
+    }
+
+    .terpcon__right {
+      height: auto;
+      max-height: none;
+      padding: 2rem;
+    }
+
+    .terpcon__vendors-scroll {
+      max-height: 70vh;
+    }
+
+    .terpcon__vendors-header {
+      justify-content: center;
+      gap: 1rem;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .terpcon__left {
+      padding: 1.5rem;
+      padding-top: calc(80px + 1.5rem);
+    }
+
+    .terpcon__title {
+      font-size: 40px;
+    }
+
+    .terpcon__subtitle {
+      font-size: 22px;
+    }
+
+    .terpcon__description {
+      font-size: 16px;
+    }
+
+    .terpcon__detail-value {
+      font-size: 16px;
+    }
+
+    .terpcon__cta-btn {
+      font-size: 16px;
+      padding: 1rem 1.5rem;
+    }
+
+    .terpcon__socials {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .terpcon__social {
+      width: 100%;
+      max-width: 200px;
+      justify-content: center;
+    }
+
+    .terpcon__right {
+      padding: 1.5rem;
+    }
+
+    .terpcon__vendors-title {
+      font-size: 24px;
+    }
+
+    .terpcon__vendors-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem;
+    }
+
+    .vendor-card {
+      padding: 1rem 0.75rem;
+    }
+
+    .vendor-card__image-wrapper {
+      width: 60px;
+      height: 60px;
+    }
+
+    .vendor-card__name {
+      font-size: 12px;
+    }
+
+    .vendor-card__description {
+      -webkit-line-clamp: 2;
+    }
+  }
+</style>

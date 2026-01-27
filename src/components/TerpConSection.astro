@@ -1,0 +1,1096 @@
+---
+// TerpCon Section - Slides in after Maid Cafe on home page
+
+interface Vendor {
+  name: string;
+  social?: string;
+  socialDisplay?: string;
+  description: string;
+  image?: string;
+  longName?: boolean;
+}
+
+const vendors: Vendor[] = [
+  { name: "BowLaces", social: "https://bsky.app/profile/bowlaces.bsky.social", socialDisplay: "@bowlaces.bsky.social", description: "Prints, full size prints, stickers", image: "/images/Vendors/1.webp" },
+  { name: "Inywiny", social: "https://inywiny.carrd.co", socialDisplay: "inywiny.carrd.co", description: "Keychains, trinkets, prints, jewelry, stickers", image: "/images/Vendors/2.webp" },
+  { name: "Zeph", social: "https://x.com/YouInsolentFool", socialDisplay: "x.com/YouInsolentFool", description: "HSR merch, prints, cards, keychains", image: "/images/Vendors/3.webp" },
+  { name: "Nagihiko_dayo", social: "https://nagihikodayo.carrd.co/", socialDisplay: "nagihikodayo.carrd.co", description: "Prints, stickers, charms, chibi commissions", image: "/images/Vendors/4.webp" },
+  { name: "Mezurashii", description: "Anime and Japanese trinkets" },
+  { name: "Liramic", description: "Prints, bookmarks, keychains, pins, deskmats" },
+  { name: "akuunosuke", social: "https://akuunosuke.carrd.co", socialDisplay: "akuunosuke.carrd.co", description: "Charms, standees, pins, stickers, prints", image: "/images/Vendors/5.webp" },
+  { name: "Otaku553", social: "https://otaku553.carrd.co", socialDisplay: "otaku553.carrd.co", description: "Prints and keychains of anime/game characters", image: "/images/Vendors/6.webp" },
+  { name: "rivertylart", social: "https://linktr.ee/rivertyl", socialDisplay: "linktr.ee/rivertyl", description: "Prints and stickers (Genshin, HSR, original)", image: "/images/Vendors/7.webp" },
+  { name: "Bonemealed", social: "https://bonemealed.carrd.co/", socialDisplay: "bonemealed.carrd.co", description: "Prints, charms, stickers, shirts", image: "/images/Vendors/8.webp" },
+  { name: "sincerelydanidesign", social: "https://sincerelydanidesign.etsy.com/", socialDisplay: "sincerelydanidesign.etsy.com", description: "Handmade crochet items and bracelets", image: "/images/Vendors/9.webp" },
+  { name: "GinkgoMART", social: "https://ginkgomart.bigcartel.com/", socialDisplay: "ginkgomart.bigcartel.com", description: "Prints, keychains, stickers, buttons, comics", image: "/images/Vendors/10.webp" },
+  { name: "Dracolegus Art", social: "https://linktr.ee/dracolegus", socialDisplay: "linktr.ee/dracolegus", description: "Prints, stickers, buttons, keychains", image: "/images/Vendors/11.webp" },
+  { name: "Ari Inkart", social: "https://sites.google.com/view/ari-inkart-portfolio/home", socialDisplay: "ari-inkart-portfolio", description: "Keychains, pin buttons, art prints", image: "/images/Vendors/12.webp" },
+  { name: "Smogfrogg", social: "https://smogfrogg.com/", socialDisplay: "smogfrogg.com", description: "Prints, stickers, pins, keychains, tote bags", image: "/images/Vendors/13.webp" },
+  { name: "Tea Shot", social: "https://linktr.ee/teashot", socialDisplay: "linktr.ee/teashot", description: "Stickers, keychains, prints, zines, patches", image: "/images/Vendors/14.webp" },
+  { name: "Chiimeshop", social: "https://svu-illustration.com", socialDisplay: "svu-illustration.com", description: "Prints, keychains, buttons, shirts", image: "/images/Vendors/15.webp" },
+  { name: "Vertebra Confit", description: "Prints, stickers, live sketch commissions" },
+  { name: "marclouart", social: "https://instagram.com/marclouart", socialDisplay: "instagram.com/marclouart", description: "Anime posters, clay figures, keychains", image: "/images/Vendors/16.webp" },
+  { name: "Novi Mochi", social: "https://novimochi.carrd.co/", socialDisplay: "novimochi.carrd.co", description: "Charms, prints, buttons, stickers", image: "/images/Vendors/17.webp" },
+  { name: "cy-chin", social: "https://cychin.carrd.co/", socialDisplay: "cychin.carrd.co", description: "Anime-style stickers, keychains, prints, buttons", image: "/images/Vendors/18.webp" },
+  { name: "SnarkFish T-Shirts", social: "https://www.snarkfishtshirts.com", socialDisplay: "snarkfishtshirts.com", description: "T-shirts, plushies, pins, prints, gaming", image: "/images/Vendors/19.webp" },
+  { name: "Artisfired Studio", social: "https://artisfired.carrd.co/", socialDisplay: "artisfired.carrd.co", description: "Anime & game charms, prints, stickers", image: "/images/Vendors/20.webp" },
+  { name: "Biodegradable Scribble Worms", description: "Stickers, prints, keychains", longName: true },
+  { name: "soapshoe", social: "https://linktr.ee/soapshoe", socialDisplay: "linktr.ee/soapshoe", description: "Prints, stickers, keychains (anime & gacha)", image: "/images/Vendors/21.webp" },
+  { name: "Canaryhare", description: "Bird stickers & prints" },
+  { name: "Meshi Market", social: "https://meshimarket.carrd.co/", socialDisplay: "meshimarket.carrd.co", description: "Stickers, charms, pins, magnets, prints", image: "/images/Vendors/22.webp" },
+  { name: "Holly Mitchell", social: "https://www.instagram.com/plzhollystop", socialDisplay: "instagram.com/plzhollystop", description: "Live charcoal portraits, watercolor originals", image: "/images/Vendors/23.webp" },
+  { name: "Mewychu", social: "https://mewychu.carrd.co/", socialDisplay: "mewychu.carrd.co", description: "Prints, stickers, commissions, plush/figures", image: "/images/Vendors/24.webp" },
+  { name: "worstkiddotcom", social: "https://linktr.ee/worstkiddotcom", socialDisplay: "linktr.ee/worstkiddotcom", description: "Prints, stickers, charms, totes, magnets", image: "/images/Vendors/25.webp" },
+  { name: "Quzzyland", social: "https://quzzyplayground.carrd.com", socialDisplay: "quzzyplayground.carrd.com", description: "Plush keychains, prints, mini zines", image: "/images/Vendors/26.webp" },
+  { name: "Kyomi Star", social: "https://www.instagram.com/kyomi_star", socialDisplay: "instagram.com/kyomi_star", description: "Stickers, prints, pins, keychains, hair clips", image: "/images/Vendors/27.webp" },
+  { name: "Luniarci", description: "Prints, stickers, keychains, earrings" },
+  { name: "Jayce the Creature Creator", social: "https://www.instagram.com/jaycethecreaturecreator", socialDisplay: "instagram.com/jaycethecreaturecreator", description: "Stickers, prints, original illustrations", image: "/images/Vendors/28.webp", longName: true },
+  { name: "Deca", social: "https://x.com/122deca__art", socialDisplay: "x.com/122deca__art", description: "Prints, posters, photocards, charms, keychains", image: "/images/Vendors/29.webp" },
+  { name: "SparkLemon", description: "Bookmarks, bracelets, cards, artwork, necklaces" },
+  { name: "Chengt", social: "https://www.instagram.com/chengt_art", socialDisplay: "instagram.com/chengt_art", description: "Art prints, keychains, art goods", image: "/images/Vendors/30.webp" },
+  { name: "Koifishin", description: "Prints, stickers, jewelry" },
+  { name: "jsunnyart", social: "https://twitter.com/jsunnyart", socialDisplay: "twitter.com/jsunnyart", description: "Prints, charms, stickers, sticker sheets", image: "/images/Vendors/31.webp" },
+  { name: "Somintso", social: "https://www.instagram.com/somintso/", socialDisplay: "instagram.com/somintso", description: "Anime prints, keychains, tarot cards, stickers", image: "/images/Vendors/32.webp" },
+  { name: "Soft Peach art", social: "https://www.etsy.com/shop/SoftpeachArt", socialDisplay: "etsy.com/shop/SoftpeachArt", description: "Keychains, stickers, art prints", image: "/images/Vendors/33.webp" },
+  { name: "Astrateia Art", description: "Prints, stickers, live portrait commissions" },
+];
+
+const defaultImage = "/images/Icons/chibi.webp";
+---
+
+<div class="terpcon-section" data-terpcon-section>
+  <!-- Background with darkening overlay -->
+  <div class="terpcon-section__bg" data-terpcon-bg></div>
+
+  <!-- Content wrapper -->
+  <div class="terpcon-section__content" data-terpcon-content>
+    <!-- TOP - Big centered title -->
+    <div class="terpcon-section__header">
+      <h1 class="terpcon-section__title" data-terpcon-title>
+        TERPCON 2026
+      </h1>
+    </div>
+
+    <!-- Two Column Layout -->
+    <div class="terpcon-section__columns">
+      <!-- LEFT SIDE - Event Info -->
+      <div class="terpcon-section__left" data-terpcon-left>
+        <!-- Title -->
+        <div class="terpcon-section__subtitle-wrapper">
+          <h2 class="terpcon-section__subtitle" data-terpcon-subtitle>
+            Vendor &<br />Artist Alley
+            <img src="/images/Icons/2.webp" alt="" class="subtitle-pow" />
+          </h2>
+        </div>
+        <!-- Description and CTA in a row -->
+        <div class="terpcon-section__desc-row">
+          <p class="terpcon-section__description" data-terpcon-desc>
+            The Terrapin Anime Society will be hosting a Vendor & Artist Alley for TERPCON 2026. Please see the official UMD site for more details.
+          </p>
+          <a href="https://stamp.umd.edu/AllNiter" target="_blank" rel="noopener noreferrer" class="terpcon-section__cta" data-terpcon-cta>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+              <polyline points="15 3 21 3 21 9"></polyline>
+              <line x1="10" y1="14" x2="21" y2="3"></line>
+            </svg>
+            UMD Official Site
+          </a>
+        </div>
+
+        <!-- Event details as horizontal cards -->
+        <div class="terpcon-section__info-cards">
+          <div class="terpcon-section__info-card" data-terpcon-detail>
+            <span class="terpcon-section__info-label">Date</span>
+            <span class="terpcon-section__info-value">Friday, February 6th</span>
+          </div>
+          <div class="terpcon-section__info-card" data-terpcon-detail>
+            <span class="terpcon-section__info-label">Time</span>
+            <span class="terpcon-section__info-value">5pm – 12am</span>
+          </div>
+          <div class="terpcon-section__info-card" data-terpcon-detail>
+            <span class="terpcon-section__info-label">Location</span>
+            <span class="terpcon-section__info-value">Stamp Student Union</span>
+          </div>
+        </div>
+
+        <!-- Featured Artists Carousel -->
+        <div class="featured-artists-collage" data-terpcon-featured-artists>
+          <span class="featured-artists-collage__label">Featured Artists</span>
+          <div class="featured-artists-collage__grid" data-featured-carousel>
+            <div class="collage-item" data-carousel-item="0">
+              <img src="/images/Artwork/1.webp" alt="Artwork by Bonemealed" class="collage-item__image" />
+              <div class="collage-item__info">
+                <img src="/images/Vendors/8.webp" alt="Bonemealed" class="collage-item__avatar" />
+                <div class="collage-item__details">
+                  <span class="collage-item__name">Bonemealed</span>
+                  <a href="https://bonemealed.carrd.co/" target="_blank" rel="noopener noreferrer" class="collage-item__social">bonemealed.carrd.co</a>
+                </div>
+              </div>
+            </div>
+            <div class="collage-item" data-carousel-item="1">
+              <img src="/images/Artwork/2.webp" alt="Artwork by Dracolegus Art" class="collage-item__image" />
+              <div class="collage-item__info">
+                <img src="/images/Vendors/11.webp" alt="Dracolegus Art" class="collage-item__avatar" />
+                <div class="collage-item__details">
+                  <span class="collage-item__name">Dracolegus Art</span>
+                  <a href="https://linktr.ee/dracolegus" target="_blank" rel="noopener noreferrer" class="collage-item__social">linktr.ee/dracolegus</a>
+                </div>
+              </div>
+            </div>
+            <div class="collage-item" data-carousel-item="2">
+              <img src="/images/Artwork/3.webp" alt="Artwork by worstkiddotcom" class="collage-item__image" />
+              <div class="collage-item__info">
+                <img src="/images/Vendors/25.webp" alt="worstkiddotcom" class="collage-item__avatar" />
+                <div class="collage-item__details">
+                  <span class="collage-item__name">worstkiddotcom</span>
+                  <a href="https://linktr.ee/worstkiddotcom" target="_blank" rel="noopener noreferrer" class="collage-item__social">linktr.ee/worstkiddotcom</a>
+                </div>
+              </div>
+            </div>
+            <div class="collage-item" data-carousel-item="3">
+              <img src="/images/Artwork/4.webp" alt="Artwork by jsunnyart" class="collage-item__image" />
+              <div class="collage-item__info">
+                <img src="/images/Vendors/31.webp" alt="jsunnyart" class="collage-item__avatar" />
+                <div class="collage-item__details">
+                  <span class="collage-item__name">jsunnyart</span>
+                  <a href="https://twitter.com/jsunnyart" target="_blank" rel="noopener noreferrer" class="collage-item__social">twitter.com/jsunnyart</a>
+                </div>
+              </div>
+            </div>
+            <div class="collage-item" data-carousel-item="4">
+              <img src="/images/Artwork/5.webp" alt="Artwork by Zeph" class="collage-item__image" />
+              <div class="collage-item__info">
+                <img src="/images/Vendors/3.webp" alt="Zeph" class="collage-item__avatar" />
+                <div class="collage-item__details">
+                  <span class="collage-item__name">Zeph</span>
+                  <a href="https://x.com/YouInsolentFool" target="_blank" rel="noopener noreferrer" class="collage-item__social">x.com/YouInsolentFool</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT SIDE - Vendor Grid -->
+      <div class="terpcon-section__right" data-terpcon-right>
+        <div class="terpcon-section__vendors-header" data-terpcon-vendors-header>
+          <h3 class="terpcon-section__vendors-title">Browse Artists</h3>
+        </div>
+        <div class="terpcon-section__vendors-scroll" data-terpcon-vendors-scroll>
+          <div class="terpcon-section__vendors-grid" data-terpcon-vendors-grid>
+            {vendors.map((vendor) => (
+              <div class="vendor-card">
+                <div class="vendor-card__image-wrapper">
+                  <img
+                    src={vendor.image || defaultImage}
+                    alt={vendor.name}
+                    class="vendor-card__image"
+                    loading="lazy"
+                  />
+                </div>
+                <h4 class={`vendor-card__name ${vendor.longName ? 'vendor-card__name--long' : ''}`}>{vendor.name}</h4>
+                {vendor.social ? (
+                  <a href={vendor.social} target="_blank" rel="noopener noreferrer" class="vendor-card__social">
+                    {vendor.socialDisplay}
+                  </a>
+                ) : (
+                  <span class="vendor-card__social vendor-card__social--none">Find us at TerpCon!</span>
+                )}
+                <p class="vendor-card__description">{vendor.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .terpcon-section {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 100;
+    will-change: transform;
+    backface-visibility: hidden;
+    background-color: #0a0a0a;
+    /* Hide initially - GSAP will show and position it */
+    visibility: hidden;
+  }
+
+  .terpcon-section__bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('/images/Backgrounds/terpcon.webp');
+    background-size: cover;
+    background-position: center;
+    z-index: 0;
+  }
+
+  .terpcon-section__bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(10, 10, 10, 0.85);
+  }
+
+  /* Content wrapper */
+  .terpcon-section__content {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 0 clamp(1rem, 4vw, 4rem);
+    padding-top: calc(80px + clamp(0.5rem, 2vw, 1rem));
+    padding-bottom: clamp(0.75rem, 2vw, 2rem);
+    pointer-events: auto;
+    box-sizing: border-box;
+  }
+
+  /* TOP - Centered title with layered echo effect */
+  .terpcon-section__header {
+    position: relative;
+    text-align: center;
+    flex-shrink: 0;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: clamp(50px, 8vw, 80px);
+  }
+
+  .terpcon-section__title-echo {
+    position: absolute;
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(60px, 10vw, 120px);
+    font-weight: 800;
+    line-height: 0.9;
+    pointer-events: none;
+    white-space: nowrap;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
+  }
+
+  /* Layer 1 - Furthest back, darkest, most offset */
+  .terpcon-section__title-echo--1 {
+    z-index: 0;
+    color: #020a14;
+    transform: translate(12px, 12px);
+  }
+
+  /* Layer 2 - Middle, very dark */
+  .terpcon-section__title-echo--2 {
+    z-index: 1;
+    color: #041526;
+    transform: translate(8px, 8px);
+  }
+
+  /* Layer 3 - Closest, dark navy */
+  .terpcon-section__title-echo--3 {
+    z-index: 2;
+    color: #072040;
+    transform: translate(4px, 4px);
+  }
+
+  .terpcon-section__title {
+    position: relative;
+    z-index: 3;
+    font-family: 'Bangers', cursive;
+    font-size: clamp(56px, 10vw, 120px);
+    font-weight: 400;
+    line-height: 0.9;
+    color: #ffeb3b;
+    letter-spacing: 0.05em;
+    margin: 0;
+    text-transform: uppercase;
+    -webkit-text-stroke: 3px #000;
+    text-shadow:
+      4px 4px 0 #e91e63,
+      8px 8px 0 #000,
+      2px 2px 8px rgba(0, 0, 0, 0.5);
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+    contain: layout paint;
+  }
+
+  /* Comic POW effects */
+  .terpcon-pow {
+    position: absolute;
+    pointer-events: none;
+    z-index: 4;
+  }
+
+  .terpcon-pow--1 {
+    width: 320px;
+    height: auto;
+    right: -300px;
+    top: -90px;
+    transform: rotate(15deg);
+  }
+
+  /* Subtitle wrapper needs relative positioning for POW */
+  .terpcon-section__subtitle-wrapper {
+    position: relative;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: clamp(60px, 10vw, 100px);
+  }
+
+  .subtitle-pow {
+    position: absolute;
+    width: 4em;
+    height: auto;
+    right: -1.7em;
+    top: -1.5em;
+    transform: rotate(-15deg);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Two Column Layout */
+  .terpcon-section__columns {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: clamp(1.5rem, 3vw, 3rem);
+    min-height: 0;
+    align-items: stretch;
+  }
+
+  /* LEFT SIDE */
+  .terpcon-section__left {
+    display: flex;
+    flex-direction: column;
+    padding-top: 0;
+  }
+
+  .terpcon-section__background-text {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(120px, 18vw, 280px);
+    font-weight: 800;
+    line-height: 1;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(25, 118, 210, 0.25);
+    pointer-events: none;
+    white-space: nowrap;
+    z-index: 0;
+  }
+
+  .terpcon-section__subtitle {
+    position: relative;
+    z-index: 1;
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(36px, 4.5vw, 60px);
+    font-weight: 800;
+    color: #ffffff;
+    margin: 0;
+    line-height: 0.95;
+    text-transform: uppercase;
+    letter-spacing: -0.03em;
+  }
+
+  /* Description and CTA row */
+  .terpcon-section__desc-row {
+    display: flex;
+    align-items: center;
+    gap: clamp(0.75rem, 2vw, 1.5rem);
+    margin-bottom: clamp(0.5rem, 1.2vw, 0.75rem);
+    flex-wrap: wrap;
+  }
+
+  .terpcon-section__description {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(12px, 1.4vw, 17px);
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.5;
+    margin: 0;
+    max-width: clamp(250px, 35vw, 400px);
+    flex: 1;
+    min-width: 200px;
+  }
+
+  /* Info cards - horizontal layout */
+  .terpcon-section__info-cards {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.75rem;
+  }
+
+  .terpcon-section__info-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    padding: clamp(0.5rem, 1.5vw, 0.75rem) clamp(0.75rem, 2vw, 1.25rem);
+    background: rgba(25, 118, 210, 0.08);
+    border: 1px solid rgba(25, 118, 210, 0.2);
+    border-radius: clamp(8px, 1vw, 10px);
+    min-width: clamp(100px, 12vw, 140px);
+    transition: background 0.3s ease, border-color 0.3s ease;
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+  }
+
+  .terpcon-section__info-card:hover {
+    background: rgba(25, 118, 210, 0.12);
+    border-color: rgba(25, 118, 210, 0.3);
+  }
+
+  .terpcon-section__info-label {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(9px, 1vw, 11px);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: #64b4ff;
+  }
+
+  .terpcon-section__info-value {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(12px, 1.5vw, 18px);
+    font-weight: 700;
+    color: #ffffff;
+    line-height: 1.2;
+  }
+
+  .terpcon-section__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: clamp(0.3rem, 0.8vw, 0.5rem);
+    width: fit-content;
+    padding: clamp(0.5rem, 1.2vw, 0.75rem) clamp(0.75rem, 2vw, 1.25rem);
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(12px, 1.2vw, 14px);
+    font-weight: 600;
+    color: #ffffff;
+    background: #1976d2;
+    border: none;
+    border-radius: clamp(8px, 1vw, 10px);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+    height: fit-content;
+  }
+
+  .terpcon-section__cta svg {
+    width: clamp(12px, 1.4vw, 16px);
+    height: clamp(12px, 1.4vw, 16px);
+  }
+
+  .terpcon-section__cta:hover {
+    background: #1565c0;
+    transform: translateY(-2px);
+  }
+
+  /* FEATURED ARTISTS COLLAGE */
+  .featured-artists-collage {
+    margin-top: 0.5rem;
+    margin-bottom: 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    flex: 1 1 0;
+    min-height: 0;
+    width: 100%;
+    max-width: 1200px;
+  }
+
+  .featured-artists-collage__label {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(11px, 1.2vw, 14px);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: #64b4ff;
+    flex-shrink: 0;
+  }
+
+  .featured-artists-collage__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+    flex: 1 1 0;
+    min-height: 0;
+    max-height: calc(100vh - 450px);
+    overflow: hidden;
+    position: relative;
+  }
+
+  .collage-item {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: calc(50% - 0.25rem);
+    height: 100%;
+    overflow: hidden;
+    border-radius: 10px;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    transform: translateX(calc(200% + 1rem));
+    transition: transform 0.6s ease, border-color 0.3s ease, opacity 0.3s ease;
+    opacity: 0;
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+  }
+
+  /* Left position (first in pair) */
+  .collage-item.pos-left {
+    transform: translateX(0);
+    opacity: 1;
+  }
+
+  /* Right position (second in pair) */
+  .collage-item.pos-right {
+    transform: translateX(calc(100% + 0.5rem));
+    opacity: 1;
+  }
+
+  /* Sliding out - both go left */
+  .collage-item.sliding-out-left {
+    transform: translateX(-110%);
+    opacity: 1;
+  }
+
+  .collage-item.sliding-out-right {
+    transform: translateX(-10%);
+    opacity: 1;
+  }
+
+  /* Exited state - hidden without animation */
+  .collage-item.exited {
+    transform: translateX(calc(200% + 1rem));
+    opacity: 0;
+    transition: none;
+  }
+
+  .collage-item:hover {
+    border-color: rgba(100, 180, 255, 0.4);
+    z-index: 2;
+  }
+
+  .collage-item__image {
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .collage-item__overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 0.5rem 0.75rem;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .collage-item:hover .collage-item__overlay {
+    opacity: 1;
+  }
+
+  .collage-item__info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.5rem 0.6rem;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.5) 70%, transparent);
+  }
+
+  .collage-item__avatar {
+    width: clamp(40px, 6vw, 70px);
+    height: clamp(40px, 6vw, 70px);
+    border-radius: 50%;
+    object-fit: cover;
+    border: clamp(2px, 0.3vw, 3px) solid rgba(255, 255, 255, 0.4);
+    flex-shrink: 0;
+  }
+
+  .collage-item__details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    min-width: 0;
+  }
+
+  .collage-item__name {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(1rem, 2vw, 2rem);
+    font-weight: 700;
+    color: #ffffff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .collage-item__social {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(0.8rem, 1.4vw, 1.4rem);
+    font-weight: 500;
+    color: #64b4ff;
+    text-decoration: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: color 0.2s ease;
+  }
+
+  .collage-item__social:hover {
+    color: #8ecaff;
+  }
+
+  /* RIGHT SIDE */
+  .terpcon-section__right {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: visible;
+    min-height: 0;
+    height: 100%;
+    padding-left: 0;
+  }
+
+  .terpcon-section__vendors-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: clamp(0.75rem, 2vw, 1.5rem);
+    flex-shrink: 0;
+  }
+
+  .terpcon-section__vendors-title {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(18px, 2.5vw, 36px);
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+  }
+
+  .terpcon-section__vendors-scroll {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.1) #0a0a0a;
+    min-height: 0;
+  }
+
+  .terpcon-section__vendors-scroll::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  .terpcon-section__vendors-scroll::-webkit-scrollbar-track {
+    background: #0a0a0a;
+  }
+
+  .terpcon-section__vendors-scroll::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+  }
+
+  .terpcon-section__vendors-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(120px, 1fr));
+    gap: 0.75rem;
+    padding-bottom: 2rem;
+    width: 100%;
+  }
+
+  /* Vendor Cards - Square grid layout with larger content */
+  .vendor-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 8%;
+    background: rgba(10, 10, 10, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    transition: all 0.2s ease;
+    will-change: transform;
+    backface-visibility: hidden;
+    transform: translateZ(0);
+    overflow: hidden;
+    gap: 0.4rem;
+  }
+
+  .vendor-card:hover {
+    background: rgba(10, 10, 10, 0.95);
+    border-color: rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
+  }
+
+  .vendor-card__image-wrapper {
+    width: 35%;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.05);
+    flex-shrink: 0;
+  }
+
+  .vendor-card__image {
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    object-fit: cover;
+  }
+
+  .vendor-card__name {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(0.8rem, 1.1vw, 1.3rem);
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0;
+    line-height: 1.2;
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .vendor-card__name--long {
+    font-size: clamp(0.7rem, 0.95vw, 1.1rem);
+  }
+
+  .vendor-card__social {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(0.6rem, 0.8vw, 1rem);
+    font-weight: 500;
+    color: #64b4ff;
+    text-decoration: none;
+    transition: color 0.2s ease;
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+  }
+
+  .vendor-card__social:hover {
+    color: #8ecaff;
+  }
+
+  .vendor-card__social--none {
+    color: rgba(255, 255, 255, 0.3);
+  }
+
+  .vendor-card__description {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(0.7rem, 1vw, 1.15rem);
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.55);
+    margin: 0;
+    line-height: 1.35;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* Responsive - reduce vendor grid columns as viewport shrinks */
+  @media (max-width: 1400px) {
+    .terpcon-section__vendors-grid {
+      grid-template-columns: repeat(2, minmax(120px, 1fr));
+    }
+
+    .terpcon-section__background-text {
+      font-size: clamp(100px, 14vw, 200px);
+    }
+
+    /* Stack featured artists carousel to single column */
+    .featured-artists-collage__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .collage-item {
+      width: 100%;
+      height: 50%;
+    }
+
+    .collage-item.pos-left {
+      transform: translateY(0);
+    }
+
+    .collage-item.pos-right {
+      transform: translateY(calc(100% + 0.5rem));
+    }
+
+    .collage-item.sliding-out-left,
+    .collage-item.sliding-out-right {
+      transform: translateY(-110%);
+    }
+
+    .collage-item.exited {
+      transform: translateY(calc(200% + 1rem));
+    }
+  }
+
+  @media (max-width: 1000px) {
+    .terpcon-section__vendors-grid {
+      grid-template-columns: repeat(1, minmax(120px, 1fr));
+    }
+  }
+
+  /* Only apply mobile layout when window is narrow AND landscape (not tall portrait windows) */
+  @media (max-width: 1100px) and (min-aspect-ratio: 1/1) {
+    .terpcon-section__content {
+      padding: 0 clamp(1rem, 3vw, 2rem);
+      padding-top: calc(80px + 1rem);
+      padding-bottom: 1rem;
+    }
+
+    .terpcon-section__columns {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto 1fr;
+      gap: 1rem;
+    }
+
+    .terpcon-section__left {
+      text-align: center;
+      align-items: center;
+    }
+
+    .terpcon-section__subtitle-wrapper {
+      justify-content: center;
+    }
+
+    .terpcon-section__background-text {
+      font-size: clamp(60px, 12vw, 120px);
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .terpcon-section__desc-row {
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .terpcon-section__info-cards {
+      justify-content: center;
+    }
+
+    .terpcon-section__vendors-grid {
+      grid-template-columns: repeat(3, minmax(120px, 1fr));
+    }
+
+    .featured-artists-collage {
+      display: none;
+    }
+
+    .subtitle-pow {
+      display: none;
+    }
+  }
+
+  @media (max-width: 900px) and (min-aspect-ratio: 1/1) {
+    .terpcon-section__content {
+      padding: 0 clamp(0.75rem, 2vw, 1.5rem);
+      padding-top: calc(70px + 1rem);
+      padding-bottom: 0.75rem;
+    }
+
+    .terpcon-section__info-cards {
+      flex-wrap: wrap;
+    }
+
+    .terpcon-section__vendors-grid {
+      grid-template-columns: repeat(2, minmax(120px, 1fr));
+    }
+  }
+
+  @media (max-width: 600px) and (min-aspect-ratio: 1/1) {
+    .terpcon-section__content {
+      padding: 0 clamp(0.5rem, 2vw, 1rem);
+      padding-top: calc(60px + 0.75rem);
+      padding-bottom: 0.5rem;
+    }
+
+    .terpcon-section__header {
+      margin-bottom: 0.5rem;
+    }
+
+    .terpcon-section__background-text {
+      font-size: clamp(48px, 14vw, 80px);
+    }
+
+    .terpcon-section__info-cards {
+      flex-direction: column;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .terpcon-section__info-card {
+      width: 100%;
+      max-width: 280px;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .terpcon-section__vendors-grid {
+      grid-template-columns: repeat(1, minmax(120px, 1fr));
+    }
+  }
+</style>
+
+<script>
+  // Featured Artists Carousel - shows 2 at a time with sliding animation
+  function initFeaturedCarousel() {
+    const carousel = document.querySelector('[data-featured-carousel]');
+    if (!carousel) return;
+
+    const items = carousel.querySelectorAll('[data-carousel-item]');
+    if (items.length === 0) return;
+
+    let currentPair = 0;
+    let isAnimating = false;
+    let isPaused = true; // Start paused until visible
+    let intervalId: number | null = null;
+    const totalItems = items.length;
+
+    // Create pairs: [0,1], [1,2], [2,3], [3,4], [4,0]
+    const pairs: number[][] = [];
+    for (let i = 0; i < totalItems; i++) {
+      pairs.push([i, (i + 1) % totalItems]);
+    }
+
+    let currentLeft: number | null = null;
+    let currentRight: number | null = null;
+
+    function showPair(pairIndex: number, animate = false) {
+      const [first, second] = pairs[pairIndex];
+
+      if (animate && !isAnimating) {
+        isAnimating = true;
+
+        // Slide out current items
+        if (currentLeft !== null) {
+          items[currentLeft].classList.remove('pos-left');
+          items[currentLeft].classList.add('sliding-out-left');
+        }
+        if (currentRight !== null) {
+          items[currentRight].classList.remove('pos-right');
+          items[currentRight].classList.add('sliding-out-right');
+        }
+
+        // After slide out animation, slide in new items
+        setTimeout(() => {
+          // Clear sliding out classes and mark exited items
+          items.forEach((item, index) => {
+            item.classList.remove('sliding-out-left', 'sliding-out-right');
+            // If this item is not in the new pair, add exited class to hide without animation
+            if (index !== first && index !== second) {
+              item.classList.add('exited');
+            } else {
+              // Remove exited class for items that will be shown
+              item.classList.remove('exited');
+            }
+          });
+
+          // Add new positions
+          items[first].classList.add('pos-left');
+          items[second].classList.add('pos-right');
+
+          currentLeft = first;
+          currentRight = second;
+          isAnimating = false;
+        }, 600);
+      } else {
+        // Initial display without animation
+        items[first].classList.add('pos-left');
+        items[second].classList.add('pos-right');
+        currentLeft = first;
+        currentRight = second;
+      }
+    }
+
+    function startInterval() {
+      if (intervalId) return;
+      intervalId = window.setInterval(() => {
+        if (!isAnimating && !isPaused) {
+          currentPair = (currentPair + 1) % pairs.length;
+          showPair(currentPair, true);
+        }
+      }, 4000);
+    }
+
+    function stopInterval() {
+      if (intervalId) {
+        clearInterval(intervalId);
+        intervalId = null;
+      }
+    }
+
+    // Show initial pair without animation
+    showPair(0, false);
+
+    // Use IntersectionObserver to pause when not visible
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            isPaused = false;
+            startInterval();
+          } else {
+            isPaused = true;
+            stopInterval();
+          }
+        });
+      },
+      { threshold: 0, rootMargin: '50px' }
+    );
+
+    observer.observe(carousel);
+
+    // Also pause when tab is hidden
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        isPaused = true;
+        stopInterval();
+      } else {
+        const rect = carousel.getBoundingClientRect();
+        const inViewport = rect.top < window.innerHeight && rect.bottom > 0;
+        if (inViewport) {
+          isPaused = false;
+          startInterval();
+        }
+      }
+    });
+  }
+
+  // Initialize on DOM ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initFeaturedCarousel);
+  } else {
+    initFeaturedCarousel();
+  }
+</script>
+

@@ -1,0 +1,922 @@
+---
+import CardCarousel from './CardCarousel.astro';
+
+interface Props {
+  description?: string;
+}
+
+const {
+  description = 'Encouraging the appreciation and discussion of anime between members and bringing awareness to the general public.'
+} = Astro.props;
+---
+
+<!-- Hero Content -->
+<div class="hero-content" data-hero-content>
+  <div class="hero-content__title-wrapper">
+    <span class="hero-content__background-text" aria-hidden="true">TAS</span>
+    <h1 class="hero-content__title">
+      <span class="hero-content__title-line">Terrapin Anime</span>
+      <span class="hero-content__title-line">Society</span>
+    </h1>
+  </div>
+  <p class="hero-content__description">{description}</p>
+  <div class="hero-content__buttons">
+    <a href="/meetings" class="hero-content__button hero-content__button--primary">Meetings</a>
+    <a href="/terpcon" class="hero-content__button hero-content__button--terpcon">TerpCon 2026</a>
+    <a href="/#maidcafe" class="hero-content__button hero-content__button--secondary">Maid Cafe 2026</a>
+    <a href="/kamecon" class="hero-content__button hero-content__button--secondary">KAMECON</a>
+  </div>
+</div>
+
+<!-- Ticket banner - outside hero-content so it animates independently -->
+<a href="/#maidcafe" class="hero-content__ticket-banner" data-ticket-banner>
+  <span>Buy Tickets for the Maid Cafe Here</span>
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <line x1="5" y1="12" x2="19" y2="12"></line>
+    <polyline points="12 5 19 12 12 19"></polyline>
+  </svg>
+</a>
+
+<div class="hero-carousel-wrapper" data-hero-carousel>
+  <CardCarousel />
+  <p class="hero-carousel-hint">hover to download</p>
+</div>
+
+<!-- About Content (hidden initially, slides in on scroll) -->
+<div class="about-content" data-about-content>
+  <!-- Separate background div that slides in from left -->
+  <div class="about-content__bg" data-about-bg></div>
+  <div class="about-content__title-wrapper">
+    <span class="about-content__background-text" aria-hidden="true">TAS</span>
+    <h2 class="about-content__title">
+      <span class="about-content__title-line">About</span>
+    </h2>
+  </div>
+  <div class="about-content__info">
+    <p class="about-content__description">The Anime Club welcomes all students who are interested in anime. To get involved, join our <a href="https://discord.gg/fzKBsnS" target="_blank" rel="noopener noreferrer" class="about-content__discord-link">Discord</a> and introduce yourself in the <span class="about-content__highlight">#intro</span> channel to receive the member role.</p>
+
+    <div class="about-content__details">
+      <div class="about-content__detail-item">
+        <span class="about-content__detail-label">Meetings</span>
+        <p class="about-content__detail-text">Every Sunday from 5:00–7:00 PM. The first half features anime activities like dubbing competitions, Guess the Anime, and anime-themed Jeopardy. The second half is a screening of two anime episodes.</p>
+      </div>
+      <div class="about-content__detail-item">
+        <span class="about-content__detail-label">Subgroups</span>
+        <div class="about-content__subgroups">
+          <a href="/subgroups#animusic" class="about-content__subgroup-btn">Animusic</a>
+          <a href="/subgroups#cosplay" class="about-content__subgroup-btn">Cosplay</a>
+          <a href="/subgroups#manga" class="about-content__subgroup-btn">Manga</a>
+          <a href="/subgroups#gaming" class="about-content__subgroup-btn">Gaming</a>
+          <a href="/subgroups#old-school" class="about-content__subgroup-btn">Old School</a>
+          <a href="/subgroups#rainbow" class="about-content__subgroup-btn">Rainbow</a>
+        </div>
+      </div>
+      <div class="about-content__detail-item">
+        <span class="about-content__detail-label">Major Events</span>
+        <div class="about-content__events">
+          <a href="/#maidcafe" class="about-content__event-btn">Maid Café <span>Spring</span></a>
+          <a href="/kamecon" class="about-content__event-btn">KAMECON <span>Fall</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="about-content__buttons">
+    <a href="https://terplink.umd.edu/organization/terrapin-anime-society" target="_blank" rel="noopener noreferrer" class="about-content__button about-content__button--primary">Join Us</a>
+    <a href="/contact" class="about-content__button about-content__button--secondary">Contact</a>
+  </div>
+  <div class="about-content__gallery">
+    <div class="about-content__collage">
+      <div class="about-content__collage-item">
+        <img src="/images/Backgrounds/tas1.webp" alt="TAS club meeting" loading="lazy" />
+      </div>
+      <div class="about-content__collage-item">
+        <img src="/images/Photos/tas2.webp" alt="TAS members" loading="lazy" />
+      </div>
+      <div class="about-content__collage-item">
+        <img src="/images/Photos/tas3.webp" alt="TAS event" loading="lazy" />
+      </div>
+      <div class="about-content__collage-item">
+        <img src="/images/Backgrounds/tas4.webp" alt="TAS gathering" loading="lazy" />
+      </div>
+      <div class="about-content__collage-item">
+        <img src="/images/Photos/tas5.webp" alt="TAS activity" loading="lazy" />
+      </div>
+      <div class="about-content__collage-item">
+        <img src="/images/Photos/tas6.webp" alt="TAS screening" loading="lazy" />
+      </div>
+      <div class="about-content__collage-item">
+        <img src="/images/Photos/tas7.webp" alt="TAS community" loading="lazy" />
+      </div>
+      <div class="about-content__collage-item">
+        <img src="/images/Photos/tas8.webp" alt="TAS friends" loading="lazy" />
+      </div>
+      <div class="about-content__collage-item">
+        <img src="/images/Photos/tas9.webp" alt="TAS fun" loading="lazy" />
+      </div>
+      <div class="about-content__collage-item">
+        <img src="/images/Photos/tas10.webp" alt="TAS memories" loading="lazy" />
+      </div>
+      <div class="about-content__collage-item">
+        <img src="/images/Photos/tas11.webp" alt="TAS moments" loading="lazy" />
+      </div>
+    </div>
+    <!-- C.C. Mascot - separate container that aligns with collage -->
+    <div class="about-content__mascot-container">
+      <img
+        src="/images/Characters/c.c.webp"
+        alt="C.C. mascot"
+        class="about__mascot"
+        data-about-mascot
+      />
+    </div>
+  </div>
+</div>
+
+<style>
+  .hero-content {
+    position: relative;
+    z-index: 10;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(1rem, 2vw, 1.5rem);
+    padding-bottom: clamp(60px, 15vh, 220px);
+    will-change: transform;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+  }
+
+  .hero-content__title-wrapper {
+    position: relative;
+    /* Fluid height based on viewport */
+    min-height: clamp(80px, 18vw, 252px);
+  }
+
+  .hero-content__background-text {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(120px, 35vw, 500px);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.35);
+    pointer-events: none;
+    user-select: none;
+    z-index: 0;
+  }
+
+  .hero-content__title {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .hero-content__title-line {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(40px, 10vw, 140px);
+    font-weight: 800;
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+    color: #ffffff;
+    text-transform: uppercase;
+    display: block;
+  }
+
+
+  .hero-content__description {
+    position: relative;
+    z-index: 1;
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(16px, 2vw, 24px);
+    font-weight: 500;
+    line-height: 1.5;
+    color: #a0a0a0;
+    max-width: min(1200px, 100%);
+    margin-top: clamp(1.5rem, 3vw, 3rem);
+  }
+
+  .hero-content__buttons {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    gap: clamp(0.5rem, 1vw, 1rem);
+    margin-top: clamp(0.5rem, 1vw, 1rem);
+  }
+
+  .hero-content__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(10px, 1.5vw, 14px) clamp(20px, 3vw, 32px);
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(14px, 1.2vw, 16px);
+    font-weight: 600;
+    border-radius: clamp(8px, 1.2vw, 12px);
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .hero-content__button--primary {
+    background-color: #ffffff;
+    color: #0a0a0a;
+    border: 1px solid #ffffff;
+  }
+
+  .hero-content__button--primary:hover {
+    background-color: #e0e0e0;
+  }
+
+  .hero-content__button--secondary {
+    background-color: transparent;
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .hero-content__button--secondary:hover {
+    border-color: rgba(255, 255, 255, 0.6);
+  }
+
+  .hero-content__button--terpcon {
+    background-color: rgba(100, 180, 255, 0.15);
+    color: #64b4ff;
+    border: 1px solid rgba(100, 180, 255, 0.4);
+  }
+
+  .hero-content__button--terpcon:hover {
+    background-color: rgba(100, 180, 255, 0.25);
+    border-color: rgba(100, 180, 255, 0.6);
+  }
+
+  /* Ticket banner - top right */
+  .hero-content__ticket-banner {
+    position: fixed;
+    top: clamp(120px, 15vh, 180px);
+    right: clamp(1rem, 6vw, 8rem);
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: clamp(8px, 1.2vw, 12px) clamp(16px, 2.5vw, 24px);
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(11px, 1.2vw, 14px);
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: #0a0a0a;
+    background: linear-gradient(135deg, #ff6b9d 0%, #ff4081 100%);
+    text-decoration: none;
+    border-radius: clamp(6px, 0.8vw, 8px);
+    transition: all 0.3s ease;
+  }
+
+  .hero-content__ticket-banner:hover {
+    background: linear-gradient(135deg, #ff4081 0%, #e91e63 100%);
+    transform: translateY(-2px);
+  }
+
+  .hero-content__ticket-banner svg {
+    flex-shrink: 0;
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+
+  .hero-carousel-wrapper {
+    position: absolute;
+    bottom: clamp(40px, 8vh, 100px);
+    left: 0;
+    right: clamp(30%, 40%, 45%);
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding-left: var(--page-padding, 3rem);
+    gap: 0.75rem;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(to right, black 70%, transparent 100%);
+    mask-image: linear-gradient(to right, black 70%, transparent 100%);
+  }
+
+  .hero-carousel-hint {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.4);
+    margin: 0;
+  }
+
+  /* ===== ABOUT CONTENT STYLES ===== */
+  .about-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: var(--page-padding, 3rem);
+    padding-top: 14vh;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 5;
+  }
+
+  /* Background div that slides in - solid color with image overlay */
+  .about-content__bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #0a0a0a;
+    z-index: 0;
+  }
+
+  /* Background image on top of solid color */
+  .about-content__bg::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('/images/Backgrounds/tas1.webp');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.12;
+  }
+
+  .about-content__title-wrapper {
+    position: relative;
+    /* Match hero title wrapper height for consistent positioning */
+    min-height: clamp(150px, 20vw, 252px);
+    /* Align single line title to bottom of wrapper */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    z-index: 1;
+  }
+
+  .about-content__background-text {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(120px, 35vw, 500px);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.35);
+    pointer-events: none;
+    user-select: none;
+    z-index: 0;
+  }
+
+  .about-content__title {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin: 0;
+  }
+
+  .about-content__title-line {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(40px, 10vw, 140px);
+    font-weight: 800;
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+    color: #ffffff;
+    text-transform: uppercase;
+    display: block;
+  }
+
+  .about-content__info {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(1rem, 1.5vw, 1.5rem);
+    max-width: min(700px, 100%);
+    margin-top: clamp(1.5rem, 4vw, 4rem);
+  }
+
+  .about-content__description {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(14px, 1.8vw, 22px);
+    font-weight: 400;
+    line-height: 1.6;
+    color: #a0a0a0;
+    margin: 0;
+  }
+
+  .about-content__highlight {
+    color: #ffffff;
+    font-weight: 500;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+
+  .about-content__discord-link {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 8px;
+    font-size: 0.9em;
+    font-weight: 600;
+    color: #ffffff;
+    background: #5865F2;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .about-content__discord-link:hover {
+    background: #4752C4;
+    transform: translateY(-1px);
+  }
+
+  .about-content__details {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .about-content__detail-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .about-content__detail-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  .about-content__detail-text {
+    font-family: 'Inter', sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.5;
+    color: #ffffff;
+    margin: 0;
+  }
+
+  .about-content__subgroups {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 0.5rem;
+  }
+
+  .about-content__subgroup-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 20px;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .about-content__subgroup-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+
+  .about-content__events {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+  }
+
+  .about-content__event-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 12px 22px;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: #ff6b6b;
+    background: rgba(255, 100, 100, 0.15);
+    border: 1px solid rgba(255, 100, 100, 0.4);
+    border-radius: 10px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .about-content__event-btn:hover {
+    background: rgba(255, 100, 100, 0.25);
+    border-color: rgba(255, 100, 100, 0.6);
+  }
+
+  .about-content__event-btn span {
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  .about-content__buttons {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  .about-content__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 32px;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 12px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .about-content__button--primary {
+    background-color: #ffffff;
+    color: #0a0a0a;
+    border: 1px solid #ffffff;
+  }
+
+  .about-content__button--primary:hover {
+    background-color: #e0e0e0;
+  }
+
+  .about-content__button--secondary {
+    background-color: transparent;
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .about-content__button--secondary:hover {
+    border-color: rgba(255, 255, 255, 0.6);
+  }
+
+  /* Gallery section with collage - positioned on right side */
+  .about-content__gallery {
+    position: absolute;
+    top: 22%;
+    left: 40%;
+    right: 5%;
+    bottom: 10%;
+    z-index: 2;
+  }
+
+  .about-content__gallery-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.4);
+    margin: 0 0 0.75rem 0;
+  }
+
+  /* Photo Collage - varied sizes mosaic with slant, uses all 11 images */
+  .about-content__collage {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    gap: 0.5rem;
+    width: 100%;
+    height: 100%;
+    transform: perspective(1200px) rotateY(-4deg);
+    transform-origin: right center;
+  }
+
+  .about-content__collage-item {
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    background-color: #0a0a0a;
+    border-radius: 4px;
+  }
+
+  /* Varied sizes for mosaic layout - all 11 images fit perfectly */
+  /* Row 1: Large image + 2 small squares */
+  .about-content__collage-item:nth-child(1) {
+    grid-column: span 3;
+    grid-row: span 2;
+  }
+  .about-content__collage-item:nth-child(2) {
+    grid-column: span 2;
+    grid-row: span 1;
+  }
+  .about-content__collage-item:nth-child(3) {
+    grid-column: span 1;
+    grid-row: span 1;
+  }
+
+  /* Row 2: Wide image + tall image */
+  .about-content__collage-item:nth-child(4) {
+    grid-column: span 2;
+    grid-row: span 1;
+  }
+  .about-content__collage-item:nth-child(5) {
+    grid-column: span 1;
+    grid-row: span 2;
+  }
+
+  /* Row 3: Small + wide + small */
+  .about-content__collage-item:nth-child(6) {
+    grid-column: span 1;
+    grid-row: span 1;
+  }
+  .about-content__collage-item:nth-child(7) {
+    grid-column: span 2;
+    grid-row: span 1;
+  }
+  .about-content__collage-item:nth-child(8) {
+    grid-column: span 2;
+    grid-row: span 1;
+  }
+
+  /* Row 4: Wide + wide + small */
+  .about-content__collage-item:nth-child(9) {
+    grid-column: span 2;
+    grid-row: span 1;
+  }
+  .about-content__collage-item:nth-child(10) {
+    grid-column: span 3;
+    grid-row: span 1;
+  }
+  .about-content__collage-item:nth-child(11) {
+    grid-column: span 1;
+    grid-row: span 1;
+  }
+
+  .about-content__collage-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    background-color: #0a0a0a;
+    transition: transform 0.3s ease;
+  }
+
+  .about-content__collage-item:hover img {
+    transform: scale(1.05);
+  }
+
+  /* C.C. Mascot container - positioned at top right of collage */
+  .about-content__mascot-container {
+    position: absolute;
+    top: clamp(-200px, -20vw, -257px);
+    right: 0;
+    width: clamp(200px, 40vw, 600px);
+    height: auto;
+    transform: perspective(1200px) rotateY(-4deg);
+    transform-origin: right center;
+    pointer-events: none;
+    z-index: 30;
+  }
+
+  /* C.C. Mascot - sitting on top of collage at top right */
+  .about__mascot {
+    position: relative;
+    width: 100%;
+    max-width: clamp(200px, 40vw, 600px);
+    height: auto;
+    filter: drop-shadow(0 10px 40px rgba(0, 0, 0, 0.5));
+    pointer-events: none;
+    will-change: transform;
+    backface-visibility: hidden;
+    transform: translateZ(0);
+    contain: layout paint;
+  }
+
+  /* ===== RESPONSIVE STYLES ===== */
+  /* Most elements now use clamp() for fluid scaling - only layout changes here */
+
+  /* Medium screens / tablets landscape */
+  @media (max-width: 992px) {
+    .hero-content__buttons {
+      flex-wrap: wrap;
+    }
+
+    .hero-content__ticket-banner {
+      right: 2rem;
+      top: 140px;
+    }
+
+    .about-content__gallery {
+      left: 50%;
+      top: 25%;
+    }
+
+    .about-content__mascot-container {
+      width: clamp(200px, 30vw, 300px);
+      top: clamp(-130px, -12vw, -100px);
+    }
+
+    .about__mascot {
+      max-width: clamp(200px, 30vw, 300px);
+    }
+
+    .about-content__info {
+      max-width: 450px;
+      margin-top: 2rem;
+    }
+  }
+
+  /* Tablets portrait - layout changes only */
+  @media (max-width: 768px) {
+    .hero-content__description {
+      max-width: 100%;
+    }
+
+    .hero-content__buttons {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.75rem;
+    }
+
+    .hero-content__button {
+      width: 100%;
+      max-width: 280px;
+    }
+
+    .hero-content__ticket-banner {
+      position: relative;
+      top: auto;
+      right: auto;
+      margin-top: 1.5rem;
+      width: fit-content;
+    }
+
+    .hero-carousel-wrapper {
+      position: relative;
+      bottom: auto;
+      left: auto;
+      right: auto;
+      padding-left: 0;
+      margin-top: 2rem;
+      -webkit-mask-image: none;
+      mask-image: none;
+    }
+
+    .about-content__gallery {
+      position: relative;
+      top: auto;
+      left: auto;
+      right: auto;
+      bottom: auto;
+      width: 100%;
+      height: 300px;
+      margin-top: 2rem;
+    }
+
+    .about-content__collage {
+      transform: none;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(4, 1fr);
+    }
+
+    /* Simplified grid for tablet */
+    .about-content__collage-item:nth-child(1) {
+      grid-column: span 2;
+      grid-row: span 2;
+    }
+    .about-content__collage-item:nth-child(2),
+    .about-content__collage-item:nth-child(3),
+    .about-content__collage-item:nth-child(4),
+    .about-content__collage-item:nth-child(5),
+    .about-content__collage-item:nth-child(6),
+    .about-content__collage-item:nth-child(7),
+    .about-content__collage-item:nth-child(8),
+    .about-content__collage-item:nth-child(9),
+    .about-content__collage-item:nth-child(10),
+    .about-content__collage-item:nth-child(11) {
+      grid-column: span 1;
+      grid-row: span 1;
+    }
+
+    .about-content__mascot-container {
+      display: none;
+    }
+
+    .about-content__info {
+      max-width: 100%;
+    }
+
+    .about-content__buttons {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .about-content__button {
+      width: 100%;
+      max-width: 280px;
+    }
+  }
+
+  /* Mobile - layout changes only */
+  @media (max-width: 480px) {
+    .about-content__gallery {
+      height: 200px;
+    }
+
+    .about-content__collage {
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(3, 1fr);
+      gap: 0.25rem;
+    }
+
+    /* Even simpler grid for mobile */
+    .about-content__collage-item:nth-child(1) {
+      grid-column: span 2;
+      grid-row: span 1;
+    }
+    .about-content__collage-item:nth-child(2),
+    .about-content__collage-item:nth-child(3),
+    .about-content__collage-item:nth-child(4),
+    .about-content__collage-item:nth-child(5),
+    .about-content__collage-item:nth-child(6) {
+      grid-column: span 1;
+      grid-row: span 1;
+    }
+    /* Hide extra images on mobile */
+    .about-content__collage-item:nth-child(7),
+    .about-content__collage-item:nth-child(8),
+    .about-content__collage-item:nth-child(9),
+    .about-content__collage-item:nth-child(10),
+    .about-content__collage-item:nth-child(11) {
+      display: none;
+    }
+
+    .about-content__info {
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .about-content__description {
+      font-size: 14px;
+    }
+
+    .about-content__detail-label {
+      font-size: 11px;
+    }
+
+    .about-content__detail-text {
+      font-size: 14px;
+    }
+
+    .about-content__subgroups {
+      gap: 0.4rem;
+    }
+
+    .about-content__subgroup-btn {
+      padding: 6px 12px;
+      font-size: 12px;
+    }
+
+    .about-content__events {
+      gap: 0.5rem;
+    }
+
+    .about-content__event-btn {
+      padding: 8px 14px;
+      font-size: 13px;
+    }
+
+    .about-content__event-btn span {
+      font-size: 10px;
+    }
+
+    .about-content__button {
+      padding: 12px 24px;
+      font-size: 14px;
+    }
+  }
+
+</style>

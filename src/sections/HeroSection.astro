@@ -1,0 +1,127 @@
+---
+interface Props {
+  mascotImage?: string;
+}
+
+const {
+  mascotImage = '/images/Characters/Tess-chan.webp'
+} = Astro.props;
+---
+
+<section class="hero" data-hero>
+  <!-- Background image -->
+  <div class="hero__bg"></div>
+
+  <div class="hero__content">
+    <slot />
+  </div>
+
+  <!-- Meetings content slot - slides in after About -->
+  <slot name="meetings" />
+
+  <!-- Eboard section slot - slides in after meetings -->
+  <slot name="eboard" />
+
+  <!-- TerpCon section slot - slides in after meetings -->
+  <slot name="terpcon" />
+
+  <!-- Kamecon section slot - slides in after terpcon -->
+  <slot name="kamecon" />
+
+  <!-- Maid Cafe section slot - slides in after kamecon -->
+  <slot name="maidcafe" />
+
+  <!-- Hero mascot (Tess-chan) -->
+  <div class="hero__mascot" data-hero-mascot>
+    <img src={mascotImage} alt="Tess-chan mascot" class="hero__mascot-image" />
+  </div>
+
+</section>
+
+
+<style>
+  .hero {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    background-color: #0a0a0a;
+    overflow: visible;
+  }
+
+  .hero__bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('/images/Backgrounds/background.webp');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.12;
+    z-index: 0;
+  }
+
+  .hero__content {
+    position: relative;
+    z-index: var(--z-base);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: var(--page-padding);
+    padding-top: 14vh;
+  }
+
+  .hero__mascot {
+    position: absolute;
+    right: 5%;
+    bottom: 0;
+    height: 100%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .hero__mascot-image {
+    height: 90vh;
+    max-height: 90%;
+    width: auto;
+    object-fit: contain;
+    object-position: bottom center;
+    opacity: 1;
+  }
+
+  /* Scale mascot and reduce opacity on smaller screens */
+  @media (max-width: 1200px) {
+    .hero__mascot-image {
+      height: 80vh;
+    }
+  }
+
+  @media (max-width: 992px) {
+    .hero__mascot {
+      right: 0;
+    }
+
+    .hero__mascot-image {
+      height: 70vh;
+      opacity: 0.4;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .hero__mascot-image {
+      height: 60vh;
+      opacity: 0.35;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .hero__mascot-image {
+      height: 50vh;
+      opacity: 0.3;
+    }
+  }
+</style>

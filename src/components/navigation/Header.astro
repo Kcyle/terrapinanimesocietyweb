@@ -1,0 +1,37 @@
+---
+import MenuButton from './MenuButton.astro';
+import DiscordLink from './DiscordLink.astro';
+import NavigationMenu from './NavigationMenu.astro';
+---
+
+<header class="header" data-header>
+  <div class="header__left">
+    <MenuButton />
+  </div>
+
+  <div class="header__right">
+    <DiscordLink />
+  </div>
+</header>
+
+<NavigationMenu />
+
+<style>
+  .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: var(--z-navigation);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-lg) var(--page-padding);
+  }
+
+  .header__left,
+  .header__right {
+    display: flex;
+    align-items: center;
+  }
+</style>

@@ -1,0 +1,52 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/navigation/Header.astro';
+import Footer from '../components/Footer.astro';
+import HeroSection from '../sections/HeroSection.astro';
+import HeroContent from '../components/HeroContent.astro';
+import NowScreening from '../components/NowScreening.astro';
+import EboardSection from '../components/EboardSection.astro';
+import MaidCafeSection from '../components/MaidCafeSection.astro';
+import TerpConSection from '../components/TerpConSection.astro';
+import KameconSection from '../components/KameconSection.astro';
+---
+
+<BaseLayout title="Terrapin Anime Society">
+  <Header />
+
+  <main>
+    <HeroSection>
+      <HeroContent
+        description="The Terrapin Anime Society is established for the expressed purpose of encouraging the appreciation and discussion of anime between its members and to bring a better awareness of anime to the general public."
+      />
+      <!-- Meetings content - slides in after About via scroll animation -->
+      <NowScreening slot="meetings" />
+      <!-- Eboard section - slides in after meetings -->
+      <EboardSection slot="eboard" />
+      <!-- TerpCon section - slides in after meetings -->
+      <TerpConSection slot="terpcon" />
+      <!-- Kamecon section - slides in after terpcon -->
+      <KameconSection slot="kamecon" />
+      <!-- Maid Cafe section - slides in after kamecon -->
+      <MaidCafeSection slot="maidcafe" />
+    </HeroSection>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<script>
+  import '../animations/index';
+  import { initScreeningAnimations } from '../animations/screening';
+
+  // Initialize screening animations for the meetings section
+  if (typeof window !== 'undefined') {
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => {
+        initScreeningAnimations();
+      });
+    } else {
+      initScreeningAnimations();
+    }
+  }
+</script>

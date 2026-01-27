@@ -1,0 +1,231 @@
+---
+// MaidCafeSection.astro - Pre-rendered Maid Cafe section for scroll animation
+---
+
+<div class="maid-cafe-section" data-maidcafe-section>
+  <!-- Background -->
+  <div class="maid-cafe__bg" data-maidcafe-bg></div>
+
+  <!-- Content -->
+  <div class="maid-cafe__content" data-maidcafe-content>
+    <div class="maid-cafe__hero">
+      <div class="maid-cafe__title-wrapper" data-maidcafe-title>
+        <span class="maid-cafe__background-text" aria-hidden="true">CAFE</span>
+        <h1 class="maid-cafe__title">
+          <span class="maid-cafe__title-text">Maid&nbsp;Cafe</span>
+        </h1>
+      </div>
+      <p class="maid-cafe__description" data-maidcafe-desc>
+        Our Maid Cafe was held in Stamp last spring semester serving over 100 attendees! Experience authentic Japanese cafe culture with themed refreshments, entertainment, and cosplay.
+      </p>
+    </div>
+
+    <div class="maid-cafe__info" data-maidcafe-info>
+      <p>The next maid cafe will be held in March. Volunteering form and tickets will be available here soon!</p>
+    </div>
+
+    <div class="maid-cafe__maid-image" data-maidcafe-image>
+      <img src="/images/Characters/maids.webp" alt="Maid Cafe" loading="eager" decoding="async" />
+    </div>
+
+    <!-- Photo collage - right side -->
+    <div class="maid-cafe__collage" data-maidcafe-collage>
+      <div class="maid-cafe__collage-inner">
+        <div class="maid-cafe__collage-item">
+          <img src="/images/Photos/maid1.webp" alt="Maid Cafe photo 1" loading="eager" decoding="async" />
+        </div>
+        <div class="maid-cafe__collage-item">
+          <img src="/images/Photos/maid2.webp" alt="Maid Cafe photo 2" loading="eager" decoding="async" />
+        </div>
+        <div class="maid-cafe__collage-item">
+          <img src="/images/Photos/maid3.webp" alt="Maid Cafe photo 3" loading="eager" decoding="async" />
+        </div>
+        <div class="maid-cafe__collage-item">
+          <img src="/images/Photos/maid4.webp" alt="Maid Cafe photo 4" loading="eager" decoding="async" />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .maid-cafe-section {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 250;
+    pointer-events: none;
+    background-color: #0a0a0a;
+    overflow: hidden;
+    will-change: transform;
+    backface-visibility: hidden;
+    /* Hide initially - GSAP will show and position it */
+    visibility: hidden;
+  }
+
+  .maid-cafe__bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('/images/Backgrounds/tas4.webp');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.15;
+    z-index: 0;
+  }
+
+  .maid-cafe__content {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    padding: clamp(1rem, 3vw, 3rem);
+    padding-top: clamp(6vh, 10vh, 14vh);
+    display: flex;
+    flex-direction: column;
+    gap: clamp(1rem, 2vw, 2rem);
+    overflow: visible;
+  }
+
+  .maid-cafe__hero {
+    max-width: min(900px, 100%);
+  }
+
+  .maid-cafe__title-wrapper {
+    position: relative;
+    min-height: clamp(60px, 12vw, 140px);
+  }
+
+  .maid-cafe__background-text {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(50px, 25vw, 350px);
+    font-weight: 800;
+    line-height: 1;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(255, 182, 193, 0.25);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .maid-cafe__title {
+    position: relative;
+    z-index: 1;
+    margin: 0;
+  }
+
+  .maid-cafe__title-text {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(40px, 10vw, 140px);
+    font-weight: 800;
+    line-height: 0.9;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: -0.04em;
+  }
+
+  .maid-cafe__description {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(14px, 2vw, 28px);
+    font-weight: 500;
+    color: #ffffff;
+    line-height: 1.6;
+    margin: clamp(0.75rem, 1.5vw, 1.5rem) 0 0 0;
+    max-width: min(800px, 100%);
+  }
+
+  .maid-cafe__info {
+    max-width: min(550px, 100%);
+  }
+
+  .maid-cafe__info p {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(14px, 1.5vw, 20px);
+    color: #e0e0e0;
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  .maid-cafe__maid-image {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: clamp(50%, 55vw, 55%);
+    pointer-events: none;
+    z-index: -1;
+    opacity: clamp(0.25, 0.8, 1);
+  }
+
+  .maid-cafe__maid-image img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+
+  /* Photo collage - right side with tilt effect */
+  .maid-cafe__collage {
+    position: absolute;
+    right: clamp(5%, 10vw, 15%);
+    top: 12.5%;
+    width: clamp(40%, 45vw, 45%);
+    height: 75%;
+    z-index: 5;
+    pointer-events: none;
+  }
+
+  .maid-cafe__collage-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: clamp(0.5rem, 1vw, 1rem);
+    width: 100%;
+    height: 100%;
+  }
+
+  .maid-cafe__collage-item {
+    overflow: hidden;
+    border-radius: clamp(8px, 1.5vw, 16px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  }
+
+  .maid-cafe__collage-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* ===== RESPONSIVE STYLES ===== */
+  /* Only layout changes that can't be handled by clamp() */
+
+  @media (max-width: 992px) {
+    .maid-cafe__maid-image {
+      opacity: 0.5;
+    }
+  }
+
+  /* Tablets portrait - hide collage, full width maid */
+  @media (max-width: 768px) {
+    .maid-cafe__maid-image {
+      width: 100%;
+      opacity: 0.3;
+    }
+
+    .maid-cafe__collage {
+      display: none;
+    }
+  }
+
+  /* Mobile */
+  @media (max-width: 480px) {
+    .maid-cafe__maid-image {
+      opacity: 0.25;
+    }
+  }
+</style>

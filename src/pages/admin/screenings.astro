@@ -1,0 +1,838 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import screeningsData from '../../data/screenings.json';
+
+const { screenings, startDate, meetingTime } = screeningsData;
+---
+
+<BaseLayout title="Edit Screenings | Admin">
+  <div class="admin">
+    <div class="admin__header">
+      <a href="/meetings?admin=true" class="admin__back">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+        Back to Meetings
+      </a>
+      <h1 class="admin__title">Edit Screenings</h1>
+      <p class="admin__subtitle">Manage your weekly anime screening schedule</p>
+    </div>
+
+    <div class="admin__content">
+      <!-- Settings Section -->
+      <section class="admin__section">
+        <h2 class="admin__section-title">Schedule Settings</h2>
+        <div class="admin__form-grid">
+          <div class="admin__field">
+            <label for="startDate">Start Date</label>
+            <input type="date" id="startDate" value={startDate} />
+            <span class="admin__hint">First Sunday of the screening schedule</span>
+          </div>
+          <div class="admin__field">
+            <label for="meetingTime">Meeting Time</label>
+            <input type="text" id="meetingTime" value={meetingTime} placeholder="e.g., 5-7 PM" />
+          </div>
+        </div>
+      </section>
+
+      <!-- Screenings List -->
+      <section class="admin__section">
+        <div class="admin__section-header">
+          <h2 class="admin__section-title">Anime Screenings</h2>
+          <button class="admin__btn admin__btn--primary" id="addAnime">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="12" y1="5" x2="12" y2="19"></line>
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+            Add Anime
+          </button>
+        </div>
+
+        <div class="admin__list" id="screeningsList">
+          {screenings.map((anime, index) => (
+            <div class="admin__card" data-index={index}>
+              <div class="admin__card-image">
+                <img src={anime.image} alt={anime.title} />
+              </div>
+              <div class="admin__card-content">
+                <div class="admin__card-header">
+                  <h3 class="admin__card-title">{anime.title}</h3>
+                  <div class="admin__card-actions">
+                    <button class="admin__icon-btn admin__icon-btn--danger" data-action="delete" title="Delete">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="3 6 5 6 21 6"></polyline>
+                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+                <div class="admin__card-meta">
+                  <span class="admin__card-episodes">{anime.episodes || '?'} Episodes</span>
+                  {anime.score && <span class="admin__card-score">★ {anime.score}</span>}
+                </div>
+                <p class="admin__card-synopsis">{anime.synopsis.substring(0, 150)}...</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- Search Modal -->
+      <div class="admin__modal" id="searchModal">
+        <div class="admin__modal-content">
+          <div class="admin__modal-header">
+            <h2>Search Anime</h2>
+            <button class="admin__icon-btn" id="closeModal">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+          </div>
+          <div class="admin__search">
+            <input type="text" id="searchInput" placeholder="Search MyAnimeList..." />
+            <button class="admin__btn admin__btn--primary" id="searchBtn">Search</button>
+          </div>
+          <div class="admin__search-results" id="searchResults">
+            <p class="admin__search-hint">Enter an anime title to search MyAnimeList</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Save Button -->
+      <div class="admin__actions">
+        <button class="admin__btn admin__btn--secondary" id="resetBtn">Reset Changes</button>
+        <button class="admin__btn admin__btn--primary" id="saveBtn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+            <polyline points="17 21 17 13 7 13 7 21"></polyline>
+            <polyline points="7 3 7 8 15 8"></polyline>
+          </svg>
+          Save Changes
+        </button>
+      </div>
+
+      <!-- Instructions -->
+      <div class="admin__info">
+        <h3>How to Update</h3>
+        <ol>
+          <li>Make your changes using the interface above</li>
+          <li>Click "Save Changes" to download the updated JSON file</li>
+          <li>Replace <code>src/data/screenings.json</code> with the downloaded file</li>
+          <li>Commit and push the changes to update the live site</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .admin {
+    min-height: 100vh;
+    background-color: #0a0a0a;
+    color: #ffffff;
+    padding: 2rem;
+  }
+
+  .admin__header {
+    max-width: 1000px;
+    margin: 0 auto 2rem;
+    padding-top: 2rem;
+  }
+
+  .admin__back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: rgba(255, 255, 255, 0.6);
+    text-decoration: none;
+    font-size: 14px;
+    margin-bottom: 1rem;
+    transition: color 0.2s;
+  }
+
+  .admin__back:hover {
+    color: #ffffff;
+  }
+
+  .admin__title {
+    font-family: 'Inter', sans-serif;
+    font-size: 36px;
+    font-weight: 700;
+    margin: 0 0 0.5rem;
+  }
+
+  .admin__subtitle {
+    color: rgba(255, 255, 255, 0.5);
+    margin: 0;
+  }
+
+  .admin__content {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .admin__section {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .admin__section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+
+  .admin__section-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0 0 1rem;
+  }
+
+  .admin__section-header .admin__section-title {
+    margin: 0;
+  }
+
+  .admin__form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+
+  .admin__field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .admin__field label {
+    font-size: 13px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .admin__field input {
+    padding: 0.75rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: #ffffff;
+    font-size: 14px;
+    transition: border-color 0.2s;
+  }
+
+  .admin__field input:focus {
+    outline: none;
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+
+  .admin__hint {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  .admin__field select {
+    padding: 0.75rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: #ffffff;
+    font-size: 14px;
+    transition: border-color 0.2s;
+    cursor: pointer;
+    width: 100%;
+  }
+
+  .admin__field select:focus {
+    outline: none;
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+
+  .admin__field select option {
+    background: #1a1a1a;
+    color: #ffffff;
+  }
+
+  .admin__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    font-size: 14px;
+    font-weight: 500;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .admin__btn--primary {
+    background: #ffffff;
+    color: #0a0a0a;
+  }
+
+  .admin__btn--primary:hover {
+    background: rgba(255, 255, 255, 0.9);
+  }
+
+  .admin__btn--secondary {
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+  }
+
+  .admin__btn--secondary:hover {
+    background: rgba(255, 255, 255, 0.15);
+  }
+
+  .admin__icon-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    color: rgba(255, 255, 255, 0.6);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .admin__icon-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+  }
+
+  .admin__icon-btn--danger:hover {
+    background: rgba(255, 59, 48, 0.2);
+    border-color: rgba(255, 59, 48, 0.3);
+    color: #ff3b30;
+  }
+
+  .admin__list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .admin__card {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    transition: border-color 0.2s;
+  }
+
+  .admin__card:hover {
+    border-color: rgba(255, 255, 255, 0.15);
+  }
+
+  .admin__card-image {
+    flex-shrink: 0;
+    width: 80px;
+    height: 120px;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  .admin__card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .admin__card-content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .admin__card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .admin__card-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0;
+  }
+
+  .admin__card-actions {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .admin__card-meta {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  .admin__card-score {
+    color: #fbbf24;
+  }
+
+  .admin__card-synopsis {
+    font-size: 13px;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.5);
+    margin: 0;
+  }
+
+  .admin__modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(4px);
+  }
+
+  .admin__modal.active {
+    display: flex;
+  }
+
+  .admin__modal-content {
+    width: 90%;
+    max-width: 700px;
+    max-height: 80vh;
+    background: #1a1a1a;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .admin__modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .admin__modal-header h2 {
+    font-size: 18px;
+    margin: 0;
+  }
+
+  .admin__search {
+    display: flex;
+    gap: 0.5rem;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .admin__search input {
+    flex: 1;
+    padding: 0.75rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: #ffffff;
+    font-size: 14px;
+  }
+
+  .admin__search input:focus {
+    outline: none;
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+
+  .admin__search-results {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1.5rem;
+    min-height: 300px;
+  }
+
+  .admin__search-hint {
+    color: rgba(255, 255, 255, 0.4);
+    text-align: center;
+    padding: 2rem;
+  }
+
+  /* 3-column grid for search results - use :global() for dynamically generated content */
+  :global(.admin__search-grid) {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+
+  :global(.admin__search-card) {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  :global(.admin__search-card:hover) {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
+  }
+
+  :global(.admin__search-card img) {
+    width: 100%;
+    aspect-ratio: 2 / 3;
+    object-fit: cover;
+  }
+
+  :global(.admin__search-card-info) {
+    padding: 0.75rem;
+  }
+
+  :global(.admin__search-card-title) {
+    font-size: 12px;
+    font-weight: 600;
+    color: #ffffff;
+    line-height: 1.3;
+    margin-bottom: 0.25rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  :global(.admin__search-card-meta) {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  :global(.admin__search-card-score) {
+    color: #fbbf24;
+  }
+
+  .admin__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .admin__info {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 1.5rem;
+  }
+
+  .admin__info h3 {
+    font-size: 16px;
+    margin: 0 0 1rem;
+  }
+
+  .admin__info ol {
+    margin: 0;
+    padding-left: 1.5rem;
+    color: rgba(255, 255, 255, 0.6);
+    line-height: 1.8;
+  }
+
+  .admin__info code {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 0.125rem 0.375rem;
+    border-radius: 4px;
+    font-size: 13px;
+  }
+
+  @media (max-width: 600px) {
+    .admin {
+      padding: 1rem;
+    }
+
+    .admin__card {
+      flex-direction: column;
+    }
+
+    .admin__card-image {
+      width: 100%;
+      height: 150px;
+    }
+
+    :global(.admin__search-grid) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>
+
+<script>
+  // Store current screenings data
+  let screeningsData = {
+    screenings: [] as Array<{
+      malId: number;
+      title: string;
+      synopsis: string;
+      image: string;
+      episodes: number | null;
+      score: number | null;
+    }>,
+    startDate: '',
+    meetingTime: '',
+  };
+
+  // Initialize from page data
+  document.addEventListener('DOMContentLoaded', () => {
+    // Get initial values from inputs
+    const startDateInput = document.getElementById('startDate') as HTMLInputElement;
+    const meetingTimeInput = document.getElementById('meetingTime') as HTMLInputElement;
+
+    screeningsData.startDate = startDateInput?.value || '';
+    screeningsData.meetingTime = meetingTimeInput?.value || '';
+
+    // Parse existing screenings from the DOM
+    const cards = document.querySelectorAll('.admin__card');
+    cards.forEach((card, index) => {
+      const img = card.querySelector('.admin__card-image img') as HTMLImageElement;
+      const title = card.querySelector('.admin__card-title')?.textContent || '';
+      const synopsis = card.querySelector('.admin__card-synopsis')?.textContent?.replace('...', '') || '';
+      const episodesText = card.querySelector('.admin__card-episodes')?.textContent || '';
+      const scoreText = card.querySelector('.admin__card-score')?.textContent || '';
+
+      screeningsData.screenings.push({
+        malId: 0,
+        title,
+        synopsis,
+        image: img?.src || '',
+        episodes: parseInt(episodesText) || null,
+        score: parseFloat(scoreText.replace('★ ', '')) || null,
+      });
+    });
+
+    // Setup event listeners
+    setupEventListeners();
+  });
+
+  function setupEventListeners() {
+    // Add anime button
+    const addBtn = document.getElementById('addAnime');
+    const modal = document.getElementById('searchModal');
+    const closeBtn = document.getElementById('closeModal');
+    const searchBtn = document.getElementById('searchBtn');
+    const searchInput = document.getElementById('searchInput') as HTMLInputElement;
+    const saveBtn = document.getElementById('saveBtn');
+    const resetBtn = document.getElementById('resetBtn');
+
+    addBtn?.addEventListener('click', () => {
+      modal?.classList.add('active');
+      searchInput?.focus();
+    });
+
+    closeBtn?.addEventListener('click', () => {
+      modal?.classList.remove('active');
+    });
+
+    modal?.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.classList.remove('active');
+      }
+    });
+
+    searchBtn?.addEventListener('click', () => searchAnime());
+    searchInput?.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') searchAnime();
+    });
+
+    saveBtn?.addEventListener('click', saveChanges);
+    resetBtn?.addEventListener('click', () => window.location.reload());
+
+    // Delete buttons
+    document.querySelectorAll('[data-action="delete"]').forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        const card = (e.currentTarget as HTMLElement).closest('.admin__card');
+        const index = parseInt(card?.getAttribute('data-index') || '0');
+        if (confirm('Remove this anime from the schedule?')) {
+          screeningsData.screenings.splice(index, 1);
+          card?.remove();
+          reindexCards();
+        }
+      });
+    });
+
+    // Input change listeners
+    document.getElementById('startDate')?.addEventListener('change', (e) => {
+      screeningsData.startDate = (e.target as HTMLInputElement).value;
+    });
+
+    document.getElementById('meetingTime')?.addEventListener('change', (e) => {
+      screeningsData.meetingTime = (e.target as HTMLInputElement).value;
+    });
+  }
+
+  async function searchAnime() {
+    const searchInput = document.getElementById('searchInput') as HTMLInputElement;
+    const resultsContainer = document.getElementById('searchResults');
+    const query = searchInput?.value.trim();
+
+    if (!query || !resultsContainer) return;
+
+    resultsContainer.innerHTML = '<p class="admin__search-hint">Searching...</p>';
+
+    try {
+      const response = await fetch(`https://api.jikan.moe/v4/anime?q=${encodeURIComponent(query)}&limit=9`);
+      const data = await response.json();
+
+      if (data.data && data.data.length > 0) {
+        resultsContainer.innerHTML = `
+          <div class="admin__search-grid">
+            ${data.data.map((anime: any) => `
+              <div class="admin__search-card" data-mal-id="${anime.mal_id}">
+                <img src="${anime.images?.jpg?.image_url || ''}" alt="${anime.title}" />
+                <div class="admin__search-card-info">
+                  <div class="admin__search-card-title">${anime.title}</div>
+                  <div class="admin__search-card-meta">
+                    ${anime.episodes || '?'} eps ${anime.score ? `· <span class="admin__search-card-score">★ ${anime.score}</span>` : ''}
+                  </div>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        `;
+
+        // Add click listeners to results
+        resultsContainer.querySelectorAll('.admin__search-card').forEach((item) => {
+          item.addEventListener('click', () => {
+            const malId = item.getAttribute('data-mal-id');
+            addAnimeById(parseInt(malId || '0'));
+          });
+        });
+      } else {
+        resultsContainer.innerHTML = '<p class="admin__search-hint">No results found</p>';
+      }
+    } catch (error) {
+      resultsContainer.innerHTML = '<p class="admin__search-hint">Error searching. Please try again.</p>';
+    }
+  }
+
+  async function addAnimeById(malId: number) {
+    const modal = document.getElementById('searchModal');
+    const resultsContainer = document.getElementById('searchResults');
+
+    if (resultsContainer) {
+      resultsContainer.innerHTML = '<p class="admin__search-hint">Adding anime...</p>';
+    }
+
+    try {
+      const response = await fetch(`https://api.jikan.moe/v4/anime/${malId}`);
+      const data = await response.json();
+
+      if (data.data) {
+        const anime = data.data;
+        const newAnime = {
+          malId: anime.mal_id,
+          title: anime.title,
+          synopsis: anime.synopsis || 'No synopsis available.',
+          image: anime.images?.jpg?.image_url || '',
+          episodes: anime.episodes || null,
+          score: anime.score || null,
+        };
+
+        screeningsData.screenings.push(newAnime);
+        addCardToDOM(newAnime, screeningsData.screenings.length - 1);
+
+        modal?.classList.remove('active');
+
+        // Clear search
+        const searchInput = document.getElementById('searchInput') as HTMLInputElement;
+        if (searchInput) searchInput.value = '';
+        if (resultsContainer) {
+          resultsContainer.innerHTML = '<p class="admin__search-hint">Enter an anime title to search MyAnimeList</p>';
+        }
+      }
+    } catch (error) {
+      if (resultsContainer) {
+        resultsContainer.innerHTML = '<p class="admin__search-hint">Error adding anime. Please try again.</p>';
+      }
+    }
+  }
+
+  function addCardToDOM(anime: typeof screeningsData.screenings[0], index: number) {
+    const list = document.getElementById('screeningsList');
+    if (!list) return;
+
+    const card = document.createElement('div');
+    card.className = 'admin__card';
+    card.setAttribute('data-index', index.toString());
+    card.innerHTML = `
+      <div class="admin__card-image">
+        <img src="${anime.image}" alt="${anime.title}" />
+      </div>
+      <div class="admin__card-content">
+        <div class="admin__card-header">
+          <h3 class="admin__card-title">${anime.title}</h3>
+          <div class="admin__card-actions">
+            <button class="admin__icon-btn admin__icon-btn--danger" data-action="delete" title="Delete">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="3 6 5 6 21 6"></polyline>
+                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div class="admin__card-meta">
+          <span class="admin__card-episodes">${anime.episodes || '?'} Episodes</span>
+          ${anime.score ? `<span class="admin__card-score">★ ${anime.score}</span>` : ''}
+        </div>
+        <p class="admin__card-synopsis">${anime.synopsis.substring(0, 150)}...</p>
+      </div>
+    `;
+
+    // Add delete listener
+    card.querySelector('[data-action="delete"]')?.addEventListener('click', () => {
+      const idx = parseInt(card.getAttribute('data-index') || '0');
+      if (confirm('Remove this anime from the schedule?')) {
+        screeningsData.screenings.splice(idx, 1);
+        card.remove();
+        reindexCards();
+      }
+    });
+
+    list.appendChild(card);
+  }
+
+  function reindexCards() {
+    document.querySelectorAll('.admin__card').forEach((card, index) => {
+      card.setAttribute('data-index', index.toString());
+    });
+  }
+
+  function saveChanges() {
+    // Update settings from inputs
+    const startDateInput = document.getElementById('startDate') as HTMLInputElement;
+    const meetingTimeInput = document.getElementById('meetingTime') as HTMLInputElement;
+
+    screeningsData.startDate = startDateInput?.value || screeningsData.startDate;
+    screeningsData.meetingTime = meetingTimeInput?.value || screeningsData.meetingTime;
+
+    // Create JSON blob
+    const json = JSON.stringify(screeningsData, null, 2);
+    const blob = new Blob([json], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+
+    // Download
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'screenings.json';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+
+    alert('File downloaded! Replace src/data/screenings.json with the downloaded file.');
+  }
+</script>

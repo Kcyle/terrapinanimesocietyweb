@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm create:*)",
+      "Bash(timeout 8 npm run dev)",
+      "Bash(npm run dev:*)",
+      "Bash(dir:*)",
+      "Bash(timeout 5 cat:*)",
+      "Bash(findstr:*)",
+      "Bash(node compress-images.mjs:*)",
+      "Bash(timeout:*)",
+      "Bash(tasklist:*)",
+      "Bash(find:*)",
+      "Bash(git rev-parse:*)",
+      "Bash(git remote add:*)"
+    ]
+  }
+}
