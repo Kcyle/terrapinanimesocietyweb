@@ -1,0 +1,153 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/navigation/Header.astro';
+import Footer from '../components/Footer.astro';
+import NowScreening from '../components/NowScreening.astro';
+---
+
+<BaseLayout title="Meetings | Terrapin Anime Society">
+  <Header />
+
+  <main>
+    <NowScreening />
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<script>
+  import '../animations/index';
+  import { initScreeningAnimations } from '../animations/screening';
+
+  let map: any = null;
+
+  function initMap() {
+    const mapContainer = document.getElementById('screeningMap');
+    if (!mapContainer) return;
+
+    // Wait for Leaflet to be available (loaded via script tag)
+    const checkLeaflet = setInterval(() => {
+      // @ts-ignore
+      if (window.L) {
+        clearInterval(checkLeaflet);
+        initializeMap(mapContainer);
+      }
+    }, 50);
+
+    // Timeout after 5 seconds
+    setTimeout(() => clearInterval(checkLeaflet), 5000);
+  }
+
+  function initializeMap(container: HTMLElement) {
+    // @ts-ignore
+    const L = window.L;
+
+    if (map) return; // Already initialized
+
+    const lat = parseFloat(container.dataset.lat || '38.9869');
+    const lng = parseFloat(container.dataset.lng || '-76.9426');
+    const name = container.dataset.name || 'UMD';
+
+    map = L.map('screeningMap', {
+      center: [lat, lng],
+      zoom: 17,
+      zoomControl: true,
+      scrollWheelZoom: false,
+    });
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap',
+      maxZoom: 19,
+    }).addTo(map);
+
+    const marker = L.marker([lat, lng]).addTo(map);
+    marker.bindPopup(`<strong>${name}</strong>`).openPopup();
+
+    // Fix map size after render
+    setTimeout(() => {
+      map.invalidateSize();
+    }, 100);
+  }
+
+  // Admin password - in production this should be handled server-side
+  // For a static site, this is a simple client-side check
+  const ADMIN_PASSWORD = 'animeclubadmin';
+
+  function initLoginModal() {
+    const loginBtn = document.getElementById('adminLoginBtn');
+    const loginModal = document.getElementById('loginModal');
+    const closeLoginBtn = document.getElementById('closeLoginModal');
+    const loginForm = document.getElementById('loginForm') as HTMLFormElement;
+    const passwordInput = document.getElementById('adminPassword') as HTMLInputElement;
+    const errorEl = document.getElementById('loginError');
+
+    if (!loginBtn || !loginModal || !loginForm) return;
+
+    // Check if already logged in
+    if (sessionStorage.getItem('adminLoggedIn') === 'true') {
+      document.body.classList.add('admin-mode');
+    }
+
+    // Open modal
+    loginBtn.addEventListener('click', () => {
+      loginModal.classList.add('active');
+      passwordInput?.focus();
+    });
+
+    // Close modal
+    closeLoginBtn?.addEventListener('click', () => {
+      loginModal.classList.remove('active');
+      if (errorEl) errorEl.textContent = '';
+      if (passwordInput) passwordInput.value = '';
+    });
+
+    // Close on backdrop click
+    loginModal.addEventListener('click', (e) => {
+      if (e.target === loginModal) {
+        loginModal.classList.remove('active');
+        if (errorEl) errorEl.textContent = '';
+        if (passwordInput) passwordInput.value = '';
+      }
+    });
+
+    // Close on escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && loginModal.classList.contains('active')) {
+        loginModal.classList.remove('active');
+        if (errorEl) errorEl.textContent = '';
+        if (passwordInput) passwordInput.value = '';
+      }
+    });
+
+    // Handle form submission
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const password = passwordInput?.value;
+
+      if (password === ADMIN_PASSWORD) {
+        // Success - store login state and redirect to admin page
+        sessionStorage.setItem('adminLoggedIn', 'true');
+        window.location.href = '/admin/screenings';
+      } else {
+        // Error
+        if (errorEl) errorEl.textContent = 'Incorrect password';
+        passwordInput?.focus();
+        passwordInput?.select();
+      }
+    });
+  }
+
+  if (typeof window !== 'undefined') {
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => {
+        initScreeningAnimations();
+        initMap();
+        initLoginModal();
+      });
+    } else {
+      initScreeningAnimations();
+      initMap();
+      initLoginModal();
+    }
+  }
+</script>

@@ -1,0 +1,179 @@
+{
+  "buildings": [
+    {
+      "code": "STP",
+      "name": "Adele H. Stamp Student Union",
+      "shortName": "Stamp",
+      "lat": 38.9882,
+      "lng": -76.9447
+    },
+    {
+      "code": "ESJ",
+      "name": "Edward St. John Learning and Teaching Center",
+      "shortName": "ESJ",
+      "lat": 38.9869,
+      "lng": -76.9422
+    },
+    {
+      "code": "IRB",
+      "name": "Iribe Center",
+      "shortName": "Iribe",
+      "lat": 38.9890,
+      "lng": -76.9365
+    },
+    {
+      "code": "ARM",
+      "name": "Armory",
+      "shortName": "Armory",
+      "lat": 38.9918,
+      "lng": -76.9453
+    },
+    {
+      "code": "SKN",
+      "name": "Skinner Building",
+      "shortName": "Skinner",
+      "lat": 38.9862,
+      "lng": -76.9488
+    },
+    {
+      "code": "TYD",
+      "name": "Tydings Hall",
+      "shortName": "Tydings",
+      "lat": 38.9845,
+      "lng": -76.9455
+    },
+    {
+      "code": "TAL",
+      "name": "Taliaferro Hall",
+      "shortName": "Taliaferro",
+      "lat": 38.9856,
+      "lng": -76.9468
+    },
+    {
+      "code": "HBK",
+      "name": "Hornbake Library",
+      "shortName": "Hornbake",
+      "lat": 38.9885,
+      "lng": -76.9432
+    },
+    {
+      "code": "MCK",
+      "name": "McKeldin Library",
+      "shortName": "McKeldin",
+      "lat": 38.9860,
+      "lng": -76.9450
+    },
+    {
+      "code": "CHM",
+      "name": "Chemistry Building",
+      "shortName": "Chemistry",
+      "lat": 38.9893,
+      "lng": -76.9406
+    },
+    {
+      "code": "PHY",
+      "name": "Physics Building",
+      "shortName": "Physics",
+      "lat": 38.9896,
+      "lng": -76.9395
+    },
+    {
+      "code": "CSI",
+      "name": "Computer Science Instructional Center",
+      "shortName": "CSIC",
+      "lat": 38.9898,
+      "lng": -76.9380
+    },
+    {
+      "code": "AVW",
+      "name": "A.V. Williams Building",
+      "shortName": "AVW",
+      "lat": 38.9905,
+      "lng": -76.9373
+    },
+    {
+      "code": "JMP",
+      "name": "Jimenez Hall",
+      "shortName": "Jimenez",
+      "lat": 38.9910,
+      "lng": -76.9385
+    },
+    {
+      "code": "SPH",
+      "name": "School of Public Health",
+      "shortName": "SPH",
+      "lat": 38.9935,
+      "lng": -76.9448
+    },
+    {
+      "code": "ATL",
+      "name": "Art-Sociology Building",
+      "shortName": "Art-Soc",
+      "lat": 38.9848,
+      "lng": -76.9477
+    },
+    {
+      "code": "TWS",
+      "name": "Tawes Hall",
+      "shortName": "Tawes",
+      "lat": 38.9842,
+      "lng": -76.9465
+    },
+    {
+      "code": "KEY",
+      "name": "Francis Scott Key Hall",
+      "shortName": "Key Hall",
+      "lat": 38.9867,
+      "lng": -76.9480
+    },
+    {
+      "code": "VMH",
+      "name": "Van Munching Hall",
+      "shortName": "Van Munching",
+      "lat": 38.9825,
+      "lng": -76.9485
+    },
+    {
+      "code": "BIO",
+      "name": "Biology-Psychology Building",
+      "shortName": "Bio-Psych",
+      "lat": 38.9888,
+      "lng": -76.9418
+    },
+    {
+      "code": "MTH",
+      "name": "Math Building",
+      "shortName": "Math",
+      "lat": 38.9895,
+      "lng": -76.9390
+    },
+    {
+      "code": "CLA",
+      "name": "Clarice Smith Performing Arts Center",
+      "shortName": "Clarice",
+      "lat": 38.9908,
+      "lng": -76.9510
+    },
+    {
+      "code": "XFC",
+      "name": "Xfinity Center",
+      "shortName": "Xfinity",
+      "lat": 38.9950,
+      "lng": -76.9420
+    },
+    {
+      "code": "SAC",
+      "name": "Student Activity Center",
+      "shortName": "SAC",
+      "lat": 38.9878,
+      "lng": -76.9460
+    }
+  ],
+  "campus": {
+    "center": {
+      "lat": 38.9869,
+      "lng": -76.9426
+    },
+    "zoom": 15
+  }
+}

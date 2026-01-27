@@ -1,0 +1,71 @@
+---
+import DiscordIcon from '../icons/DiscordIcon.astro';
+import ArrowIcon from '../icons/ArrowIcon.astro';
+
+interface Props {
+  href?: string;
+}
+
+const { href = 'https://discord.gg/fzKBsnS' } = Astro.props;
+---
+
+<a
+  class="discord-link"
+  href={href}
+  target="_blank"
+  rel="noopener noreferrer"
+  aria-label="Join our Discord server (opens in new tab)"
+>
+  <DiscordIcon size={18} class="discord-link__icon" />
+  <span class="discord-link__label">discord</span>
+  <ArrowIcon size={14} direction="right" class="discord-link__arrow" />
+</a>
+
+<style>
+  .discord-link {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    padding: var(--space-sm) var(--space-md);
+    font-size: 0.875rem;
+    font-weight: var(--font-weight-semibold);
+    text-transform: lowercase;
+    letter-spacing: 0.02em;
+    color: var(--color-text-primary);
+    background-color: var(--color-bg-primary, #0a0a0a);
+    border: 1px solid var(--color-border);
+    transition: border-color var(--transition-fast);
+  }
+
+  .discord-link:hover {
+    border-color: var(--color-border-hover);
+  }
+
+  .discord-link:hover .discord-link__arrow {
+    transform: translateX(2px);
+  }
+
+  .discord-link:focus-visible {
+    outline: 1px solid var(--color-text-primary);
+    outline-offset: 2px;
+  }
+
+  .discord-link__label {
+    display: none;
+  }
+
+  .discord-link__arrow {
+    display: none;
+    transition: transform var(--transition-fast);
+  }
+
+  @media (min-width: 640px) {
+    .discord-link__label {
+      display: inline;
+    }
+
+    .discord-link__arrow {
+      display: block;
+    }
+  }
+</style>

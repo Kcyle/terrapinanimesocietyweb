@@ -1,0 +1,361 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/navigation/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<BaseLayout title="About | Terrapin Anime Society">
+  <Header />
+
+  <main class="about">
+    <div class="about__content">
+      <!-- Hero Section -->
+      <div class="about__hero">
+        <div class="about__title-wrapper">
+          <span class="about__background-text" aria-hidden="true">TAS</span>
+          <h1 class="about__title">
+            <span class="about__title-line">About</span>
+          </h1>
+        </div>
+        <p class="about__description">
+          The Terrapin Anime Society is a welcoming community of anime enthusiasts at the University of Maryland. Whether you're a longtime fan or just getting started, you'll find a place here to share your passion for Japanese animation and culture.
+        </p>
+      </div>
+
+      <!-- Photo Collage and Welcome Text -->
+      <div class="about__main">
+        <div class="about__text-section">
+          <h2 class="about__section-title">Welcome to TAS</h2>
+          <p class="about__text">
+            Founded with the goal of bringing anime fans together, we host weekly meetings, movie nights, and special events throughout the year. Our club is open to all UMD students, regardless of experience level.
+          </p>
+          <p class="about__text">
+            From casual watch parties to our annual KAMECON convention and Maid Cafe, there's always something exciting happening. Join us to make new friends, discover new anime, and be part of a vibrant community.
+          </p>
+          <p class="about__text">
+            We meet every Sunday from 5-7 PM for screenings, discussions, and good times. Everyone is welcome!
+          </p>
+          <a href="https://terplink.umd.edu/organization/terrapin-anime-society" target="_blank" rel="noopener noreferrer" class="about__cta">Join Us</a>
+        </div>
+
+        <div class="about__collage">
+          <div class="about__collage-item about__collage-item--1">
+            <img src="/images/Backgrounds/tas1.webp" alt="TAS club meeting" loading="lazy" />
+          </div>
+          <div class="about__collage-item about__collage-item--2">
+            <img src="/images/Photos/tas2.webp" alt="TAS members" loading="lazy" />
+          </div>
+          <div class="about__collage-item about__collage-item--3">
+            <img src="/images/Photos/tas3.webp" alt="TAS event" loading="lazy" />
+          </div>
+          <div class="about__collage-item about__collage-item--4">
+            <img src="/images/Backgrounds/tas4.webp" alt="TAS gathering" loading="lazy" />
+          </div>
+          <div class="about__collage-item about__collage-item--5">
+            <img src="/images/Photos/tas5.webp" alt="TAS activity" loading="lazy" />
+          </div>
+          <div class="about__collage-item about__collage-item--6">
+            <img src="/images/Photos/tas6.webp" alt="TAS screening" loading="lazy" />
+          </div>
+        </div>
+      </div>
+
+      <!-- More Photos Section -->
+      <div class="about__gallery">
+        <h2 class="about__section-title">Our Community</h2>
+        <div class="about__gallery-grid">
+          <div class="about__gallery-item">
+            <img src="/images/Photos/tas7.webp" alt="TAS community" loading="lazy" />
+          </div>
+          <div class="about__gallery-item">
+            <img src="/images/Photos/tas8.webp" alt="TAS friends" loading="lazy" />
+          </div>
+          <div class="about__gallery-item">
+            <img src="/images/Photos/tas9.webp" alt="TAS fun" loading="lazy" />
+          </div>
+          <div class="about__gallery-item">
+            <img src="/images/Photos/tas10.webp" alt="TAS memories" loading="lazy" />
+          </div>
+          <div class="about__gallery-item">
+            <img src="/images/Photos/tas11.webp" alt="TAS moments" loading="lazy" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<script>
+  import '../animations/index';
+</script>
+
+<style>
+  .about {
+    position: relative;
+    min-height: 100vh;
+    background-color: #0a0a0a;
+  }
+
+  .about__content {
+    position: relative;
+    width: 100%;
+    padding: var(--page-padding, 3rem);
+    padding-top: 14vh;
+    padding-bottom: 6rem;
+  }
+
+  /* Hero Section */
+  .about__hero {
+    margin-bottom: 4rem;
+  }
+
+  .about__title-wrapper {
+    position: relative;
+    min-height: calc(140px * 0.9);
+    margin-bottom: 1.5rem;
+  }
+
+  .about__background-text {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    font-family: 'Inter', sans-serif;
+    font-size: 500px;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.35);
+    pointer-events: none;
+    user-select: none;
+    z-index: 0;
+  }
+
+  .about__title {
+    position: relative;
+    z-index: 1;
+    margin: 0;
+  }
+
+  .about__title-line {
+    font-family: 'Inter', sans-serif;
+    font-size: 140px;
+    font-weight: 800;
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+    color: #ffffff;
+    text-transform: uppercase;
+    display: block;
+  }
+
+  .about__description {
+    position: relative;
+    z-index: 1;
+    font-family: 'Inter', sans-serif;
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 1.5;
+    color: #a0a0a0;
+    max-width: 1200px;
+    margin-top: 3rem;
+  }
+
+  /* Main Section - Text + Collage */
+  .about__main {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    margin-bottom: 6rem;
+  }
+
+  .about__text-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .about__section-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0;
+  }
+
+  .about__text {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.7;
+    color: #a0a0a0;
+    margin: 0;
+  }
+
+  .about__cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 32px;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 12px;
+    text-decoration: none;
+    background-color: #ffffff;
+    color: #0a0a0a;
+    border: 1px solid #ffffff;
+    transition: all 0.2s ease;
+    width: fit-content;
+    margin-top: 1rem;
+  }
+
+  .about__cta:hover {
+    background-color: #e0e0e0;
+  }
+
+  /* Photo Collage */
+  .about__collage {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 200px);
+    gap: 1rem;
+    transform: perspective(1000px) rotateY(-8deg);
+    transform-origin: left center;
+  }
+
+  .about__collage-item {
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .about__collage-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+
+  .about__collage-item:hover img {
+    transform: scale(1.05);
+  }
+
+  .about__collage-item--1 {
+    grid-column: span 2;
+  }
+
+  .about__collage-item--4 {
+    grid-column: span 2;
+  }
+
+  /* Gallery Section */
+  .about__gallery {
+    margin-top: 4rem;
+  }
+
+  .about__gallery .about__section-title {
+    margin-bottom: 2rem;
+  }
+
+  .about__gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1rem;
+  }
+
+  .about__gallery-item {
+    border-radius: 12px;
+    overflow: hidden;
+    aspect-ratio: 1;
+  }
+
+  .about__gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+
+  .about__gallery-item:hover img {
+    transform: scale(1.05);
+  }
+
+  /* Responsive - matches home page breakpoints */
+  @media (max-width: 1400px) {
+    .about__title-line {
+      font-size: 120px;
+    }
+
+    .about__background-text {
+      font-size: 400px;
+    }
+  }
+
+  @media (max-width: 1000px) {
+    .about__title-line {
+      font-size: 90px;
+    }
+
+    .about__background-text {
+      font-size: 280px;
+    }
+
+    .about__description {
+      font-size: 20px;
+    }
+
+    .about__main {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+
+    .about__collage {
+      grid-template-rows: repeat(2, 180px);
+    }
+
+    .about__gallery-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .about__content {
+      padding: 1.5rem;
+      padding-top: calc(80px + 4vh);
+    }
+
+    .about__title-line {
+      font-size: 56px;
+    }
+
+    .about__background-text {
+      font-size: 180px;
+    }
+
+    .about__description {
+      font-size: 16px;
+    }
+
+    .about__collage {
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(3, 150px);
+    }
+
+    .about__collage-item--1,
+    .about__collage-item--4 {
+      grid-column: span 1;
+    }
+
+    .about__gallery-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .about__section-title {
+      font-size: 24px;
+    }
+  }
+</style>

@@ -1,0 +1,182 @@
+---
+interface Props {
+  title?: string;
+}
+
+const {
+  title = 'About'
+} = Astro.props;
+---
+
+<section class="about" data-about>
+  <div class="about__content">
+    <div class="about__title-wrapper">
+      <span class="about__background-text" aria-hidden="true">TAS</span>
+      <h2 class="about__title">
+        <span class="about__title-line">{title}</span>
+      </h2>
+    </div>
+
+    <p class="about__description">We are a community of anime enthusiasts at UMD dedicated to sharing our passion for Japanese animation and culture.</p>
+
+    <div class="about__grid">
+      <div class="about__card" data-about-card>
+        <span class="about__card-number">01</span>
+        <h3 class="about__card-title">Weekly Meetings</h3>
+        <p class="about__card-text">Join us every week for anime screenings, discussions, and community events. We watch a variety of genres and welcome all tastes.</p>
+      </div>
+
+      <div class="about__card" data-about-card>
+        <span class="about__card-number">02</span>
+        <h3 class="about__card-title">Community</h3>
+        <p class="about__card-text">Connect with fellow anime enthusiasts at UMD. Make friends, share recommendations, and be part of a welcoming community.</p>
+      </div>
+
+      <div class="about__card" data-about-card>
+        <span class="about__card-number">03</span>
+        <h3 class="about__card-title">Events</h3>
+        <p class="about__card-text">From watch parties to conventions like KAMECON, we host exciting events throughout the year for members to enjoy.</p>
+      </div>
+
+      <div class="about__card" data-about-card>
+        <span class="about__card-number">04</span>
+        <h3 class="about__card-title">Subgroups</h3>
+        <p class="about__card-text">Explore specialized interests through our subgroups including gaming, manga reading, cosplay, and Japanese culture.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    background-color: #0a0a0a;
+    padding: var(--page-padding);
+    padding-top: clamp(60px, 10vh, 120px);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+  .about__content {
+    max-width: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(1rem, 2vw, 1.5rem);
+  }
+
+  .about__title-wrapper {
+    position: relative;
+  }
+
+  .about__background-text {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(150px, 50vw, 700px);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.35);
+    pointer-events: none;
+    user-select: none;
+    z-index: 0;
+  }
+
+  .about__title {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin: 0;
+  }
+
+  .about__title-line {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(50px, 14vw, 200px);
+    font-weight: 800;
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+    color: #ffffff;
+    text-transform: uppercase;
+    display: block;
+  }
+
+  .about__description {
+    position: relative;
+    z-index: 1;
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(16px, 2.5vw, 32px);
+    font-weight: 500;
+    line-height: 1.5;
+    color: #a0a0a0;
+    max-width: min(1500px, 100%);
+    margin-top: clamp(1.5rem, 4vw, 4rem);
+  }
+
+  .about__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: clamp(1rem, 2vw, 1.5rem);
+    margin-top: clamp(1.5rem, 3vw, 3rem);
+  }
+
+  .about__card {
+    padding: clamp(1rem, 2vw, 2rem);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: clamp(8px, 1.5vw, 12px);
+    transition: border-color 0.3s ease;
+  }
+
+  .about__card:hover {
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+
+  .about__card-number {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(12px, 1vw, 14px);
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    color: #666666;
+    display: block;
+    margin-bottom: clamp(0.5rem, 1vw, 1rem);
+  }
+
+  .about__card-title {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(16px, 1.8vw, 22px);
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: clamp(0.5rem, 1vw, 0.75rem);
+  }
+
+  .about__card-text {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(12px, 1.2vw, 14px);
+    font-weight: 400;
+    line-height: 1.6;
+    color: #a0a0a0;
+  }
+
+  /* Grid layout changes - can't be done with clamp */
+  @media (max-width: 1400px) {
+    .about__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .about__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
