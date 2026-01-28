@@ -61,8 +61,7 @@
     overflow: hidden;
     will-change: transform;
     backface-visibility: hidden;
-    /* Hide initially - GSAP will show and position it */
-    visibility: hidden;
+    /* Positioned off-screen by GSAP (yPercent: 100) - no visibility toggle needed */
   }
 
   .maid-cafe__bg {
