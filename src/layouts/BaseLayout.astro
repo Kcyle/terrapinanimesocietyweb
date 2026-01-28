@@ -21,8 +21,56 @@ const { title, description = 'Terrapin Anime Society - University of Maryland' }
     <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <title>{title}</title>
     <slot name="head" />
+    <!-- Loading screen styles - inline to ensure immediate display -->
+    <style>
+      .loading-screen {
+        position: fixed;
+        inset: 0;
+        z-index: 99999;
+        background-color: #0a0a0a;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: opacity 0.4s ease-out, visibility 0.4s ease-out;
+      }
+      .loading-screen.hidden {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+      }
+      .loading-screen__content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+      }
+      .loading-screen__spinner {
+        width: 48px;
+        height: 48px;
+        border: 3px solid rgba(255, 255, 255, 0.1);
+        border-top-color: #fff;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+      .loading-screen__text {
+        font-family: 'Inter', sans-serif;
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.6);
+        letter-spacing: 0.1em;
+      }
+      @keyframes spin {
+        to { transform: rotate(360deg); }
+      }
+    </style>
   </head>
   <body>
+    <!-- Loading screen - shows until GSAP is initialized -->
+    <div id="loading-screen" class="loading-screen">
+      <div class="loading-screen__content">
+        <div class="loading-screen__spinner"></div>
+        <span class="loading-screen__text">Loading...</span>
+      </div>
+    </div>
     <slot />
   </body>
 </html>
