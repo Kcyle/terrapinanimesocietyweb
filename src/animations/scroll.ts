@@ -14,6 +14,34 @@ const scrollTriggerInstances: ScrollTrigger[] = [];
 let mainScrollTrigger: ScrollTrigger | null = null;
 
 /**
+ * Hide the loading screen after GSAP initialization and all resources are loaded
+ */
+function hideLoadingScreen(): void {
+  const loadingScreen = document.getElementById('loading-screen');
+  if (!loadingScreen) return;
+
+  const doHide = () => {
+    // Small delay to ensure all GSAP sets have applied
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        loadingScreen.classList.add('hidden');
+        // Remove from DOM after transition
+        setTimeout(() => {
+          loadingScreen.remove();
+        }, 500);
+      });
+    });
+  };
+
+  // Wait for all images and fonts to load
+  if (document.readyState === 'complete') {
+    doHide();
+  } else {
+    window.addEventListener('load', doHide);
+  }
+}
+
+/**
  * Independent section-based scroll animation system
  * One master ScrollTrigger pins for entire duration
  * Each transition uses fixed absolute positions (no percentages)
@@ -422,6 +450,9 @@ export function initScrollTransition(): void {
       }
     }
   }
+
+  // All GSAP initial states and animations are set up - hide loading screen
+  hideLoadingScreen();
 }
 
 /**
