@@ -238,7 +238,8 @@ const vendors: Vendor[] = [
     will-change: transform;
     backface-visibility: hidden;
     background-color: #0a0a0a;
-    /* GSAP positions this off-screen with yPercent: 100 */
+    /* Hidden until GSAP positions it off-screen and sets visible */
+    visibility: hidden;
   }
 
   .kamecon-section__bg {
