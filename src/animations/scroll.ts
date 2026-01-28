@@ -356,17 +356,18 @@ export function initScrollTransition(): void {
       if (meetingsLocationSection) masterTl.to(meetingsLocationSection, { y: '100vh', duration: 0.35, ease: 'none' }, 2.18);
       if (meetingsSchedulerBtn) masterTl.to(meetingsSchedulerBtn, { y: '100vh', opacity: 0, duration: 0.35, ease: 'none' }, 2.1);
       // Meetings bg exits and TerpCon section enters - SYNCED with yPercent to stick together
-      if (meetingsBg) masterTl.to(meetingsBg, { yPercent: -100, duration: 0.4, ease: 'none' }, 2.1);
-      if (terpconSection) masterTl.to(terpconSection, { yPercent: 0, duration: 0.4, ease: 'none' }, 2.1);
+      // Use fromTo() to prevent GSAP from reading DOM on first forward scroll (fixes glitch)
+      if (meetingsBg) masterTl.fromTo(meetingsBg, { yPercent: 0 }, { yPercent: -100, duration: 0.4, ease: 'none' }, 2.1);
+      if (terpconSection) masterTl.fromTo(terpconSection, { yPercent: 100 }, { yPercent: 0, duration: 0.4, ease: 'none' }, 2.1);
       // TerpCon content elements - finish by 2.7 to give dwell time before exit at 3.1
-      if (terpconTitle) masterTl.to(terpconTitle, { y: 0, scale: 1, duration: 0.1, ease: 'none' }, 2.5);
-      if (terpconSubtitle) masterTl.to(terpconSubtitle, { x: 0, duration: 0.1, ease: 'none' }, 2.52);
-      if (terpconDesc) masterTl.to(terpconDesc, { x: 0, opacity: 1, duration: 0.08, ease: 'none' }, 2.54);
-      if (terpconVendorsHeader) masterTl.to(terpconVendorsHeader, { x: 0, duration: 0.1, ease: 'none' }, 2.56);
-      if (terpconDetails.length) masterTl.to(terpconDetails, { x: 0, opacity: 1, duration: 0.08, ease: 'none', stagger: 0.01 }, 2.58);
-      if (terpconVendorsScroll) masterTl.to(terpconVendorsScroll, { x: 0, duration: 0.1, ease: 'none' }, 2.6);
-      if (terpconCta) masterTl.to(terpconCta, { x: 0, opacity: 1, duration: 0.08, ease: 'none' }, 2.62);
-      if (terpconFeaturedArtists) masterTl.to(terpconFeaturedArtists, { y: 0, opacity: 1, duration: 0.08, ease: 'none' }, 2.64);
+      if (terpconTitle) masterTl.fromTo(terpconTitle, { y: '100vh', scale: 0.3 }, { y: 0, scale: 1, duration: 0.1, ease: 'none' }, 2.5);
+      if (terpconSubtitle) masterTl.fromTo(terpconSubtitle, { x: '-100vw' }, { x: 0, duration: 0.1, ease: 'none' }, 2.52);
+      if (terpconDesc) masterTl.fromTo(terpconDesc, { x: '-100vw', opacity: 1 }, { x: 0, opacity: 1, duration: 0.08, ease: 'none' }, 2.54);
+      if (terpconVendorsHeader) masterTl.fromTo(terpconVendorsHeader, { x: '100vw' }, { x: 0, duration: 0.1, ease: 'none' }, 2.56);
+      if (terpconDetails.length) masterTl.fromTo(terpconDetails, { x: '-100vw', opacity: 1 }, { x: 0, opacity: 1, duration: 0.08, ease: 'none', stagger: 0.01 }, 2.58);
+      if (terpconVendorsScroll) masterTl.fromTo(terpconVendorsScroll, { x: '100vw' }, { x: 0, duration: 0.1, ease: 'none' }, 2.6);
+      if (terpconCta) masterTl.fromTo(terpconCta, { x: '-100vw', opacity: 1 }, { x: 0, opacity: 1, duration: 0.08, ease: 'none' }, 2.62);
+      if (terpconFeaturedArtists) masterTl.fromTo(terpconFeaturedArtists, { y: '50vh', opacity: 1 }, { y: 0, opacity: 1, duration: 0.08, ease: 'none' }, 2.64);
 
       // ============================================
       // TRANSITION 4: TERPCON → KAMECON (position 3 to 4)
@@ -383,15 +384,16 @@ export function initScrollTransition(): void {
         if (terpconVendorsHeader) masterTl.to(terpconVendorsHeader, { x: '100vw', duration: 0.3, ease: 'none' }, 3.1);
         if (terpconVendorsScroll) masterTl.to(terpconVendorsScroll, { x: '100vw', duration: 0.3, ease: 'none' }, 3.1);
         // TerpCon section exits and Kamecon section enters - overlap to prevent gaps
-        if (kameconSection) masterTl.to(kameconSection, { yPercent: 0, duration: 0.45, ease: 'none' }, 3.05);
-        if (terpconSection) masterTl.to(terpconSection, { yPercent: -100, duration: 0.4, ease: 'none' }, 3.1);
+        // Use fromTo() to prevent GSAP from reading DOM on first forward scroll (fixes glitch)
+        if (kameconSection) masterTl.fromTo(kameconSection, { yPercent: 100 }, { yPercent: 0, duration: 0.45, ease: 'none' }, 3.05);
+        if (terpconSection) masterTl.fromTo(terpconSection, { yPercent: 0 }, { yPercent: -100, duration: 0.4, ease: 'none' }, 3.1);
         // Kamecon content elements - finish by 3.7 to give dwell time before exit at 4.1
-        if (kameconCarousel) masterTl.to(kameconCarousel, { x: 0, duration: 0.1, ease: 'none' }, 3.5);
-        if (kameconTitle) masterTl.to(kameconTitle, { y: 0, duration: 0.1, ease: 'none' }, 3.5);
-        if (kameconDesc) masterTl.to(kameconDesc, { y: 0, duration: 0.08, ease: 'none' }, 3.55);
-        if (kameconButtons) masterTl.to(kameconButtons, { y: 0, duration: 0.08, ease: 'none' }, 3.58);
-        if (kameconVendors) masterTl.to(kameconVendors, { x: 0, duration: 0.1, ease: 'none' }, 3.6);
-        if (kameconTurtle) masterTl.to(kameconTurtle, { x: 0, duration: 0.1, ease: 'none' }, 3.65);
+        if (kameconCarousel) masterTl.fromTo(kameconCarousel, { x: '-100vw' }, { x: 0, duration: 0.1, ease: 'none' }, 3.5);
+        if (kameconTitle) masterTl.fromTo(kameconTitle, { y: '-100vh' }, { y: 0, duration: 0.1, ease: 'none' }, 3.5);
+        if (kameconDesc) masterTl.fromTo(kameconDesc, { y: '100vh' }, { y: 0, duration: 0.08, ease: 'none' }, 3.55);
+        if (kameconButtons) masterTl.fromTo(kameconButtons, { y: '100vh' }, { y: 0, duration: 0.08, ease: 'none' }, 3.58);
+        if (kameconVendors) masterTl.fromTo(kameconVendors, { x: '100vw' }, { x: 0, duration: 0.1, ease: 'none' }, 3.6);
+        if (kameconTurtle) masterTl.fromTo(kameconTurtle, { x: '100vw' }, { x: 0, duration: 0.1, ease: 'none' }, 3.65);
 
         // ============================================
         // TRANSITION 5: KAMECON → MAID CAFE (position 4 to 5)
@@ -406,15 +408,16 @@ export function initScrollTransition(): void {
           if (kameconVendors) masterTl.to(kameconVendors, { x: '100vw', duration: 0.3, ease: 'none' }, 4.1);
           if (kameconTurtle) masterTl.to(kameconTurtle, { x: '100vw', duration: 0.3, ease: 'none' }, 4.1);
           // Kamecon section exits and Maid Cafe section enters - overlap to prevent gaps
-          if (maidCafeSection) masterTl.to(maidCafeSection, { yPercent: 0, duration: 0.45, ease: 'none' }, 4.05);
-          if (kameconSection) masterTl.to(kameconSection, { yPercent: -100, duration: 0.4, ease: 'none' }, 4.1);
+          // Use fromTo() to prevent GSAP from reading DOM on first forward scroll (fixes glitch)
+          if (maidCafeSection) masterTl.fromTo(maidCafeSection, { yPercent: 100 }, { yPercent: 0, duration: 0.45, ease: 'none' }, 4.05);
+          if (kameconSection) masterTl.fromTo(kameconSection, { yPercent: 0 }, { yPercent: -100, duration: 0.4, ease: 'none' }, 4.1);
           // Maid Cafe content elements - start AFTER section is fully visible (section ends at 4.5)
           // Faster animations so content is visible sooner
-          if (maidCafeTitle) masterTl.to(maidCafeTitle, { y: 0, scale: 1, duration: 0.1, ease: 'none' }, 4.5);
-          if (maidCafeImage) masterTl.to(maidCafeImage, { x: 0, duration: 0.1, ease: 'none' }, 4.52);
-          if (maidCafeDesc) masterTl.to(maidCafeDesc, { y: 0, opacity: 1, duration: 0.08, ease: 'none' }, 4.54);
-          if (maidCafeCollage) masterTl.to(maidCafeCollage, { x: 0, duration: 0.1, ease: 'none' }, 4.56);
-          if (maidCafeInfo) masterTl.to(maidCafeInfo, { y: 0, opacity: 1, duration: 0.08, ease: 'none' }, 4.58);
+          if (maidCafeTitle) masterTl.fromTo(maidCafeTitle, { y: '100vh', scale: 0.3 }, { y: 0, scale: 1, duration: 0.1, ease: 'none' }, 4.5);
+          if (maidCafeImage) masterTl.fromTo(maidCafeImage, { x: '-100vw' }, { x: 0, duration: 0.1, ease: 'none' }, 4.52);
+          if (maidCafeDesc) masterTl.fromTo(maidCafeDesc, { y: '50vh', opacity: 1 }, { y: 0, opacity: 1, duration: 0.08, ease: 'none' }, 4.54);
+          if (maidCafeCollage) masterTl.fromTo(maidCafeCollage, { x: '100vw' }, { x: 0, duration: 0.1, ease: 'none' }, 4.56);
+          if (maidCafeInfo) masterTl.fromTo(maidCafeInfo, { y: '50vh', opacity: 1 }, { y: 0, opacity: 1, duration: 0.08, ease: 'none' }, 4.58);
         }
       }
     }
