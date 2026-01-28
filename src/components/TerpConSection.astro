@@ -221,8 +221,7 @@ const defaultImage = "/images/Icons/chibi.webp";
     will-change: transform;
     backface-visibility: hidden;
     background-color: #0a0a0a;
-    /* Hide initially - GSAP will show and position it */
-    visibility: hidden;
+    /* Positioned off-screen by GSAP (yPercent: 100) - no visibility toggle needed */
   }
 
   .terpcon-section__bg {
