@@ -155,8 +155,8 @@ export function initScrollTransition(): void {
   if (meetingsSchedulerBtn) gsap.set(meetingsSchedulerBtn, { y: '100vh', opacity: 0 });
 
   // TerpCon - entire section slides in from yPercent: 100 (off-screen below)
-  // Set opacity: 1 to override any CSS opacity: 0
-  if (terpconSection) gsap.set(terpconSection, { zIndex: 100, yPercent: 100 });
+  // Set visibility: visible after positioning off-screen (CSS hides initially to prevent flash)
+  if (terpconSection) gsap.set(terpconSection, { zIndex: 100, yPercent: 100, visibility: 'visible' });
   if (terpconTitle) gsap.set(terpconTitle, { y: '100vh', scale: 0.3, opacity: 1 });
   if (terpconSubtitle) gsap.set(terpconSubtitle, { x: '-100vw', opacity: 1 });
   if (terpconDesc) gsap.set(terpconDesc, { x: '-100vw', opacity: 1 });
@@ -167,8 +167,8 @@ export function initScrollTransition(): void {
   if (terpconFeaturedArtists) gsap.set(terpconFeaturedArtists, { y: '50vh', opacity: 1 });
 
   // Kamecon - entire section slides in from yPercent: 100 (off-screen below)
-  // Set opacity: 1 to override any CSS opacity: 0
-  if (kameconSection) gsap.set(kameconSection, { zIndex: 150, yPercent: 100 });
+  // Set visibility: visible after positioning off-screen (CSS hides initially to prevent flash)
+  if (kameconSection) gsap.set(kameconSection, { zIndex: 150, yPercent: 100, visibility: 'visible' });
   if (kameconCarousel) gsap.set(kameconCarousel, { x: '-100vw', opacity: 1 });
   if (kameconTitle) gsap.set(kameconTitle, { y: '-100vh', opacity: 1 });
   if (kameconDesc) gsap.set(kameconDesc, { y: '100vh', opacity: 1 });
@@ -177,8 +177,8 @@ export function initScrollTransition(): void {
   if (kameconTurtle) gsap.set(kameconTurtle, { x: '100vw', opacity: 1 });
 
   // Maid Cafe - entire section slides in from yPercent: 100 (off-screen below)
-  // Set opacity: 1 to override any CSS opacity: 0
-  if (maidCafeSection) gsap.set(maidCafeSection, { zIndex: 250, yPercent: 100 });
+  // Set visibility: visible after positioning off-screen (CSS hides initially to prevent flash)
+  if (maidCafeSection) gsap.set(maidCafeSection, { zIndex: 250, yPercent: 100, visibility: 'visible' });
   if (maidCafeTitle) gsap.set(maidCafeTitle, { y: '100vh', scale: 0.3, opacity: 1 });
   if (maidCafeDesc) gsap.set(maidCafeDesc, { y: '50vh', opacity: 1 });
   if (maidCafeInfo) gsap.set(maidCafeInfo, { y: '50vh', opacity: 1 });
