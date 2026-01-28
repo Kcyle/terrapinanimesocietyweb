@@ -19,15 +19,6 @@ const {
   <!-- Meetings content slot - slides in after About -->
   <slot name="meetings" />
 
-  <!-- TerpCon section slot - slides in after meetings -->
-  <slot name="terpcon" />
-
-  <!-- Kamecon section slot - slides in after terpcon -->
-  <slot name="kamecon" />
-
-  <!-- Maid Cafe section slot - slides in after kamecon -->
-  <slot name="maidcafe" />
-
   <!-- Hero mascot (Tess-chan) -->
   <div class="hero__mascot" data-hero-mascot>
     <img src={mascotImage} alt="Tess-chan mascot" class="hero__mascot-image" />
@@ -62,18 +53,23 @@ const {
     z-index: var(--z-base);
     width: 100%;
     height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
+    display: grid;
+    grid-template-rows: auto 1fr;
+    row-gap: 1.5rem;
     padding: var(--page-padding);
     padding-top: 14vh;
+    /* Extra padding at bottom: page-padding + gap to match top gap */
+    padding-bottom: calc(var(--page-padding) + 4.5rem);
+    overflow: hidden;
   }
 
   .hero__mascot {
     position: absolute;
-    right: 5%;
+    right: 0;
     bottom: 0;
     height: 100%;
+    /* Never exceed the space after the 65vw carousel + padding */
+    max-width: calc(35vw - var(--page-padding, 3rem));
     display: flex;
     align-items: flex-end;
     justify-content: flex-end;
@@ -85,40 +81,83 @@ const {
     height: 90vh;
     max-height: 90%;
     width: auto;
+    /* Constrain width to parent so she scales down when space is limited */
+    max-width: 100%;
     object-fit: contain;
-    object-position: bottom center;
+    object-position: bottom right;
     opacity: 1;
   }
 
-  /* Scale mascot and reduce opacity on smaller screens */
-  @media (max-width: 1200px) {
-    .hero__mascot-image {
-      height: 80vh;
-    }
-  }
-
+  /* Reduce opacity on smaller screens for readability */
   @media (max-width: 992px) {
-    .hero__mascot {
-      right: 0;
-    }
-
     .hero__mascot-image {
-      height: 70vh;
       opacity: 0.4;
     }
   }
 
   @media (max-width: 768px) {
+    .hero__mascot {
+      top: auto;
+      /* Will be set by JS to anchor to carousel */
+      bottom: 0;
+      height: auto;
+      right: var(--page-padding, 3rem);
+      max-width: 40vw;
+      z-index: 15;
+    }
+
     .hero__mascot-image {
-      height: 60vh;
-      opacity: 0.35;
+      height: auto;
+      max-height: 33dvh;
+      width: auto;
+      max-width: 100%;
+      opacity: 1;
+      object-fit: contain;
+      object-position: bottom right;
     }
   }
 
   @media (max-width: 480px) {
+    .hero__mascot {
+      max-width: 35vw;
+    }
+
     .hero__mascot-image {
-      height: 50vh;
-      opacity: 0.3;
+      max-height: 28dvh;
+      opacity: 1;
     }
   }
 </style>
+
+<script>
+  // Anchor mascot to carousel top on mobile only
+  function anchorMascotToCarousel() {
+    const mascot = document.querySelector('[data-hero-mascot]') as HTMLElement;
+    const carousel = document.querySelector('[data-hero-carousel]');
+
+    if (!mascot || !carousel) return;
+
+    const isMobile = window.matchMedia('(max-width: 768px)').matches;
+
+    if (isMobile) {
+      const carouselRect = carousel.getBoundingClientRect();
+      const viewportHeight = window.innerHeight;
+      const bottomOffset = viewportHeight - carouselRect.top;
+      mascot.style.bottom = `${bottomOffset}px`;
+    } else {
+      // Reset to CSS default on desktop
+      mascot.style.bottom = '';
+    }
+  }
+
+  // Run on load and resize
+  if (typeof window !== 'undefined') {
+    window.addEventListener('load', anchorMascotToCarousel);
+    window.addEventListener('resize', anchorMascotToCarousel);
+
+    // Also run immediately if DOM is ready
+    if (document.readyState !== 'loading') {
+      anchorMascotToCarousel();
+    }
+  }
+</script>

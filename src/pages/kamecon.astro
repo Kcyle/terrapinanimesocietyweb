@@ -1,0 +1,744 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/navigation/Header.astro';
+
+// Kamecon Page - Standalone page with slide-in animations on load
+
+interface Vendor {
+  name: string;
+  social?: string;
+  socialDisplay?: string;
+  description: string;
+}
+
+const vendors: Vendor[] = [
+  { name: "GinkgoMART", social: "https://ginkgomart.bigcartel.com", socialDisplay: "ginkgomart.bigcartel.com", description: "Anime/manga/game fanart prints, keychains, buttons, and stickers" },
+  { name: "Inywiny", social: "https://inywiny.carrd.co", socialDisplay: "inywiny.carrd.co", description: "Handmade trinkets, acrylic charms, stickers, and prints" },
+  { name: "Meshi Market", social: "https://meshimarket.carrd.co", socialDisplay: "meshimarket.carrd.co", description: "Food-themed magnets, charms, pins, prints, keychains, and stickers" },
+  { name: "B.S. Warren", social: "https://bswarren.carrd.co", socialDisplay: "bswarren.carrd.co", description: "Fantasy novels and merchandise" },
+  { name: "Lord Detaur Art", social: "https://lorddetaur.etsy.com", socialDisplay: "lorddetaur.etsy.com", description: "Anime and video game themed key chains, stickers, prints" },
+  { name: "cy-chin", social: "https://cychin.carrd.co", socialDisplay: "cychin.carrd.co", description: "Anime-themed artwork (prints, stickers, buttons, keychains)" },
+  { name: "Bonemealed", social: "https://bonemealed.carrd.co", socialDisplay: "bonemealed.carrd.co", description: "Anime artwork: prints, charms, stickers, shirts, and stationary" },
+  { name: "Mewychu", social: "https://mewychu.carrd.co", socialDisplay: "mewychu.carrd.co", description: "Anime inspired stickers, prints, keychains" },
+  { name: "Pops-A-Plenty, LLC", description: "Custom artwork Funko Pops and shadowboxes" },
+  { name: "Kyomi Star", description: "Button pins, stickers, prints, notepads, keychain & hairclips with Anime designs" },
+  { name: "Novi Mochi", social: "https://novimochi.carrd.co", socialDisplay: "novimochi.carrd.co", description: "Anime themed prints, stickers, buttons, and keychains" },
+  { name: "SvvLinh", social: "https://svvlinh.weebly.com", socialDisplay: "svvlinh.weebly.com", description: "Anime and gaming themed artwork/prints, stationary and small accessories" },
+  { name: "Summ.art", description: "Vibrant anime, video game, and superhero art: framed prints, apparel, keychains, stickers, pins" },
+  { name: "Teashot", description: "Handmade prints, stickers, tote bags, keychains, t-shirts, and canvas patches based on anime" },
+  { name: "Smogfrogg", social: "https://smogfrogg.com", socialDisplay: "smogfrogg.com", description: "Fanart and original artwork: prints, stickers, pins, acrylic keychains, comics, tote bags" },
+  { name: "Luniarci Art", social: "https://tumblr.com/luniarci", socialDisplay: "tumblr.com/luniarci", description: "Anime-themed artwork and prints, laser cut wooden keychains" },
+  { name: "Lumikha Cosplay Resale", social: "https://linktr.ee/lumikha", socialDisplay: "linktr.ee/lumikha", description: "Secondhand cosplays" },
+  { name: "Kaimatic", social: "https://kaimaticportfolio.carrd.co", socialDisplay: "kaimaticportfolio.carrd.co", description: "Genshin Impact, Splatoon, OMORI, Pokemon, JJK: stickers, buttons, charms, acrylic stands, prints" },
+  { name: "Dracolegus", social: "https://linktr.ee/dracolegus", socialDisplay: "linktr.ee/dracolegus", description: "Fanart prints of pokemon, dungeon meshi, arcane, and mythical creatures" },
+  { name: "saeuchelle", social: "https://saeuchelle.bigcartel.com", socialDisplay: "saeuchelle.bigcartel.com", description: "Cute character artworks: keychains, apparel, plushies, pins, stickers, prints" },
+  { name: "PassionPhantom", social: "https://passionphantom.wixsite.com", socialDisplay: "passionphantom.wixsite.com", description: "Art books, zines, comics, OC Art, Anime Fan Art, key charms, stickers, prints, buttons" },
+  { name: "Blue bean crochet", description: "Hand made crochet plushies: Pokemon, characters from games/shows, animals" },
+  { name: "AnxiousLilies", social: "https://lilyibe.myportfolio.com", socialDisplay: "lilyibe.myportfolio.com", description: "Anime-themed artwork and prints, stickers and keychains" },
+  { name: "Mezurashii", social: "https://mezurashii.store", socialDisplay: "mezurashii.store", description: "Anime figurines, Monchhichis, anime keychains and phone charms, Japanese trinkets" },
+  { name: "quzzyplayground", social: "https://quzzyplayground.carrd.co", socialDisplay: "quzzyplayground.carrd.co", description: "Handmade anime keychains and prints" },
+  { name: "Chiimeshop", social: "https://instagram.com/chiime_", socialDisplay: "instagram.com/chiime_", description: "Fanart/original works, keychains, stickers, apparel, prints and pouches" },
+  { name: "Melina Rivera", social: "https://watermeloooms.myportfolio.com", socialDisplay: "watermeloooms.myportfolio.com", description: "Art prints, stickers, t-shirts with Japanese alternative themes" },
+  { name: "Somintso", social: "https://linktr.ee/somintso", socialDisplay: "linktr.ee/somintso", description: "Anime styled prints, keychains, stickers, and zines" },
+  { name: "Sophuia Liu", description: "Original art prints, postcards, acrylic keychains, acrylic stand" },
+  { name: "Artisfired Studio", social: "https://artisfired.carrd.co", socialDisplay: "artisfired.carrd.co", description: "Anime/Video Game Inspired Prints, Keychains, and Stickers" },
+  { name: "marclouart", description: "Large prints 11x17, Small prints 5.5x8.5, 3 inch stickers, 2 inch clay figures" },
+  { name: "rivertylart", description: "Prints, Stickers (genshin/hsr fanart, original art like kitsune and sushi creatures)" },
+  { name: "SnarkFish", description: "Geeky t-shirts, gaming dice, 3D-printed gaming wares, Pokemon finger puppets, plushies, trading cards" },
+  { name: "Art Club", description: "Student vendors selling a wide range of their own artwork" },
+  { name: "Caitlin Goh", description: "Student vendor selling hand made crochet plushies" },
+  { name: "Akuunosoku", social: "https://akuunosuke.carrd.co", socialDisplay: "akuunosuke.carrd.co", description: "Prints, charms, enamel pins, stickers & more (Genshin Impact, ALNST, BSD, etc.)" },
+  { name: "Liramic", social: "https://liramic.etsy.com", socialDisplay: "liramic.etsy.com", description: "Art prints and posters, charms, pins, buttons, tote bags, fanart includes Genshin Impact, TGCF, SVSSS, etc." },
+  { name: "Ari Inkart", social: "https://ariinkart.carrd.co", socialDisplay: "ariinkart.carrd.co", description: "Vocaloid and Project Sekai key chains and pin buttons" },
+  { name: "Anxious Lilies", social: "https://linktr.ee/anxious_lilies", socialDisplay: "linktr.ee/anxious_lilies", description: "Commissions, stickers, holographics" },
+];
+---
+
+<BaseLayout title="KAMECON 2025 - Terrapin Anime Society">
+  <Header />
+
+  <main class="kamecon-page">
+    <div class="kamecon-section">
+      <!-- Background with darkening overlay -->
+      <div class="kamecon-section__bg"></div>
+
+      <!-- Content wrapper - Two column layout -->
+      <div class="kamecon-section__content">
+        <!-- LEFT HALF - Carousel spanning full height -->
+        <div class="kamecon-section__left">
+          <!-- Photo Carousel - Large, Apple style -->
+          <div class="kamecon-carousel" data-kamecon-carousel>
+            <div class="kamecon-carousel__container">
+              <div class="kamecon-carousel__track" data-kamecon-track>
+                <div class="kamecon-carousel__slide"><img src="/images/Photos/DSCF1467.webp" alt="KAMECON Photo" /></div>
+                <div class="kamecon-carousel__slide"><img src="/images/Photos/DSCF1482.webp" alt="KAMECON Photo" /></div>
+                <div class="kamecon-carousel__slide"><img src="/images/Photos/DSCF1483.webp" alt="KAMECON Photo" /></div>
+                <div class="kamecon-carousel__slide"><img src="/images/Photos/DSCF1488.webp" alt="KAMECON Photo" /></div>
+                <div class="kamecon-carousel__slide"><img src="/images/Photos/DSCF1495.webp" alt="KAMECON Photo" /></div>
+                <div class="kamecon-carousel__slide"><img src="/images/Photos/DSCF1497.webp" alt="KAMECON Photo" /></div>
+                <div class="kamecon-carousel__slide"><img src="/images/Photos/DSCF1498.webp" alt="KAMECON Photo" /></div>
+                <div class="kamecon-carousel__slide"><img src="/images/Photos/DSCF1499.webp" alt="KAMECON Photo" /></div>
+                <div class="kamecon-carousel__slide"><img src="/images/Photos/DSCF1505.webp" alt="KAMECON Photo" /></div>
+                <div class="kamecon-carousel__slide"><img src="/images/Photos/DSCF1509.webp" alt="KAMECON Photo" /></div>
+                <div class="kamecon-carousel__slide"><img src="/images/Photos/DSCF1521.webp" alt="KAMECON Photo" /></div>
+                <div class="kamecon-carousel__slide"><img src="/images/Photos/DSCF1542.webp" alt="KAMECON Photo" /></div>
+              </div>
+              <!-- 2025 Highlights overlay text - inside container -->
+              <div class="kamecon-carousel__overlay">
+                <span class="kamecon-carousel__overlay-text">2025 Highlights</span>
+              </div>
+            </div>
+
+            <!-- Carousel dots -->
+            <div class="kamecon-carousel__dots" data-kamecon-dots></div>
+          </div>
+        </div>
+
+        <!-- RIGHT HALF - Title on top, then info -->
+        <div class="kamecon-section__right">
+          <!-- Turtle character - top right corner touching vendors -->
+          <img src="/images/Characters/turtle.webp" alt="Kamecon Turtle Mascot" class="kamecon-turtle" data-kamecon-turtle />
+
+          <h1 class="kamecon-section__title" data-kamecon-title>KAMECON</h1>
+
+          <div class="kamecon-section__info-row">
+            <p class="kamecon-section__description" data-kamecon-desc>KAMECON is an annual anime convention held at the University of Maryland in the Stamp Student Union and is open to the public. First held in 2017, the convention made its long awaited return in Fall 2025, welcoming over 700 attendees. The event featured a live concert, artist and vendor alley, cosplay competition, gaming hall, and many other exciting activities. With KAMECON's successful comeback, plans are already underway for KAMECON 2026, stay tuned for more updates!</p>
+
+            <div class="kamecon-section__buttons" data-kamecon-buttons>
+              <a href="https://www.youtube.com/playlist?list=PLMH_PlKQsMXAqFixQTorreqpBu1tEuMYp" target="_blank" rel="noopener noreferrer" class="kamecon-section__btn kamecon-section__btn--primary">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/>
+                </svg>
+                Concert Videos
+              </a>
+              <a href="https://adobe.ly/3JVx4td" target="_blank" rel="noopener noreferrer" class="kamecon-section__btn kamecon-section__btn--secondary">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                  <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                  <polyline points="21 15 16 10 5 21"></polyline>
+                </svg>
+                KAMECON Photos
+              </a>
+            </div>
+          </div>
+
+          <!-- Vendors section - squared cards -->
+          <div class="kamecon-section__vendors" data-kamecon-vendors>
+            <h3 class="kamecon-section__vendors-title">Thank You to Our 2025 Vendors!</h3>
+            <div class="kamecon-section__vendors-scroll">
+              <div class="kamecon-section__vendors-grid">
+                {vendors.map((vendor) => (
+                  <div class="kamecon-vendor-card">
+                    <h4 class="kamecon-vendor-card__name">{vendor.name}</h4>
+                    {vendor.social ? (
+                      <a href={vendor.social} target="_blank" rel="noopener noreferrer" class="kamecon-vendor-card__social">
+                        {vendor.socialDisplay}
+                      </a>
+                    ) : null}
+                    <p class="kamecon-vendor-card__desc">{vendor.description}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</BaseLayout>
+
+<script>
+  import gsap from 'gsap';
+
+  // Page load slide-in animations
+  function initPageAnimations() {
+    const carousel = document.querySelector('[data-kamecon-carousel]');
+    const title = document.querySelector('[data-kamecon-title]');
+    const desc = document.querySelector('[data-kamecon-desc]');
+    const buttons = document.querySelector('[data-kamecon-buttons]');
+    const vendors = document.querySelector('[data-kamecon-vendors]');
+    const turtle = document.querySelector('[data-kamecon-turtle]');
+
+    // Set initial states
+    gsap.set(carousel, { x: -100, opacity: 0 });
+    gsap.set(title, { y: -100, opacity: 0 });
+    gsap.set(desc, { y: 100, opacity: 0 });
+    gsap.set(buttons, { y: 100, opacity: 0 });
+    gsap.set(vendors, { x: 100, opacity: 0 });
+    gsap.set(turtle, { x: 100, opacity: 0 });
+
+    // Create timeline for staggered animations
+    const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+
+    tl.to(carousel, { x: 0, opacity: 1, duration: 0.8 }, 0.1)
+      .to(title, { y: 0, opacity: 1, duration: 0.7 }, 0.2)
+      .to(desc, { y: 0, opacity: 1, duration: 0.6 }, 0.4)
+      .to(buttons, { y: 0, opacity: 1, duration: 0.6 }, 0.5)
+      .to(vendors, { x: 0, opacity: 1, duration: 0.7 }, 0.5)
+      .to(turtle, { x: 0, opacity: 1, duration: 0.6 }, 0.6);
+
+  }
+
+  // Simple carousel auto-advance with visibility pausing
+  function initCarousel() {
+    const track = document.querySelector('[data-kamecon-track]') as HTMLElement;
+    const dotsContainer = document.querySelector('[data-kamecon-dots]') as HTMLElement;
+    const carousel = document.querySelector('[data-kamecon-carousel]') as HTMLElement;
+    if (!track || !dotsContainer || !carousel) return;
+
+    const slides = track.querySelectorAll('.kamecon-carousel__slide');
+    const totalSlides = slides.length;
+    let currentIndex = 0;
+    let isPaused = false;
+    let intervalId: number | null = null;
+
+    // Create dots
+    for (let i = 0; i < totalSlides; i++) {
+      const dot = document.createElement('button');
+      dot.className = 'kamecon-carousel__dot' + (i === 0 ? ' active' : '');
+      dot.addEventListener('click', () => goToSlide(i));
+      dotsContainer.appendChild(dot);
+    }
+
+    const dots = dotsContainer.querySelectorAll('.kamecon-carousel__dot');
+
+    function goToSlide(index: number) {
+      currentIndex = index;
+      track.style.transform = `translateX(-${index * 100}%)`;
+      dots.forEach((dot, i) => {
+        dot.classList.toggle('active', i === index);
+      });
+    }
+
+    function startInterval() {
+      if (intervalId) return;
+      intervalId = window.setInterval(() => {
+        if (!isPaused) {
+          currentIndex = (currentIndex + 1) % totalSlides;
+          goToSlide(currentIndex);
+        }
+      }, 4000);
+    }
+
+    function stopInterval() {
+      if (intervalId) {
+        clearInterval(intervalId);
+        intervalId = null;
+      }
+    }
+
+    // Use IntersectionObserver to pause when not visible
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            isPaused = false;
+            startInterval();
+          } else {
+            isPaused = true;
+            stopInterval();
+          }
+        });
+      },
+      { threshold: 0, rootMargin: '50px' }
+    );
+
+    observer.observe(carousel);
+
+    // Also pause when tab is hidden
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        isPaused = true;
+        stopInterval();
+      } else {
+        const rect = carousel.getBoundingClientRect();
+        const inViewport = rect.top < window.innerHeight && rect.bottom > 0;
+        if (inViewport) {
+          isPaused = false;
+          startInterval();
+        }
+      }
+    });
+  }
+
+  // Initialize on DOM ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+      initPageAnimations();
+      initCarousel();
+    });
+  } else {
+    initPageAnimations();
+    initCarousel();
+  }
+</script>
+
+<style>
+  .kamecon-page {
+    min-height: 100vh;
+    background-color: #0a0a0a;
+  }
+
+  .kamecon-section {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    overflow: hidden;
+    background-color: #0a0a0a;
+  }
+
+  .kamecon-section__bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('/images/Backgrounds/kamecon.webp');
+    background-size: cover;
+    background-position: center;
+    z-index: 0;
+  }
+
+  .kamecon-section__bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(10, 10, 10, 0.85);
+  }
+
+  .kamecon-section__content {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    min-height: 100vh;
+    padding: clamp(80px, 10vh, 100px) clamp(1rem, 3vw, 3rem) clamp(1rem, 5vh, 80px) clamp(1rem, 3vw, 3rem);
+    box-sizing: border-box;
+    display: flex;
+    gap: clamp(1.5rem, 3vw, 3rem);
+  }
+
+  .kamecon-section__left {
+    flex: 0 0 38%;
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - clamp(80px, 10vh, 100px) - clamp(1rem, 5vh, 80px));
+  }
+
+  .kamecon-carousel {
+    position: relative;
+    width: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  .kamecon-carousel__container {
+    position: relative;
+    width: 100%;
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+    border-radius: clamp(16px, 2vw, 24px);
+    background: #111;
+  }
+
+  .kamecon-carousel__container::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 24px;
+    pointer-events: none;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    z-index: 5;
+  }
+
+  .kamecon-carousel__track {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    height: 100%;
+    transition: transform 0.6s cubic-bezier(0.25, 0.1, 0.25, 1);
+  }
+
+  .kamecon-carousel__slide {
+    flex: 0 0 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .kamecon-carousel__slide img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .kamecon-carousel__overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 3rem 2rem 1.5rem;
+    background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 100%);
+    pointer-events: none;
+    z-index: 3;
+    border-radius: 0 0 24px 24px;
+  }
+
+  .kamecon-carousel__overlay-text {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(28px, 4vw, 48px);
+    font-weight: 700;
+    color: #ffffff;
+  }
+
+  .kamecon-carousel__dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 1rem;
+  }
+
+  .kamecon-carousel__dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 0;
+  }
+
+  .kamecon-carousel__dot:hover {
+    background: rgba(255, 255, 255, 0.5);
+  }
+
+  .kamecon-carousel__dot.active {
+    background: #ef5350;
+    transform: scale(1.2);
+  }
+
+  .kamecon-section__right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding-right: 2rem;
+    overflow: visible;
+    position: relative;
+  }
+
+  .kamecon-turtle {
+    position: absolute;
+    top: clamp(18rem, 35vw, 24rem);
+    right: clamp(0.5rem, 2vw, 2rem);
+    width: clamp(100px, 15vw, 220px);
+    height: auto;
+    z-index: 10;
+    pointer-events: none;
+  }
+
+  .kamecon-section__title {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(90px, 12vw, 160px);
+    font-weight: 900;
+    line-height: 0.85;
+    color: #ef5350;
+    letter-spacing: -0.04em;
+    margin: 0 0 1.5rem 0;
+    text-transform: uppercase;
+    text-shadow: 4px 4px 0px rgba(0, 0, 0, 0.5), 8px 8px 0px rgba(0, 0, 0, 0.25);
+    flex-shrink: 0;
+  }
+
+  .kamecon-section__info-row {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    flex-shrink: 0;
+  }
+
+  .kamecon-section__description {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(16px, 1.5vw, 22px);
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.7;
+    margin: 0 0 1.5rem 0;
+  }
+
+  .kamecon-section__buttons {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .kamecon-section__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 1rem 1.8rem;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+  }
+
+  .kamecon-section__btn svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .kamecon-section__btn--primary {
+    background: #ef5350;
+    color: #ffffff;
+    border: 2px solid #ef5350;
+  }
+
+  .kamecon-section__btn--primary:hover {
+    background: #e53935;
+    border-color: #e53935;
+    transform: translateY(-2px);
+  }
+
+  .kamecon-section__btn--secondary {
+    background: transparent;
+    color: #ffffff;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .kamecon-section__btn--secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: translateY(-2px);
+  }
+
+  .kamecon-section__vendors {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    margin-top: 1rem;
+  }
+
+  .kamecon-section__vendors-title {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(20px, 2vw, 28px);
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0 0 1rem 0;
+  }
+
+  .kamecon-section__vendors-scroll {
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(239, 83, 80, 0.3) rgba(0, 0, 0, 0.2);
+    padding-right: 0.5rem;
+    max-height: calc(260px * 3 + 1rem * 2 + 2px);
+  }
+
+  .kamecon-section__vendors-scroll::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .kamecon-section__vendors-scroll::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+  }
+
+  .kamecon-section__vendors-scroll::-webkit-scrollbar-thumb {
+    background: rgba(239, 83, 80, 0.4);
+    border-radius: 3px;
+  }
+
+  .kamecon-section__vendors-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(clamp(180px, 18vw, 260px), 1fr));
+    gap: clamp(0.5rem, 1vw, 1rem);
+  }
+
+  .kamecon-vendor-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    padding: clamp(1rem, 1.5vw, 1.5rem);
+    background: rgba(15, 15, 15, 0.95);
+    border: 2px solid rgba(239, 83, 80, 0.4);
+    border-radius: clamp(12px, 1.5vw, 16px);
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+  }
+
+  .kamecon-vendor-card:hover {
+    background: rgba(25, 25, 25, 0.98);
+    border-color: rgba(239, 83, 80, 0.7);
+    transform: translateY(-3px);
+  }
+
+  .kamecon-vendor-card__name {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(1rem, 1.5vw, 1.5rem);
+    font-weight: 800;
+    color: #ffffff;
+    margin: 0 0 clamp(0.3rem, 0.5vw, 0.5rem) 0;
+    line-height: 1.2;
+    max-width: 100%;
+  }
+
+  .kamecon-vendor-card__social {
+    display: inline-block;
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(0.7rem, 1vw, 0.95rem);
+    font-weight: 500;
+    color: #ff6659;
+    text-decoration: none;
+    transition: color 0.2s ease;
+    margin-bottom: clamp(0.4rem, 0.8vw, 0.75rem);
+    word-break: break-word;
+    max-width: 100%;
+  }
+
+  .kamecon-vendor-card__social:hover {
+    color: #ff8a80;
+    text-decoration: underline;
+  }
+
+  .kamecon-vendor-card__desc {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(0.75rem, 1.1vw, 1.05rem);
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.5;
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* Responsive */
+  @media (max-width: 1200px) {
+    .kamecon-section__content {
+      padding: 90px 2rem 2rem 2rem;
+      gap: 2rem;
+    }
+
+    .kamecon-turtle {
+      width: 180px;
+    }
+
+    .kamecon-section__title {
+      font-size: clamp(70px, 10vw, 120px);
+    }
+  }
+
+  @media (max-width: 900px) {
+    .kamecon-section__content {
+      flex-direction: column;
+      padding: 90px 1.5rem 1.5rem 1.5rem;
+      gap: 1.5rem;
+      overflow-y: auto;
+    }
+
+    .kamecon-turtle {
+      width: 140px;
+      top: -20px;
+      right: -10px;
+    }
+
+    .kamecon-section__left,
+    .kamecon-section__right {
+      flex: none;
+      height: auto;
+    }
+
+    .kamecon-section__left {
+      align-items: center;
+      text-align: center;
+    }
+
+    .kamecon-section__title {
+      font-size: clamp(60px, 14vw, 100px);
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    .kamecon-carousel {
+      max-width: 450px;
+      height: 300px;
+      flex: none;
+    }
+
+    .kamecon-section__right {
+      padding-right: 0;
+      align-items: center;
+      text-align: center;
+    }
+
+    .kamecon-section__info-row {
+      align-items: center;
+    }
+
+    .kamecon-section__description {
+      font-size: 16px;
+      text-align: center;
+    }
+
+    .kamecon-section__buttons {
+      justify-content: center;
+    }
+
+    .kamecon-section__vendors-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .kamecon-section__content {
+      padding: 80px 1rem 1rem 1rem;
+    }
+
+    .kamecon-turtle {
+      width: 100px;
+      top: -30px;
+      right: -5px;
+    }
+
+    .kamecon-section__title {
+      font-size: clamp(50px, 16vw, 80px);
+    }
+
+    .kamecon-carousel {
+      max-width: 100%;
+      height: 250px;
+    }
+
+    .kamecon-section__vendors-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem;
+    }
+
+    .kamecon-section__description {
+      font-size: 14px;
+    }
+
+    .kamecon-section__btn {
+      padding: 0.8rem 1.2rem;
+      font-size: 14px;
+    }
+  }
+</style>

@@ -14,40 +14,11 @@ const scrollTriggerInstances: ScrollTrigger[] = [];
 let mainScrollTrigger: ScrollTrigger | null = null;
 
 /**
- * Hide the loading screen after GSAP initialization and all resources are loaded
- */
-function hideLoadingScreen(): void {
-  const loadingScreen = document.getElementById('loading-screen');
-  if (!loadingScreen) return;
-
-  const doHide = () => {
-    // Small delay to ensure all GSAP sets have applied
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        loadingScreen.classList.add('hidden');
-        // Remove from DOM after transition
-        setTimeout(() => {
-          loadingScreen.remove();
-        }, 500);
-      });
-    });
-  };
-
-  // Wait for all images and fonts to load
-  if (document.readyState === 'complete') {
-    doHide();
-  } else {
-    window.addEventListener('load', doHide);
-  }
-}
-
-/**
  * Independent section-based scroll animation system
  * One master ScrollTrigger pins for entire duration
  * Each transition uses fixed absolute positions (no percentages)
- * Adding a new section = add animations at position N, increase total duration
  *
- * Flow: Hero → About → Meetings → TerpCon → Kamecon → Maid Cafe
+ * Flow: Hero → About → Meetings
  */
 export function initScrollTransition(): void {
   const heroSection = document.querySelector('[data-hero]') as HTMLElement;
@@ -86,42 +57,9 @@ export function initScrollTransition(): void {
   const meetingsLocationSection = document.querySelector('.meetings__location-section') as HTMLElement;
   const meetingsSchedulerBtn = document.querySelector('.meetings__admin-btn') as HTMLElement;
 
-  // TerpCon elements
-  const terpconSection = document.querySelector('[data-terpcon-section]') as HTMLElement;
-  const terpconTitle = document.querySelector('[data-terpcon-title]') as HTMLElement;
-  const terpconTitleEcho = document.querySelector('[data-terpcon-title-echo]') as HTMLElement;
-  const terpconBackgroundText = document.querySelector('[data-terpcon-background-text]') as HTMLElement;
-  const terpconSubtitle = document.querySelector('[data-terpcon-subtitle]') as HTMLElement;
-  const terpconDesc = document.querySelector('[data-terpcon-desc]') as HTMLElement;
-  const terpconDetails = document.querySelectorAll('[data-terpcon-detail]');
-  const terpconCta = document.querySelector('[data-terpcon-cta]') as HTMLElement;
-  const terpconVendorsHeader = document.querySelector('[data-terpcon-vendors-header]') as HTMLElement;
-  const terpconVendorsScroll = document.querySelector('[data-terpcon-vendors-scroll]') as HTMLElement;
-  const terpconFeaturedArtists = document.querySelector('[data-terpcon-featured-artists]') as HTMLElement;
-
-  // Kamecon elements
-  const kameconSection = document.querySelector('[data-kamecon-section]') as HTMLElement;
-  const kameconCarousel = document.querySelector('[data-kamecon-carousel]') as HTMLElement;
-  const kameconTitle = document.querySelector('[data-kamecon-title]') as HTMLElement;
-  const kameconDesc = document.querySelector('[data-kamecon-desc]') as HTMLElement;
-  const kameconButtons = document.querySelector('[data-kamecon-buttons]') as HTMLElement;
-  const kameconVendors = document.querySelector('[data-kamecon-vendors]') as HTMLElement;
-  const kameconTurtle = document.querySelector('[data-kamecon-turtle]') as HTMLElement;
-
-  // Maid Cafe elements
-  const maidCafeSection = document.querySelector('[data-maidcafe-section]') as HTMLElement;
-  const maidCafeTitle = document.querySelector('[data-maidcafe-title]') as HTMLElement;
-  const maidCafeDesc = document.querySelector('[data-maidcafe-desc]') as HTMLElement;
-  const maidCafeInfo = document.querySelector('[data-maidcafe-info]') as HTMLElement;
-  const maidCafeImage = document.querySelector('[data-maidcafe-image]') as HTMLElement;
-  const maidCafeCollage = document.querySelector('[data-maidcafe-collage]') as HTMLElement;
-
   if (!heroContent || !aboutContent) return;
 
   const hasMeetings = !!(meetingsContent && meetingsBg);
-  const hasTerpcon = !!terpconSection;
-  const hasKamecon = !!kameconSection;
-  const hasMaidCafe = !!maidCafeSection;
 
   // ============================================
   // APPLY GPU ACCELERATION HINTS (MINIMAL)
@@ -137,17 +75,11 @@ export function initScrollTransition(): void {
   applyGPUHints(aboutContent);
   applyGPUHints(meetingsBg);
   applyGPUHints(meetingsContent);
-  applyGPUHints(terpconSection);
-  applyGPUHints(kameconSection);
-  applyGPUHints(maidCafeSection);
 
   console.log('[Scroll] Elements found:', {
     heroContent: !!heroContent,
     aboutContent: !!aboutContent,
-    hasMeetings,
-    hasTerpcon,
-    hasKamecon,
-    hasMaidCafe
+    hasMeetings
   });
 
   // ============================================
@@ -186,47 +118,13 @@ export function initScrollTransition(): void {
   if (meetingsLocationSection) gsap.set(meetingsLocationSection, { y: '100vh' });
   if (meetingsSchedulerBtn) gsap.set(meetingsSchedulerBtn, { y: '100vh', opacity: 0 });
 
-  // TerpCon - entire section slides in from yPercent: 100 (off-screen below)
-  // autoAlpha handles visibility+opacity together, more reliable than visibility alone
-  if (terpconSection) gsap.set(terpconSection, { zIndex: 100, yPercent: 100, autoAlpha: 1 });
-  if (terpconTitle) gsap.set(terpconTitle, { y: '100vh', scale: 0.3, opacity: 1 });
-  if (terpconSubtitle) gsap.set(terpconSubtitle, { x: '-100vw', opacity: 1 });
-  if (terpconDesc) gsap.set(terpconDesc, { x: '-100vw', opacity: 1 });
-  if (terpconDetails.length) gsap.set(terpconDetails, { x: '-100vw', opacity: 1 });
-  if (terpconCta) gsap.set(terpconCta, { x: '-100vw', opacity: 1 });
-  if (terpconVendorsHeader) gsap.set(terpconVendorsHeader, { x: '100vw', opacity: 1 });
-  if (terpconVendorsScroll) gsap.set(terpconVendorsScroll, { x: '100vw', opacity: 1 });
-  if (terpconFeaturedArtists) gsap.set(terpconFeaturedArtists, { y: '50vh', opacity: 1 });
-
-  // Kamecon - entire section slides in from yPercent: 100 (off-screen below)
-  // autoAlpha handles visibility+opacity together, more reliable than visibility alone
-  if (kameconSection) gsap.set(kameconSection, { zIndex: 150, yPercent: 100, autoAlpha: 1 });
-  if (kameconCarousel) gsap.set(kameconCarousel, { x: '-100vw', opacity: 1 });
-  if (kameconTitle) gsap.set(kameconTitle, { y: '-100vh', opacity: 1 });
-  if (kameconDesc) gsap.set(kameconDesc, { y: '100vh', opacity: 1 });
-  if (kameconButtons) gsap.set(kameconButtons, { y: '100vh', opacity: 1 });
-  if (kameconVendors) gsap.set(kameconVendors, { x: '100vw', opacity: 1 });
-  if (kameconTurtle) gsap.set(kameconTurtle, { x: '100vw', opacity: 1 });
-
-  // Maid Cafe - entire section slides in from yPercent: 100 (off-screen below)
-  // autoAlpha handles visibility+opacity together, more reliable than visibility alone
-  if (maidCafeSection) gsap.set(maidCafeSection, { zIndex: 250, yPercent: 100, autoAlpha: 1 });
-  if (maidCafeTitle) gsap.set(maidCafeTitle, { y: '100vh', scale: 0.3, opacity: 1 });
-  if (maidCafeDesc) gsap.set(maidCafeDesc, { y: '50vh', opacity: 1 });
-  if (maidCafeInfo) gsap.set(maidCafeInfo, { y: '50vh', opacity: 1 });
-  if (maidCafeImage) gsap.set(maidCafeImage, { x: '-100vw', opacity: 1 });
-  if (maidCafeCollage) gsap.set(maidCafeCollage, { x: '100vw', opacity: 1 });
-
   // ============================================
   // CALCULATE TOTAL SCROLL NEEDED
   // ============================================
 
-  // Flow: Hero→About→Meetings→TerpCon→Kamecon→MaidCafe
+  // Flow: Hero→About→Meetings
   let numTransitions = 1; // Base: Hero→About
   if (hasMeetings) numTransitions += 1; // About→Meetings
-  if (hasTerpcon) numTransitions += 1; // Meetings→TerpCon
-  if (hasKamecon) numTransitions += 1; // TerpCon→Kamecon
-  if (hasMaidCafe) numTransitions += 1; // Kamecon→MaidCafe
   const totalScrollVh = numTransitions * 150;
 
   console.log('[Scroll] Transitions:', numTransitions, 'Total scroll:', totalScrollVh + 'vh');
@@ -240,10 +138,7 @@ export function initScrollTransition(): void {
   const sectionBoundaries = {
     hero: transitionSize * 0.5,
     about: transitionSize,
-    meetings: transitionSize * 2,
-    terpcon: transitionSize * 3,
-    kamecon: transitionSize * 4,
-    maidcafe: transitionSize * 5
+    meetings: transitionSize * 2
   };
 
   const masterTl = gsap.timeline({
@@ -269,12 +164,6 @@ export function initScrollTransition(): void {
           newSection = 1; // About
         } else if (hasMeetings && progress < sectionBoundaries.meetings) {
           newSection = progress < transitionSize * 1.5 ? 1 : 2;
-        } else if (hasTerpcon && progress < sectionBoundaries.terpcon) {
-          newSection = 3; // TerpCon
-        } else if (hasKamecon && progress < sectionBoundaries.kamecon) {
-          newSection = 4; // Kamecon
-        } else if (hasMaidCafe) {
-          newSection = 5; // Maid Cafe
         } else {
           newSection = 2; // Meetings fallback
         }
@@ -283,7 +172,6 @@ export function initScrollTransition(): void {
           currentSection = newSection;
 
           // Update pointer events only - visibility is handled by GSAP positioning
-          // Elements at yPercent: 100 are off-screen and don't render anyway
           if (heroContent) {
             heroContent.style.pointerEvents = newSection === 0 ? 'auto' : 'none';
           }
@@ -292,15 +180,6 @@ export function initScrollTransition(): void {
           }
           if (meetingsContent) {
             meetingsContent.style.pointerEvents = newSection === 2 ? 'auto' : 'none';
-          }
-          if (terpconSection) {
-            terpconSection.style.pointerEvents = newSection === 3 ? 'auto' : 'none';
-          }
-          if (kameconSection) {
-            kameconSection.style.pointerEvents = newSection === 4 ? 'auto' : 'none';
-          }
-          if (maidCafeSection) {
-            maidCafeSection.style.pointerEvents = newSection === 5 ? 'auto' : 'none';
           }
         }
       }
@@ -373,96 +252,10 @@ export function initScrollTransition(): void {
     if (meetingsThumbnails) masterTl.to(meetingsThumbnails, { x: 0, duration: 0.35, ease: 'none' }, 1.44);
     if (meetingsLocationSection) masterTl.to(meetingsLocationSection, { y: 0, duration: 0.35, ease: 'none' }, 1.46);
     if (meetingsSchedulerBtn) masterTl.to(meetingsSchedulerBtn, { y: 0, opacity: 1, duration: 0.35, ease: 'none' }, 1.42);
-
-    // ============================================
-    // TRANSITION 3: MEETINGS → TERPCON (position 2 to 3)
-    // ============================================
-
-    if (hasTerpcon) {
-      if (meetingsPunch) masterTl.to(meetingsPunch, { x: '100vw', duration: 0.35, ease: 'none' }, 2.1);
-      if (meetingsReze) masterTl.to(meetingsReze, { x: '-100vw', duration: 0.35, ease: 'none' }, 2.1);
-      if (meetingsHeroTitle) masterTl.to(meetingsHeroTitle, { y: '-100vh', duration: 0.35, ease: 'none' }, 2.12);
-      if (meetingsSectionHeader) masterTl.to(meetingsSectionHeader, { y: '-100vh', duration: 0.35, ease: 'none' }, 2.12);
-      if (meetingsViewer) masterTl.to(meetingsViewer, { y: '100vh', duration: 0.35, ease: 'none' }, 2.15);
-      if (meetingsThumbnails) masterTl.to(meetingsThumbnails, { x: '100vw', duration: 0.35, ease: 'none' }, 2.15);
-      if (meetingsLocationSection) masterTl.to(meetingsLocationSection, { y: '100vh', duration: 0.35, ease: 'none' }, 2.18);
-      if (meetingsSchedulerBtn) masterTl.to(meetingsSchedulerBtn, { y: '100vh', opacity: 0, duration: 0.35, ease: 'none' }, 2.1);
-      // Meetings bg exits and TerpCon section enters - SYNCED with yPercent to stick together
-      // Use fromTo() to prevent GSAP from reading DOM on first forward scroll (fixes glitch)
-      if (meetingsBg) masterTl.fromTo(meetingsBg, { yPercent: 0 }, { yPercent: -100, duration: 0.4, ease: 'none' }, 2.1);
-      if (terpconSection) masterTl.fromTo(terpconSection, { yPercent: 100 }, { yPercent: 0, duration: 0.4, ease: 'none' }, 2.1);
-      // TerpCon content elements - finish by 2.7 to give dwell time before exit at 3.1
-      if (terpconTitle) masterTl.fromTo(terpconTitle, { y: '100vh', scale: 0.3 }, { y: 0, scale: 1, duration: 0.1, ease: 'none' }, 2.5);
-      if (terpconSubtitle) masterTl.fromTo(terpconSubtitle, { x: '-100vw' }, { x: 0, duration: 0.1, ease: 'none' }, 2.52);
-      if (terpconDesc) masterTl.fromTo(terpconDesc, { x: '-100vw', opacity: 1 }, { x: 0, opacity: 1, duration: 0.08, ease: 'none' }, 2.54);
-      if (terpconVendorsHeader) masterTl.fromTo(terpconVendorsHeader, { x: '100vw' }, { x: 0, duration: 0.1, ease: 'none' }, 2.56);
-      if (terpconDetails.length) masterTl.fromTo(terpconDetails, { x: '-100vw', opacity: 1 }, { x: 0, opacity: 1, duration: 0.08, ease: 'none', stagger: 0.01 }, 2.58);
-      if (terpconVendorsScroll) masterTl.fromTo(terpconVendorsScroll, { x: '100vw' }, { x: 0, duration: 0.1, ease: 'none' }, 2.6);
-      if (terpconCta) masterTl.fromTo(terpconCta, { x: '-100vw', opacity: 1 }, { x: 0, opacity: 1, duration: 0.08, ease: 'none' }, 2.62);
-      if (terpconFeaturedArtists) masterTl.fromTo(terpconFeaturedArtists, { y: '50vh', opacity: 1 }, { y: 0, opacity: 1, duration: 0.08, ease: 'none' }, 2.64);
-
-      // ============================================
-      // TRANSITION 4: TERPCON → KAMECON (position 3 to 4)
-      // ============================================
-
-      if (hasKamecon) {
-        // TerpCon content exits
-        if (terpconTitle) masterTl.to(terpconTitle, { y: '-100vh', scale: 0.3, duration: 0.3, ease: 'none' }, 3.1);
-        if (terpconSubtitle) masterTl.to(terpconSubtitle, { x: '-100vw', duration: 0.3, ease: 'none' }, 3.1);
-        if (terpconDesc) masterTl.to(terpconDesc, { x: '-100vw', opacity: 0, duration: 0.25, ease: 'none' }, 3.1);
-        if (terpconDetails.length) masterTl.to(terpconDetails, { x: '-100vw', opacity: 0, duration: 0.25, ease: 'none' }, 3.1);
-        if (terpconCta) masterTl.to(terpconCta, { x: '-100vw', opacity: 0, duration: 0.25, ease: 'none' }, 3.1);
-        if (terpconFeaturedArtists) masterTl.to(terpconFeaturedArtists, { y: '50vh', opacity: 0, duration: 0.25, ease: 'none' }, 3.1);
-        if (terpconVendorsHeader) masterTl.to(terpconVendorsHeader, { x: '100vw', duration: 0.3, ease: 'none' }, 3.1);
-        if (terpconVendorsScroll) masterTl.to(terpconVendorsScroll, { x: '100vw', duration: 0.3, ease: 'none' }, 3.1);
-        // TerpCon section exits and Kamecon section enters - overlap to prevent gaps
-        // Use fromTo() to prevent GSAP from reading DOM on first forward scroll (fixes glitch)
-        if (kameconSection) masterTl.fromTo(kameconSection, { yPercent: 100 }, { yPercent: 0, duration: 0.45, ease: 'none' }, 3.05);
-        if (terpconSection) masterTl.fromTo(terpconSection, { yPercent: 0 }, { yPercent: -100, duration: 0.4, ease: 'none' }, 3.1);
-        // Kamecon content elements - finish by 3.7 to give dwell time before exit at 4.1
-        if (kameconCarousel) masterTl.fromTo(kameconCarousel, { x: '-100vw' }, { x: 0, duration: 0.1, ease: 'none' }, 3.5);
-        if (kameconTitle) masterTl.fromTo(kameconTitle, { y: '-100vh' }, { y: 0, duration: 0.1, ease: 'none' }, 3.5);
-        if (kameconDesc) masterTl.fromTo(kameconDesc, { y: '100vh' }, { y: 0, duration: 0.08, ease: 'none' }, 3.55);
-        if (kameconButtons) masterTl.fromTo(kameconButtons, { y: '100vh' }, { y: 0, duration: 0.08, ease: 'none' }, 3.58);
-        if (kameconVendors) masterTl.fromTo(kameconVendors, { x: '100vw' }, { x: 0, duration: 0.1, ease: 'none' }, 3.6);
-        if (kameconTurtle) masterTl.fromTo(kameconTurtle, { x: '100vw' }, { x: 0, duration: 0.1, ease: 'none' }, 3.65);
-
-        // ============================================
-        // TRANSITION 5: KAMECON → MAID CAFE (position 4 to 5)
-        // ============================================
-
-        if (hasMaidCafe) {
-          // Kamecon content exits (sliding out, not fading)
-          if (kameconCarousel) masterTl.to(kameconCarousel, { x: '-100vw', duration: 0.3, ease: 'none' }, 4.1);
-          if (kameconTitle) masterTl.to(kameconTitle, { y: '-100vh', duration: 0.3, ease: 'none' }, 4.1);
-          if (kameconDesc) masterTl.to(kameconDesc, { y: '100vh', duration: 0.25, ease: 'none' }, 4.1);
-          if (kameconButtons) masterTl.to(kameconButtons, { y: '100vh', duration: 0.25, ease: 'none' }, 4.1);
-          if (kameconVendors) masterTl.to(kameconVendors, { x: '100vw', duration: 0.3, ease: 'none' }, 4.1);
-          if (kameconTurtle) masterTl.to(kameconTurtle, { x: '100vw', duration: 0.3, ease: 'none' }, 4.1);
-          // Kamecon section exits and Maid Cafe section enters - overlap to prevent gaps
-          // Use fromTo() to prevent GSAP from reading DOM on first forward scroll (fixes glitch)
-          if (maidCafeSection) masterTl.fromTo(maidCafeSection, { yPercent: 100 }, { yPercent: 0, duration: 0.45, ease: 'none' }, 4.05);
-          if (kameconSection) masterTl.fromTo(kameconSection, { yPercent: 0 }, { yPercent: -100, duration: 0.4, ease: 'none' }, 4.1);
-          // Maid Cafe content elements - start AFTER section is fully visible (section ends at 4.5)
-          // Faster animations so content is visible sooner
-          if (maidCafeTitle) masterTl.fromTo(maidCafeTitle, { y: '100vh', scale: 0.3 }, { y: 0, scale: 1, duration: 0.1, ease: 'none' }, 4.5);
-          if (maidCafeImage) masterTl.fromTo(maidCafeImage, { x: '-100vw' }, { x: 0, duration: 0.1, ease: 'none' }, 4.52);
-          if (maidCafeDesc) masterTl.fromTo(maidCafeDesc, { y: '50vh', opacity: 1 }, { y: 0, opacity: 1, duration: 0.08, ease: 'none' }, 4.54);
-          if (maidCafeCollage) masterTl.fromTo(maidCafeCollage, { x: '100vw' }, { x: 0, duration: 0.1, ease: 'none' }, 4.56);
-          if (maidCafeInfo) masterTl.fromTo(maidCafeInfo, { y: '50vh', opacity: 1 }, { y: 0, opacity: 1, duration: 0.08, ease: 'none' }, 4.58);
-        }
-      }
-    }
   }
 
   // Force ScrollTrigger to recalculate positions after all animations are set up
   ScrollTrigger.refresh();
-
-  // All GSAP initial states and animations are set up - hide loading screen
-  // Small delay ensures layout is fully stable before revealing
-  setTimeout(() => {
-    hideLoadingScreen();
-  }, 50);
 }
 
 /**
@@ -483,37 +276,8 @@ export function destroyScrollTransition(): void {
 }
 
 /**
- * Scroll to the maid cafe section
- */
-export function scrollToMaidCafe(): void {
-  if (!mainScrollTrigger) {
-    console.warn('[Scroll] ScrollTrigger not initialized yet');
-    return;
-  }
-  const endScroll = mainScrollTrigger.end;
-  gsap.to(window, {
-    scrollTo: { y: endScroll, autoKill: false },
-    duration: 1.5,
-    ease: 'power2.inOut'
-  });
-}
-
-/**
- * Check URL hash and scroll to section if needed
+ * Handle hash navigation (stub for backwards compatibility)
  */
 export function handleHashNavigation(): void {
-  if (window.location.hash === '#maidcafe') {
-    setTimeout(() => {
-      scrollToMaidCafe();
-    }, 500);
-  }
-
-  const maidCafeLinks = document.querySelectorAll('a[href="/#maidcafe"], a[href="#maidcafe"]');
-  maidCafeLinks.forEach(link => {
-    link.addEventListener('click', (e) => {
-      e.preventDefault();
-      window.history.pushState(null, '', '/#maidcafe');
-      scrollToMaidCafe();
-    });
-  });
+  // Hash navigation removed - individual pages now handle their own sections
 }

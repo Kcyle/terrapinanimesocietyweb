@@ -1,3 +1,4 @@
+/*
 ---
 // TerpCon Section - Slides in after Maid Cafe on home page
 
@@ -443,8 +444,6 @@ const defaultImage = "/images/Icons/chibi.webp";
     border-radius: clamp(8px, 1vw, 10px);
     min-width: clamp(100px, 12vw, 140px);
     transition: background 0.3s ease, border-color 0.3s ease;
-    will-change: transform, opacity;
-    backface-visibility: hidden;
   }
 
   .terpcon-section__info-card:hover {
@@ -717,6 +716,8 @@ const defaultImage = "/images/Icons/chibi.webp";
     gap: 0.75rem;
     padding-bottom: 2rem;
     width: 100%;
+    content-visibility: auto;
+    contain-intrinsic-size: auto 800px;
   }
 
   /* Vendor Cards - Square grid layout with larger content */
@@ -733,9 +734,6 @@ const defaultImage = "/images/Icons/chibi.webp";
     width: 100%;
     aspect-ratio: 1 / 1;
     transition: all 0.2s ease;
-    will-change: transform;
-    backface-visibility: hidden;
-    transform: translateZ(0);
     overflow: hidden;
     gap: 0.4rem;
   }
@@ -1093,4 +1091,4 @@ const defaultImage = "/images/Icons/chibi.webp";
     initFeaturedCarousel();
   }
 </script>
-
+*/
