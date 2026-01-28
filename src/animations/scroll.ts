@@ -217,7 +217,6 @@ export function initScrollTransition(): void {
   const masterTl = gsap.timeline({
     defaults: {
       immediateRender: false,
-      force3d: true,
     },
     scrollTrigger: {
       trigger: heroSection,
