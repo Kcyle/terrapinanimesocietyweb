@@ -3,8 +3,8 @@ import { defineConfig } from 'astro/config';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://kcyle.github.io',
-  base: '/terrapinanimesocietyweb',
+  site: 'https://terrapinanimesociety.org',
+  base: '/',
   vite: {
     build: {
       cssMinify: true,
