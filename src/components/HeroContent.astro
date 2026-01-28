@@ -23,23 +23,13 @@ const {
   <div class="hero-content__buttons">
     <a href="/meetings" class="hero-content__button hero-content__button--primary">Meetings</a>
     <a href="/terpcon" class="hero-content__button hero-content__button--terpcon">TerpCon 2026</a>
-    <a href="/#maidcafe" class="hero-content__button hero-content__button--secondary">Maid Cafe 2026</a>
+    <a href="/maidcafe" class="hero-content__button hero-content__button--secondary">Maid Cafe 2026</a>
     <a href="/kamecon" class="hero-content__button hero-content__button--secondary">KAMECON</a>
   </div>
 </div>
 
-<!-- Ticket banner - outside hero-content so it animates independently -->
-<a href="/#maidcafe" class="hero-content__ticket-banner" data-ticket-banner>
-  <span>Buy Tickets for the Maid Cafe Here</span>
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-    <line x1="5" y1="12" x2="19" y2="12"></line>
-    <polyline points="12 5 19 12 12 19"></polyline>
-  </svg>
-</a>
-
 <div class="hero-carousel-wrapper" data-hero-carousel>
   <CardCarousel />
-  <p class="hero-carousel-hint">hover to download</p>
 </div>
 
 <!-- About Content (hidden initially, slides in on scroll) -->
@@ -74,7 +64,7 @@ const {
       <div class="about-content__detail-item">
         <span class="about-content__detail-label">Major Events</span>
         <div class="about-content__events">
-          <a href="/#maidcafe" class="about-content__event-btn">Maid Café <span>Spring</span></a>
+          <a href="/maidcafe" class="about-content__event-btn">Maid Café <span>Spring</span></a>
           <a href="/kamecon" class="about-content__event-btn">KAMECON <span>Fall</span></a>
         </div>
       </div>
@@ -139,8 +129,7 @@ const {
     max-width: 100%;
     display: flex;
     flex-direction: column;
-    gap: clamp(1rem, 2vw, 1.5rem);
-    padding-bottom: clamp(60px, 15vh, 220px);
+    gap: 1.5rem;
     will-change: transform;
     transform: translateZ(0);
     backface-visibility: hidden;
@@ -206,6 +195,7 @@ const {
     position: relative;
     z-index: 1;
     display: flex;
+    flex-wrap: wrap;
     gap: clamp(0.5rem, 1vw, 1rem);
     margin-top: clamp(0.5rem, 1vw, 1rem);
   }
@@ -214,11 +204,11 @@ const {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: clamp(10px, 1.5vw, 14px) clamp(20px, 3vw, 32px);
+    padding: clamp(14px, 2vw, 20px) clamp(28px, 4vw, 48px);
     font-family: 'Inter', sans-serif;
-    font-size: clamp(14px, 1.2vw, 16px);
+    font-size: clamp(16px, 1.8vw, 22px);
     font-weight: 600;
-    border-radius: clamp(8px, 1.2vw, 12px);
+    border-radius: clamp(10px, 1.5vw, 16px);
     text-decoration: none;
     transition: all 0.2s ease;
   }
@@ -287,20 +277,14 @@ const {
   }
 
   .hero-carousel-wrapper {
-    position: absolute;
-    bottom: clamp(40px, 8vh, 100px);
-    left: 0;
-    right: clamp(30%, 40%, 45%);
+    position: relative;
     z-index: 10;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-    padding-left: var(--page-padding, 3rem);
-    gap: 0.75rem;
+    min-height: 0;
     overflow: hidden;
-    -webkit-mask-image: linear-gradient(to right, black 70%, transparent 100%);
-    mask-image: linear-gradient(to right, black 70%, transparent 100%);
+    /* Stop before the mascot area */
+    width: 65vw;
+    -webkit-mask-image: linear-gradient(to right, black 85%, transparent 100%);
+    mask-image: linear-gradient(to right, black 85%, transparent 100%);
   }
 
   .hero-carousel-hint {
@@ -778,9 +762,10 @@ const {
       position: relative;
       bottom: auto;
       left: auto;
-      right: auto;
-      padding-left: 0;
-      margin-top: 2rem;
+      width: 100%;
+      max-width: 100%;
+      /* Set explicit height on mobile for anchoring */
+      height: var(--mobile-carousel-height, 35dvh);
       -webkit-mask-image: none;
       mask-image: none;
     }
