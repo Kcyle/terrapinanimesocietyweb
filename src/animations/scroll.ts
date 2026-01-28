@@ -251,29 +251,59 @@ export function initScrollTransition(): void {
         if (newSection !== currentSection) {
           currentSection = newSection;
 
-          if (heroContent && pointerEventsState.get(heroContent) !== (newSection === 0 ? 'auto' : 'none')) {
+          // Helper to check if section is active or adjacent (for smooth transitions)
+          const isNearby = (sectionNum: number) => Math.abs(newSection - sectionNum) <= 1;
+
+          // Update pointer events AND visibility for each section
+          // Sections more than 1 step away get hidden entirely to save resources
+          if (heroContent) {
             heroContent.style.pointerEvents = newSection === 0 ? 'auto' : 'none';
-            pointerEventsState.set(heroContent, heroContent.style.pointerEvents);
           }
-          if (aboutContent && pointerEventsState.get(aboutContent) !== (newSection === 1 ? 'auto' : 'none')) {
+          if (aboutContent) {
             aboutContent.style.pointerEvents = newSection === 1 ? 'auto' : 'none';
-            pointerEventsState.set(aboutContent, aboutContent.style.pointerEvents);
           }
-          if (meetingsContent && pointerEventsState.get(meetingsContent) !== (newSection === 2 ? 'auto' : 'none')) {
+          if (meetingsContent) {
             meetingsContent.style.pointerEvents = newSection === 2 ? 'auto' : 'none';
-            pointerEventsState.set(meetingsContent, meetingsContent.style.pointerEvents);
+            // Hide meetings content when far away
+            if (!isNearby(2)) {
+              meetingsContent.style.visibility = 'hidden';
+            } else {
+              meetingsContent.style.visibility = 'visible';
+            }
           }
-          if (terpconSection && pointerEventsState.get(terpconSection) !== (newSection === 3 ? 'auto' : 'none')) {
+          if (meetingsBg) {
+            if (!isNearby(2)) {
+              meetingsBg.style.visibility = 'hidden';
+            } else {
+              meetingsBg.style.visibility = 'visible';
+            }
+          }
+          if (terpconSection) {
             terpconSection.style.pointerEvents = newSection === 3 ? 'auto' : 'none';
-            pointerEventsState.set(terpconSection, terpconSection.style.pointerEvents);
+            // Hide TerpCon when far away (more than 1 section)
+            if (!isNearby(3)) {
+              terpconSection.style.visibility = 'hidden';
+            } else {
+              terpconSection.style.visibility = 'visible';
+            }
           }
-          if (kameconSection && pointerEventsState.get(kameconSection) !== (newSection === 4 ? 'auto' : 'none')) {
+          if (kameconSection) {
             kameconSection.style.pointerEvents = newSection === 4 ? 'auto' : 'none';
-            pointerEventsState.set(kameconSection, kameconSection.style.pointerEvents);
+            // Hide Kamecon when far away
+            if (!isNearby(4)) {
+              kameconSection.style.visibility = 'hidden';
+            } else {
+              kameconSection.style.visibility = 'visible';
+            }
           }
-          if (maidCafeSection && pointerEventsState.get(maidCafeSection) !== (newSection === 5 ? 'auto' : 'none')) {
+          if (maidCafeSection) {
             maidCafeSection.style.pointerEvents = newSection === 5 ? 'auto' : 'none';
-            pointerEventsState.set(maidCafeSection, maidCafeSection.style.pointerEvents);
+            // Hide Maid Cafe when far away
+            if (!isNearby(5)) {
+              maidCafeSection.style.visibility = 'hidden';
+            } else {
+              maidCafeSection.style.visibility = 'visible';
+            }
           }
         }
       }
