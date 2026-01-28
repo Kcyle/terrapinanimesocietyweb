@@ -154,6 +154,10 @@ export function initScrollTransition(): void {
   // SET INITIAL STATES
   // ============================================
 
+  // Force browser to compute layout before GSAP reads any positions
+  // This prevents race conditions on hard refresh
+  void document.body.offsetHeight;
+
   // Hero - starts in natural position
   gsap.set(heroContent, { x: 0, zIndex: 10 });
   if (heroMascot) gsap.set(heroMascot, { y: 0 });
@@ -451,8 +455,14 @@ export function initScrollTransition(): void {
     }
   }
 
+  // Force ScrollTrigger to recalculate positions after all animations are set up
+  ScrollTrigger.refresh();
+
   // All GSAP initial states and animations are set up - hide loading screen
-  hideLoadingScreen();
+  // Small delay ensures layout is fully stable before revealing
+  setTimeout(() => {
+    hideLoadingScreen();
+  }, 50);
 }
 
 /**
