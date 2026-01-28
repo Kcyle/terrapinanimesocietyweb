@@ -155,15 +155,16 @@ export function initScrollTransition(): void {
   if (meetingsSchedulerBtn) gsap.set(meetingsSchedulerBtn, { y: '100vh', opacity: 0 });
 
   // TerpCon - entire section slides in (not just bg, to avoid overflow:hidden clipping)
+  // Set opacity: 1 to override any CSS opacity: 0 (like Kamecon)
   if (terpconSection) gsap.set(terpconSection, { zIndex: 100, yPercent: 100, visibility: 'visible' });
-  if (terpconTitle) gsap.set(terpconTitle, { y: '100vh', scale: 0.3 });
-  if (terpconSubtitle) gsap.set(terpconSubtitle, { x: '-100vw' });
-  if (terpconDesc) gsap.set(terpconDesc, { x: '-100vw', opacity: 0 });
-  if (terpconDetails.length) gsap.set(terpconDetails, { x: '-100vw', opacity: 0 });
-  if (terpconCta) gsap.set(terpconCta, { x: '-100vw', opacity: 0 });
-  if (terpconVendorsHeader) gsap.set(terpconVendorsHeader, { x: '100vw' });
-  if (terpconVendorsScroll) gsap.set(terpconVendorsScroll, { x: '100vw' });
-  if (terpconFeaturedArtists) gsap.set(terpconFeaturedArtists, { y: '50vh', opacity: 0 });
+  if (terpconTitle) gsap.set(terpconTitle, { y: '100vh', scale: 0.3, opacity: 1 });
+  if (terpconSubtitle) gsap.set(terpconSubtitle, { x: '-100vw', opacity: 1 });
+  if (terpconDesc) gsap.set(terpconDesc, { x: '-100vw', opacity: 1 });
+  if (terpconDetails.length) gsap.set(terpconDetails, { x: '-100vw', opacity: 1 });
+  if (terpconCta) gsap.set(terpconCta, { x: '-100vw', opacity: 1 });
+  if (terpconVendorsHeader) gsap.set(terpconVendorsHeader, { x: '100vw', opacity: 1 });
+  if (terpconVendorsScroll) gsap.set(terpconVendorsScroll, { x: '100vw', opacity: 1 });
+  if (terpconFeaturedArtists) gsap.set(terpconFeaturedArtists, { y: '50vh', opacity: 1 });
 
   // Kamecon - entire section slides in (not just bg, to avoid overflow:hidden clipping)
   // No fading - pure sliding from off-screen. Set opacity: 1 to override CSS opacity: 0
@@ -176,12 +177,13 @@ export function initScrollTransition(): void {
   if (kameconTurtle) gsap.set(kameconTurtle, { x: '100vw', opacity: 1 });
 
   // Maid Cafe - entire section slides in (not just bg, to avoid overflow:hidden clipping)
+  // Set opacity: 1 to override any CSS opacity: 0 (like Kamecon)
   if (maidCafeSection) gsap.set(maidCafeSection, { zIndex: 250, yPercent: 100, visibility: 'visible' });
-  if (maidCafeTitle) gsap.set(maidCafeTitle, { y: '100vh', scale: 0.3 });
-  if (maidCafeDesc) gsap.set(maidCafeDesc, { y: '50vh', opacity: 0 });
-  if (maidCafeInfo) gsap.set(maidCafeInfo, { y: '50vh', opacity: 0 });
-  if (maidCafeImage) gsap.set(maidCafeImage, { x: '-100vw' });
-  if (maidCafeCollage) gsap.set(maidCafeCollage, { x: '100vw' });
+  if (maidCafeTitle) gsap.set(maidCafeTitle, { y: '100vh', scale: 0.3, opacity: 1 });
+  if (maidCafeDesc) gsap.set(maidCafeDesc, { y: '50vh', opacity: 1 });
+  if (maidCafeInfo) gsap.set(maidCafeInfo, { y: '50vh', opacity: 1 });
+  if (maidCafeImage) gsap.set(maidCafeImage, { x: '-100vw', opacity: 1 });
+  if (maidCafeCollage) gsap.set(maidCafeCollage, { x: '100vw', opacity: 1 });
 
   // ============================================
   // CALCULATE TOTAL SCROLL NEEDED
@@ -211,8 +213,6 @@ export function initScrollTransition(): void {
     kamecon: transitionSize * 4,
     maidcafe: transitionSize * 5
   };
-
-  const pointerEventsState = new Map<HTMLElement | null, string>();
 
   const masterTl = gsap.timeline({
     defaults: {
@@ -250,11 +250,8 @@ export function initScrollTransition(): void {
         if (newSection !== currentSection) {
           currentSection = newSection;
 
-          // Helper to check if section is active or adjacent (for smooth transitions)
-          const isNearby = (sectionNum: number) => Math.abs(newSection - sectionNum) <= 1;
-
-          // Update pointer events AND visibility for each section
-          // Sections more than 1 step away get hidden entirely to save resources
+          // Update pointer events only - visibility is handled by GSAP positioning
+          // Elements at yPercent: 100 are off-screen and don't render anyway
           if (heroContent) {
             heroContent.style.pointerEvents = newSection === 0 ? 'auto' : 'none';
           }
@@ -263,46 +260,15 @@ export function initScrollTransition(): void {
           }
           if (meetingsContent) {
             meetingsContent.style.pointerEvents = newSection === 2 ? 'auto' : 'none';
-            // Hide meetings content when far away
-            if (!isNearby(2)) {
-              meetingsContent.style.visibility = 'hidden';
-            } else {
-              meetingsContent.style.visibility = 'visible';
-            }
-          }
-          if (meetingsBg) {
-            if (!isNearby(2)) {
-              meetingsBg.style.visibility = 'hidden';
-            } else {
-              meetingsBg.style.visibility = 'visible';
-            }
           }
           if (terpconSection) {
             terpconSection.style.pointerEvents = newSection === 3 ? 'auto' : 'none';
-            // Hide TerpCon when far away (more than 1 section)
-            if (!isNearby(3)) {
-              terpconSection.style.visibility = 'hidden';
-            } else {
-              terpconSection.style.visibility = 'visible';
-            }
           }
           if (kameconSection) {
             kameconSection.style.pointerEvents = newSection === 4 ? 'auto' : 'none';
-            // Hide Kamecon when far away
-            if (!isNearby(4)) {
-              kameconSection.style.visibility = 'hidden';
-            } else {
-              kameconSection.style.visibility = 'visible';
-            }
           }
           if (maidCafeSection) {
             maidCafeSection.style.pointerEvents = newSection === 5 ? 'auto' : 'none';
-            // Hide Maid Cafe when far away
-            if (!isNearby(5)) {
-              maidCafeSection.style.visibility = 'hidden';
-            } else {
-              maidCafeSection.style.visibility = 'visible';
-            }
           }
         }
       }
