@@ -4,6 +4,9 @@ import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
+// Expose ScrollTrigger globally for navigation teleport
+(window as any).ScrollTrigger = ScrollTrigger;
+
 // Force GPU acceleration for all animations
 gsap.config({ force3D: true });
 
@@ -18,7 +21,7 @@ let mainScrollTrigger: ScrollTrigger | null = null;
  * One master ScrollTrigger pins for entire duration
  * Each transition uses fixed absolute positions (no percentages)
  *
- * Flow: Hero → About → Meetings
+ * Flow: Hero → About → Meetings → Activities
  */
 export function initScrollTransition(): void {
   const heroSection = document.querySelector('[data-hero]') as HTMLElement;
@@ -57,9 +60,66 @@ export function initScrollTransition(): void {
   const meetingsLocationSection = document.querySelector('.meetings__location-section') as HTMLElement;
   const meetingsSchedulerBtn = document.querySelector('.meetings__admin-btn') as HTMLElement;
 
+  // Activities elements
+  const activitiesContent = document.querySelector('[data-activities-content]') as HTMLElement;
+  const activitiesBg = document.querySelector('[data-activities-bg]') as HTMLElement;
+  const activitiesCharacter = document.querySelector('[data-activities-character]') as HTMLElement;
+  const activitiesPower = document.querySelector('[data-activities-power]') as HTMLElement;
+  const activitiesTitle = document.querySelector('[data-activities-title]') as HTMLElement;
+  const activitiesDescription = document.querySelector('[data-activities-description]') as HTMLElement;
+  const activityCards = document.querySelectorAll('[data-activity-card]');
+  const activitiesVoid = document.querySelector('[data-activities-void]') as HTMLElement;
+
+  // Sky biome elements - 5 different skies that transition as character falls
+  const skyBiome1 = document.querySelector('[data-sky-biome-1]') as HTMLElement; // Animusic
+  const skyBiome2 = document.querySelector('[data-sky-biome-2]') as HTMLElement; // Cosplay
+  const skyBiome3 = document.querySelector('[data-sky-biome-3]') as HTMLElement; // Old Anime
+  const skyBiome4 = document.querySelector('[data-sky-biome-4]') as HTMLElement; // Book Club
+  const skyBiome5 = document.querySelector('[data-sky-biome-5]') as HTMLElement; // Rainbow
+
+  // Subgroups intro screen and content
+  const subgroupsIntro = document.querySelector('[data-subgroups-intro]') as HTMLElement;
+  const subgroupsHeading = document.querySelector('[data-subgroups-heading]') as HTMLElement;
+  const subgroupsSubtitle = document.querySelector('[data-subgroups-subtitle]') as HTMLElement;
+  const subgroupsPreviews = document.querySelector('[data-subgroups-previews]') as HTMLElement;
+  const subgroup1 = document.querySelector('[data-subgroup-1]') as HTMLElement;
+  const subgroup1Left = document.querySelector('[data-subgroup-1-left]') as HTMLElement;
+  const subgroup1Right = document.querySelector('[data-subgroup-1-right]') as HTMLElement;
+  const subgroup1PhotoLeft = document.querySelector('[data-subgroup-1-photo-left]') as HTMLElement;
+  const subgroup1PhotoRight = document.querySelector('[data-subgroup-1-photo-right]') as HTMLElement;
+  const subgroup2 = document.querySelector('[data-subgroup-2]') as HTMLElement;
+  const subgroup2Left = document.querySelector('[data-subgroup-2-left]') as HTMLElement;
+  const subgroup2Right = document.querySelector('[data-subgroup-2-right]') as HTMLElement;
+  const subgroup2PhotoLeft = document.querySelector('[data-subgroup-2-photo-left]') as HTMLElement;
+  const subgroup2PhotoRight = document.querySelector('[data-subgroup-2-photo-right]') as HTMLElement;
+  const subgroup3 = document.querySelector('[data-subgroup-3]') as HTMLElement;
+  const subgroup3Left = document.querySelector('[data-subgroup-3-left]') as HTMLElement;
+  const subgroup3Right = document.querySelector('[data-subgroup-3-right]') as HTMLElement;
+  const subgroup3PhotoLeft = document.querySelector('[data-subgroup-3-photo-left]') as HTMLElement;
+  const subgroup3PhotoRight = document.querySelector('[data-subgroup-3-photo-right]') as HTMLElement;
+  const subgroup4 = document.querySelector('[data-subgroup-4]') as HTMLElement;
+  const subgroup4Left = document.querySelector('[data-subgroup-4-left]') as HTMLElement;
+  const subgroup4Right = document.querySelector('[data-subgroup-4-right]') as HTMLElement;
+  const subgroup5 = document.querySelector('[data-subgroup-5]') as HTMLElement;
+  const subgroup5Left = document.querySelector('[data-subgroup-5-left]') as HTMLElement;
+  const subgroup5Right = document.querySelector('[data-subgroup-5-right]') as HTMLElement;
+
+  // Partners elements
+  const partnersContent = document.querySelector('[data-partners-content]') as HTMLElement;
+  const partnersBg = document.querySelector('[data-partners-bg]') as HTMLElement;
+  const partnersHeader = document.querySelector('[data-partners-header]') as HTMLElement;
+  const partnersTrinity = document.querySelector('[data-partners-trinity]') as HTMLElement;
+  const partnerItems = document.querySelectorAll('[data-partner]');
+  const partnersShowcase = document.querySelector('[data-partners-showcase]') as HTMLElement;
+
+  // Footer - hide during subgroups
+  const footer = document.querySelector('[data-footer]') as HTMLElement;
+
   if (!heroContent || !aboutContent) return;
 
   const hasMeetings = !!(meetingsContent && meetingsBg);
+  const hasActivities = !!(activitiesContent && activitiesBg);
+  const hasPartners = !!(partnersContent && partnersBg);
 
   // ============================================
   // APPLY GPU ACCELERATION HINTS (MINIMAL)
@@ -75,11 +135,20 @@ export function initScrollTransition(): void {
   applyGPUHints(aboutContent);
   applyGPUHints(meetingsBg);
   applyGPUHints(meetingsContent);
+  applyGPUHints(activitiesBg);
+  applyGPUHints(activitiesContent);
 
   console.log('[Scroll] Elements found:', {
     heroContent: !!heroContent,
     aboutContent: !!aboutContent,
-    hasMeetings
+    hasMeetings,
+    hasActivities,
+    hasPartners,
+    partnersContent: !!partnersContent,
+    partnersBg: !!partnersBg,
+    partnersHeader: !!partnersHeader,
+    partnersTrinity: !!partnersTrinity,
+    partnerItems: partnerItems.length
   });
 
   // ============================================
@@ -118,27 +187,100 @@ export function initScrollTransition(): void {
   if (meetingsLocationSection) gsap.set(meetingsLocationSection, { y: '100vh' });
   if (meetingsSchedulerBtn) gsap.set(meetingsSchedulerBtn, { y: '100vh', opacity: 0 });
 
+  // Activities - starts off-screen
+  if (activitiesBg) gsap.set(activitiesBg, { autoAlpha: 0, visibility: 'visible' });
+  if (activitiesContent) gsap.set(activitiesContent, { visibility: 'visible', opacity: 1 });
+  if (activitiesCharacter) gsap.set(activitiesCharacter, { x: '100vw', y: '100vh' });
+  if (activitiesPower) gsap.set(activitiesPower, { y: '100vh' }); // Only hide below, x set when grid is calculated
+  if (activitiesTitle) gsap.set(activitiesTitle, { y: '100vh' });
+  if (activitiesDescription) gsap.set(activitiesDescription, { y: '100vh', opacity: 0 });
+  // Void - hidden initially, shown after grid
+  if (activitiesVoid) gsap.set(activitiesVoid, { opacity: 0 });
+
+  // Subgroups intro - starts hidden, will fade in as fullscreen
+  if (subgroupsIntro) gsap.set(subgroupsIntro, { opacity: 0 });
+  if (subgroupsHeading) gsap.set(subgroupsHeading, { y: '40px', opacity: 0 });
+  if (subgroupsSubtitle) gsap.set(subgroupsSubtitle, { y: '20px', opacity: 0 });
+  if (subgroupsPreviews) gsap.set(subgroupsPreviews, { y: '30px', opacity: 0 });
+  // First biome starts hidden - intro shows first
+  if (skyBiome1) gsap.set(skyBiome1, { opacity: 0 });
+
+  // Subgroup content - all start hidden with left/right offscreen
+  if (subgroup1) gsap.set(subgroup1, { opacity: 0 });
+  if (subgroup1Left) gsap.set(subgroup1Left, { x: '-100vw', opacity: 0 });
+  if (subgroup1Right) gsap.set(subgroup1Right, { x: '100vw', opacity: 0 });
+  if (subgroup1PhotoLeft) gsap.set(subgroup1PhotoLeft, { y: '100vh', opacity: 0 });
+  if (subgroup1PhotoRight) gsap.set(subgroup1PhotoRight, { y: '-100vh', opacity: 0 });
+  if (subgroup2) gsap.set(subgroup2, { opacity: 0 });
+  if (subgroup2Left) gsap.set(subgroup2Left, { x: '-100vw', opacity: 0 });
+  if (subgroup2Right) gsap.set(subgroup2Right, { x: '100vw', opacity: 0 });
+  if (subgroup2PhotoLeft) gsap.set(subgroup2PhotoLeft, { y: '100vh', opacity: 0 });
+  if (subgroup2PhotoRight) gsap.set(subgroup2PhotoRight, { y: '100vh', opacity: 0 });
+  if (subgroup3) gsap.set(subgroup3, { opacity: 0 });
+  if (subgroup3Left) gsap.set(subgroup3Left, { x: '-100vw', opacity: 0 });
+  if (subgroup3Right) gsap.set(subgroup3Right, { x: '100vw', opacity: 0 });
+  if (subgroup3PhotoLeft) gsap.set(subgroup3PhotoLeft, { y: '100vh', opacity: 0 });
+  if (subgroup3PhotoRight) gsap.set(subgroup3PhotoRight, { y: '-100vh', opacity: 0 });
+  if (subgroup4) gsap.set(subgroup4, { opacity: 0 });
+  if (subgroup4Left) gsap.set(subgroup4Left, { x: '-100vw', opacity: 0 });
+  if (subgroup4Right) gsap.set(subgroup4Right, { x: '100vw', opacity: 0 });
+  if (subgroup5) gsap.set(subgroup5, { opacity: 0 });
+  if (subgroup5Left) gsap.set(subgroup5Left, { x: '-100vw', opacity: 0 });
+  if (subgroup5Right) gsap.set(subgroup5Right, { x: '100vw', opacity: 0 });
+
+  // Partners - starts off-screen
+  if (partnersContent) gsap.set(partnersContent, { visibility: 'visible', opacity: 1 });
+  if (partnersBg) gsap.set(partnersBg, { yPercent: 100, visibility: 'visible' });
+  if (partnersHeader) gsap.set(partnersHeader, { y: 40, opacity: 0 });
+  if (partnersTrinity) gsap.set(partnersTrinity, { opacity: 0 });
+  if (partnerItems.length) {
+    partnerItems.forEach((item, i) => {
+      gsap.set(item, { y: 30, opacity: 0 });
+    });
+  }
+  if (partnersShowcase) gsap.set(partnersShowcase, { y: 30, opacity: 0 });
+
+  // Activity cards - start off-screen, alternating left/right, fully opaque (no fade)
+  if (activityCards.length) {
+    activityCards.forEach((card, i) => {
+      const fromLeft = i % 2 === 0;
+      gsap.set(card, {
+        x: fromLeft ? '-120vw' : '120vw',
+        rotation: fromLeft ? -25 : 25,
+        opacity: 1,
+      });
+    });
+  }
+
   // ============================================
   // CALCULATE TOTAL SCROLL NEEDED
   // ============================================
 
-  // Flow: Hero→About→Meetings
+  // Flow: Hero→About→Meetings→Activities (+ card pile)
   let numTransitions = 1; // Base: Hero→About
   if (hasMeetings) numTransitions += 1; // About→Meetings
-  const totalScrollVh = numTransitions * 150;
+  if (hasActivities) numTransitions += 1; // Meetings→Activities
 
-  console.log('[Scroll] Transitions:', numTransitions, 'Total scroll:', totalScrollVh + 'vh');
+  // Extra scroll units for partners (1.5) + intro screen + 5 sky biomes
+  // Partners: 1.5 units, Intro: 1.5 units, 5 biomes x 1.5 units each = 12 total
+  let effectiveUnits = numTransitions;
+  if (hasPartners) effectiveUnits += 1.5;
+  if (hasActivities) effectiveUnits += 12; // Subgroups section
+  const totalScrollVh = effectiveUnits * 150;
+
+  console.log('[Scroll] Transitions:', numTransitions, 'Effective units:', effectiveUnits, 'Total scroll:', totalScrollVh + 'vh');
 
   // ============================================
   // MASTER TIMELINE
   // ============================================
 
   let currentSection = 0;
-  const transitionSize = 1 / numTransitions;
+  const transitionSize = 1 / effectiveUnits;
   const sectionBoundaries = {
     hero: transitionSize * 0.5,
     about: transitionSize,
-    meetings: transitionSize * 2
+    meetings: transitionSize * 2,
+    activities: transitionSize * 3
   };
 
   const masterTl = gsap.timeline({
@@ -164,8 +306,10 @@ export function initScrollTransition(): void {
           newSection = 1; // About
         } else if (hasMeetings && progress < sectionBoundaries.meetings) {
           newSection = progress < transitionSize * 1.5 ? 1 : 2;
+        } else if (hasActivities && progress < sectionBoundaries.activities) {
+          newSection = progress < transitionSize * 2.5 ? 2 : 3;
         } else {
-          newSection = 2; // Meetings fallback
+          newSection = hasActivities ? 3 : 2;
         }
 
         if (newSection !== currentSection) {
@@ -181,6 +325,9 @@ export function initScrollTransition(): void {
           if (meetingsContent) {
             meetingsContent.style.pointerEvents = newSection === 2 ? 'auto' : 'none';
           }
+          if (activitiesContent) {
+            activitiesContent.style.pointerEvents = newSection === 3 ? 'auto' : 'none';
+          }
         }
       }
     }
@@ -191,23 +338,24 @@ export function initScrollTransition(): void {
 
   // Prevent animations from triggering during browser resize
   let resizeTimeout: number | null = null;
-  let savedProgress: number | null = null;
+  let isResizing = false;
 
   window.addEventListener('resize', () => {
-    if (savedProgress === null && mainScrollTrigger) {
-      savedProgress = mainScrollTrigger.progress;
-      mainScrollTrigger.disable(false);
+    if (!isResizing && mainScrollTrigger) {
+      isResizing = true;
+      // Don't disable - just pause updates to prevent glitching
+      masterTl.pause();
     }
     if (resizeTimeout) clearTimeout(resizeTimeout);
     resizeTimeout = window.setTimeout(() => {
-      if (mainScrollTrigger && savedProgress !== null) {
-        mainScrollTrigger.enable(false);
-        mainScrollTrigger.refresh();
-        const newScrollPos = mainScrollTrigger.start + (savedProgress * (mainScrollTrigger.end - mainScrollTrigger.start));
-        window.scrollTo(0, newScrollPos);
-        savedProgress = null;
+      if (mainScrollTrigger && isResizing) {
+        // Refresh ScrollTrigger calculations for new dimensions
+        ScrollTrigger.refresh();
+        // Resume the timeline
+        masterTl.resume();
+        isResizing = false;
       }
-    }, 150);
+    }, 200);
   });
 
   // ============================================
@@ -228,7 +376,8 @@ export function initScrollTransition(): void {
   if (aboutInfo) masterTl.to(aboutInfo, { y: 0, duration: 0.35, ease: 'none' }, 0.28);
   if (aboutButtons) masterTl.to(aboutButtons, { y: 0, duration: 0.35, ease: 'none' }, 0.3);
   if (collageItems.length) masterTl.to(collageItems, { y: 0, duration: 0.35, ease: 'none', stagger: 0.02 }, 0.28);
-  if (aboutMascot) masterTl.to(aboutMascot, { y: 0, duration: 0.35, ease: 'none' }, 0.32);
+  // C.C. slides in separately from bottom, after collage is in place
+  if (aboutMascot) masterTl.to(aboutMascot, { y: 0, duration: 0.4, ease: 'power2.out' }, 0.5);
 
   // ============================================
   // TRANSITION 2: ABOUT → MEETINGS (position 1 to 2)
@@ -254,8 +403,461 @@ export function initScrollTransition(): void {
     if (meetingsSchedulerBtn) masterTl.to(meetingsSchedulerBtn, { y: 0, opacity: 1, duration: 0.35, ease: 'none' }, 1.42);
   }
 
+  // ============================================
+  // TRANSITION 3: MEETINGS → ACTIVITIES (position 2 to 3)
+  // Makima bg fades in slowly/cinematically first,
+  // then Chainsaw Man slides in from bottom-right,
+  // then Activities title enters
+  // ============================================
+
+  if (hasActivities && hasMeetings) {
+    // Meetings elements exit
+    if (meetingsHeroTitle) masterTl.to(meetingsHeroTitle, { y: '-100vh', duration: 0.35, ease: 'none' }, 2.1);
+    if (meetingsSectionHeader) masterTl.to(meetingsSectionHeader, { y: '-100vh', duration: 0.35, ease: 'none' }, 2.1);
+    if (meetingsViewer) masterTl.to(meetingsViewer, { y: '100vh', duration: 0.35, ease: 'none' }, 2.12);
+    if (meetingsThumbnails) masterTl.to(meetingsThumbnails, { x: '100vw', duration: 0.35, ease: 'none' }, 2.12);
+    if (meetingsLocationSection) masterTl.to(meetingsLocationSection, { y: '100vh', duration: 0.35, ease: 'none' }, 2.14);
+    if (meetingsSchedulerBtn) masterTl.to(meetingsSchedulerBtn, { y: '100vh', opacity: 0, duration: 0.35, ease: 'none' }, 2.14);
+    if (meetingsPunch) masterTl.to(meetingsPunch, { x: '100vw', duration: 0.35, ease: 'none' }, 2.15);
+    if (meetingsReze) masterTl.to(meetingsReze, { x: '-100vw', duration: 0.35, ease: 'none' }, 2.15);
+
+    // Meetings bg exits upward
+    if (meetingsBg) masterTl.to(meetingsBg, { yPercent: -100, duration: 0.4, ease: 'none' }, 2.1);
+
+    // Makima background fades in slowly and cinematically
+    // Starts early and takes a long duration for that slow cinematic feel
+    if (activitiesBg) masterTl.to(activitiesBg, { autoAlpha: 1, duration: 0.5, ease: 'power1.inOut' }, 2.2);
+
+    // Chainsaw Man slides in from bottom-right after bg is settling in
+    if (activitiesCharacter) masterTl.to(activitiesCharacter, { x: 0, y: 0, duration: 0.4, ease: 'power2.out' }, 2.45);
+
+    // Power stays hidden - will slide in from bottom after card pile animation
+
+    // Activities title enters from below, arrives last
+    if (activitiesTitle) masterTl.to(activitiesTitle, { y: 0, duration: 0.35, ease: 'power2.out' }, 2.55);
+
+    // Description fades in after the title
+    if (activitiesDescription) masterTl.to(activitiesDescription, { y: 0, opacity: 1, duration: 0.3, ease: 'power2.out' }, 2.65);
+
+    // ============================================
+    // CARD PILE: Activity cards slide in one by one (positions 3.0 to ~4.7)
+    // Each card slides from off-screen and lands in the pile
+    // with a unique rotation and offset, like papers being tossed
+    // ============================================
+
+    if (activityCards.length) {
+      // Final rotation and offset for each card in the pile
+      const cardFinalStates = [
+        { rotation: -7,  x: -15, y: 8   },  // Movie Bingo
+        { rotation: 4,   x: 18,  y: -10  },  // Jeopardy
+        { rotation: -12, x: -8,  y: 14   },  // Pictionary/Charades
+        { rotation: 6,   x: 22,  y: -6   },  // 20 Questions
+        { rotation: -3,  x: -20, y: 5    },  // Hot Takes
+        { rotation: 10,  x: 10,  y: -16  },  // Magic Boy Screening
+        { rotation: -9,  x: -12, y: 10   },  // Chainsaw Man Event
+        { rotation: 5,   x: 16,  y: -8   },  // Scavenger Hunt
+        { rotation: -5,  x: -18, y: 12   },  // Live Fandubs
+        { rotation: 2,   x: 6,   y: -4   },  // Presentations
+        { rotation: -8,  x: -10, y: 6    },  // Fujimoto 17-26 Screening
+      ];
+
+      activityCards.forEach((card, i) => {
+        const state = cardFinalStates[i] || { rotation: 0, x: 0, y: 0 };
+        const startPos = 3.0 + i * 0.18;
+
+        masterTl.to(card, {
+          x: state.x,
+          y: state.y,
+          rotation: state.rotation,
+          duration: 0.2,
+          ease: 'power3.out',
+        }, startPos);
+      });
+
+      // ============================================
+      // CARD GRID: 3x3 grid for first 9 cards only
+      // Last 2 cards (Presentations, Fujimoto) fade out
+      // Anchored to fit between description and footer
+      // ============================================
+
+      const gridGap = 10;
+      const gridCols = 3;
+      const baseCardW = 500;
+      const baseCardH = 280;
+
+      // Get pile position for offset calculation
+      const pileEl = document.querySelector('.activities__card-pile') as HTMLElement;
+      const pileLeft = pileEl ? pileEl.offsetLeft : 200;
+      const pileTop = pileEl ? pileEl.offsetTop : 560;
+
+      // Calculate available space - stricter constraints for 1080p
+      const mainEl = document.querySelector('.activities__main') as HTMLElement;
+      const descBottom = mainEl ? mainEl.offsetTop + mainEl.offsetHeight : 280;
+      const viewportHeight = window.innerHeight;
+      const footerBuffer = 80; // Increased space for footer
+      const topGap = 10; // Reduced gap from description
+      const availableHeight = viewportHeight - descBottom - footerBuffer - topGap;
+      const availableWidth = window.innerWidth - 150; // More padding on sides
+
+      // Scale to fit 3 rows within available space
+      const totalBaseGridHeight = 3 * baseCardH + 2 * gridGap;
+      const totalBaseGridWidth = 3 * baseCardW + 2 * gridGap;
+      const scaleH = availableHeight / totalBaseGridHeight;
+      const scaleW = availableWidth / totalBaseGridWidth;
+      // Use minimum of height/width scale, cap at 0.65 for 1080p compatibility
+      const scale = Math.min(0.65, scaleH, scaleW);
+
+      const cardW = baseCardW * scale;
+      const cardH = baseCardH * scale;
+      const cellW = cardW + gridGap;
+      const cellH = cardH + gridGap;
+
+      // Calculate total grid dimensions after scaling
+      const totalGridWidth = 3 * cardW + 2 * gridGap;
+      const totalGridHeight = 3 * cardH + 2 * gridGap;
+
+      // Align grid with the description (same left edge as text content)
+      // Use page-padding to match the Activities title/description alignment
+      const pagePadding = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--page-padding')) || 48;
+      const gridStartX = pagePadding + 20; // Slight offset from edge
+      // Position grid closer to description
+      const gridStartY = descBottom + topGap;
+
+      // Calculate offsets from pile position
+      const gridOffsetX = gridStartX - pileLeft;
+      const gridOffsetY = gridStartY - pileTop;
+
+      activityCards.forEach((card, i) => {
+        if (i < 9) {
+          // First 9 cards: 3x3 grid
+          const col = i % gridCols;
+          const row = Math.floor(i / gridCols);
+          const targetX = col * cellW + gridOffsetX;
+          const targetY = row * cellH + gridOffsetY;
+
+          masterTl.to(card, {
+            x: targetX,
+            y: targetY,
+            rotation: 0,
+            scale: scale,
+            transformOrigin: 'top left',
+            duration: 0.4,
+            ease: 'power2.inOut',
+          }, 5.2 + i * 0.02);
+        } else {
+          // Last 2 cards (Presentations, Fujimoto): fade out
+          masterTl.to(card, {
+            opacity: 0,
+            scale: 0.8,
+            duration: 0.3,
+            ease: 'power2.in',
+          }, 5.2);
+        }
+      });
+
+      // Power slides in from bottom after card pile animation completes
+      // Card pile ends around position 4.8 (3.0 + 10 * 0.18), so slide in at 5.0
+      if (activitiesPower) {
+        const powerTargetX = gridStartX + totalGridWidth - 80; // Overlaps with grid
+        // Set x position instantly at start, then animate y sliding up from bottom
+        masterTl.set(activitiesPower, { x: powerTargetX }, 5.0);
+        masterTl.to(activitiesPower, {
+          y: 0,
+          duration: 0.4,
+          ease: 'power2.out',
+        }, 5.0);
+      }
+
+      // ============================================
+      // TRANSITION 4: ACTIVITIES → PARTNERS (position 6.0 to 7.5)
+      // ============================================
+
+      // Activities elements slide off
+      if (activitiesTitle) {
+        masterTl.to(activitiesTitle, { x: '-100vw', opacity: 0, duration: 0.5, ease: 'power2.in' }, 6.0);
+      }
+      if (activitiesDescription) {
+        masterTl.to(activitiesDescription, { x: '-100vw', opacity: 0, duration: 0.5, ease: 'power2.in' }, 6.05);
+      }
+      if (activitiesCharacter) {
+        masterTl.to(activitiesCharacter, { x: '100vw', y: '100vh', opacity: 0, duration: 0.5, ease: 'power2.in' }, 6.1);
+      }
+      if (activitiesPower) {
+        masterTl.to(activitiesPower, { y: '100vh', opacity: 0, duration: 0.5, ease: 'power2.in' }, 6.1);
+      }
+      // Slide out the grid cards
+      activityCards.forEach((card, i) => {
+        masterTl.to(card, { y: '100vh', opacity: 0, duration: 0.4, ease: 'power2.in' }, 6.0 + i * 0.02);
+      });
+
+      // Activities bg out, Partners bg in
+      if (activitiesBg) {
+        masterTl.to(activitiesBg, { autoAlpha: 0, duration: 0.4, ease: 'none' }, 6.0);
+      }
+      if (partnersBg) {
+        masterTl.to(partnersBg, { yPercent: 0, duration: 0.4, ease: 'none' }, 6.0);
+      }
+
+      // Partners content animates in - fade up elegantly
+      if (partnersHeader) {
+        masterTl.to(partnersHeader, { y: 0, opacity: 1, duration: 0.5, ease: 'power3.out' }, 6.25);
+      }
+      if (partnersTrinity) {
+        masterTl.to(partnersTrinity, { opacity: 1, duration: 0.3, ease: 'none' }, 6.35);
+      }
+      // Partner items stagger in
+      if (partnerItems.length) {
+        partnerItems.forEach((item, i) => {
+          masterTl.to(item, { y: 0, opacity: 1, duration: 0.5, ease: 'power3.out' }, 6.4 + i * 0.08);
+        });
+      }
+      // Showcase fades in after partners
+      if (partnersShowcase) {
+        masterTl.to(partnersShowcase, { y: 0, opacity: 1, duration: 0.5, ease: 'power3.out' }, 6.7);
+      }
+
+      // Partners elements exit - fade out
+      if (partnersHeader) {
+        masterTl.to(partnersHeader, { y: -30, opacity: 0, duration: 0.35, ease: 'power2.in' }, 7.5);
+      }
+      if (partnerItems.length) {
+        partnerItems.forEach((item, i) => {
+          masterTl.to(item, { y: -20, opacity: 0, duration: 0.3, ease: 'power2.in' }, 7.5 + i * 0.02);
+        });
+      }
+      if (partnersTrinity) {
+        masterTl.to(partnersTrinity, { opacity: 0, duration: 0.2, ease: 'none' }, 7.6);
+      }
+      if (partnersShowcase) {
+        masterTl.to(partnersShowcase, { y: -20, opacity: 0, duration: 0.3, ease: 'power2.in' }, 7.55);
+      }
+
+      // Partners bg out, Void fades in
+      if (partnersBg) {
+        masterTl.to(partnersBg, { yPercent: -100, duration: 0.4, ease: 'none' }, 7.7);
+      }
+      if (activitiesVoid) {
+        masterTl.to(activitiesVoid, {
+          opacity: 1,
+          duration: 0.6,
+          ease: 'power1.inOut',
+        }, 7.8);
+      }
+
+      // ============================================
+      // HIDE FOOTER during subgroups section
+      // ============================================
+      if (footer) {
+        masterTl.to(footer, { opacity: 0, y: 50, duration: 0.3, ease: 'power2.in' }, 7.8);
+      }
+
+      // ============================================
+      // SUBGROUPS INTRO - Clean Apple-style
+      // ============================================
+      if (subgroupsIntro) {
+        masterTl.to(subgroupsIntro, { opacity: 1, duration: 0.4, ease: 'power2.out' }, 7.8);
+      }
+      if (subgroupsHeading) {
+        masterTl.to(subgroupsHeading, { y: 0, opacity: 1, duration: 0.5, ease: 'power3.out' }, 8.0);
+      }
+      if (subgroupsSubtitle) {
+        masterTl.to(subgroupsSubtitle, { y: 0, opacity: 1, duration: 0.4, ease: 'power3.out' }, 8.15);
+      }
+      if (subgroupsPreviews) {
+        masterTl.to(subgroupsPreviews, { y: 0, opacity: 1, duration: 0.5, ease: 'power3.out' }, 8.3);
+        masterTl.to(subgroupsPreviews, { y: '100px', opacity: 0, duration: 0.4, ease: 'power2.in' }, 8.8);
+      }
+      if (subgroupsIntro) {
+        masterTl.to(subgroupsIntro, { opacity: 0, duration: 0.4, ease: 'power2.in' }, 9.0);
+      }
+
+      // ============================================
+      // SKY BIOME TRANSITIONS - 5 different skies
+      // Intro: 7.8 - 9.0
+      // Biome 1 (Animusic): 9.0 - 10.5
+      // Biome 2 (Cosplay): 10.5 - 12.0
+      // Biome 3 (Old Anime): 12.0 - 13.5
+      // Biome 4 (Book Club): 13.5 - 15.0
+      // Biome 5 (Rainbow): 15.0 - 16.5
+      // ============================================
+
+      // ===== BIOME 1: ANIMUSIC (9.0 - 10.5) =====
+      if (skyBiome1) {
+        masterTl.to(skyBiome1, { opacity: 1, duration: 0.4, ease: 'power2.out' }, 9.0);
+      }
+      if (subgroup1) {
+        masterTl.to(subgroup1, { opacity: 1, duration: 0.2, ease: 'none' }, 9.2);
+      }
+      if (subgroup1Left) {
+        masterTl.to(subgroup1Left, { x: 0, opacity: 1, duration: 0.3, ease: 'power2.out' }, 9.25);
+      }
+      if (subgroup1Right) {
+        masterTl.to(subgroup1Right, { x: 0, opacity: 1, duration: 0.3, ease: 'power2.out' }, 9.3);
+      }
+      if (subgroup1PhotoRight) {
+        masterTl.to(subgroup1PhotoRight, { y: 0, opacity: 1, duration: 0.4, ease: 'power2.out' }, 9.35);
+      }
+      if (subgroup1PhotoLeft) {
+        masterTl.to(subgroup1PhotoLeft, { y: 0, opacity: 1, duration: 0.4, ease: 'power2.out' }, 9.4);
+      }
+      // Slide out
+      if (subgroup1PhotoRight) {
+        masterTl.to(subgroup1PhotoRight, { y: '-100vh', opacity: 0, duration: 0.3, ease: 'power2.in' }, 10.05);
+      }
+      if (subgroup1PhotoLeft) {
+        masterTl.to(subgroup1PhotoLeft, { y: '100vh', opacity: 0, duration: 0.3, ease: 'power2.in' }, 10.05);
+      }
+      if (subgroup1Left) {
+        masterTl.to(subgroup1Left, { x: '-100vw', opacity: 0, duration: 0.25, ease: 'power2.in' }, 10.1);
+      }
+      if (subgroup1Right) {
+        masterTl.to(subgroup1Right, { x: '100vw', opacity: 0, duration: 0.25, ease: 'power2.in' }, 10.1);
+      }
+      if (subgroup1) {
+        masterTl.to(subgroup1, { opacity: 0, duration: 0.15, ease: 'none' }, 10.4);
+      }
+
+      // Biome 1 → Biome 2 (position 10.5)
+      if (skyBiome1) {
+        masterTl.to(skyBiome1, { opacity: 0, duration: 0.3, ease: 'power1.inOut' }, 10.5);
+      }
+      if (skyBiome2) {
+        masterTl.to(skyBiome2, { opacity: 1, duration: 0.3, ease: 'power1.inOut' }, 10.5);
+      }
+
+      // ===== BIOME 2: COSPLAY (10.5 - 12.0) =====
+      if (subgroup2) {
+        masterTl.to(subgroup2, { opacity: 1, duration: 0.2, ease: 'none' }, 10.7);
+      }
+      if (subgroup2Left) {
+        masterTl.to(subgroup2Left, { x: 0, opacity: 1, duration: 0.3, ease: 'power2.out' }, 10.75);
+      }
+      if (subgroup2Right) {
+        masterTl.to(subgroup2Right, { x: 0, opacity: 1, duration: 0.3, ease: 'power2.out' }, 10.8);
+      }
+      // Cosplay photos slide up from bottom
+      if (subgroup2PhotoLeft) {
+        masterTl.to(subgroup2PhotoLeft, { y: 0, opacity: 1, duration: 0.4, ease: 'power2.out' }, 10.85);
+      }
+      if (subgroup2PhotoRight) {
+        masterTl.to(subgroup2PhotoRight, { y: 0, opacity: 1, duration: 0.4, ease: 'power2.out' }, 10.9);
+      }
+      // Slide out
+      if (subgroup2PhotoLeft) {
+        masterTl.to(subgroup2PhotoLeft, { y: '100vh', opacity: 0, duration: 0.3, ease: 'power2.in' }, 11.55);
+      }
+      if (subgroup2PhotoRight) {
+        masterTl.to(subgroup2PhotoRight, { y: '100vh', opacity: 0, duration: 0.3, ease: 'power2.in' }, 11.55);
+      }
+      if (subgroup2Left) {
+        masterTl.to(subgroup2Left, { x: '-100vw', opacity: 0, duration: 0.25, ease: 'power2.in' }, 11.6);
+      }
+      if (subgroup2Right) {
+        masterTl.to(subgroup2Right, { x: '100vw', opacity: 0, duration: 0.25, ease: 'power2.in' }, 11.6);
+      }
+      if (subgroup2) {
+        masterTl.to(subgroup2, { opacity: 0, duration: 0.15, ease: 'none' }, 11.9);
+      }
+
+      // Biome 2 → Biome 3 (position 12.0)
+      if (skyBiome2) {
+        masterTl.to(skyBiome2, { opacity: 0, duration: 0.3, ease: 'power1.inOut' }, 12.0);
+      }
+      if (skyBiome3) {
+        masterTl.to(skyBiome3, { opacity: 1, duration: 0.3, ease: 'power1.inOut' }, 12.0);
+      }
+
+      // ===== BIOME 3: OLD ANIME (12.0 - 13.5) =====
+      if (subgroup3) {
+        masterTl.to(subgroup3, { opacity: 1, duration: 0.2, ease: 'none' }, 12.2);
+      }
+      if (subgroup3Left) {
+        masterTl.to(subgroup3Left, { x: 0, opacity: 1, duration: 0.3, ease: 'power2.out' }, 12.25);
+      }
+      if (subgroup3Right) {
+        masterTl.to(subgroup3Right, { x: 0, opacity: 1, duration: 0.3, ease: 'power2.out' }, 12.3);
+      }
+      // Old Anime character images slide in
+      if (subgroup3PhotoRight) {
+        masterTl.to(subgroup3PhotoRight, { y: 0, opacity: 1, duration: 0.4, ease: 'power2.out' }, 12.35);
+      }
+      if (subgroup3PhotoLeft) {
+        masterTl.to(subgroup3PhotoLeft, { y: 0, opacity: 1, duration: 0.4, ease: 'power2.out' }, 12.4);
+      }
+      // Slide out
+      if (subgroup3PhotoRight) {
+        masterTl.to(subgroup3PhotoRight, { y: '-100vh', opacity: 0, duration: 0.3, ease: 'power2.in' }, 13.05);
+      }
+      if (subgroup3PhotoLeft) {
+        masterTl.to(subgroup3PhotoLeft, { y: '100vh', opacity: 0, duration: 0.3, ease: 'power2.in' }, 13.05);
+      }
+      if (subgroup3Left) {
+        masterTl.to(subgroup3Left, { x: '-100vw', opacity: 0, duration: 0.25, ease: 'power2.in' }, 13.1);
+      }
+      if (subgroup3Right) {
+        masterTl.to(subgroup3Right, { x: '100vw', opacity: 0, duration: 0.25, ease: 'power2.in' }, 13.1);
+      }
+      if (subgroup3) {
+        masterTl.to(subgroup3, { opacity: 0, duration: 0.15, ease: 'none' }, 13.4);
+      }
+
+      // Biome 3 → Biome 4 (position 13.5)
+      if (skyBiome3) {
+        masterTl.to(skyBiome3, { opacity: 0, duration: 0.3, ease: 'power1.inOut' }, 13.5);
+      }
+      if (skyBiome4) {
+        masterTl.to(skyBiome4, { opacity: 1, duration: 0.3, ease: 'power1.inOut' }, 13.5);
+      }
+
+      // ===== BIOME 4: BOOK CLUB (13.5 - 15.0) =====
+      if (subgroup4) {
+        masterTl.to(subgroup4, { opacity: 1, duration: 0.2, ease: 'none' }, 13.7);
+      }
+      if (subgroup4Left) {
+        masterTl.to(subgroup4Left, { x: 0, opacity: 1, duration: 0.3, ease: 'power2.out' }, 13.75);
+      }
+      if (subgroup4Right) {
+        masterTl.to(subgroup4Right, { x: 0, opacity: 1, duration: 0.3, ease: 'power2.out' }, 13.8);
+      }
+      if (subgroup4Left) {
+        masterTl.to(subgroup4Left, { x: '-100vw', opacity: 0, duration: 0.25, ease: 'power2.in' }, 14.6);
+      }
+      if (subgroup4Right) {
+        masterTl.to(subgroup4Right, { x: '100vw', opacity: 0, duration: 0.25, ease: 'power2.in' }, 14.6);
+      }
+      if (subgroup4) {
+        masterTl.to(subgroup4, { opacity: 0, duration: 0.15, ease: 'none' }, 14.9);
+      }
+
+      // Biome 4 → Biome 5 (position 15.0)
+      if (skyBiome4) {
+        masterTl.to(skyBiome4, { opacity: 0, duration: 0.3, ease: 'power1.inOut' }, 15.0);
+      }
+      if (skyBiome5) {
+        masterTl.to(skyBiome5, { opacity: 1, duration: 0.3, ease: 'power1.inOut' }, 15.0);
+      }
+
+      // ===== BIOME 5: RAINBOW (15.0 - 16.5) =====
+      if (subgroup5) {
+        masterTl.to(subgroup5, { opacity: 1, duration: 0.2, ease: 'none' }, 15.2);
+      }
+      if (subgroup5Left) {
+        masterTl.to(subgroup5Left, { x: 0, opacity: 1, duration: 0.3, ease: 'power2.out' }, 15.25);
+      }
+      if (subgroup5Right) {
+        masterTl.to(subgroup5Right, { x: 0, opacity: 1, duration: 0.3, ease: 'power2.out' }, 15.3);
+      }
+
+      // Force timeline to extend for proper scroll mapping
+      masterTl.to({}, { duration: 0.01, ease: 'none' }, 16.49);
+    }
+  }
+
   // Force ScrollTrigger to recalculate positions after all animations are set up
-  ScrollTrigger.refresh();
+  // Defer to prevent auto-scroll issues on page load
+  requestAnimationFrame(() => {
+    ScrollTrigger.refresh();
+  });
 }
 
 /**

@@ -4,16 +4,35 @@ import CloseIcon from '../icons/CloseIcon.astro';
 interface NavItem {
   label: string;
   href: string;
+  children?: { label: string; href: string }[];
 }
 
 const navItems: NavItem[] = [
   { label: 'Home', href: '/' },
-  { label: 'TerpCon 2026', href: '/terpcon' },
-  { label: 'Kamecon', href: '/kamecon' },
-  { label: 'Maid Cafe', href: '/maidcafe' },
-  { label: 'About', href: '/about' },
-  { label: 'Join', href: '/join' },
-  { label: 'Contact', href: '/contact' },
+  { label: 'About', href: '#about-section' },
+  { label: 'Meetings', href: '#meetings-section' },
+  { label: 'Activities', href: '#activities-section' },
+  { label: 'Partners', href: '#partners-section' },
+  {
+    label: 'Subgroups',
+    href: '#subgroups-section',
+    children: [
+      { label: 'Animusic', href: '#subgroup-animusic' },
+      { label: 'Cosplay', href: '#subgroup-cosplay' },
+      { label: 'Old Anime', href: '#subgroup-oldanime' },
+      { label: 'Book Club', href: '#subgroup-bookclub' },
+      { label: 'Rainbow', href: '#subgroup-rainbow' },
+    ]
+  },
+  {
+    label: 'Events',
+    href: '#',
+    children: [
+      { label: 'TerpCon 2026', href: '/terpcon' },
+      { label: 'Kamecon', href: '/kamecon' },
+      { label: 'Maid Cafe', href: '/maidcafe' },
+    ]
+  },
 ];
 ---
 
@@ -43,13 +62,29 @@ const navItems: NavItem[] = [
 
     <ul class="navigation-menu__list">
       {navItems.map((item, index) => (
-        <li class="navigation-menu__item" style={`--item-index: ${index}`}>
+        <li class={`navigation-menu__item ${item.children ? 'navigation-menu__item--has-children' : ''}`} style={`--item-index: ${index}`}>
           <a class="navigation-menu__link" href={item.href} data-menu-link>
             <span class="navigation-menu__link-index">
               {String(index + 1).padStart(2, '0')}
             </span>
             <span class="navigation-menu__link-label">{item.label}</span>
+            {item.children && (
+              <svg class="navigation-menu__chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            )}
           </a>
+          {item.children && (
+            <ul class="navigation-menu__dropdown">
+              {item.children.map((child) => (
+                <li class="navigation-menu__dropdown-item">
+                  <a class="navigation-menu__dropdown-link" href={child.href} data-menu-link>
+                    {child.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          )}
         </li>
       ))}
     </ul>
@@ -60,7 +95,85 @@ const navItems: NavItem[] = [
   </div>
 </nav>
 
+<!-- Teleport Loading Screen -->
+<div class="teleport-loader" data-teleport-loader>
+  <div class="teleport-loader__content">
+    <img src="/images/Icons/chibi.webp" alt="" class="teleport-loader__icon" />
+    <div class="teleport-loader__bar">
+      <div class="teleport-loader__bar-fill"></div>
+    </div>
+  </div>
+</div>
+
 <style>
+  /* Teleport Loading Screen */
+  .teleport-loader {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    background-color: #0a0a0a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.15s ease, visibility 0.15s ease;
+  }
+
+  .teleport-loader[data-active="true"] {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .teleport-loader__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .teleport-loader__icon {
+    width: 56px;
+    height: 56px;
+    object-fit: contain;
+    opacity: 0;
+    transform: scale(0.8);
+  }
+
+  .teleport-loader[data-active="true"] .teleport-loader__icon {
+    animation: iconReveal 0.3s ease forwards;
+  }
+
+  @keyframes iconReveal {
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  .teleport-loader__bar {
+    width: 120px;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 1px;
+    overflow: hidden;
+  }
+
+  .teleport-loader__bar-fill {
+    height: 100%;
+    width: 0;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 1px;
+  }
+
+  .teleport-loader[data-active="true"] .teleport-loader__bar-fill {
+    animation: barProgress 0.4s ease forwards;
+  }
+
+  @keyframes barProgress {
+    to { width: 100%; }
+  }
+
   .navigation-menu {
     position: fixed;
     inset: 0;
@@ -195,6 +308,59 @@ const navItems: NavItem[] = [
     color: var(--color-text-secondary);
   }
 
+  /* Chevron icon for dropdown */
+  .navigation-menu__chevron {
+    margin-left: auto;
+    color: var(--color-text-muted);
+    transition: transform var(--transition-fast);
+  }
+
+  .navigation-menu__item--has-children:hover .navigation-menu__chevron {
+    transform: rotate(180deg);
+  }
+
+  /* Dropdown styles */
+  .navigation-menu__dropdown {
+    max-height: 0;
+    overflow: hidden;
+    padding-left: 2.5rem;
+    transition: max-height 0.3s ease;
+  }
+
+  .navigation-menu__item--has-children:hover .navigation-menu__dropdown {
+    max-height: 300px;
+  }
+
+  .navigation-menu__dropdown-item {
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+
+  .navigation-menu__item--has-children:hover .navigation-menu__dropdown-item {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .navigation-menu__dropdown-item:nth-child(1) { transition-delay: 0.05s; }
+  .navigation-menu__dropdown-item:nth-child(2) { transition-delay: 0.1s; }
+  .navigation-menu__dropdown-item:nth-child(3) { transition-delay: 0.15s; }
+  .navigation-menu__dropdown-item:nth-child(4) { transition-delay: 0.2s; }
+  .navigation-menu__dropdown-item:nth-child(5) { transition-delay: 0.25s; }
+
+  .navigation-menu__dropdown-link {
+    display: block;
+    padding: 0.5rem 0;
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-secondary);
+    transition: color var(--transition-fast);
+  }
+
+  .navigation-menu__dropdown-link:hover {
+    color: var(--color-text-primary);
+  }
+
   .navigation-menu__footer {
     padding: var(--space-xl);
     border-top: 1px solid var(--color-border);
@@ -206,4 +372,109 @@ const navItems: NavItem[] = [
     text-transform: uppercase;
     letter-spacing: 0.05em;
   }
+
 </style>
+
+<script>
+  // Handle section link clicks - teleport to sections in scroll animation
+  document.addEventListener('DOMContentLoaded', () => {
+    const loader = document.querySelector('[data-teleport-loader]') as HTMLElement;
+
+    // Direct scroll percentages (0-1) - land AFTER slide-in animations complete
+    // Total effective units: 15.0 (3 transitions + 1.5 partners + 12 subgroups)
+    const sectionPositions: Record<string, number> = {
+      '/': 0,                    // Home (Hero) at the top
+      '#about-section': 0.05,    // About page fully visible
+      '#meetings-section': 0.12, // Meetings page fully visible
+      '#activities-section': 0.35, // Activities with grid and characters
+      '#partners-section': 0.48, // Partners section fully visible
+      '#subgroups-section': 0.58, // Subgroups intro with preview cards
+      '#subgroup-animusic': 0.65, // Animusic fully visible
+      '#subgroup-cosplay': 0.73, // Cosplay fully visible
+      '#subgroup-oldanime': 0.81, // Old Anime fully visible
+      '#subgroup-bookclub': 0.89, // Book Club fully visible
+      '#subgroup-rainbow': 0.96, // Rainbow fully visible
+    };
+
+    // Teleport function with loading screen
+    const teleportTo = (position: number) => {
+      // Show loading screen
+      if (loader) {
+        loader.setAttribute('data-active', 'true');
+      }
+
+      // Close the navigation menu immediately
+      const menu = document.querySelector('[data-menu]');
+      if (menu) {
+        menu.setAttribute('data-open', 'false');
+        document.body.style.overflow = '';
+      }
+
+      // Wait for loading screen to fully appear, then teleport
+      setTimeout(() => {
+        // Calculate scroll position
+        const docHeight = document.documentElement.scrollHeight;
+        const viewportHeight = window.innerHeight;
+        const maxScroll = docHeight - viewportHeight;
+        const targetScroll = maxScroll * position;
+
+        // Teleport instantly
+        window.scrollTo(0, targetScroll);
+
+        // Force GSAP ScrollTrigger to update and refresh
+        // @ts-ignore - ScrollTrigger is globally available
+        if (window.ScrollTrigger) {
+          window.ScrollTrigger.update();
+          // Double update to ensure all animations are fully rendered
+          requestAnimationFrame(() => {
+            window.ScrollTrigger.update();
+          });
+        }
+
+        // Hide loading screen after GSAP has fully updated
+        // Use longer delay to ensure all animations are complete
+        setTimeout(() => {
+          if (loader) {
+            loader.setAttribute('data-active', 'false');
+          }
+        }, 400);
+      }, 400);
+    };
+
+    // Add click handlers for each section link (including all matching links)
+    Object.entries(sectionPositions).forEach(([href, position]) => {
+      // Find ALL links with this href, not just the first one
+      const links = document.querySelectorAll(`a[href="${href}"]`);
+
+      links.forEach(link => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+
+          // Only works on the home page with the scroll animation
+          if (window.location.pathname !== '/') {
+            // Redirect to home page with hash - store position in sessionStorage for immediate teleport
+            if (href.startsWith('#')) {
+              sessionStorage.setItem('teleportTo', String(position));
+              window.location.href = '/';
+            } else if (href === '/') {
+              window.location.href = '/';
+            }
+            return;
+          }
+
+          teleportTo(position);
+        });
+      });
+    });
+
+    // Check if we need to teleport after arriving from another page
+    const storedPosition = sessionStorage.getItem('teleportTo');
+    if (storedPosition && window.location.pathname === '/') {
+      sessionStorage.removeItem('teleportTo');
+      // Small delay to ensure page is ready
+      setTimeout(() => {
+        teleportTo(parseFloat(storedPosition));
+      }, 100);
+    }
+  });
+</script>

@@ -19,6 +19,12 @@ const {
   <!-- Meetings content slot - slides in after About -->
   <slot name="meetings" />
 
+  <!-- Activities slot - slides in after Meetings -->
+  <slot name="activities" />
+
+  <!-- Partners slot - slides in after Activities -->
+  <slot name="partners" />
+
   <!-- Hero mascot (Tess-chan) -->
   <div class="hero__mascot" data-hero-mascot>
     <img src={mascotImage} alt="Tess-chan mascot" class="hero__mascot-image" />

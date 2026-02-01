@@ -59,9 +59,12 @@ import Header from '../components/navigation/Header.astro';
 
 <script>
   import gsap from 'gsap';
+  import { initMenuAnimations } from '../animations/menu';
 
   // Page load slide-in animations - matching scroll animation style
   function initPageAnimations() {
+    // Initialize menu
+    initMenuAnimations();
     const title = document.querySelector('[data-maidcafe-title]');
     const desc = document.querySelector('[data-maidcafe-desc]');
     const info = document.querySelector('[data-maidcafe-info]');
@@ -132,6 +135,32 @@ import Header from '../components/navigation/Header.astro';
     flex-direction: column;
     gap: clamp(1rem, 2vw, 2rem);
     overflow: visible;
+  }
+
+  /* Elements start hidden - GSAP will animate them in */
+  .maid-cafe__title-wrapper {
+    opacity: 0;
+    transform: translateY(100px) scale(0.8);
+  }
+
+  .maid-cafe__description {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+
+  .maid-cafe__info {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+
+  .maid-cafe__maid-image {
+    opacity: 0;
+    transform: translateX(-100px);
+  }
+
+  .maid-cafe__collage {
+    opacity: 0;
+    transform: translateX(100px);
   }
 
   .maid-cafe__hero {

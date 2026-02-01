@@ -2,7 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/navigation/Header.astro';
 
-// TerpCon Page - Standalone page with slide-in animations on load
+// TerpCon Page - Comic themed with explosive energy
 
 interface Vendor {
   name: string;
@@ -58,152 +58,128 @@ const vendors: Vendor[] = [
   { name: "Astrateia Art", description: "Prints, stickers, live portrait commissions" },
 ];
 
+const featuredArtists = [
+  { name: "Bonemealed", social: "https://bonemealed.carrd.co/", socialDisplay: "bonemealed.carrd.co", artwork: "/images/Artwork/1.webp", avatar: "/images/Vendors/8.webp" },
+  { name: "Dracolegus Art", social: "https://linktr.ee/dracolegus", socialDisplay: "linktr.ee/dracolegus", artwork: "/images/Artwork/2.webp", avatar: "/images/Vendors/11.webp" },
+  { name: "worstkiddotcom", social: "https://linktr.ee/worstkiddotcom", socialDisplay: "linktr.ee/worstkiddotcom", artwork: "/images/Artwork/3.webp", avatar: "/images/Vendors/25.webp" },
+  { name: "jsunnyart", social: "https://twitter.com/jsunnyart", socialDisplay: "twitter.com/jsunnyart", artwork: "/images/Artwork/4.webp", avatar: "/images/Vendors/31.webp" },
+  { name: "Zeph", social: "https://x.com/YouInsolentFool", socialDisplay: "x.com/YouInsolentFool", artwork: "/images/Artwork/5.webp", avatar: "/images/Vendors/3.webp" },
+  { name: "Koifishin", artwork: "/images/Artwork/6.png", avatar: "/images/Icons/chibi.webp" },
+  { name: "Mewychu", social: "https://mewychu.carrd.co/", socialDisplay: "mewychu.carrd.co", artwork: "/images/Artwork/7.jpeg", avatar: "/images/Vendors/24.webp" },
+  { name: "Artisfired Studio", social: "https://artisfired.carrd.co/", socialDisplay: "artisfired.carrd.co", artwork: "/images/Artwork/8.png", avatar: "/images/Vendors/20.webp" },
+  { name: "Tea Shot", social: "https://linktr.ee/teashot", socialDisplay: "linktr.ee/teashot", artwork: "/images/Artwork/9.png", avatar: "/images/Vendors/14.webp" },
+  { name: "Jayce the Creature Creator", social: "https://www.instagram.com/jaycethecreaturecreator", socialDisplay: "instagram.com/jaycethecreaturecreator", artwork: "/images/Artwork/10.png", avatar: "/images/Vendors/28.webp" },
+  { name: "Inywiny", social: "https://inywiny.carrd.co", socialDisplay: "inywiny.carrd.co", artwork: "/images/Artwork/11.png", avatar: "/images/Vendors/2.webp" },
+];
+
 const defaultImage = "/images/Icons/chibi.webp";
 ---
 
 <BaseLayout title="TERPCON 2026 - Terrapin Anime Society">
   <Header />
 
-  <main class="terpcon-page">
-    <div class="terpcon-section">
-      <!-- Background with darkening overlay -->
-      <div class="terpcon-section__bg"></div>
+  <main class="comic-page">
+    <!-- Comic Background -->
+    <div class="comic-bg"></div>
+    <div class="comic-overlay"></div>
 
-      <!-- Content wrapper -->
-      <div class="terpcon-section__content">
-        <!-- TOP - Big centered title -->
-        <div class="terpcon-section__header">
-          <h1 class="terpcon-section__title" data-terpcon-title>
-            TERPCON 2026
-          </h1>
+    <!-- Main Content -->
+    <div class="comic-content">
+      <!-- Hero Title Section -->
+      <div class="comic-hero" data-comic-hero>
+        <div class="comic-burst">
+          <h1 class="comic-title" data-comic-title>TERPCON</h1>
+          <span class="comic-year">2026</span>
+          <img src="/images/Icons/2.webp" alt="POW!" class="comic-pow" />
         </div>
+        <p class="comic-tagline" data-comic-tagline>Vendor & Artist Alley</p>
+      </div>
 
-        <!-- Two Column Layout -->
-        <div class="terpcon-section__columns">
-          <!-- LEFT SIDE - Event Info -->
-          <div class="terpcon-section__left">
-            <!-- Title -->
-            <div class="terpcon-section__subtitle-wrapper">
-              <h2 class="terpcon-section__subtitle" data-terpcon-subtitle>
-                Vendor &<br />Artist Alley
-                <img src="/images/Icons/2.webp" alt="" class="subtitle-pow" />
-              </h2>
-            </div>
-            <!-- Description and CTA in a row -->
-            <div class="terpcon-section__desc-row">
-              <p class="terpcon-section__description" data-terpcon-desc>
-                The Terrapin Anime Society will be hosting a Vendor & Artist Alley for TERPCON 2026. Please see the official UMD site for more details.
-              </p>
-              <a href="https://stamp.umd.edu/AllNiter" target="_blank" rel="noopener noreferrer" class="terpcon-section__cta" data-terpcon-cta>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <!-- Two Column Layout -->
+      <div class="comic-columns">
+        <!-- Left Column - Info + Featured Artists -->
+        <div class="comic-left">
+          <!-- Info Panel -->
+          <div class="comic-panel comic-panel--info" data-comic-info>
+            <p class="comic-description">
+              The Terrapin Anime Society will be hosting a Vendor & Artist Alley for TERPCON 2026. Please see the official UMD site for more details.
+            </p>
+
+            <div class="comic-details-row">
+              <div class="comic-details">
+                <div class="comic-detail">
+                  <span class="detail-label">DATE</span>
+                  <span class="detail-value">FRI, FEB 6TH</span>
+                </div>
+                <div class="comic-detail">
+                  <span class="detail-label">TIME</span>
+                  <span class="detail-value">5PM - 12AM</span>
+                </div>
+                <div class="comic-detail">
+                  <span class="detail-label">LOCATION</span>
+                  <span class="detail-value">STAMP STUDENT UNION</span>
+                </div>
+              </div>
+
+              <a href="https://stamp.umd.edu/AllNiter" target="_blank" rel="noopener noreferrer" class="comic-cta">
+                <span>UMD OFFICIAL SITE</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
                   <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
                   <polyline points="15 3 21 3 21 9"></polyline>
                   <line x1="10" y1="14" x2="21" y2="3"></line>
                 </svg>
-                UMD Official Site
               </a>
-            </div>
-
-            <!-- Event details as horizontal cards -->
-            <div class="terpcon-section__info-cards">
-              <div class="terpcon-section__info-card" data-terpcon-detail>
-                <span class="terpcon-section__info-label">Date</span>
-                <span class="terpcon-section__info-value">Friday, February 6th</span>
-              </div>
-              <div class="terpcon-section__info-card" data-terpcon-detail>
-                <span class="terpcon-section__info-label">Time</span>
-                <span class="terpcon-section__info-value">5pm – 12am</span>
-              </div>
-              <div class="terpcon-section__info-card" data-terpcon-detail>
-                <span class="terpcon-section__info-label">Location</span>
-                <span class="terpcon-section__info-value">Stamp Student Union</span>
-              </div>
-            </div>
-
-            <!-- Featured Artists Carousel -->
-            <div class="featured-artists-collage" data-terpcon-featured-artists>
-              <span class="featured-artists-collage__label">Featured Artists</span>
-              <div class="featured-artists-collage__grid" data-featured-carousel>
-                <div class="collage-item" data-carousel-item="0">
-                  <img src="/images/Artwork/1.webp" alt="Artwork by Bonemealed" class="collage-item__image" />
-                  <div class="collage-item__info">
-                    <img src="/images/Vendors/8.webp" alt="Bonemealed" class="collage-item__avatar" />
-                    <div class="collage-item__details">
-                      <span class="collage-item__name">Bonemealed</span>
-                      <a href="https://bonemealed.carrd.co/" target="_blank" rel="noopener noreferrer" class="collage-item__social">bonemealed.carrd.co</a>
-                    </div>
-                  </div>
-                </div>
-                <div class="collage-item" data-carousel-item="1">
-                  <img src="/images/Artwork/2.webp" alt="Artwork by Dracolegus Art" class="collage-item__image" />
-                  <div class="collage-item__info">
-                    <img src="/images/Vendors/11.webp" alt="Dracolegus Art" class="collage-item__avatar" />
-                    <div class="collage-item__details">
-                      <span class="collage-item__name">Dracolegus Art</span>
-                      <a href="https://linktr.ee/dracolegus" target="_blank" rel="noopener noreferrer" class="collage-item__social">linktr.ee/dracolegus</a>
-                    </div>
-                  </div>
-                </div>
-                <div class="collage-item" data-carousel-item="2">
-                  <img src="/images/Artwork/3.webp" alt="Artwork by worstkiddotcom" class="collage-item__image" />
-                  <div class="collage-item__info">
-                    <img src="/images/Vendors/25.webp" alt="worstkiddotcom" class="collage-item__avatar" />
-                    <div class="collage-item__details">
-                      <span class="collage-item__name">worstkiddotcom</span>
-                      <a href="https://linktr.ee/worstkiddotcom" target="_blank" rel="noopener noreferrer" class="collage-item__social">linktr.ee/worstkiddotcom</a>
-                    </div>
-                  </div>
-                </div>
-                <div class="collage-item" data-carousel-item="3">
-                  <img src="/images/Artwork/4.webp" alt="Artwork by jsunnyart" class="collage-item__image" />
-                  <div class="collage-item__info">
-                    <img src="/images/Vendors/31.webp" alt="jsunnyart" class="collage-item__avatar" />
-                    <div class="collage-item__details">
-                      <span class="collage-item__name">jsunnyart</span>
-                      <a href="https://twitter.com/jsunnyart" target="_blank" rel="noopener noreferrer" class="collage-item__social">twitter.com/jsunnyart</a>
-                    </div>
-                  </div>
-                </div>
-                <div class="collage-item" data-carousel-item="4">
-                  <img src="/images/Artwork/5.webp" alt="Artwork by Zeph" class="collage-item__image" />
-                  <div class="collage-item__info">
-                    <img src="/images/Vendors/3.webp" alt="Zeph" class="collage-item__avatar" />
-                    <div class="collage-item__details">
-                      <span class="collage-item__name">Zeph</span>
-                      <a href="https://x.com/YouInsolentFool" target="_blank" rel="noopener noreferrer" class="collage-item__social">x.com/YouInsolentFool</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
 
-          <!-- RIGHT SIDE - Vendor Grid -->
-          <div class="terpcon-section__right">
-            <div class="terpcon-section__vendors-header" data-terpcon-vendors-header>
-              <h3 class="terpcon-section__vendors-title">Browse Artists</h3>
+          <!-- Featured Artists Carousel -->
+          <div class="comic-panel comic-panel--featured" data-comic-featured>
+            <h3 class="featured-title">FEATURED ARTISTS</h3>
+            <div class="featured-carousel" data-featured-carousel>
+              <div class="featured-track" data-featured-track>
+                {featuredArtists.map((artist, index) => (
+                  <div class="featured-card" data-featured-card={index}>
+                    <div class="featured-card__image">
+                      <img src={artist.artwork} alt={`Artwork by ${artist.name}`} />
+                    </div>
+                    <div class="featured-card__info">
+                      <img src={artist.avatar} alt={artist.name} class="featured-card__avatar" />
+                      <div class="featured-card__details">
+                        <span class="featured-card__name">{artist.name}</span>
+                        {artist.social ? (
+                          <a href={artist.social} target="_blank" rel="noopener noreferrer" class="featured-card__social">{artist.socialDisplay}</a>
+                        ) : (
+                          <span class="featured-card__social">Find us at TerpCon!</span>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
-            <div class="terpcon-section__vendors-scroll" data-terpcon-vendors-scroll>
-              <div class="terpcon-section__vendors-grid">
+          </div>
+        </div>
+
+        <!-- Right Column - Vendors -->
+        <div class="comic-right">
+          <div class="comic-panel comic-panel--vendors" data-comic-vendors>
+            <h3 class="vendors-title">BROWSE ARTISTS</h3>
+            <div class="vendors-scroll">
+              <div class="vendors-grid">
                 {vendors.map((vendor) => (
                   <div class="vendor-card">
-                    <div class="vendor-card__image-wrapper">
-                      <img
-                        src={vendor.image || defaultImage}
-                        alt={vendor.name}
-                        class="vendor-card__image"
-                        loading="lazy"
-                      />
+                    <div class="vendor-avatar">
+                      <img src={vendor.image || defaultImage} alt={vendor.name} loading="lazy" />
                     </div>
-                    <h4 class={`vendor-card__name ${vendor.longName ? 'vendor-card__name--long' : ''}`}>{vendor.name}</h4>
+                    <h4 class={`vendor-name ${vendor.longName ? 'vendor-name--long' : ''}`}>{vendor.name}</h4>
                     {vendor.social ? (
-                      <a href={vendor.social} target="_blank" rel="noopener noreferrer" class="vendor-card__social">
+                      <a href={vendor.social} target="_blank" rel="noopener noreferrer" class="vendor-social">
                         {vendor.socialDisplay}
                       </a>
                     ) : (
-                      <span class="vendor-card__social vendor-card__social--none">Find us at TerpCon!</span>
+                      <span class="vendor-social vendor-social--none">Find us at TerpCon!</span>
                     )}
-                    <p class="vendor-card__description">{vendor.description}</p>
+                    <p class="vendor-desc">{vendor.description}</p>
                   </div>
                 ))}
               </div>
@@ -217,687 +193,673 @@ const defaultImage = "/images/Icons/chibi.webp";
 
 <script>
   import gsap from 'gsap';
+  import { initMenuAnimations } from '../animations/menu';
 
-  // Page load slide-in animations
-  function initPageAnimations() {
-    const title = document.querySelector('[data-terpcon-title]');
-    const subtitle = document.querySelector('[data-terpcon-subtitle]');
-    const desc = document.querySelector('[data-terpcon-desc]');
-    const cta = document.querySelector('[data-terpcon-cta]');
-    const details = document.querySelectorAll('[data-terpcon-detail]');
-    const vendorsHeader = document.querySelector('[data-terpcon-vendors-header]');
-    const vendorsScroll = document.querySelector('[data-terpcon-vendors-scroll]');
-    const featuredArtists = document.querySelector('[data-terpcon-featured-artists]');
+  function initAnimations() {
+    // Initialize menu
+    initMenuAnimations();
+    const hero = document.querySelector('[data-comic-hero]');
+    const title = document.querySelector('[data-comic-title]');
+    const info = document.querySelector('[data-comic-info]');
+    const featured = document.querySelector('[data-comic-featured]');
+    const featuredCards = document.querySelectorAll('[data-featured-card]');
+    const vendors = document.querySelector('[data-comic-vendors]');
 
-    // Set initial states
-    gsap.set(title, { y: 100, scale: 0.8, opacity: 0 });
-    gsap.set(subtitle, { x: -100, opacity: 0 });
-    gsap.set(desc, { x: -80, opacity: 0 });
-    gsap.set(cta, { x: -60, opacity: 0 });
-    gsap.set(details, { x: -50, opacity: 0 });
-    gsap.set(vendorsHeader, { x: 100, opacity: 0 });
-    gsap.set(vendorsScroll, { x: 100, opacity: 0 });
-    gsap.set(featuredArtists, { y: 50, opacity: 0 });
+    gsap.set([hero, info, featured, vendors], { opacity: 0, y: 30 });
+    gsap.set(title, { scale: 0.5, rotation: -10 });
 
-    // Create timeline for staggered animations
-    const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+    // Hide all featured cards initially
+    featuredCards.forEach((card, i) => {
+      if (i < 4) {
+        gsap.set(card, { x: 100 });
+      } else {
+        gsap.set(card, { display: 'none' });
+      }
+    });
 
-    tl.to(title, { y: 0, scale: 1, opacity: 1, duration: 0.8 }, 0.1)
-      .to(subtitle, { x: 0, opacity: 1, duration: 0.6 }, 0.3)
-      .to(desc, { x: 0, opacity: 1, duration: 0.5 }, 0.4)
-      .to(cta, { x: 0, opacity: 1, duration: 0.5 }, 0.5)
-      .to(details, { x: 0, opacity: 1, duration: 0.5, stagger: 0.1 }, 0.5)
-      .to(vendorsHeader, { x: 0, opacity: 1, duration: 0.6 }, 0.4)
-      .to(vendorsScroll, { x: 0, opacity: 1, duration: 0.6 }, 0.5)
-      .to(featuredArtists, { y: 0, opacity: 1, duration: 0.6 }, 0.6);
+    const tl = gsap.timeline({ defaults: { ease: 'back.out(1.7)' } });
 
+    tl.to(hero, { opacity: 1, y: 0, duration: 0.5 }, 0)
+      .to(title, { scale: 1, rotation: 0, duration: 0.6 }, 0.1)
+      .to(info, { opacity: 1, y: 0, duration: 0.5 }, 0.3)
+      .to(featured, { opacity: 1, y: 0, duration: 0.3 }, 0.4)
+      .to(vendors, { opacity: 1, y: 0, duration: 0.5 }, 0.6);
+
+    // Slide in first 4 cards from right with stagger
+    for (let i = 0; i < 4 && i < featuredCards.length; i++) {
+      tl.to(featuredCards[i], {
+        x: 0,
+        duration: 0.5,
+        ease: 'power2.out'
+      }, 0.5 + i * 0.1);
+    }
+
+    // After initial animations, start the carousel
+    tl.add(() => initCarousel(), 1.2);
   }
 
-  // Featured Artists Carousel
-  function initFeaturedCarousel() {
-    const carousel = document.querySelector('[data-featured-carousel]');
-    if (!carousel) return;
+  function initCarousel() {
+    const track = document.querySelector('[data-featured-track]') as HTMLElement;
+    const cards = Array.from(document.querySelectorAll('[data-featured-card]')) as HTMLElement[];
+    if (!track || cards.length <= 4) return;
 
-    const items = carousel.querySelectorAll('[data-carousel-item]');
-    if (items.length < 2) return;
+    const totalCards = cards.length;
+    let visibleStart = 0;
 
-    const totalItems = items.length;
-    let currentPair = 0;
-    let isPaused = false;
-    let intervalId: number | null = null;
+    function rotateCarousel() {
+      const outgoingIndex = visibleStart;
+      const incomingIndex = (visibleStart + 4) % totalCards;
+      const outgoingCard = cards[outgoingIndex];
+      const incomingCard = cards[incomingIndex];
 
-    function showPair(pairIndex: number, animate = true) {
-      const leftIndex = (pairIndex * 2) % totalItems;
-      const rightIndex = (pairIndex * 2 + 1) % totalItems;
+      // Get card width for sliding
+      const cardWidth = outgoingCard.offsetWidth;
+      const gap = 12; // 0.75rem gap
 
-      items.forEach((item, i) => {
-        item.classList.remove('pos-left', 'pos-right', 'sliding-out-left', 'sliding-out-right', 'exited');
-
-        if (i === leftIndex) {
-          item.classList.add('pos-left');
-        } else if (i === rightIndex) {
-          item.classList.add('pos-right');
-        } else {
-          item.classList.add('exited');
+      // Timeline - all cards slide left by one card width
+      const rotateTl = gsap.timeline({
+        onComplete: () => {
+          // After animation, hide outgoing and reset positions
+          gsap.set(outgoingCard, { display: 'none' });
+          // Reset all visible cards to x: 0
+          for (let i = 1; i <= 4; i++) {
+            const idx = (visibleStart + i) % totalCards;
+            gsap.set(cards[idx], { x: 0 });
+          }
+          visibleStart = (visibleStart + 1) % totalCards;
+          setTimeout(rotateCarousel, 3500);
         }
       });
-    }
 
-    function nextPair() {
-      const oldLeftIndex = (currentPair * 2) % totalItems;
-      const oldRightIndex = (currentPair * 2 + 1) % totalItems;
-
-      items[oldLeftIndex]?.classList.add('sliding-out-left');
-      items[oldRightIndex]?.classList.add('sliding-out-right');
-
-      currentPair = (currentPair + 1) % Math.ceil(totalItems / 2);
-
-      setTimeout(() => {
-        showPair(currentPair, true);
-      }, 300);
-    }
-
-    function startInterval() {
-      if (intervalId) return;
-      intervalId = window.setInterval(() => {
-        if (!isPaused) nextPair();
-      }, 4000);
-    }
-
-    function stopInterval() {
-      if (intervalId) {
-        clearInterval(intervalId);
-        intervalId = null;
+      // All visible cards slide left
+      for (let i = 0; i < 4; i++) {
+        const idx = (visibleStart + i) % totalCards;
+        rotateTl.to(cards[idx], {
+          x: -(cardWidth + gap),
+          duration: 0.6,
+          ease: 'power2.inOut'
+        }, 0);
       }
+
+      // Incoming card: show it at the right edge and slide into position
+      // Must end at same x as other cards so reset is seamless
+      gsap.set(incomingCard, { display: 'flex', x: 0 });
+      rotateTl.to(incomingCard, {
+        x: -(cardWidth + gap),
+        duration: 0.6,
+        ease: 'power2.inOut'
+      }, 0);
     }
 
-    // Initialize first pair
-    showPair(0, false);
-
-    // Use IntersectionObserver to pause when not visible
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            isPaused = false;
-            startInterval();
-          } else {
-            isPaused = true;
-            stopInterval();
-          }
-        });
-      },
-      { threshold: 0, rootMargin: '50px' }
-    );
-
-    observer.observe(carousel);
-
-    // Pause when tab hidden
-    document.addEventListener('visibilitychange', () => {
-      if (document.hidden) {
-        isPaused = true;
-        stopInterval();
-      } else {
-        const rect = carousel.getBoundingClientRect();
-        const inViewport = rect.top < window.innerHeight && rect.bottom > 0;
-        if (inViewport) {
-          isPaused = false;
-          startInterval();
-        }
-      }
-    });
+    setTimeout(rotateCarousel, 3500);
   }
 
-  // Initialize on DOM ready
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-      initPageAnimations();
-      initFeaturedCarousel();
-    });
+    document.addEventListener('DOMContentLoaded', initAnimations);
   } else {
-    initPageAnimations();
-    initFeaturedCarousel();
+    initAnimations();
   }
 </script>
 
 <style>
-  .terpcon-page {
-    min-height: 100vh;
-    background-color: #0a0a0a;
-  }
+  @import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
 
-  .terpcon-section {
+  .comic-page {
     position: relative;
     width: 100%;
-    min-height: 100vh;
+    height: 100vh;
     overflow: hidden;
-    background-color: #0a0a0a;
+    background: #0a0a0a;
   }
 
-  .terpcon-section__bg {
+  .comic-bg {
     position: absolute;
     inset: 0;
-    background-image: url('/images/Backgrounds/terpcon.webp');
+    background-image: url('/images/Backgrounds/comic background.jpg');
     background-size: cover;
     background-position: center;
     z-index: 0;
   }
 
-  .terpcon-section__bg::after {
+  .comic-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.35);
+    z-index: 1;
+  }
+
+  /* Halftone pattern overlay */
+  .comic-overlay::before {
     content: '';
     position: absolute;
     inset: 0;
-    background: rgba(10, 10, 10, 0.85);
+    background-image: radial-gradient(circle, rgba(0,0,0,0.08) 1px, transparent 1px);
+    background-size: 4px 4px;
+    pointer-events: none;
   }
 
-  .terpcon-section__content {
+  .comic-content {
     position: relative;
-    z-index: 1;
+    z-index: 2;
     width: 100%;
     height: 100vh;
     display: flex;
     flex-direction: column;
-    padding: 0 clamp(1rem, 4vw, 4rem);
-    padding-top: calc(80px + clamp(0.5rem, 2vw, 1rem));
-    padding-bottom: 1rem;
+    padding: calc(70px + 1rem) 2rem 1.5rem;
     box-sizing: border-box;
     overflow: hidden;
   }
 
-  .terpcon-section__header {
-    position: relative;
+  /* ===== HERO SECTION ===== */
+  .comic-hero {
     text-align: center;
-    flex-shrink: 0;
     margin-bottom: 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: clamp(50px, 8vw, 80px);
+    flex-shrink: 0;
+    opacity: 0;
+    transform: translateY(30px);
   }
 
-  .terpcon-section__title {
+  /* Elements start hidden - GSAP will animate them in */
+  .comic-panel--info,
+  .comic-panel--featured,
+  .comic-panel--vendors {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  .comic-title {
+    transform: scale(0.5) rotate(-10deg);
+  }
+
+  .comic-burst {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.5rem;
     position: relative;
-    z-index: 3;
+  }
+
+  .comic-title {
     font-family: 'Bangers', cursive;
-    font-size: clamp(56px, 10vw, 120px);
+    font-size: clamp(70px, 14vw, 160px);
     font-weight: 400;
-    line-height: 0.9;
     color: #ffeb3b;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.08em;
     margin: 0;
     text-transform: uppercase;
-    -webkit-text-stroke: 3px #000;
+    -webkit-text-stroke: 5px #000;
     text-shadow:
-      4px 4px 0 #e91e63,
-      8px 8px 0 #000,
-      2px 2px 8px rgba(0, 0, 0, 0.5);
+      8px 8px 0 #ff6b35,
+      16px 16px 0 #000;
+    line-height: 0.85;
   }
 
-  .terpcon-section__columns {
+  .comic-year {
+    font-family: 'Bangers', cursive;
+    font-size: clamp(35px, 7vw, 80px);
+    color: #00bcd4;
+    -webkit-text-stroke: 3px #000;
+    text-shadow: 4px 4px 0 #000;
+    transform: rotate(-8deg);
+  }
+
+  .comic-tagline {
+    font-family: 'Bangers', cursive;
+    font-size: clamp(22px, 4vw, 40px);
+    color: #fff;
+    letter-spacing: 0.15em;
+    margin: 0.5rem 0 0;
+    text-shadow: 3px 3px 0 #000;
+  }
+
+  .comic-pow {
+    position: absolute;
+    width: clamp(80px, 12vw, 150px);
+    height: auto;
+    right: -3rem;
+    top: -2rem;
+    transform: rotate(15deg);
+    pointer-events: none;
+    filter: drop-shadow(4px 4px 0 #000);
+    z-index: -1;
+  }
+
+  /* ===== COLUMNS LAYOUT ===== */
+  .comic-columns {
     flex: 1;
     display: grid;
-    grid-template-columns: 1.5fr 1fr;
-    gap: clamp(1.5rem, 3vw, 3rem);
+    grid-template-columns: 1.8fr 1fr;
+    gap: 1.5rem;
     min-height: 0;
-    height: 100%;
   }
 
-  .terpcon-section__left {
+  .comic-left {
     display: flex;
     flex-direction: column;
-    padding-top: 0;
-    height: 100%;
+    gap: 1rem;
     min-height: 0;
   }
 
-  .terpcon-section__subtitle-wrapper {
-    position: relative;
-    margin-bottom: 0.5rem;
+  .comic-right {
     display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    min-height: clamp(60px, 10vw, 100px);
+    flex-direction: column;
+    min-height: 0;
   }
 
-  .subtitle-pow {
-    position: absolute;
-    width: 4em;
-    height: auto;
-    right: -1.7em;
-    top: -1.5em;
-    transform: rotate(-15deg);
-    pointer-events: none;
-    z-index: 0;
+  /* ===== COMIC PANELS ===== */
+  .comic-panel {
+    position: relative;
+    background: rgba(0, 0, 0, 0.6);
+    border: 4px solid rgba(255, 107, 53, 0.8);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(8px);
   }
 
-  .terpcon-section__subtitle {
+  /* ===== INFO PANEL ===== */
+  .comic-panel--info {
+    padding: clamp(0.75rem, 1.2vw, 1.5rem) clamp(1rem, 1.5vw, 2rem);
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: clamp(0.6rem, 1vw, 1.25rem);
+  }
+
+  .comic-description {
     position: relative;
     z-index: 1;
     font-family: 'Inter', sans-serif;
-    font-size: clamp(36px, 4.5vw, 60px);
-    font-weight: 800;
-    color: #ffffff;
+    font-size: clamp(14px, 1.4vw, 22px);
+    font-weight: 500;
+    color: #fff;
+    line-height: 1.3;
     margin: 0;
-    line-height: 0.95;
-    text-transform: uppercase;
-    letter-spacing: -0.03em;
   }
 
-  .terpcon-section__desc-row {
+  .comic-details-row {
     display: flex;
     align-items: center;
-    gap: clamp(0.75rem, 2vw, 1.5rem);
-    margin-bottom: clamp(0.5rem, 1.2vw, 0.75rem);
+    gap: clamp(0.75rem, 1.2vw, 1.5rem);
     flex-wrap: wrap;
   }
 
-  .terpcon-section__description {
-    font-family: 'Inter', sans-serif;
-    font-size: clamp(12px, 1.4vw, 17px);
-    font-weight: 400;
-    color: rgba(255, 255, 255, 0.7);
-    line-height: 1.5;
-    margin: 0;
-    max-width: clamp(250px, 35vw, 400px);
-    flex: 1;
-    min-width: 200px;
-  }
-
-  .terpcon-section__info-cards {
+  .comic-details {
     display: flex;
-    gap: 0.75rem;
-    flex-wrap: wrap;
-    margin-bottom: 1rem;
+    gap: clamp(0.5rem, 0.8vw, 1rem);
+    flex-wrap: nowrap;
+    align-items: center;
   }
 
-  .terpcon-section__info-card {
+  .comic-detail {
     display: flex;
     flex-direction: column;
-    gap: 0.15rem;
-    padding: clamp(0.5rem, 1.5vw, 0.75rem) clamp(0.75rem, 2vw, 1.25rem);
-    background: rgba(25, 118, 210, 0.08);
-    border: 1px solid rgba(25, 118, 210, 0.2);
-    border-radius: clamp(8px, 1vw, 10px);
-    min-width: clamp(100px, 12vw, 140px);
-    transition: background 0.3s ease, border-color 0.3s ease;
+    padding: clamp(0.4rem, 0.6vw, 0.75rem) clamp(0.6rem, 1vw, 1.25rem);
+    background: #ff6b35;
+    border: 3px solid #000;
+    border-radius: 6px;
+    box-shadow: 3px 3px 0 #000;
   }
 
-  .terpcon-section__info-card:hover {
-    background: rgba(25, 118, 210, 0.12);
-    border-color: rgba(25, 118, 210, 0.3);
+  .detail-label {
+    font-family: 'Bangers', cursive;
+    font-size: clamp(10px, 0.9vw, 14px);
+    color: #ffeb3b;
+    letter-spacing: 0.08em;
   }
 
-  .terpcon-section__info-label {
-    font-family: 'Inter', sans-serif;
-    font-size: clamp(9px, 1vw, 11px);
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    color: #64b4ff;
+  .detail-value {
+    font-family: 'Bangers', cursive;
+    font-size: clamp(14px, 1.5vw, 22px);
+    color: #fff;
+    letter-spacing: 0.03em;
   }
 
-  .terpcon-section__info-value {
-    font-family: 'Inter', sans-serif;
-    font-size: clamp(12px, 1.5vw, 18px);
-    font-weight: 700;
-    color: #ffffff;
-    line-height: 1.2;
-  }
-
-  .terpcon-section__cta {
+  .comic-cta {
+    position: relative;
+    z-index: 1;
     display: inline-flex;
     align-items: center;
-    gap: clamp(0.3rem, 0.8vw, 0.5rem);
-    width: fit-content;
-    padding: clamp(0.5rem, 1.2vw, 0.75rem) clamp(0.75rem, 2vw, 1.25rem);
-    font-family: 'Inter', sans-serif;
-    font-size: clamp(12px, 1.2vw, 14px);
-    font-weight: 600;
-    color: #ffffff;
-    background: #1976d2;
-    border: none;
-    border-radius: clamp(8px, 1vw, 10px);
+    gap: 0.4rem;
+    padding: clamp(0.4rem, 0.6vw, 0.75rem) clamp(0.6rem, 1vw, 1.25rem);
+    font-family: 'Bangers', cursive;
+    font-size: clamp(12px, 1.3vw, 18px);
+    color: #000;
+    background: #ffeb3b;
+    border: 3px solid #000;
+    border-radius: 6px;
+    box-shadow: 3px 3px 0 #000;
     text-decoration: none;
-    transition: all 0.3s ease;
-    flex-shrink: 0;
-    height: fit-content;
+    letter-spacing: 0.05em;
+    transition: all 0.15s ease;
+    white-space: nowrap;
   }
 
-  .terpcon-section__cta svg {
-    width: clamp(12px, 1.4vw, 16px);
-    height: clamp(12px, 1.4vw, 16px);
+  .comic-cta:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0 #000;
   }
 
-  .terpcon-section__cta:hover {
-    background: #1565c0;
-    transform: translateY(-2px);
+  .comic-cta:active {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0 #000;
   }
 
-  /* Featured Artists Collage */
-  .featured-artists-collage {
-    margin-top: 0.5rem;
+  /* ===== FEATURED ARTISTS ===== */
+  .comic-panel--featured {
+    flex: 1;
+    min-height: 0;
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
-    width: 100%;
-    max-width: 1200px;
-    flex: 1;
-    min-height: 0;
+    padding: 1rem;
   }
 
-  .featured-artists-collage__label {
-    font-family: 'Inter', sans-serif;
-    font-size: clamp(11px, 1.2vw, 14px);
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    color: #64b4ff;
-    flex-shrink: 0;
+  .featured-title {
+    position: relative;
+    z-index: 1;
+    font-family: 'Bangers', cursive;
+    font-size: clamp(22px, 3vw, 36px);
+    color: #ff6b35;
+    letter-spacing: 0.1em;
+    margin: 0 0 0.75rem;
+    -webkit-text-stroke: 1px #000;
+    text-shadow: 2px 2px 0 #000;
   }
 
-  .featured-artists-collage__grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0.5rem;
+  .featured-carousel {
     flex: 1;
-    min-height: 0;
     overflow: hidden;
+    min-height: 0;
     position: relative;
   }
 
-  .collage-item {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: calc(50% - 0.25rem);
+  .featured-track {
+    display: flex;
+    gap: 0.75rem;
     height: 100%;
+  }
+
+  .featured-card {
+    flex: 0 0 calc(25% - 0.5625rem);
+    min-width: 0;
+    position: relative;
+    border-radius: 8px;
     overflow: hidden;
-    border-radius: 10px;
-    border: 2px solid rgba(255, 255, 255, 0.1);
-    transform: translateX(calc(200% + 1rem));
-    transition: transform 0.6s ease, border-color 0.3s ease, opacity 0.3s ease;
-    opacity: 0;
+    border: 3px solid #000;
+    box-shadow: 4px 4px 0 #000;
+    background: #111;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
   }
 
-  .collage-item.pos-left {
-    transform: translateX(0);
-    opacity: 1;
+  .featured-card__image {
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
   }
 
-  .collage-item.pos-right {
-    transform: translateX(calc(100% + 0.5rem));
-    opacity: 1;
-  }
-
-  .collage-item.sliding-out-left {
-    transform: translateX(-110%);
-    opacity: 1;
-  }
-
-  .collage-item.sliding-out-right {
-    transform: translateX(-10%);
-    opacity: 1;
-  }
-
-  .collage-item.exited {
-    transform: translateX(calc(200% + 1rem));
-    opacity: 0;
-    transition: none;
-  }
-
-  .collage-item:hover {
-    border-color: rgba(100, 180, 255, 0.4);
-    z-index: 2;
-  }
-
-  .collage-item__image {
+  .featured-card__image img {
     width: 100%;
     height: 100%;
-    max-width: 100%;
     object-fit: cover;
-    display: block;
+    object-position: top;
   }
 
-  .collage-item__info {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
+  .featured-card__info {
     display: flex;
     align-items: center;
-    gap: 0.6rem;
-    padding: 0.5rem 0.6rem;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.5) 70%, transparent);
+    gap: 0.5rem;
+    padding: 0.5rem;
+    background: rgba(0,0,0,0.95);
   }
 
-  .collage-item__avatar {
-    width: clamp(40px, 6vw, 70px);
-    height: clamp(40px, 6vw, 70px);
+  .featured-card__avatar {
+    width: clamp(35px, 4vw, 50px);
+    height: clamp(35px, 4vw, 50px);
     border-radius: 50%;
     object-fit: cover;
-    border: clamp(2px, 0.3vw, 3px) solid rgba(255, 255, 255, 0.4);
+    border: 3px solid #ff6b35;
     flex-shrink: 0;
   }
 
-  .collage-item__details {
+  .featured-card__details {
     display: flex;
     flex-direction: column;
-    gap: 0.15rem;
     min-width: 0;
   }
 
-  .collage-item__name {
-    font-family: 'Inter', sans-serif;
-    font-size: clamp(1rem, 2vw, 2rem);
-    font-weight: 700;
-    color: #ffffff;
+  .featured-card__name {
+    font-family: 'Bangers', cursive;
+    font-size: clamp(14px, 1.8vw, 20px);
+    color: #fff;
+    letter-spacing: 0.03em;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
 
-  .collage-item__social {
+  .featured-card__social {
     font-family: 'Inter', sans-serif;
-    font-size: clamp(0.8rem, 1.4vw, 1.4rem);
-    font-weight: 500;
-    color: #64b4ff;
+    font-size: clamp(9px, 1vw, 12px);
+    font-weight: 600;
+    color: #00bcd4;
     text-decoration: none;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    transition: color 0.2s ease;
   }
 
-  .collage-item__social:hover {
-    color: #8ecaff;
+  .featured-card__social:hover {
+    color: #4dd0e1;
   }
 
-  /* Right Side - Vendors */
-  .terpcon-section__right {
+  /* ===== VENDORS PANEL ===== */
+  .comic-panel--vendors {
+    flex: 1;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    padding: 1rem;
     min-height: 0;
-    height: 100%;
-    padding-left: 0;
-    overflow: hidden;
   }
 
-  .terpcon-section__vendors-header {
-    display: flex;
-    align-items: center;
-    margin-bottom: clamp(0.75rem, 2vw, 1.5rem);
-    flex-shrink: 0;
+  .vendors-title {
+    position: relative;
+    z-index: 1;
+    font-family: 'Bangers', cursive;
+    font-size: clamp(24px, 3vw, 40px);
+    color: #ff6b35;
+    letter-spacing: 0.1em;
+    margin: 0 0 0.75rem;
+    text-align: center;
+    -webkit-text-stroke: 1px #000;
+    text-shadow: 2px 2px 0 #000;
   }
 
-  .terpcon-section__vendors-title {
-    font-family: 'Inter', sans-serif;
-    font-size: clamp(18px, 2.5vw, 36px);
-    font-weight: 700;
-    color: #ffffff;
-    margin: 0;
-    text-transform: uppercase;
-    letter-spacing: -0.02em;
-  }
-
-  .terpcon-section__vendors-scroll {
+  .vendors-scroll {
     flex: 1;
     overflow-y: auto;
     overflow-x: hidden;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: thin;
-    scrollbar-color: rgba(255, 255, 255, 0.1) #0a0a0a;
     min-height: 0;
-    width: 100%;
+    padding-right: 0.5rem;
+    scrollbar-width: thin;
+    scrollbar-color: #ff6b35 #fff;
   }
 
-  .terpcon-section__vendors-scroll::-webkit-scrollbar {
-    width: 4px;
+  .vendors-scroll::-webkit-scrollbar {
+    width: 8px;
   }
 
-  .terpcon-section__vendors-scroll::-webkit-scrollbar-track {
-    background: #0a0a0a;
+  .vendors-scroll::-webkit-scrollbar-track {
+    background: #fff;
+    border: 2px solid #000;
+    border-radius: 4px;
   }
 
-  .terpcon-section__vendors-scroll::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 2px;
+  .vendors-scroll::-webkit-scrollbar-thumb {
+    background: #ff6b35;
+    border: 2px solid #000;
+    border-radius: 4px;
   }
 
-  .terpcon-section__vendors-grid {
+  .vendors-grid {
     display: grid;
-    grid-template-columns: repeat(3, minmax(120px, 1fr));
-    gap: 0.75rem;
-    padding-bottom: 2rem;
-    width: 100%;
-    content-visibility: auto;
-    contain-intrinsic-size: auto 800px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    padding-bottom: 1rem;
   }
 
   .vendor-card {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding: 8%;
-    background: rgba(10, 10, 10, 0.85);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.5);
+    border: 2px solid rgba(255, 107, 53, 0.5);
     border-radius: 12px;
-    width: 100%;
-    aspect-ratio: 1 / 1;
     transition: all 0.2s ease;
-    overflow: hidden;
-    gap: 0.4rem;
+    aspect-ratio: 1 / 1;
   }
 
   .vendor-card:hover {
-    background: rgba(10, 10, 10, 0.95);
-    border-color: rgba(255, 255, 255, 0.15);
-    transform: translateY(-2px);
+    transform: translateY(-4px);
+    background: rgba(0, 0, 0, 0.7);
+    border-color: #ff6b35;
+    box-shadow: 0 8px 24px rgba(255, 107, 53, 0.3);
   }
 
-  .vendor-card__image-wrapper {
-    width: clamp(40px, 6vw, 70px);
-    height: clamp(40px, 6vw, 70px);
+  .vendor-avatar {
+    width: clamp(60px, 50%, 100px);
+    height: clamp(60px, 50%, 100px);
     border-radius: 50%;
     overflow: hidden;
+    border: 4px solid #ff6b35;
+    margin-bottom: 0.5rem;
+    background: #222;
     flex-shrink: 0;
-    border: 2px solid rgba(255, 255, 255, 0.1);
   }
 
-  .vendor-card__image {
+  .vendor-avatar img {
     width: 100%;
     height: 100%;
     object-fit: cover;
   }
 
-  .vendor-card__name {
+  .vendor-name {
     font-family: 'Inter', sans-serif;
-    font-size: clamp(11px, 1.3vw, 15px);
+    font-size: clamp(14px, 1.5vw, 18px);
     font-weight: 700;
-    color: #ffffff;
+    color: #fff;
     margin: 0;
+    letter-spacing: 0.01em;
     line-height: 1.2;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
   }
 
-  .vendor-card__name--long {
-    font-size: clamp(9px, 1.1vw, 12px);
+  .vendor-name--long {
+    font-size: clamp(12px, 1.2vw, 15px);
   }
 
-  .vendor-card__social {
+  .vendor-social {
     font-family: 'Inter', sans-serif;
-    font-size: clamp(8px, 0.9vw, 10px);
-    font-weight: 500;
-    color: #64b4ff;
+    font-size: clamp(9px, 1vw, 12px);
+    font-weight: 600;
+    color: #ff6b35;
     text-decoration: none;
-    transition: color 0.2s ease;
-    display: -webkit-box;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+    margin: 0.2rem 0;
     word-break: break-all;
   }
 
-  .vendor-card__social:hover {
-    color: #8ecaff;
+  .vendor-social:hover {
+    color: #00bcd4;
+    text-decoration: underline;
   }
 
-  .vendor-card__social--none {
-    color: rgba(255, 255, 255, 0.4);
+  .vendor-social--none {
+    color: #999;
     font-style: italic;
   }
 
-  .vendor-card__description {
+  .vendor-desc {
     font-family: 'Inter', sans-serif;
-    font-size: clamp(8px, 0.9vw, 11px);
-    font-weight: 400;
-    color: rgba(255, 255, 255, 0.5);
-    line-height: 1.3;
-    margin: 0;
+    font-size: clamp(12px, 1.3vw, 16px);
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.4;
+    margin: 0.3rem 0 0;
     display: -webkit-box;
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
 
-  /* Responsive */
-  @media (max-width: 1200px) {
-    .terpcon-section__columns {
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 1100px) {
+    .comic-columns {
       grid-template-columns: 1fr 1fr;
     }
   }
 
-  @media (max-width: 900px) {
-    .terpcon-section__columns {
+  @media (max-width: 800px) {
+    .comic-content {
+      padding: calc(70px + 0.5rem) 1rem 1rem;
+      overflow-y: auto;
+    }
+
+    .comic-columns {
       grid-template-columns: 1fr;
-      gap: 2rem;
+      gap: 1rem;
     }
 
-    .terpcon-section__vendors-grid {
-      grid-template-columns: repeat(2, minmax(120px, 1fr));
+    .comic-left, .comic-right {
+      height: auto;
     }
 
-    .featured-artists-collage {
-      display: none;
+    .comic-panel--featured {
+      min-height: 250px;
+    }
+
+    .featured-card {
+      flex: 0 0 calc(25% - 0.5625rem);
+    }
+
+    .comic-panel--vendors {
+      min-height: 400px;
+    }
+
+    .vendors-grid {
+      grid-template-columns: repeat(2, 1fr);
     }
   }
 
-  @media (max-width: 600px) {
-    .terpcon-section__content {
-      padding: 80px 1rem 1rem 1rem;
+  @media (max-width: 500px) {
+    .comic-title {
+      font-size: 50px;
+      -webkit-text-stroke: 3px #000;
     }
 
-    .terpcon-section__vendors-grid {
-      grid-template-columns: repeat(2, minmax(100px, 1fr));
+    .comic-year {
+      font-size: 25px;
     }
 
-    .subtitle-pow {
+    .comic-pow {
       display: none;
+    }
+
+    .comic-details {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .vendors-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.5rem;
+    }
+
+    .featured-card {
+      flex: 0 0 calc(50% - 0.375rem);
     }
   }
 </style>

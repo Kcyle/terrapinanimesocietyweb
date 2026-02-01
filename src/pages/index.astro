@@ -5,6 +5,8 @@ import Footer from '../components/Footer.astro';
 import HeroSection from '../sections/HeroSection.astro';
 import HeroContent from '../components/HeroContent.astro';
 import NowScreening from '../components/NowScreening.astro';
+import ActivitiesSection from '../components/ActivitiesSection.astro';
+import PartnersSection from '../components/PartnersSection.astro';
 ---
 
 <BaseLayout title="Terrapin Anime Society">
@@ -17,6 +19,10 @@ import NowScreening from '../components/NowScreening.astro';
       />
       <!-- Meetings content - slides in after About via scroll animation -->
       <NowScreening slot="meetings" />
+      <!-- Activities - slides in after Meetings -->
+      <ActivitiesSection slot="activities" />
+      <!-- Partners - slides in after Activities -->
+      <PartnersSection slot="partners" />
     </HeroSection>
   </main>
 

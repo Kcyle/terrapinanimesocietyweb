@@ -149,9 +149,12 @@ const vendors: Vendor[] = [
 
 <script>
   import gsap from 'gsap';
+  import { initMenuAnimations } from '../animations/menu';
 
   // Page load slide-in animations
   function initPageAnimations() {
+    // Initialize menu
+    initMenuAnimations();
     const carousel = document.querySelector('[data-kamecon-carousel]');
     const title = document.querySelector('[data-kamecon-title]');
     const desc = document.querySelector('[data-kamecon-desc]');
@@ -275,14 +278,15 @@ const vendors: Vendor[] = [
 
 <style>
   .kamecon-page {
-    min-height: 100vh;
+    height: 100vh;
     background-color: #0a0a0a;
+    overflow: hidden;
   }
 
   .kamecon-section {
     position: relative;
     width: 100%;
-    min-height: 100vh;
+    height: 100vh;
     overflow: hidden;
     background-color: #0a0a0a;
   }
@@ -307,11 +311,12 @@ const vendors: Vendor[] = [
     position: relative;
     z-index: 1;
     width: 100%;
-    min-height: 100vh;
+    height: 100vh;
     padding: clamp(80px, 10vh, 100px) clamp(1rem, 3vw, 3rem) clamp(1rem, 5vh, 80px) clamp(1rem, 3vw, 3rem);
     box-sizing: border-box;
     display: flex;
     gap: clamp(1.5rem, 3vw, 3rem);
+    overflow: hidden;
   }
 
   .kamecon-section__left {
@@ -321,6 +326,7 @@ const vendors: Vendor[] = [
     height: calc(100vh - clamp(80px, 10vh, 100px) - clamp(1rem, 5vh, 80px));
   }
 
+  /* Elements start hidden - GSAP will animate them in */
   .kamecon-carousel {
     position: relative;
     width: 100%;
@@ -328,6 +334,33 @@ const vendors: Vendor[] = [
     display: flex;
     flex-direction: column;
     min-height: 0;
+    opacity: 0;
+    transform: translateX(-100px);
+  }
+
+  .kamecon-section__title {
+    opacity: 0;
+    transform: translateY(-100px);
+  }
+
+  .kamecon-section__description {
+    opacity: 0;
+    transform: translateY(100px);
+  }
+
+  .kamecon-section__buttons {
+    opacity: 0;
+    transform: translateY(100px);
+  }
+
+  .kamecon-section__vendors {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+
+  .kamecon-turtle {
+    opacity: 0;
+    transform: translateX(100px);
   }
 
   .kamecon-carousel__container {
