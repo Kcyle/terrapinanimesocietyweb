@@ -1,0 +1,438 @@
+---
+// Partners section - displays between Activities and Subgroups
+// Clean cinematic design with 3 partners centered + Sony Pictures movie showcase
+---
+
+<div class="partners" data-partners-content>
+  <!-- Background -->
+  <div class="partners__bg" data-partners-bg></div>
+
+  <!-- Content container -->
+  <div class="partners__container">
+    <!-- Header -->
+    <div class="partners__header" data-partners-header>
+      <h2 class="partners__title">Our Partners</h2>
+    </div>
+
+    <!-- Side partners - UMD Gaming left, XR Club right -->
+    <div class="partners__sides" data-partners-trinity>
+      <!-- UMD Gaming - LEFT -->
+      <a href="https://terplink.umd.edu/organization/gaming" target="_blank" rel="noopener" class="partner partner--side partner--left" data-partner>
+        <img class="partner__logo" src="/images/Icons/Gaming logo.png" alt="UMD Gaming" />
+      </a>
+
+      <!-- Sony Pictures - CENTER -->
+      <a href="https://www.sonypictures.com/movies/anime" target="_blank" rel="noopener" class="partner partner--center" data-partner>
+        <img class="partner__logo" src="/images/Artwork/Sony_Pictures_Inc._logo.svg.png" alt="Sony Pictures" />
+      </a>
+
+      <!-- XR Club - RIGHT -->
+      <a href="https://terplink.umd.edu/organization/xr-club" target="_blank" rel="noopener" class="partner partner--side partner--right" data-partner>
+        <img class="partner__logo" src="/images/Icons/xr (2).png" alt="XR Club" />
+      </a>
+    </div>
+
+    <!-- Sony Pictures Cinematic Showcase -->
+    <div class="partners__showcase" data-partners-showcase>
+      <p class="showcase__headline">
+        In partnership with <strong>Sony Pictures</strong>, our members receive <strong>completely free</strong> exclusive early access to theatrical anime screenings
+      </p>
+      <div class="showcase__theater">
+        <div class="showcase__poster">
+          <div class="showcase__poster-frame">
+            <img src="/images/Photos/Demon Slayer.jpg" alt="Demon Slayer" />
+          </div>
+          <div class="showcase__poster-info">
+            <span class="showcase__poster-title">Demon Slayer</span>
+            <span class="showcase__poster-status">Screened</span>
+          </div>
+        </div>
+        <div class="showcase__poster showcase__poster--featured">
+          <div class="showcase__poster-frame">
+            <img src="/images/Photos/reze.webp" alt="Chainsaw Man: Reze Arc" />
+          </div>
+          <div class="showcase__poster-info">
+            <span class="showcase__poster-title">Chainsaw Man: Reze</span>
+            <span class="showcase__poster-status">Screened</span>
+          </div>
+        </div>
+        <div class="showcase__poster">
+          <div class="showcase__poster-frame">
+            <img src="/images/Photos/scarlet.webp" alt="Scarlet" />
+          </div>
+          <div class="showcase__poster-info">
+            <span class="showcase__poster-title">Scarlet</span>
+            <span class="showcase__poster-status showcase__poster-status--upcoming">Upcoming</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .partners {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    /* Will be set to visible by GSAP */
+    visibility: hidden;
+    pointer-events: none;
+    z-index: 35;
+    overflow: hidden;
+  }
+
+
+  .partners__bg {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)),
+      url('/images/Artwork/partners.jpg') center/cover no-repeat;
+    z-index: 0;
+  }
+
+  .partners__container {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(8rem, 15vh, 12rem) var(--page-padding) clamp(10rem, 18vh, 14rem);
+    gap: clamp(1.5rem, 3vh, 2.5rem);
+  }
+
+  /* Header */
+  .partners__header {
+    text-align: center;
+    margin-top: clamp(3rem, 8vh, 6rem);
+  }
+
+  .partners__title {
+    font-size: clamp(3.5rem, 10vw, 7rem);
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    text-transform: uppercase;
+    text-shadow: 0 4px 40px rgba(0, 0, 0, 0.9), 0 2px 10px rgba(0, 0, 0, 0.7);
+  }
+
+  /* Partners layout - sides positioned absolutely */
+  .partners__sides {
+    position: relative;
+    width: 100%;
+    height: clamp(250px, 40vh, 450px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Individual partner */
+  .partner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    text-decoration: none;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .partner:hover {
+    transform: translateY(-8px);
+  }
+
+  .partner__logo {
+    height: auto;
+    object-fit: contain;
+    opacity: 0.9;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .partner:hover .partner__logo {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+
+  .partner__name {
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.55);
+    letter-spacing: 0.03em;
+    transition: color 0.4s ease;
+  }
+
+  .partner:hover .partner__name {
+    color: rgba(255, 255, 255, 1);
+  }
+
+  /* Side partners (UMD Gaming & XR Club) - HUGE and positioned to edges */
+  .partner--side {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .partner--side:hover {
+    transform: translateY(calc(-50% - 8px));
+  }
+
+  .partner--side .partner__logo {
+    width: clamp(280px, 40vw, 550px);
+    max-height: clamp(200px, 32vw, 400px);
+    opacity: 1;
+  }
+
+  .partner--left {
+    left: 5rem;
+  }
+
+  .partner--right {
+    right: 2rem;
+  }
+
+  /* Center partner (Sony) - prominent center placement */
+  .partner--center .partner__logo {
+    width: clamp(200px, 28vw, 400px);
+    max-height: clamp(140px, 20vw, 280px);
+    opacity: 0.85;
+    filter: brightness(0) invert(1);
+  }
+
+  .partner--center .partner__name {
+    font-size: clamp(0.75rem, 1vw, 0.9rem);
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  /* Sony Pictures Cinematic Showcase */
+  .partners__showcase {
+    width: 100%;
+    max-width: 1000px;
+    text-align: center;
+    margin-bottom: clamp(2rem, 5vh, 4rem);
+  }
+
+  .showcase__headline {
+    font-size: clamp(1rem, 1.5vw, 1.2rem);
+    color: rgba(255, 255, 255, 0.5);
+    line-height: 1.6;
+    margin-bottom: clamp(1.5rem, 3vh, 2.5rem);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .showcase__headline strong {
+    color: rgba(255, 255, 255, 0.85);
+    font-weight: 600;
+  }
+
+  .showcase__theater {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: clamp(1.5rem, 3vw, 2.5rem);
+  }
+
+  .showcase__poster {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .showcase__poster:hover {
+    transform: translateY(-8px);
+  }
+
+  .showcase__poster-frame {
+    position: relative;
+    width: clamp(140px, 18vw, 220px);
+    aspect-ratio: 2/3;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #111;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .showcase__poster-frame::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      transparent 60%,
+      rgba(0, 0, 0, 0.7) 100%
+    );
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .showcase__poster-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.85;
+    transition: all 0.5s ease;
+  }
+
+  .showcase__poster:hover .showcase__poster-frame img {
+    opacity: 1;
+    transform: scale(1.03);
+  }
+
+  /* Featured/center poster - larger */
+  .showcase__poster--featured .showcase__poster-frame {
+    width: clamp(160px, 22vw, 280px);
+    border: 2px solid rgba(255, 255, 255, 0.15);
+  }
+
+  .showcase__poster-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+  }
+
+  .showcase__poster-title {
+    font-size: clamp(0.9rem, 1.2vw, 1.1rem);
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.8);
+    letter-spacing: 0.01em;
+  }
+
+  .showcase__poster-status {
+    font-size: clamp(0.65rem, 0.8vw, 0.75rem);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: rgba(255, 255, 255, 0.35);
+  }
+
+  .showcase__poster-status--upcoming {
+    color: rgba(230, 57, 70, 0.9);
+  }
+
+  /* Responsive */
+  @media (max-width: 1100px) {
+    .partner--side {
+      position: relative;
+      top: auto;
+      left: auto;
+      right: auto;
+      transform: none;
+    }
+
+    .partner--side:hover {
+      transform: translateY(-8px);
+    }
+
+    .partners__sides {
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .partner--left,
+    .partner--right {
+      align-items: center;
+    }
+
+    .partner--side .partner__logo {
+      width: clamp(200px, 50vw, 350px);
+      max-height: clamp(150px, 35vw, 280px);
+    }
+
+    .partner--side .partner__name {
+      font-size: clamp(1.4rem, 4vw, 2rem);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .partners__sides {
+      gap: 1.5rem;
+    }
+
+    .partner--side .partner__logo {
+      width: clamp(160px, 45vw, 280px);
+      max-height: clamp(120px, 30vw, 220px);
+    }
+
+    .partner--side .partner__name {
+      font-size: clamp(1.2rem, 3.5vw, 1.6rem);
+    }
+
+    .partner--center .partner__logo {
+      width: clamp(120px, 30vw, 180px);
+      max-height: clamp(80px, 20vw, 120px);
+    }
+
+    .showcase__theater {
+      gap: clamp(1rem, 2vw, 1.5rem);
+    }
+
+    .showcase__poster-frame {
+      width: clamp(100px, 25vw, 160px);
+    }
+
+    .showcase__poster--featured .showcase__poster-frame {
+      width: clamp(120px, 30vw, 180px);
+    }
+
+    .showcase__poster-title {
+      font-size: 0.85rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .partners__container {
+      padding: clamp(4rem, 10vh, 6rem) var(--page-padding);
+      gap: 1rem;
+    }
+
+    .partners__sides {
+      gap: 1rem;
+    }
+
+    .partner--side .partner__logo {
+      width: clamp(140px, 55vw, 220px);
+      max-height: clamp(100px, 35vw, 160px);
+    }
+
+    .partner--side .partner__name {
+      font-size: clamp(1rem, 4vw, 1.3rem);
+    }
+
+    .partner--center {
+      display: none;
+    }
+
+    .showcase__headline {
+      font-size: 0.85rem;
+      margin-bottom: 1rem;
+    }
+
+    .showcase__theater {
+      gap: 0.75rem;
+    }
+
+    .showcase__poster-frame {
+      width: clamp(80px, 26vw, 110px);
+    }
+
+    .showcase__poster--featured .showcase__poster-frame {
+      width: clamp(95px, 30vw, 130px);
+    }
+
+    .showcase__poster-title {
+      font-size: 0.75rem;
+    }
+
+    .showcase__poster-status {
+      font-size: 0.6rem;
+    }
+  }
+</style>

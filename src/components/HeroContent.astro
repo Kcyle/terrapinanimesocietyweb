@@ -21,8 +21,8 @@ const {
   </div>
   <p class="hero-content__description">{description}</p>
   <div class="hero-content__buttons">
-    <a href="/meetings" class="hero-content__button hero-content__button--primary">Meetings</a>
-    <a href="/terpcon" class="hero-content__button hero-content__button--terpcon">TerpCon 2026</a>
+    <a href="#meetings-section" class="hero-content__button hero-content__button--primary">Meetings</a>
+    <a href="/terpcon" class="hero-content__button hero-content__button--secondary">TerpCon 2026</a>
     <a href="/maidcafe" class="hero-content__button hero-content__button--secondary">Maid Cafe 2026</a>
     <a href="/kamecon" class="hero-content__button hero-content__button--secondary">KAMECON</a>
   </div>
@@ -137,8 +137,8 @@ const {
 
   .hero-content__title-wrapper {
     position: relative;
-    /* Fluid height based on viewport */
-    min-height: clamp(80px, 18vw, 252px);
+    /* Fluid height based on viewport - reduced max for more carousel space */
+    min-height: clamp(80px, 14vw, 180px);
   }
 
   .hero-content__background-text {
@@ -147,7 +147,7 @@ const {
     left: 0;
     transform: translateY(-50%);
     font-family: 'Inter', sans-serif;
-    font-size: clamp(120px, 35vw, 500px);
+    font-size: clamp(120px, 28vw, 380px);
     font-weight: 800;
     line-height: 1;
     letter-spacing: -0.02em;
@@ -169,13 +169,14 @@ const {
 
   .hero-content__title-line {
     font-family: 'Inter', sans-serif;
-    font-size: clamp(40px, 10vw, 140px);
+    font-size: clamp(40px, 8vw, 100px);
     font-weight: 800;
     line-height: 0.9;
     letter-spacing: -0.04em;
     color: #ffffff;
     text-transform: uppercase;
     display: block;
+    text-shadow: 0 4px 40px rgba(0, 0, 0, 0.9), 0 2px 10px rgba(0, 0, 0, 0.7);
   }
 
 
@@ -183,12 +184,12 @@ const {
     position: relative;
     z-index: 1;
     font-family: 'Inter', sans-serif;
-    font-size: clamp(16px, 2vw, 24px);
+    font-size: clamp(16px, 1.5vw, 20px);
     font-weight: 500;
     line-height: 1.5;
     color: #a0a0a0;
-    max-width: min(1200px, 100%);
-    margin-top: clamp(1.5rem, 3vw, 3rem);
+    max-width: min(1000px, 100%);
+    margin-top: clamp(1rem, 2vw, 1.5rem);
   }
 
   .hero-content__buttons {
@@ -196,19 +197,19 @@ const {
     z-index: 1;
     display: flex;
     flex-wrap: wrap;
-    gap: clamp(0.5rem, 1vw, 1rem);
-    margin-top: clamp(0.5rem, 1vw, 1rem);
+    gap: clamp(0.5rem, 0.8vw, 0.75rem);
+    margin-top: clamp(0.5rem, 1vw, 0.75rem);
   }
 
   .hero-content__button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: clamp(14px, 2vw, 20px) clamp(28px, 4vw, 48px);
+    padding: clamp(12px, 1.5vw, 16px) clamp(24px, 3vw, 36px);
     font-family: 'Inter', sans-serif;
-    font-size: clamp(16px, 1.8vw, 22px);
+    font-size: clamp(14px, 1.4vw, 18px);
     font-weight: 600;
-    border-radius: clamp(10px, 1.5vw, 16px);
+    border-radius: clamp(8px, 1.2vw, 12px);
     text-decoration: none;
     transition: all 0.2s ease;
   }
@@ -231,17 +232,6 @@ const {
 
   .hero-content__button--secondary:hover {
     border-color: rgba(255, 255, 255, 0.6);
-  }
-
-  .hero-content__button--terpcon {
-    background-color: rgba(100, 180, 255, 0.15);
-    color: #64b4ff;
-    border: 1px solid rgba(100, 180, 255, 0.4);
-  }
-
-  .hero-content__button--terpcon:hover {
-    background-color: rgba(100, 180, 255, 0.25);
-    border-color: rgba(100, 180, 255, 0.6);
   }
 
   /* Ticket banner - top right */
@@ -342,22 +332,18 @@ const {
 
   .about-content__title-wrapper {
     position: relative;
-    /* Match hero title wrapper height for consistent positioning */
-    min-height: clamp(150px, 20vw, 252px);
-    /* Align single line title to bottom of wrapper */
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
+    min-height: clamp(80px, 14vw, 180px);
     z-index: 1;
   }
 
   .about-content__background-text {
     position: absolute;
-    top: 50%;
+    /* Position at same place as hero: centered behind two title lines = one line height from top */
+    top: calc(clamp(40px, 8vw, 100px) * 0.9);
     left: 0;
     transform: translateY(-50%);
     font-family: 'Inter', sans-serif;
-    font-size: clamp(120px, 35vw, 500px);
+    font-size: clamp(120px, 28vw, 380px);
     font-weight: 800;
     line-height: 1;
     letter-spacing: -0.02em;
@@ -380,13 +366,14 @@ const {
 
   .about-content__title-line {
     font-family: 'Inter', sans-serif;
-    font-size: clamp(40px, 10vw, 140px);
+    font-size: clamp(40px, 8vw, 100px);
     font-weight: 800;
     line-height: 0.9;
     letter-spacing: -0.04em;
     color: #ffffff;
     text-transform: uppercase;
     display: block;
+    text-shadow: 0 4px 40px rgba(0, 0, 0, 0.9), 0 2px 10px rgba(0, 0, 0, 0.7);
   }
 
   .about-content__info {
@@ -573,7 +560,7 @@ const {
     position: absolute;
     top: 22%;
     left: 40%;
-    right: 5%;
+    right: 3%;
     bottom: 10%;
     z-index: 2;
   }
@@ -675,9 +662,9 @@ const {
   /* C.C. Mascot container - positioned at top right of collage */
   .about-content__mascot-container {
     position: absolute;
-    top: clamp(-200px, -20vw, -257px);
+    /* Top set by JS to anchor to collage */
     right: 0;
-    width: clamp(200px, 40vw, 600px);
+    width: clamp(180px, 35vw, 500px);
     height: auto;
     transform: perspective(1200px) rotateY(-4deg);
     transform-origin: right center;
@@ -689,7 +676,7 @@ const {
   .about__mascot {
     position: relative;
     width: 100%;
-    max-width: clamp(200px, 40vw, 600px);
+    max-width: clamp(180px, 35vw, 500px);
     height: auto;
     filter: drop-shadow(0 10px 40px rgba(0, 0, 0, 0.5));
     pointer-events: none;
@@ -714,13 +701,13 @@ const {
     }
 
     .about-content__gallery {
-      left: 50%;
+      /* Left set by JS */
       top: 25%;
     }
 
     .about-content__mascot-container {
       width: clamp(200px, 30vw, 300px);
-      top: clamp(-130px, -12vw, -100px);
+      /* Top set by JS */
     }
 
     .about__mascot {
@@ -904,4 +891,138 @@ const {
     }
   }
 
+  /* ===== LARGE DISPLAY SCALING (2560x1440, 3840x2160) ===== */
+  /* All changes isolated here - zero impact on 1920x1080 */
+  @media (min-width: 2500px) {
+    .hero-content__title-line {
+      font-size: clamp(100px, 6vw, 200px);
+    }
+
+    .hero-content__background-text {
+      font-size: clamp(380px, 22vw, 600px);
+    }
+
+    .hero-content__title-wrapper {
+      min-height: clamp(180px, 10vw, 280px);
+    }
+
+    .hero-content__description {
+      font-size: clamp(20px, 1.2vw, 30px);
+    }
+
+    .hero-content__button {
+      padding: clamp(16px, 1.2vw, 24px) clamp(36px, 2.5vw, 56px);
+      font-size: clamp(18px, 1.1vw, 26px);
+      border-radius: clamp(12px, 1vw, 18px);
+    }
+
+    .hero-content__buttons {
+      gap: clamp(0.75rem, 0.8vw, 1.25rem);
+    }
+
+    .hero-carousel-wrapper {
+      width: 60vw;
+    }
+
+    .about-content__title-wrapper {
+      min-height: clamp(180px, 10vw, 280px);
+    }
+
+    .about-content__title-line {
+      font-size: clamp(100px, 6vw, 200px);
+    }
+
+    .about-content__background-text {
+      font-size: clamp(380px, 22vw, 600px);
+      top: calc(clamp(100px, 6vw, 200px) * 0.9);
+    }
+
+    .about-content__info {
+      max-width: min(1000px, 100%);
+    }
+
+    .about-content__description {
+      font-size: clamp(22px, 1.2vw, 30px);
+    }
+
+    .about-content__detail-label {
+      font-size: clamp(13px, 0.8vw, 18px);
+    }
+
+    .about-content__detail-text {
+      font-size: clamp(18px, 1.1vw, 26px);
+    }
+
+    .about-content__subgroup-btn {
+      padding: clamp(10px, 0.8vw, 16px) clamp(20px, 1.4vw, 32px);
+      font-size: clamp(15px, 0.9vw, 22px);
+    }
+
+    .about-content__event-btn {
+      padding: clamp(12px, 0.9vw, 20px) clamp(22px, 1.6vw, 36px);
+      font-size: clamp(16px, 1vw, 24px);
+    }
+
+    .about-content__event-btn span {
+      font-size: clamp(12px, 0.7vw, 16px);
+    }
+
+    .about-content__button {
+      padding: clamp(14px, 1vw, 22px) clamp(32px, 2.2vw, 50px);
+      font-size: clamp(16px, 1vw, 24px);
+      border-radius: clamp(12px, 1vw, 18px);
+    }
+
+    .about-content__mascot-container {
+      width: clamp(500px, 28vw, 750px);
+    }
+
+    .about__mascot {
+      max-width: clamp(500px, 28vw, 750px);
+    }
+
+    .about-content__discord-link {
+      font-size: 1em;
+      padding: 3px 10px;
+    }
+
+    .about-content__details {
+      gap: 1.75rem;
+    }
+  }
+
 </style>
+
+<script>
+  // Anchor C.C. mascot to top right corner of the photo collage
+  function anchorCCToCollage() {
+    const mascotContainer = document.querySelector('.about-content__mascot-container') as HTMLElement;
+    const mascotImg = document.querySelector('.about__mascot') as HTMLImageElement;
+
+    if (!mascotContainer || !mascotImg) return;
+
+    // Wait for image to load to get accurate height
+    if (!mascotImg.complete) {
+      mascotImg.addEventListener('load', anchorCCToCollage, { once: true });
+      return;
+    }
+
+    // Get the mascot image height
+    const mascotHeight = mascotImg.offsetHeight;
+
+    // Position mascot so she sits on top of collage
+    // 75% above collage, 25% overlapping
+    mascotContainer.style.top = `${-(mascotHeight * 0.75)}px`;
+  }
+
+  // Run on load and resize
+  if (typeof window !== 'undefined') {
+    window.addEventListener('load', anchorCCToCollage);
+    window.addEventListener('resize', anchorCCToCollage);
+
+    // Also run immediately if DOM is ready
+    if (document.readyState !== 'loading') {
+      anchorCCToCollage();
+    }
+  }
+</script>

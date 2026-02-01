@@ -176,6 +176,33 @@ const duplicatedImages = [...images, ...images];
   .card-carousel__overlay {
     padding-bottom: clamp(0.75rem, 1.5vw, 1.5rem);
   }
+
+  /* ===== LARGE DISPLAY SCALING (2560x1440, 3840x2160) ===== */
+  /* All changes isolated here - zero impact on 1920x1080 */
+  @media (min-width: 2500px) {
+    .card-carousel__track {
+      gap: clamp(2rem, 1.5vw, 4rem);
+    }
+
+    .card-carousel__download {
+      font-size: clamp(16px, 1vw, 22px);
+      padding: clamp(12px, 0.8vw, 18px) clamp(24px, 1.6vw, 36px);
+      border-radius: clamp(10px, 0.7vw, 14px);
+    }
+
+    .card-carousel__icon {
+      width: clamp(18px, 1.2vw, 26px);
+      height: clamp(18px, 1.2vw, 26px);
+    }
+
+    .card-carousel__slide {
+      border-radius: clamp(16px, 1.2vw, 24px);
+    }
+
+    .card-carousel__overlay {
+      padding-bottom: clamp(1.5rem, 1.5vw, 2.5rem);
+    }
+  }
 </style>
 
 <script>

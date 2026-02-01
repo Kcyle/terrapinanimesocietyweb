@@ -35,8 +35,19 @@ export function destroyAnimations(): void {
  * Auto-initialize when DOM is ready
  */
 if (typeof window !== 'undefined') {
+  // Disable browser scroll restoration to prevent auto-scrolling to meetings
+  if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+  }
+
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initAnimations);
+    document.addEventListener('DOMContentLoaded', () => {
+      // Only scroll to top on fresh page load (not hot reload)
+      if (performance.navigation?.type === 0 || performance.getEntriesByType('navigation')[0]?.type === 'navigate') {
+        window.scrollTo(0, 0);
+      }
+      initAnimations();
+    });
   } else {
     initAnimations();
   }
