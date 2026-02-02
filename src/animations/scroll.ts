@@ -4,6 +4,11 @@ import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
+// Prevent browser's automatic scroll restoration which causes scroll jumps
+if ('scrollRestoration' in history) {
+  history.scrollRestoration = 'manual';
+}
+
 // Expose ScrollTrigger globally for navigation teleport
 (window as any).ScrollTrigger = ScrollTrigger;
 
@@ -347,8 +352,14 @@ export function initScrollTransition(): void {
     if (resizeTimeout) clearTimeout(resizeTimeout);
     resizeTimeout = window.setTimeout(() => {
       if (mainScrollTrigger && isResizing) {
+        // Store scroll position before refresh
+        const scrollPos = window.scrollY;
         // Refresh ScrollTrigger calculations for new dimensions
         ScrollTrigger.refresh();
+        // Restore position if it jumped during refresh
+        if (Math.abs(window.scrollY - scrollPos) > 50) {
+          window.scrollTo({ top: scrollPos, behavior: 'instant' });
+        }
         // Resume the timeline
         masterTl.resume();
         isResizing = false;
@@ -781,9 +792,16 @@ export function initScrollTransition(): void {
 
   // Force ScrollTrigger to recalculate positions after all animations are set up
   // Defer to prevent auto-scroll issues on page load
-  requestAnimationFrame(() => {
+  // Use a longer delay to ensure browser scroll restoration completes first
+  setTimeout(() => {
+    // Disable smooth scroll restoration before refresh
+    const scrollPos = window.scrollY;
     ScrollTrigger.refresh();
-  });
+    // Restore position if it jumped
+    if (Math.abs(window.scrollY - scrollPos) > 50) {
+      window.scrollTo({ top: scrollPos, behavior: 'instant' });
+    }
+  }, 100);
 }
 
 /**
