@@ -19,7 +19,6 @@ const { screenings, startDate, meetingTime } = screeningsData;
     </div>
 
     <div class="admin__content">
-      <!-- Settings Section -->
       <section class="admin__section">
         <h2 class="admin__section-title">Schedule Settings</h2>
         <div class="admin__form-grid">
@@ -35,7 +34,6 @@ const { screenings, startDate, meetingTime } = screeningsData;
         </div>
       </section>
 
-      <!-- Screenings List -->
       <section class="admin__section">
         <div class="admin__section-header">
           <h2 class="admin__section-title">Anime Screenings</h2>
@@ -77,7 +75,6 @@ const { screenings, startDate, meetingTime } = screeningsData;
         </div>
       </section>
 
-      <!-- Search Modal -->
       <div class="admin__modal" id="searchModal">
         <div class="admin__modal-content">
           <div class="admin__modal-header">
@@ -99,7 +96,6 @@ const { screenings, startDate, meetingTime } = screeningsData;
         </div>
       </div>
 
-      <!-- Save Button -->
       <div class="admin__actions">
         <button class="admin__btn admin__btn--secondary" id="resetBtn">Reset Changes</button>
         <button class="admin__btn admin__btn--primary" id="saveBtn">
@@ -112,7 +108,6 @@ const { screenings, startDate, meetingTime } = screeningsData;
         </button>
       </div>
 
-      <!-- Instructions -->
       <div class="admin__info">
         <h3>How to Update</h3>
         <ol>
@@ -465,7 +460,6 @@ const { screenings, startDate, meetingTime } = screeningsData;
     padding: 2rem;
   }
 
-  /* 3-column grid for search results - use :global() for dynamically generated content */
   :global(.admin__search-grid) {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -572,7 +566,6 @@ const { screenings, startDate, meetingTime } = screeningsData;
 </style>
 
 <script>
-  // Store current screenings data
   let screeningsData = {
     screenings: [] as Array<{
       malId: number;
@@ -586,16 +579,13 @@ const { screenings, startDate, meetingTime } = screeningsData;
     meetingTime: '',
   };
 
-  // Initialize from page data
   document.addEventListener('DOMContentLoaded', () => {
-    // Get initial values from inputs
     const startDateInput = document.getElementById('startDate') as HTMLInputElement;
     const meetingTimeInput = document.getElementById('meetingTime') as HTMLInputElement;
 
     screeningsData.startDate = startDateInput?.value || '';
     screeningsData.meetingTime = meetingTimeInput?.value || '';
 
-    // Parse existing screenings from the DOM
     const cards = document.querySelectorAll('.admin__card');
     cards.forEach((card, index) => {
       const img = card.querySelector('.admin__card-image img') as HTMLImageElement;
@@ -614,12 +604,10 @@ const { screenings, startDate, meetingTime } = screeningsData;
       });
     });
 
-    // Setup event listeners
     setupEventListeners();
   });
 
   function setupEventListeners() {
-    // Add anime button
     const addBtn = document.getElementById('addAnime');
     const modal = document.getElementById('searchModal');
     const closeBtn = document.getElementById('closeModal');
@@ -651,7 +639,6 @@ const { screenings, startDate, meetingTime } = screeningsData;
     saveBtn?.addEventListener('click', saveChanges);
     resetBtn?.addEventListener('click', () => window.location.reload());
 
-    // Delete buttons
     document.querySelectorAll('[data-action="delete"]').forEach((btn) => {
       btn.addEventListener('click', (e) => {
         const card = (e.currentTarget as HTMLElement).closest('.admin__card');
@@ -664,7 +651,6 @@ const { screenings, startDate, meetingTime } = screeningsData;
       });
     });
 
-    // Input change listeners
     document.getElementById('startDate')?.addEventListener('change', (e) => {
       screeningsData.startDate = (e.target as HTMLInputElement).value;
     });
@@ -704,7 +690,6 @@ const { screenings, startDate, meetingTime } = screeningsData;
           </div>
         `;
 
-        // Add click listeners to results
         resultsContainer.querySelectorAll('.admin__search-card').forEach((item) => {
           item.addEventListener('click', () => {
             const malId = item.getAttribute('data-mal-id');
@@ -747,7 +732,6 @@ const { screenings, startDate, meetingTime } = screeningsData;
 
         modal?.classList.remove('active');
 
-        // Clear search
         const searchInput = document.getElementById('searchInput') as HTMLInputElement;
         if (searchInput) searchInput.value = '';
         if (resultsContainer) {
@@ -792,7 +776,6 @@ const { screenings, startDate, meetingTime } = screeningsData;
       </div>
     `;
 
-    // Add delete listener
     card.querySelector('[data-action="delete"]')?.addEventListener('click', () => {
       const idx = parseInt(card.getAttribute('data-index') || '0');
       if (confirm('Remove this anime from the schedule?')) {
@@ -812,19 +795,16 @@ const { screenings, startDate, meetingTime } = screeningsData;
   }
 
   function saveChanges() {
-    // Update settings from inputs
     const startDateInput = document.getElementById('startDate') as HTMLInputElement;
     const meetingTimeInput = document.getElementById('meetingTime') as HTMLInputElement;
 
     screeningsData.startDate = startDateInput?.value || screeningsData.startDate;
     screeningsData.meetingTime = meetingTimeInput?.value || screeningsData.meetingTime;
 
-    // Create JSON blob
     const json = JSON.stringify(screeningsData, null, 2);
     const blob = new Blob([json], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
 
-    // Download
     const a = document.createElement('a');
     a.href = url;
     a.download = 'screenings.json';

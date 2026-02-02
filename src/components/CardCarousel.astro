@@ -83,7 +83,7 @@ const duplicatedImages = [...images, ...images];
   .card-carousel__track {
     display: flex;
     height: 100%;
-    gap: 2rem;
+    gap: 1.33vw;
     animation: scroll 50s linear infinite;
     will-change: transform;
     transform: translateZ(0);
@@ -102,7 +102,7 @@ const duplicatedImages = [...images, ...images];
     height: 100%;
     aspect-ratio: 2 / 3;
     border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 16px;
+    border-radius: 0.67vw;
     overflow: hidden;
     transform: translateZ(0);
     backface-visibility: hidden;
@@ -136,15 +136,15 @@ const duplicatedImages = [...images, ...images];
   .card-carousel__download {
     display: flex;
     align-items: center;
-    gap: clamp(0.25rem, 0.5vw, 0.5rem);
-    padding: clamp(6px, 1.2vw, 12px) clamp(12px, 2.4vw, 24px);
+    gap: 0.37vh;
+    padding: 0.89vh 1vw;
     font-family: 'Inter', sans-serif;
-    font-size: clamp(11px, 1.4vw, 16px);
+    font-size: 0.67vw;
     font-weight: 600;
     color: #0a0a0a;
     background-color: #ffffff;
     border: 1px solid #ffffff;
-    border-radius: clamp(6px, 1vw, 10px);
+    border-radius: 0.42vw;
     text-decoration: none;
     transition: background-color 0.2s ease;
   }
@@ -154,8 +154,8 @@ const duplicatedImages = [...images, ...images];
   }
 
   .card-carousel__icon {
-    width: clamp(12px, 1.5vw, 18px);
-    height: clamp(12px, 1.5vw, 18px);
+    width: 0.75vw;
+    height: 0.75vw;
   }
 
   @keyframes scroll {
@@ -163,9 +163,8 @@ const duplicatedImages = [...images, ...images];
       transform: translateX(0);
     }
     100% {
-      /* Card height ≈ 100vh - 14vh (top) - 40vh (content) - 6rem (gaps/padding) = 46vh - 6rem */
-      /* Card width = height * 2/3, plus gap */
-      transform: translateX(calc(((46vh - 6rem) * 2 / 3 + 2rem) * -31));
+      /* Card width = height * 2/3, plus gap (1.33vw) */
+      transform: translateX(calc((40vh * 2 / 3 + 1.33vw) * -31));
     }
   }
 
@@ -174,33 +173,35 @@ const duplicatedImages = [...images, ...images];
   }
 
   .card-carousel__overlay {
-    padding-bottom: clamp(0.75rem, 1.5vw, 1.5rem);
+    padding-bottom: 1.11vh;
   }
 
-  /* ===== LARGE DISPLAY SCALING (2560x1440, 3840x2160) ===== */
-  /* All changes isolated here - zero impact on 1920x1080 */
-  @media (min-width: 2500px) {
+  /* Large display media query removed - pure vw/vh units scale automatically */
+
+  /* Mobile - pixel values for readability */
+  @media (max-width: 768px) {
     .card-carousel__track {
-      gap: clamp(2rem, 1.5vw, 4rem);
-    }
-
-    .card-carousel__download {
-      font-size: clamp(16px, 1vw, 22px);
-      padding: clamp(12px, 0.8vw, 18px) clamp(24px, 1.6vw, 36px);
-      border-radius: clamp(10px, 0.7vw, 14px);
-    }
-
-    .card-carousel__icon {
-      width: clamp(18px, 1.2vw, 26px);
-      height: clamp(18px, 1.2vw, 26px);
+      gap: 1rem;
     }
 
     .card-carousel__slide {
-      border-radius: clamp(16px, 1.2vw, 24px);
+      border-radius: 12px;
+    }
+
+    .card-carousel__download {
+      font-size: 12px;
+      padding: 8px 16px;
+      border-radius: 6px;
+      gap: 4px;
+    }
+
+    .card-carousel__icon {
+      width: 14px;
+      height: 14px;
     }
 
     .card-carousel__overlay {
-      padding-bottom: clamp(1.5rem, 1.5vw, 2.5rem);
+      padding-bottom: 1rem;
     }
   }
 </style>

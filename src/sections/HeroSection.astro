@@ -9,23 +9,18 @@ const {
 ---
 
 <section class="hero" data-hero>
-  <!-- Background image -->
   <div class="hero__bg"></div>
 
   <div class="hero__content">
     <slot />
   </div>
 
-  <!-- Meetings content slot - slides in after About -->
   <slot name="meetings" />
 
-  <!-- Activities slot - slides in after Meetings -->
   <slot name="activities" />
 
-  <!-- Partners slot - slides in after Activities -->
   <slot name="partners" />
 
-  <!-- Hero mascot (Tess-chan) -->
   <div class="hero__mascot" data-hero-mascot>
     <img src={mascotImage} alt="Tess-chan mascot" class="hero__mascot-image" />
   </div>
@@ -64,7 +59,6 @@ const {
     row-gap: 1.5rem;
     padding: var(--page-padding);
     padding-top: 14vh;
-    /* Extra padding at bottom: page-padding + gap to match top gap */
     padding-bottom: calc(var(--page-padding) + 4.5rem);
     overflow: hidden;
   }
@@ -74,7 +68,6 @@ const {
     right: 0;
     bottom: 0;
     height: 100%;
-    /* Never exceed the space after the 65vw carousel + padding */
     max-width: calc(35vw - var(--page-padding, 3rem));
     display: flex;
     align-items: flex-end;
@@ -87,14 +80,12 @@ const {
     height: 90vh;
     max-height: 90%;
     width: auto;
-    /* Constrain width to parent so she scales down when space is limited */
     max-width: 100%;
     object-fit: contain;
     object-position: bottom right;
     opacity: 1;
   }
 
-  /* Reduce opacity on smaller screens for readability */
   @media (max-width: 992px) {
     .hero__mascot-image {
       opacity: 0.4;
@@ -104,7 +95,6 @@ const {
   @media (max-width: 768px) {
     .hero__mascot {
       top: auto;
-      /* Will be set by JS to anchor to carousel */
       bottom: 0;
       height: auto;
       right: var(--page-padding, 3rem);
@@ -136,7 +126,6 @@ const {
 </style>
 
 <script>
-  // Anchor mascot to carousel top on mobile only
   function anchorMascotToCarousel() {
     const mascot = document.querySelector('[data-hero-mascot]') as HTMLElement;
     const carousel = document.querySelector('[data-hero-carousel]');
@@ -151,17 +140,14 @@ const {
       const bottomOffset = viewportHeight - carouselRect.top;
       mascot.style.bottom = `${bottomOffset}px`;
     } else {
-      // Reset to CSS default on desktop
       mascot.style.bottom = '';
     }
   }
 
-  // Run on load and resize
   if (typeof window !== 'undefined') {
     window.addEventListener('load', anchorMascotToCarousel);
     window.addEventListener('resize', anchorMascotToCarousel);
 
-    // Also run immediately if DOM is ready
     if (document.readyState !== 'loading') {
       anchorMascotToCarousel();
     }

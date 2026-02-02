@@ -64,7 +64,6 @@ export function initScrollTransition(): void {
   const activitiesContent = document.querySelector('[data-activities-content]') as HTMLElement;
   const activitiesBg = document.querySelector('[data-activities-bg]') as HTMLElement;
   const activitiesCharacter = document.querySelector('[data-activities-character]') as HTMLElement;
-  const activitiesPower = document.querySelector('[data-activities-power]') as HTMLElement;
   const activitiesTitle = document.querySelector('[data-activities-title]') as HTMLElement;
   const activitiesDescription = document.querySelector('[data-activities-description]') as HTMLElement;
   const activityCards = document.querySelectorAll('[data-activity-card]');
@@ -187,11 +186,10 @@ export function initScrollTransition(): void {
   if (meetingsLocationSection) gsap.set(meetingsLocationSection, { y: '100vh' });
   if (meetingsSchedulerBtn) gsap.set(meetingsSchedulerBtn, { y: '100vh', opacity: 0 });
 
-  // Activities - starts off-screen
-  if (activitiesBg) gsap.set(activitiesBg, { autoAlpha: 0, visibility: 'visible' });
+  // Activities - starts off-screen (visibility hidden via CSS, revealed by GSAP)
+  if (activitiesBg) gsap.set(activitiesBg, { autoAlpha: 0 });
   if (activitiesContent) gsap.set(activitiesContent, { visibility: 'visible', opacity: 1 });
   if (activitiesCharacter) gsap.set(activitiesCharacter, { x: '100vw', y: '100vh' });
-  if (activitiesPower) gsap.set(activitiesPower, { y: '100vh' }); // Only hide below, x set when grid is calculated
   if (activitiesTitle) gsap.set(activitiesTitle, { y: '100vh' });
   if (activitiesDescription) gsap.set(activitiesDescription, { y: '100vh', opacity: 0 });
   // Void - hidden initially, shown after grid
@@ -475,381 +473,309 @@ export function initScrollTransition(): void {
       });
 
       // ============================================
-      // CARD GRID: 3x3 grid for first 9 cards only
-      // Last 2 cards (Presentations, Fujimoto) fade out
-      // Anchored to fit between description and footer
-      // ============================================
-
-      const gridGap = 10;
-      const gridCols = 3;
-      const baseCardW = 500;
-      const baseCardH = 280;
-
-      // Get pile position for offset calculation
-      const pileEl = document.querySelector('.activities__card-pile') as HTMLElement;
-      const pileLeft = pileEl ? pileEl.offsetLeft : 200;
-      const pileTop = pileEl ? pileEl.offsetTop : 560;
-
-      // Calculate available space - stricter constraints for 1080p
-      const mainEl = document.querySelector('.activities__main') as HTMLElement;
-      const descBottom = mainEl ? mainEl.offsetTop + mainEl.offsetHeight : 280;
-      const viewportHeight = window.innerHeight;
-      const footerBuffer = 80; // Increased space for footer
-      const topGap = 10; // Reduced gap from description
-      const availableHeight = viewportHeight - descBottom - footerBuffer - topGap;
-      const availableWidth = window.innerWidth - 150; // More padding on sides
-
-      // Scale to fit 3 rows within available space
-      const totalBaseGridHeight = 3 * baseCardH + 2 * gridGap;
-      const totalBaseGridWidth = 3 * baseCardW + 2 * gridGap;
-      const scaleH = availableHeight / totalBaseGridHeight;
-      const scaleW = availableWidth / totalBaseGridWidth;
-      // Use minimum of height/width scale, cap at 0.65 for 1080p compatibility
-      const scale = Math.min(0.65, scaleH, scaleW);
-
-      const cardW = baseCardW * scale;
-      const cardH = baseCardH * scale;
-      const cellW = cardW + gridGap;
-      const cellH = cardH + gridGap;
-
-      // Calculate total grid dimensions after scaling
-      const totalGridWidth = 3 * cardW + 2 * gridGap;
-      const totalGridHeight = 3 * cardH + 2 * gridGap;
-
-      // Align grid with the description (same left edge as text content)
-      // Use page-padding to match the Activities title/description alignment
-      const pagePadding = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--page-padding')) || 48;
-      const gridStartX = pagePadding + 20; // Slight offset from edge
-      // Position grid closer to description
-      const gridStartY = descBottom + topGap;
-
-      // Calculate offsets from pile position
-      const gridOffsetX = gridStartX - pileLeft;
-      const gridOffsetY = gridStartY - pileTop;
-
-      activityCards.forEach((card, i) => {
-        if (i < 9) {
-          // First 9 cards: 3x3 grid
-          const col = i % gridCols;
-          const row = Math.floor(i / gridCols);
-          const targetX = col * cellW + gridOffsetX;
-          const targetY = row * cellH + gridOffsetY;
-
-          masterTl.to(card, {
-            x: targetX,
-            y: targetY,
-            rotation: 0,
-            scale: scale,
-            transformOrigin: 'top left',
-            duration: 0.4,
-            ease: 'power2.inOut',
-          }, 5.2 + i * 0.02);
-        } else {
-          // Last 2 cards (Presentations, Fujimoto): fade out
-          masterTl.to(card, {
-            opacity: 0,
-            scale: 0.8,
-            duration: 0.3,
-            ease: 'power2.in',
-          }, 5.2);
-        }
-      });
-
-      // Power slides in from bottom after card pile animation completes
-      // Card pile ends around position 4.8 (3.0 + 10 * 0.18), so slide in at 5.0
-      if (activitiesPower) {
-        const powerTargetX = gridStartX + totalGridWidth - 80; // Overlaps with grid
-        // Set x position instantly at start, then animate y sliding up from bottom
-        masterTl.set(activitiesPower, { x: powerTargetX }, 5.0);
-        masterTl.to(activitiesPower, {
-          y: 0,
-          duration: 0.4,
-          ease: 'power2.out',
-        }, 5.0);
-      }
-
-      // ============================================
-      // TRANSITION 4: ACTIVITIES → PARTNERS (position 6.0 to 7.5)
+      // TRANSITION 4: ACTIVITIES → PARTNERS (position 5.0 to 6.5)
+      // Cards explode outward from pile and disappear
       // ============================================
 
       // Activities elements slide off
       if (activitiesTitle) {
-        masterTl.to(activitiesTitle, { x: '-100vw', opacity: 0, duration: 0.5, ease: 'power2.in' }, 6.0);
+        masterTl.to(activitiesTitle, { x: '-100vw', opacity: 0, duration: 0.5, ease: 'power2.in' }, 5.0);
       }
       if (activitiesDescription) {
-        masterTl.to(activitiesDescription, { x: '-100vw', opacity: 0, duration: 0.5, ease: 'power2.in' }, 6.05);
+        masterTl.to(activitiesDescription, { x: '-100vw', opacity: 0, duration: 0.5, ease: 'power2.in' }, 5.05);
       }
       if (activitiesCharacter) {
-        masterTl.to(activitiesCharacter, { x: '100vw', y: '100vh', opacity: 0, duration: 0.5, ease: 'power2.in' }, 6.1);
+        masterTl.to(activitiesCharacter, { x: '100vw', y: '100vh', opacity: 0, duration: 0.5, ease: 'power2.in' }, 5.1);
       }
-      if (activitiesPower) {
-        masterTl.to(activitiesPower, { y: '100vh', opacity: 0, duration: 0.5, ease: 'power2.in' }, 6.1);
-      }
-      // Slide out the grid cards
+
+      // Pop/explode effect for cards - they scale up, burst outward in all directions
+      // Each card explodes in a unique direction from the pile center
+      const explodeDirections = [
+        { x: -250, y: -180, rot: -35 },   // Top-left burst
+        { x: 280, y: -150, rot: 40 },     // Top-right burst
+        { x: -200, y: 120, rot: -25 },    // Bottom-left burst
+        { x: 260, y: 180, rot: 30 },      // Bottom-right burst
+        { x: -300, y: 0, rot: -45 },      // Left burst
+        { x: 320, y: -50, rot: 50 },      // Right burst
+        { x: 0, y: -220, rot: 15 },       // Top burst
+        { x: -180, y: 200, rot: -20 },    // Bottom-left burst
+        { x: 200, y: 250, rot: 25 },      // Bottom-right burst
+        { x: -280, y: -100, rot: -40 },   // Upper-left burst
+      ];
+
       activityCards.forEach((card, i) => {
-        masterTl.to(card, { y: '100vh', opacity: 0, duration: 0.4, ease: 'power2.in' }, 6.0 + i * 0.02);
+        const dir = explodeDirections[i] || { x: 0, y: -200, rot: 0 };
+        masterTl.to(card, {
+          x: `+=${dir.x}`,
+          y: `+=${dir.y}`,
+          scale: 1.4,
+          rotation: `+=${dir.rot}`,
+          opacity: 0,
+          duration: 0.4,
+          ease: 'power2.out',
+        }, 5.0 + i * 0.02);
       });
 
       // Activities bg out, Partners bg in
       if (activitiesBg) {
-        masterTl.to(activitiesBg, { autoAlpha: 0, duration: 0.4, ease: 'none' }, 6.0);
+        masterTl.to(activitiesBg, { autoAlpha: 0, duration: 0.4, ease: 'none' }, 5.0);
       }
       if (partnersBg) {
-        masterTl.to(partnersBg, { yPercent: 0, duration: 0.4, ease: 'none' }, 6.0);
+        masterTl.to(partnersBg, { yPercent: 0, duration: 0.4, ease: 'none' }, 5.0);
       }
 
       // Partners content animates in - fade up elegantly
       if (partnersHeader) {
-        masterTl.to(partnersHeader, { y: 0, opacity: 1, duration: 0.5, ease: 'power3.out' }, 6.25);
+        masterTl.to(partnersHeader, { y: 0, opacity: 1, duration: 0.5, ease: 'power3.out' }, 5.25);
       }
       if (partnersTrinity) {
-        masterTl.to(partnersTrinity, { opacity: 1, duration: 0.3, ease: 'none' }, 6.35);
+        masterTl.to(partnersTrinity, { opacity: 1, duration: 0.3, ease: 'none' }, 5.35);
       }
       // Partner items stagger in
       if (partnerItems.length) {
         partnerItems.forEach((item, i) => {
-          masterTl.to(item, { y: 0, opacity: 1, duration: 0.5, ease: 'power3.out' }, 6.4 + i * 0.08);
+          masterTl.to(item, { y: 0, opacity: 1, duration: 0.5, ease: 'power3.out' }, 5.4 + i * 0.08);
         });
       }
       // Showcase fades in after partners
       if (partnersShowcase) {
-        masterTl.to(partnersShowcase, { y: 0, opacity: 1, duration: 0.5, ease: 'power3.out' }, 6.7);
+        masterTl.to(partnersShowcase, { y: 0, opacity: 1, duration: 0.5, ease: 'power3.out' }, 5.7);
       }
 
       // Partners elements exit - fade out
       if (partnersHeader) {
-        masterTl.to(partnersHeader, { y: -30, opacity: 0, duration: 0.35, ease: 'power2.in' }, 7.5);
+        masterTl.to(partnersHeader, { y: -30, opacity: 0, duration: 0.35, ease: 'power2.in' }, 6.5);
       }
       if (partnerItems.length) {
         partnerItems.forEach((item, i) => {
-          masterTl.to(item, { y: -20, opacity: 0, duration: 0.3, ease: 'power2.in' }, 7.5 + i * 0.02);
+          masterTl.to(item, { y: -20, opacity: 0, duration: 0.3, ease: 'power2.in' }, 6.5 + i * 0.02);
         });
       }
       if (partnersTrinity) {
-        masterTl.to(partnersTrinity, { opacity: 0, duration: 0.2, ease: 'none' }, 7.6);
+        masterTl.to(partnersTrinity, { opacity: 0, duration: 0.2, ease: 'none' }, 6.6);
       }
       if (partnersShowcase) {
-        masterTl.to(partnersShowcase, { y: -20, opacity: 0, duration: 0.3, ease: 'power2.in' }, 7.55);
+        masterTl.to(partnersShowcase, { y: -20, opacity: 0, duration: 0.3, ease: 'power2.in' }, 6.55);
       }
 
       // Partners bg out, Void fades in
       if (partnersBg) {
-        masterTl.to(partnersBg, { yPercent: -100, duration: 0.4, ease: 'none' }, 7.7);
+        masterTl.to(partnersBg, { yPercent: -100, duration: 0.4, ease: 'none' }, 6.7);
       }
       if (activitiesVoid) {
         masterTl.to(activitiesVoid, {
           opacity: 1,
           duration: 0.6,
           ease: 'power1.inOut',
-        }, 7.8);
+        }, 6.8);
       }
 
       // ============================================
       // HIDE FOOTER during subgroups section
       // ============================================
       if (footer) {
-        masterTl.to(footer, { opacity: 0, y: 50, duration: 0.3, ease: 'power2.in' }, 7.8);
+        masterTl.to(footer, { opacity: 0, y: 50, duration: 0.3, ease: 'power2.in' }, 6.8);
       }
 
       // ============================================
       // SUBGROUPS INTRO - Clean Apple-style
       // ============================================
       if (subgroupsIntro) {
-        masterTl.to(subgroupsIntro, { opacity: 1, duration: 0.4, ease: 'power2.out' }, 7.8);
+        masterTl.to(subgroupsIntro, { opacity: 1, duration: 0.4, ease: 'power2.out' }, 6.8);
       }
       if (subgroupsHeading) {
-        masterTl.to(subgroupsHeading, { y: 0, opacity: 1, duration: 0.5, ease: 'power3.out' }, 8.0);
+        masterTl.to(subgroupsHeading, { y: 0, opacity: 1, duration: 0.5, ease: 'power3.out' }, 7.0);
       }
       if (subgroupsSubtitle) {
-        masterTl.to(subgroupsSubtitle, { y: 0, opacity: 1, duration: 0.4, ease: 'power3.out' }, 8.15);
+        masterTl.to(subgroupsSubtitle, { y: 0, opacity: 1, duration: 0.4, ease: 'power3.out' }, 7.15);
       }
       if (subgroupsPreviews) {
-        masterTl.to(subgroupsPreviews, { y: 0, opacity: 1, duration: 0.5, ease: 'power3.out' }, 8.3);
-        masterTl.to(subgroupsPreviews, { y: '100px', opacity: 0, duration: 0.4, ease: 'power2.in' }, 8.8);
+        masterTl.to(subgroupsPreviews, { y: 0, opacity: 1, duration: 0.5, ease: 'power3.out' }, 7.3);
+        masterTl.to(subgroupsPreviews, { y: '100px', opacity: 0, duration: 0.4, ease: 'power2.in' }, 7.8);
       }
       if (subgroupsIntro) {
-        masterTl.to(subgroupsIntro, { opacity: 0, duration: 0.4, ease: 'power2.in' }, 9.0);
+        masterTl.to(subgroupsIntro, { opacity: 0, duration: 0.4, ease: 'power2.in' }, 8.0);
       }
 
       // ============================================
       // SKY BIOME TRANSITIONS - 5 different skies
-      // Intro: 7.8 - 9.0
-      // Biome 1 (Animusic): 9.0 - 10.5
-      // Biome 2 (Cosplay): 10.5 - 12.0
-      // Biome 3 (Old Anime): 12.0 - 13.5
-      // Biome 4 (Book Club): 13.5 - 15.0
-      // Biome 5 (Rainbow): 15.0 - 16.5
+      // Intro: 6.8 - 8.0
+      // Biome 1 (Animusic): 8.0 - 9.5
+      // Biome 2 (Cosplay): 9.5 - 11.0
+      // Biome 3 (Old Anime): 11.0 - 12.5
+      // Biome 4 (Book Club): 12.5 - 14.0
+      // Biome 5 (Rainbow): 14.0 - 15.5
       // ============================================
 
-      // ===== BIOME 1: ANIMUSIC (9.0 - 10.5) =====
+      // ===== BIOME 1: ANIMUSIC (8.0 - 9.5) =====
       if (skyBiome1) {
-        masterTl.to(skyBiome1, { opacity: 1, duration: 0.4, ease: 'power2.out' }, 9.0);
+        masterTl.to(skyBiome1, { opacity: 1, duration: 0.4, ease: 'power2.out' }, 8.0);
       }
       if (subgroup1) {
-        masterTl.to(subgroup1, { opacity: 1, duration: 0.2, ease: 'none' }, 9.2);
+        masterTl.to(subgroup1, { opacity: 1, duration: 0.2, ease: 'none' }, 8.2);
       }
       if (subgroup1Left) {
-        masterTl.to(subgroup1Left, { x: 0, opacity: 1, duration: 0.3, ease: 'power2.out' }, 9.25);
+        masterTl.to(subgroup1Left, { x: 0, opacity: 1, duration: 0.3, ease: 'power2.out' }, 8.25);
       }
       if (subgroup1Right) {
-        masterTl.to(subgroup1Right, { x: 0, opacity: 1, duration: 0.3, ease: 'power2.out' }, 9.3);
+        masterTl.to(subgroup1Right, { x: 0, opacity: 1, duration: 0.3, ease: 'power2.out' }, 8.3);
       }
       if (subgroup1PhotoRight) {
-        masterTl.to(subgroup1PhotoRight, { y: 0, opacity: 1, duration: 0.4, ease: 'power2.out' }, 9.35);
+        masterTl.to(subgroup1PhotoRight, { y: 0, opacity: 1, duration: 0.4, ease: 'power2.out' }, 8.35);
       }
       if (subgroup1PhotoLeft) {
-        masterTl.to(subgroup1PhotoLeft, { y: 0, opacity: 1, duration: 0.4, ease: 'power2.out' }, 9.4);
+        masterTl.to(subgroup1PhotoLeft, { y: 0, opacity: 1, duration: 0.4, ease: 'power2.out' }, 8.4);
       }
       // Slide out
       if (subgroup1PhotoRight) {
-        masterTl.to(subgroup1PhotoRight, { y: '-100vh', opacity: 0, duration: 0.3, ease: 'power2.in' }, 10.05);
+        masterTl.to(subgroup1PhotoRight, { y: '-100vh', opacity: 0, duration: 0.3, ease: 'power2.in' }, 9.05);
       }
       if (subgroup1PhotoLeft) {
-        masterTl.to(subgroup1PhotoLeft, { y: '100vh', opacity: 0, duration: 0.3, ease: 'power2.in' }, 10.05);
+        masterTl.to(subgroup1PhotoLeft, { y: '100vh', opacity: 0, duration: 0.3, ease: 'power2.in' }, 9.05);
       }
       if (subgroup1Left) {
-        masterTl.to(subgroup1Left, { x: '-100vw', opacity: 0, duration: 0.25, ease: 'power2.in' }, 10.1);
+        masterTl.to(subgroup1Left, { x: '-100vw', opacity: 0, duration: 0.25, ease: 'power2.in' }, 9.1);
       }
       if (subgroup1Right) {
-        masterTl.to(subgroup1Right, { x: '100vw', opacity: 0, duration: 0.25, ease: 'power2.in' }, 10.1);
+        masterTl.to(subgroup1Right, { x: '100vw', opacity: 0, duration: 0.25, ease: 'power2.in' }, 9.1);
       }
       if (subgroup1) {
-        masterTl.to(subgroup1, { opacity: 0, duration: 0.15, ease: 'none' }, 10.4);
+        masterTl.to(subgroup1, { opacity: 0, duration: 0.15, ease: 'none' }, 9.4);
       }
 
-      // Biome 1 → Biome 2 (position 10.5)
+      // Biome 1 → Biome 2 (position 9.5)
       if (skyBiome1) {
-        masterTl.to(skyBiome1, { opacity: 0, duration: 0.3, ease: 'power1.inOut' }, 10.5);
+        masterTl.to(skyBiome1, { opacity: 0, duration: 0.3, ease: 'power1.inOut' }, 9.5);
       }
       if (skyBiome2) {
-        masterTl.to(skyBiome2, { opacity: 1, duration: 0.3, ease: 'power1.inOut' }, 10.5);
+        masterTl.to(skyBiome2, { opacity: 1, duration: 0.3, ease: 'power1.inOut' }, 9.5);
       }
 
-      // ===== BIOME 2: COSPLAY (10.5 - 12.0) =====
+      // ===== BIOME 2: COSPLAY (9.5 - 11.0) =====
       if (subgroup2) {
-        masterTl.to(subgroup2, { opacity: 1, duration: 0.2, ease: 'none' }, 10.7);
+        masterTl.to(subgroup2, { opacity: 1, duration: 0.2, ease: 'none' }, 9.7);
       }
       if (subgroup2Left) {
-        masterTl.to(subgroup2Left, { x: 0, opacity: 1, duration: 0.3, ease: 'power2.out' }, 10.75);
+        masterTl.to(subgroup2Left, { x: 0, opacity: 1, duration: 0.3, ease: 'power2.out' }, 9.75);
       }
       if (subgroup2Right) {
-        masterTl.to(subgroup2Right, { x: 0, opacity: 1, duration: 0.3, ease: 'power2.out' }, 10.8);
+        masterTl.to(subgroup2Right, { x: 0, opacity: 1, duration: 0.3, ease: 'power2.out' }, 9.8);
       }
       // Cosplay photos slide up from bottom
       if (subgroup2PhotoLeft) {
-        masterTl.to(subgroup2PhotoLeft, { y: 0, opacity: 1, duration: 0.4, ease: 'power2.out' }, 10.85);
+        masterTl.to(subgroup2PhotoLeft, { y: 0, opacity: 1, duration: 0.4, ease: 'power2.out' }, 9.85);
       }
       if (subgroup2PhotoRight) {
-        masterTl.to(subgroup2PhotoRight, { y: 0, opacity: 1, duration: 0.4, ease: 'power2.out' }, 10.9);
+        masterTl.to(subgroup2PhotoRight, { y: 0, opacity: 1, duration: 0.4, ease: 'power2.out' }, 9.9);
       }
       // Slide out
       if (subgroup2PhotoLeft) {
-        masterTl.to(subgroup2PhotoLeft, { y: '100vh', opacity: 0, duration: 0.3, ease: 'power2.in' }, 11.55);
+        masterTl.to(subgroup2PhotoLeft, { y: '100vh', opacity: 0, duration: 0.3, ease: 'power2.in' }, 10.55);
       }
       if (subgroup2PhotoRight) {
-        masterTl.to(subgroup2PhotoRight, { y: '100vh', opacity: 0, duration: 0.3, ease: 'power2.in' }, 11.55);
+        masterTl.to(subgroup2PhotoRight, { y: '100vh', opacity: 0, duration: 0.3, ease: 'power2.in' }, 10.55);
       }
       if (subgroup2Left) {
-        masterTl.to(subgroup2Left, { x: '-100vw', opacity: 0, duration: 0.25, ease: 'power2.in' }, 11.6);
+        masterTl.to(subgroup2Left, { x: '-100vw', opacity: 0, duration: 0.25, ease: 'power2.in' }, 10.6);
       }
       if (subgroup2Right) {
-        masterTl.to(subgroup2Right, { x: '100vw', opacity: 0, duration: 0.25, ease: 'power2.in' }, 11.6);
+        masterTl.to(subgroup2Right, { x: '100vw', opacity: 0, duration: 0.25, ease: 'power2.in' }, 10.6);
       }
       if (subgroup2) {
-        masterTl.to(subgroup2, { opacity: 0, duration: 0.15, ease: 'none' }, 11.9);
+        masterTl.to(subgroup2, { opacity: 0, duration: 0.15, ease: 'none' }, 10.9);
       }
 
-      // Biome 2 → Biome 3 (position 12.0)
+      // Biome 2 → Biome 3 (position 11.0)
       if (skyBiome2) {
-        masterTl.to(skyBiome2, { opacity: 0, duration: 0.3, ease: 'power1.inOut' }, 12.0);
+        masterTl.to(skyBiome2, { opacity: 0, duration: 0.3, ease: 'power1.inOut' }, 11.0);
       }
       if (skyBiome3) {
-        masterTl.to(skyBiome3, { opacity: 1, duration: 0.3, ease: 'power1.inOut' }, 12.0);
+        masterTl.to(skyBiome3, { opacity: 1, duration: 0.3, ease: 'power1.inOut' }, 11.0);
       }
 
-      // ===== BIOME 3: OLD ANIME (12.0 - 13.5) =====
+      // ===== BIOME 3: OLD ANIME (11.0 - 12.5) =====
       if (subgroup3) {
-        masterTl.to(subgroup3, { opacity: 1, duration: 0.2, ease: 'none' }, 12.2);
+        masterTl.to(subgroup3, { opacity: 1, duration: 0.2, ease: 'none' }, 11.2);
       }
       if (subgroup3Left) {
-        masterTl.to(subgroup3Left, { x: 0, opacity: 1, duration: 0.3, ease: 'power2.out' }, 12.25);
+        masterTl.to(subgroup3Left, { x: 0, opacity: 1, duration: 0.3, ease: 'power2.out' }, 11.25);
       }
       if (subgroup3Right) {
-        masterTl.to(subgroup3Right, { x: 0, opacity: 1, duration: 0.3, ease: 'power2.out' }, 12.3);
+        masterTl.to(subgroup3Right, { x: 0, opacity: 1, duration: 0.3, ease: 'power2.out' }, 11.3);
       }
       // Old Anime character images slide in
       if (subgroup3PhotoRight) {
-        masterTl.to(subgroup3PhotoRight, { y: 0, opacity: 1, duration: 0.4, ease: 'power2.out' }, 12.35);
+        masterTl.to(subgroup3PhotoRight, { y: 0, opacity: 1, duration: 0.4, ease: 'power2.out' }, 11.35);
       }
       if (subgroup3PhotoLeft) {
-        masterTl.to(subgroup3PhotoLeft, { y: 0, opacity: 1, duration: 0.4, ease: 'power2.out' }, 12.4);
+        masterTl.to(subgroup3PhotoLeft, { y: 0, opacity: 1, duration: 0.4, ease: 'power2.out' }, 11.4);
       }
       // Slide out
       if (subgroup3PhotoRight) {
-        masterTl.to(subgroup3PhotoRight, { y: '-100vh', opacity: 0, duration: 0.3, ease: 'power2.in' }, 13.05);
+        masterTl.to(subgroup3PhotoRight, { y: '-100vh', opacity: 0, duration: 0.3, ease: 'power2.in' }, 12.05);
       }
       if (subgroup3PhotoLeft) {
-        masterTl.to(subgroup3PhotoLeft, { y: '100vh', opacity: 0, duration: 0.3, ease: 'power2.in' }, 13.05);
+        masterTl.to(subgroup3PhotoLeft, { y: '100vh', opacity: 0, duration: 0.3, ease: 'power2.in' }, 12.05);
       }
       if (subgroup3Left) {
-        masterTl.to(subgroup3Left, { x: '-100vw', opacity: 0, duration: 0.25, ease: 'power2.in' }, 13.1);
+        masterTl.to(subgroup3Left, { x: '-100vw', opacity: 0, duration: 0.25, ease: 'power2.in' }, 12.1);
       }
       if (subgroup3Right) {
-        masterTl.to(subgroup3Right, { x: '100vw', opacity: 0, duration: 0.25, ease: 'power2.in' }, 13.1);
+        masterTl.to(subgroup3Right, { x: '100vw', opacity: 0, duration: 0.25, ease: 'power2.in' }, 12.1);
       }
       if (subgroup3) {
-        masterTl.to(subgroup3, { opacity: 0, duration: 0.15, ease: 'none' }, 13.4);
+        masterTl.to(subgroup3, { opacity: 0, duration: 0.15, ease: 'none' }, 12.4);
       }
 
-      // Biome 3 → Biome 4 (position 13.5)
+      // Biome 3 → Biome 4 (position 12.5)
       if (skyBiome3) {
-        masterTl.to(skyBiome3, { opacity: 0, duration: 0.3, ease: 'power1.inOut' }, 13.5);
+        masterTl.to(skyBiome3, { opacity: 0, duration: 0.3, ease: 'power1.inOut' }, 12.5);
       }
       if (skyBiome4) {
-        masterTl.to(skyBiome4, { opacity: 1, duration: 0.3, ease: 'power1.inOut' }, 13.5);
+        masterTl.to(skyBiome4, { opacity: 1, duration: 0.3, ease: 'power1.inOut' }, 12.5);
       }
 
-      // ===== BIOME 4: BOOK CLUB (13.5 - 15.0) =====
+      // ===== BIOME 4: BOOK CLUB (12.5 - 14.0) =====
       if (subgroup4) {
-        masterTl.to(subgroup4, { opacity: 1, duration: 0.2, ease: 'none' }, 13.7);
+        masterTl.to(subgroup4, { opacity: 1, duration: 0.2, ease: 'none' }, 12.7);
       }
       if (subgroup4Left) {
-        masterTl.to(subgroup4Left, { x: 0, opacity: 1, duration: 0.3, ease: 'power2.out' }, 13.75);
+        masterTl.to(subgroup4Left, { x: 0, opacity: 1, duration: 0.3, ease: 'power2.out' }, 12.75);
       }
       if (subgroup4Right) {
-        masterTl.to(subgroup4Right, { x: 0, opacity: 1, duration: 0.3, ease: 'power2.out' }, 13.8);
+        masterTl.to(subgroup4Right, { x: 0, opacity: 1, duration: 0.3, ease: 'power2.out' }, 12.8);
       }
       if (subgroup4Left) {
-        masterTl.to(subgroup4Left, { x: '-100vw', opacity: 0, duration: 0.25, ease: 'power2.in' }, 14.6);
+        masterTl.to(subgroup4Left, { x: '-100vw', opacity: 0, duration: 0.25, ease: 'power2.in' }, 13.6);
       }
       if (subgroup4Right) {
-        masterTl.to(subgroup4Right, { x: '100vw', opacity: 0, duration: 0.25, ease: 'power2.in' }, 14.6);
+        masterTl.to(subgroup4Right, { x: '100vw', opacity: 0, duration: 0.25, ease: 'power2.in' }, 13.6);
       }
       if (subgroup4) {
-        masterTl.to(subgroup4, { opacity: 0, duration: 0.15, ease: 'none' }, 14.9);
+        masterTl.to(subgroup4, { opacity: 0, duration: 0.15, ease: 'none' }, 13.9);
       }
 
-      // Biome 4 → Biome 5 (position 15.0)
+      // Biome 4 → Biome 5 (position 14.0)
       if (skyBiome4) {
-        masterTl.to(skyBiome4, { opacity: 0, duration: 0.3, ease: 'power1.inOut' }, 15.0);
+        masterTl.to(skyBiome4, { opacity: 0, duration: 0.3, ease: 'power1.inOut' }, 14.0);
       }
       if (skyBiome5) {
-        masterTl.to(skyBiome5, { opacity: 1, duration: 0.3, ease: 'power1.inOut' }, 15.0);
+        masterTl.to(skyBiome5, { opacity: 1, duration: 0.3, ease: 'power1.inOut' }, 14.0);
       }
 
-      // ===== BIOME 5: RAINBOW (15.0 - 16.5) =====
+      // ===== BIOME 5: RAINBOW (14.0 - 15.5) =====
       if (subgroup5) {
-        masterTl.to(subgroup5, { opacity: 1, duration: 0.2, ease: 'none' }, 15.2);
+        masterTl.to(subgroup5, { opacity: 1, duration: 0.2, ease: 'none' }, 14.2);
       }
       if (subgroup5Left) {
-        masterTl.to(subgroup5Left, { x: 0, opacity: 1, duration: 0.3, ease: 'power2.out' }, 15.25);
+        masterTl.to(subgroup5Left, { x: 0, opacity: 1, duration: 0.3, ease: 'power2.out' }, 14.25);
       }
       if (subgroup5Right) {
-        masterTl.to(subgroup5Right, { x: 0, opacity: 1, duration: 0.3, ease: 'power2.out' }, 15.3);
+        masterTl.to(subgroup5Right, { x: 0, opacity: 1, duration: 0.3, ease: 'power2.out' }, 14.3);
       }
 
       // Force timeline to extend for proper scroll mapping
-      masterTl.to({}, { duration: 0.01, ease: 'none' }, 16.49);
+      masterTl.to({}, { duration: 0.01, ease: 'none' }, 15.49);
     }
   }
 
