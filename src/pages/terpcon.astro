@@ -2,8 +2,6 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/navigation/Header.astro';
 
-// TerpCon Page - Comic themed with explosive energy
-
 interface Vendor {
   name: string;
   social?: string;
@@ -79,13 +77,9 @@ const defaultImage = "/images/Icons/chibi.webp";
   <Header />
 
   <main class="comic-page">
-    <!-- Comic Background -->
     <div class="comic-bg"></div>
     <div class="comic-overlay"></div>
-
-    <!-- Main Content -->
     <div class="comic-content">
-      <!-- Hero Title Section -->
       <div class="comic-hero" data-comic-hero>
         <div class="comic-burst">
           <h1 class="comic-title" data-comic-title>TERPCON</h1>
@@ -94,12 +88,8 @@ const defaultImage = "/images/Icons/chibi.webp";
         </div>
         <p class="comic-tagline" data-comic-tagline>Vendor & Artist Alley</p>
       </div>
-
-      <!-- Two Column Layout -->
       <div class="comic-columns">
-        <!-- Left Column - Info + Featured Artists -->
         <div class="comic-left">
-          <!-- Info Panel -->
           <div class="comic-panel comic-panel--info" data-comic-info>
             <p class="comic-description">
               The Terrapin Anime Society will be hosting a Vendor & Artist Alley for TERPCON 2026. Please see the official UMD site for more details.
@@ -131,8 +121,6 @@ const defaultImage = "/images/Icons/chibi.webp";
               </a>
             </div>
           </div>
-
-          <!-- Featured Artists Carousel -->
           <div class="comic-panel comic-panel--featured" data-comic-featured>
             <h3 class="featured-title">FEATURED ARTISTS</h3>
             <div class="featured-carousel" data-featured-carousel>
@@ -159,8 +147,6 @@ const defaultImage = "/images/Icons/chibi.webp";
             </div>
           </div>
         </div>
-
-        <!-- Right Column - Vendors -->
         <div class="comic-right">
           <div class="comic-panel comic-panel--vendors" data-comic-vendors>
             <h3 class="vendors-title">BROWSE ARTISTS</h3>
@@ -196,7 +182,6 @@ const defaultImage = "/images/Icons/chibi.webp";
   import { initMenuAnimations } from '../animations/menu';
 
   function initAnimations() {
-    // Initialize menu
     initMenuAnimations();
     const hero = document.querySelector('[data-comic-hero]');
     const title = document.querySelector('[data-comic-title]');
@@ -208,7 +193,6 @@ const defaultImage = "/images/Icons/chibi.webp";
     gsap.set([hero, info, featured, vendors], { opacity: 0, y: 30 });
     gsap.set(title, { scale: 0.5, rotation: -10 });
 
-    // Hide all featured cards initially
     featuredCards.forEach((card, i) => {
       if (i < 4) {
         gsap.set(card, { x: 100 });
@@ -225,7 +209,6 @@ const defaultImage = "/images/Icons/chibi.webp";
       .to(featured, { opacity: 1, y: 0, duration: 0.3 }, 0.4)
       .to(vendors, { opacity: 1, y: 0, duration: 0.5 }, 0.6);
 
-    // Slide in first 4 cards from right with stagger
     for (let i = 0; i < 4 && i < featuredCards.length; i++) {
       tl.to(featuredCards[i], {
         x: 0,
@@ -234,7 +217,6 @@ const defaultImage = "/images/Icons/chibi.webp";
       }, 0.5 + i * 0.1);
     }
 
-    // After initial animations, start the carousel
     tl.add(() => initCarousel(), 1.2);
   }
 
@@ -251,17 +233,12 @@ const defaultImage = "/images/Icons/chibi.webp";
       const incomingIndex = (visibleStart + 4) % totalCards;
       const outgoingCard = cards[outgoingIndex];
       const incomingCard = cards[incomingIndex];
-
-      // Get card width for sliding
       const cardWidth = outgoingCard.offsetWidth;
-      const gap = 12; // 0.75rem gap
+      const gap = 12;
 
-      // Timeline - all cards slide left by one card width
       const rotateTl = gsap.timeline({
         onComplete: () => {
-          // After animation, hide outgoing and reset positions
           gsap.set(outgoingCard, { display: 'none' });
-          // Reset all visible cards to x: 0
           for (let i = 1; i <= 4; i++) {
             const idx = (visibleStart + i) % totalCards;
             gsap.set(cards[idx], { x: 0 });
@@ -271,7 +248,6 @@ const defaultImage = "/images/Icons/chibi.webp";
         }
       });
 
-      // All visible cards slide left
       for (let i = 0; i < 4; i++) {
         const idx = (visibleStart + i) % totalCards;
         rotateTl.to(cards[idx], {
@@ -281,8 +257,6 @@ const defaultImage = "/images/Icons/chibi.webp";
         }, 0);
       }
 
-      // Incoming card: show it at the right edge and slide into position
-      // Must end at same x as other cards so reset is seamless
       gsap.set(incomingCard, { display: 'flex', x: 0 });
       rotateTl.to(incomingCard, {
         x: -(cardWidth + gap),
@@ -328,7 +302,6 @@ const defaultImage = "/images/Icons/chibi.webp";
     z-index: 1;
   }
 
-  /* Halftone pattern overlay */
   .comic-overlay::before {
     content: '';
     position: absolute;
@@ -345,21 +318,19 @@ const defaultImage = "/images/Icons/chibi.webp";
     height: 100vh;
     display: flex;
     flex-direction: column;
-    padding: calc(70px + 1rem) 2rem 1.5rem;
+    padding: calc(5.19vh + 0.74vh) 1.33vw 1.11vh;
     box-sizing: border-box;
     overflow: hidden;
   }
 
-  /* ===== HERO SECTION ===== */
   .comic-hero {
     text-align: center;
-    margin-bottom: 1rem;
+    margin-bottom: 0.74vh;
     flex-shrink: 0;
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateY(2.22vh);
   }
 
-  /* Elements start hidden - GSAP will animate them in */
   .comic-panel--info,
   .comic-panel--featured,
   .comic-panel--vendors {
@@ -374,68 +345,67 @@ const defaultImage = "/images/Icons/chibi.webp";
   .comic-burst {
     display: inline-flex;
     align-items: baseline;
-    gap: 0.5rem;
+    gap: 0.33vw;
     position: relative;
   }
 
   .comic-title {
     font-family: 'Bangers', cursive;
-    font-size: clamp(70px, 14vw, 160px);
+    font-size: 6.67vw;
     font-weight: 400;
     color: #ffeb3b;
     letter-spacing: 0.08em;
     margin: 0;
     text-transform: uppercase;
-    -webkit-text-stroke: 5px #000;
+    -webkit-text-stroke: 0.21vw #000;
     text-shadow:
-      8px 8px 0 #ff6b35,
-      16px 16px 0 #000;
+      0.33vw 0.33vw 0 #ff6b35,
+      0.67vw 0.67vw 0 #000;
     line-height: 0.85;
   }
 
   .comic-year {
     font-family: 'Bangers', cursive;
-    font-size: clamp(35px, 7vw, 80px);
+    font-size: 3.33vw;
     color: #00bcd4;
-    -webkit-text-stroke: 3px #000;
-    text-shadow: 4px 4px 0 #000;
+    -webkit-text-stroke: 0.13vw #000;
+    text-shadow: 0.17vw 0.17vw 0 #000;
     transform: rotate(-8deg);
   }
 
   .comic-tagline {
     font-family: 'Bangers', cursive;
-    font-size: clamp(22px, 4vw, 40px);
+    font-size: 1.67vw;
     color: #fff;
     letter-spacing: 0.15em;
-    margin: 0.5rem 0 0;
-    text-shadow: 3px 3px 0 #000;
+    margin: 0.37vh 0 0;
+    text-shadow: 0.13vw 0.13vw 0 #000;
   }
 
   .comic-pow {
     position: absolute;
-    width: clamp(80px, 12vw, 150px);
+    width: 6.25vw;
     height: auto;
-    right: -3rem;
-    top: -2rem;
+    right: -1.25vw;
+    top: -1.48vh;
     transform: rotate(15deg);
     pointer-events: none;
-    filter: drop-shadow(4px 4px 0 #000);
+    filter: drop-shadow(0.17vw 0.17vw 0 #000);
     z-index: -1;
   }
 
-  /* ===== COLUMNS LAYOUT ===== */
   .comic-columns {
     flex: 1;
     display: grid;
     grid-template-columns: 1.8fr 1fr;
-    gap: 1.5rem;
+    gap: 1vw;
     min-height: 0;
   }
 
   .comic-left {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 0.74vh;
     min-height: 0;
   }
 
@@ -445,32 +415,30 @@ const defaultImage = "/images/Icons/chibi.webp";
     min-height: 0;
   }
 
-  /* ===== COMIC PANELS ===== */
   .comic-panel {
     position: relative;
     background: rgba(0, 0, 0, 0.6);
-    border: 4px solid rgba(255, 107, 53, 0.8);
-    border-radius: 12px;
+    border: 0.17vw solid rgba(255, 107, 53, 0.8);
+    border-radius: 0.5vw;
     overflow: hidden;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-    backdrop-filter: blur(8px);
+    box-shadow: 0 0.59vh 1.33vw rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(0.33vw);
   }
 
-  /* ===== INFO PANEL ===== */
   .comic-panel--info {
-    padding: clamp(0.75rem, 1.2vw, 1.5rem) clamp(1rem, 1.5vw, 2rem);
+    padding: 1.11vh 1.33vw;
     flex: 0 0 auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: clamp(0.6rem, 1vw, 1.25rem);
+    gap: 1.48vh;
   }
 
   .comic-description {
     position: relative;
     z-index: 1;
     font-family: 'Inter', sans-serif;
-    font-size: clamp(14px, 1.4vw, 22px);
+    font-size: 0.92vw;
     font-weight: 500;
     color: #fff;
     line-height: 1.3;
@@ -480,13 +448,13 @@ const defaultImage = "/images/Icons/chibi.webp";
   .comic-details-row {
     display: flex;
     align-items: center;
-    gap: clamp(0.75rem, 1.2vw, 1.5rem);
+    gap: 1vw;
     flex-wrap: wrap;
   }
 
   .comic-details {
     display: flex;
-    gap: clamp(0.5rem, 0.8vw, 1rem);
+    gap: 0.67vw;
     flex-wrap: nowrap;
     align-items: center;
   }
@@ -494,23 +462,23 @@ const defaultImage = "/images/Icons/chibi.webp";
   .comic-detail {
     display: flex;
     flex-direction: column;
-    padding: clamp(0.4rem, 0.6vw, 0.75rem) clamp(0.6rem, 1vw, 1.25rem);
+    padding: 0.89vh 0.83vw;
     background: #ff6b35;
-    border: 3px solid #000;
-    border-radius: 6px;
-    box-shadow: 3px 3px 0 #000;
+    border: 0.13vw solid #000;
+    border-radius: 0.25vw;
+    box-shadow: 0.13vw 0.13vw 0 #000;
   }
 
   .detail-label {
     font-family: 'Bangers', cursive;
-    font-size: clamp(10px, 0.9vw, 14px);
+    font-size: 0.58vw;
     color: #ffeb3b;
     letter-spacing: 0.08em;
   }
 
   .detail-value {
     font-family: 'Bangers', cursive;
-    font-size: clamp(14px, 1.5vw, 22px);
+    font-size: 0.92vw;
     color: #fff;
     letter-spacing: 0.03em;
   }
@@ -520,15 +488,15 @@ const defaultImage = "/images/Icons/chibi.webp";
     z-index: 1;
     display: inline-flex;
     align-items: center;
-    gap: 0.4rem;
-    padding: clamp(0.4rem, 0.6vw, 0.75rem) clamp(0.6rem, 1vw, 1.25rem);
+    gap: 0.3vh;
+    padding: 0.89vh 0.83vw;
     font-family: 'Bangers', cursive;
-    font-size: clamp(12px, 1.3vw, 18px);
+    font-size: 0.75vw;
     color: #000;
     background: #ffeb3b;
-    border: 3px solid #000;
-    border-radius: 6px;
-    box-shadow: 3px 3px 0 #000;
+    border: 0.13vw solid #000;
+    border-radius: 0.25vw;
+    box-shadow: 0.13vw 0.13vw 0 #000;
     text-decoration: none;
     letter-spacing: 0.05em;
     transition: all 0.15s ease;
@@ -536,34 +504,33 @@ const defaultImage = "/images/Icons/chibi.webp";
   }
 
   .comic-cta:hover {
-    transform: translate(-2px, -2px);
-    box-shadow: 6px 6px 0 #000;
+    transform: translate(-0.08vw, -0.15vh);
+    box-shadow: 0.25vw 0.25vw 0 #000;
   }
 
   .comic-cta:active {
-    transform: translate(2px, 2px);
-    box-shadow: 2px 2px 0 #000;
+    transform: translate(0.08vw, 0.15vh);
+    box-shadow: 0.08vw 0.08vw 0 #000;
   }
 
-  /* ===== FEATURED ARTISTS ===== */
   .comic-panel--featured {
     flex: 1;
     min-height: 0;
     display: flex;
     flex-direction: column;
-    padding: 1rem;
+    padding: 0.74vh 0.67vw;
   }
 
   .featured-title {
     position: relative;
     z-index: 1;
     font-family: 'Bangers', cursive;
-    font-size: clamp(22px, 3vw, 36px);
+    font-size: 1.5vw;
     color: #ff6b35;
     letter-spacing: 0.1em;
-    margin: 0 0 0.75rem;
-    -webkit-text-stroke: 1px #000;
-    text-shadow: 2px 2px 0 #000;
+    margin: 0 0 0.56vh;
+    -webkit-text-stroke: 0.04vw #000;
+    text-shadow: 0.08vw 0.08vw 0 #000;
   }
 
   .featured-carousel {
@@ -575,18 +542,18 @@ const defaultImage = "/images/Icons/chibi.webp";
 
   .featured-track {
     display: flex;
-    gap: 0.75rem;
+    gap: 0.5vw;
     height: 100%;
   }
 
   .featured-card {
-    flex: 0 0 calc(25% - 0.5625rem);
+    flex: 0 0 calc(25% - 0.375vw);
     min-width: 0;
     position: relative;
-    border-radius: 8px;
+    border-radius: 0.33vw;
     overflow: hidden;
-    border: 3px solid #000;
-    box-shadow: 4px 4px 0 #000;
+    border: 0.13vw solid #000;
+    box-shadow: 0.17vw 0.17vw 0 #000;
     background: #111;
     display: flex;
     flex-direction: column;
@@ -609,17 +576,17 @@ const defaultImage = "/images/Icons/chibi.webp";
   .featured-card__info {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.5rem;
+    gap: 0.33vw;
+    padding: 0.37vh 0.33vw;
     background: rgba(0,0,0,0.95);
   }
 
   .featured-card__avatar {
-    width: clamp(35px, 4vw, 50px);
-    height: clamp(35px, 4vw, 50px);
+    width: 2.08vw;
+    height: 2.08vw;
     border-radius: 50%;
     object-fit: cover;
-    border: 3px solid #ff6b35;
+    border: 0.13vw solid #ff6b35;
     flex-shrink: 0;
   }
 
@@ -631,7 +598,7 @@ const defaultImage = "/images/Icons/chibi.webp";
 
   .featured-card__name {
     font-family: 'Bangers', cursive;
-    font-size: clamp(14px, 1.8vw, 20px);
+    font-size: 0.83vw;
     color: #fff;
     letter-spacing: 0.03em;
     white-space: nowrap;
@@ -641,7 +608,7 @@ const defaultImage = "/images/Icons/chibi.webp";
 
   .featured-card__social {
     font-family: 'Inter', sans-serif;
-    font-size: clamp(9px, 1vw, 12px);
+    font-size: 0.5vw;
     font-weight: 600;
     color: #00bcd4;
     text-decoration: none;
@@ -654,12 +621,11 @@ const defaultImage = "/images/Icons/chibi.webp";
     color: #4dd0e1;
   }
 
-  /* ===== VENDORS PANEL ===== */
   .comic-panel--vendors {
     flex: 1;
     display: flex;
     flex-direction: column;
-    padding: 1rem;
+    padding: 0.74vh 0.67vw;
     min-height: 0;
   }
 
@@ -667,13 +633,13 @@ const defaultImage = "/images/Icons/chibi.webp";
     position: relative;
     z-index: 1;
     font-family: 'Bangers', cursive;
-    font-size: clamp(24px, 3vw, 40px);
+    font-size: 1.67vw;
     color: #ff6b35;
     letter-spacing: 0.1em;
-    margin: 0 0 0.75rem;
+    margin: 0 0 0.56vh;
     text-align: center;
-    -webkit-text-stroke: 1px #000;
-    text-shadow: 2px 2px 0 #000;
+    -webkit-text-stroke: 0.04vw #000;
+    text-shadow: 0.08vw 0.08vw 0 #000;
   }
 
   .vendors-scroll {
@@ -681,32 +647,32 @@ const defaultImage = "/images/Icons/chibi.webp";
     overflow-y: auto;
     overflow-x: hidden;
     min-height: 0;
-    padding-right: 0.5rem;
+    padding-right: 0.33vw;
     scrollbar-width: thin;
     scrollbar-color: #ff6b35 #fff;
   }
 
   .vendors-scroll::-webkit-scrollbar {
-    width: 8px;
+    width: 0.33vw;
   }
 
   .vendors-scroll::-webkit-scrollbar-track {
     background: #fff;
-    border: 2px solid #000;
-    border-radius: 4px;
+    border: 0.08vw solid #000;
+    border-radius: 0.17vw;
   }
 
   .vendors-scroll::-webkit-scrollbar-thumb {
     background: #ff6b35;
-    border: 2px solid #000;
-    border-radius: 4px;
+    border: 0.08vw solid #000;
+    border-radius: 0.17vw;
   }
 
   .vendors-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 1rem;
-    padding-bottom: 1rem;
+    gap: 0.67vw;
+    padding-bottom: 0.74vh;
   }
 
   .vendor-card {
@@ -716,28 +682,29 @@ const defaultImage = "/images/Icons/chibi.webp";
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding: 1rem;
+    padding: 0.74vh 0.67vw;
     background: rgba(0, 0, 0, 0.5);
-    border: 2px solid rgba(255, 107, 53, 0.5);
-    border-radius: 12px;
+    border: 0.08vw solid rgba(255, 107, 53, 0.5);
+    border-radius: 0.5vw;
     transition: all 0.2s ease;
     aspect-ratio: 1 / 1;
   }
 
   .vendor-card:hover {
-    transform: translateY(-4px);
+    transform: translateY(-0.3vh);
     background: rgba(0, 0, 0, 0.7);
     border-color: #ff6b35;
-    box-shadow: 0 8px 24px rgba(255, 107, 53, 0.3);
+    box-shadow: 0 0.59vh 1vw rgba(255, 107, 53, 0.3);
   }
 
   .vendor-avatar {
-    width: clamp(60px, 50%, 100px);
-    height: clamp(60px, 50%, 100px);
+    width: 50%;
+    height: auto;
+    aspect-ratio: 1 / 1;
     border-radius: 50%;
     overflow: hidden;
-    border: 4px solid #ff6b35;
-    margin-bottom: 0.5rem;
+    border: 0.17vw solid #ff6b35;
+    margin-bottom: 0.37vh;
     background: #222;
     flex-shrink: 0;
   }
@@ -750,7 +717,7 @@ const defaultImage = "/images/Icons/chibi.webp";
 
   .vendor-name {
     font-family: 'Inter', sans-serif;
-    font-size: clamp(14px, 1.5vw, 18px);
+    font-size: 0.75vw;
     font-weight: 700;
     color: #fff;
     margin: 0;
@@ -759,16 +726,16 @@ const defaultImage = "/images/Icons/chibi.webp";
   }
 
   .vendor-name--long {
-    font-size: clamp(12px, 1.2vw, 15px);
+    font-size: 0.63vw;
   }
 
   .vendor-social {
     font-family: 'Inter', sans-serif;
-    font-size: clamp(9px, 1vw, 12px);
+    font-size: 0.5vw;
     font-weight: 600;
     color: #ff6b35;
     text-decoration: none;
-    margin: 0.2rem 0;
+    margin: 0.15vh 0;
     word-break: break-all;
   }
 
@@ -784,64 +751,218 @@ const defaultImage = "/images/Icons/chibi.webp";
 
   .vendor-desc {
     font-family: 'Inter', sans-serif;
-    font-size: clamp(12px, 1.3vw, 16px);
+    font-size: 0.67vw;
     font-weight: 500;
     color: rgba(255, 255, 255, 0.7);
     line-height: 1.4;
-    margin: 0.3rem 0 0;
+    margin: 0.22vh 0 0;
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
 
-  /* ===== RESPONSIVE ===== */
+  /* Tablet breakpoint */
   @media (max-width: 1100px) {
     .comic-columns {
       grid-template-columns: 1fr 1fr;
     }
   }
 
-  @media (max-width: 800px) {
+  /* Mobile breakpoint - pixel values for readability */
+  @media (max-width: 768px) {
     .comic-content {
-      padding: calc(70px + 0.5rem) 1rem 1rem;
+      padding: calc(70px + 8px) 16px 16px;
       overflow-y: auto;
+    }
+
+    .comic-hero {
+      margin-bottom: 12px;
+    }
+
+    .comic-title {
+      font-size: 56px;
+      -webkit-text-stroke: 4px #000;
+      text-shadow: 6px 6px 0 #ff6b35, 12px 12px 0 #000;
+    }
+
+    .comic-year {
+      font-size: 28px;
+      -webkit-text-stroke: 2px #000;
+    }
+
+    .comic-tagline {
+      font-size: 18px;
+      margin-top: 6px;
+    }
+
+    .comic-pow {
+      width: 70px;
+      right: -20px;
+      top: -16px;
     }
 
     .comic-columns {
       grid-template-columns: 1fr;
-      gap: 1rem;
+      gap: 16px;
     }
 
     .comic-left, .comic-right {
       height: auto;
     }
 
+    .comic-left {
+      gap: 12px;
+    }
+
+    .comic-panel {
+      border-width: 3px;
+      border-radius: 10px;
+    }
+
+    .comic-panel--info {
+      padding: 12px 16px;
+      gap: 12px;
+    }
+
+    .comic-description {
+      font-size: 14px;
+    }
+
+    .comic-details-row {
+      gap: 12px;
+    }
+
+    .comic-details {
+      gap: 8px;
+    }
+
+    .comic-detail {
+      padding: 8px 12px;
+      border-width: 2px;
+      border-radius: 4px;
+    }
+
+    .detail-label {
+      font-size: 10px;
+    }
+
+    .detail-value {
+      font-size: 14px;
+    }
+
+    .comic-cta {
+      padding: 8px 12px;
+      font-size: 12px;
+      border-width: 2px;
+      border-radius: 4px;
+    }
+
     .comic-panel--featured {
-      min-height: 250px;
+      min-height: 200px;
+      padding: 12px;
+    }
+
+    .featured-title {
+      font-size: 20px;
+      margin-bottom: 8px;
+    }
+
+    .featured-track {
+      gap: 10px;
     }
 
     .featured-card {
-      flex: 0 0 calc(25% - 0.5625rem);
+      flex: 0 0 calc(50% - 5px);
+      border-width: 2px;
+      border-radius: 6px;
+    }
+
+    .featured-card__info {
+      padding: 6px;
+      gap: 6px;
+    }
+
+    .featured-card__avatar {
+      width: 32px;
+      height: 32px;
+      border-width: 2px;
+    }
+
+    .featured-card__name {
+      font-size: 12px;
+    }
+
+    .featured-card__social {
+      font-size: 9px;
     }
 
     .comic-panel--vendors {
-      min-height: 400px;
+      min-height: 350px;
+      padding: 12px;
+    }
+
+    .vendors-title {
+      font-size: 22px;
+      margin-bottom: 10px;
+    }
+
+    .vendors-scroll {
+      padding-right: 6px;
+    }
+
+    .vendors-scroll::-webkit-scrollbar {
+      width: 6px;
     }
 
     .vendors-grid {
       grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      padding-bottom: 12px;
+    }
+
+    .vendor-card {
+      padding: 10px;
+      border-radius: 8px;
+    }
+
+    .vendor-avatar {
+      border-width: 3px;
+      margin-bottom: 6px;
+    }
+
+    .vendor-name {
+      font-size: 12px;
+    }
+
+    .vendor-name--long {
+      font-size: 11px;
+    }
+
+    .vendor-social {
+      font-size: 9px;
+      margin: 3px 0;
+    }
+
+    .vendor-desc {
+      font-size: 11px;
+      margin-top: 4px;
     }
   }
 
-  @media (max-width: 500px) {
+  /* Small mobile */
+  @media (max-width: 480px) {
     .comic-title {
-      font-size: 50px;
+      font-size: 42px;
       -webkit-text-stroke: 3px #000;
     }
 
     .comic-year {
-      font-size: 25px;
+      font-size: 22px;
+    }
+
+    .comic-tagline {
+      font-size: 15px;
     }
 
     .comic-pow {
@@ -850,16 +971,24 @@ const defaultImage = "/images/Icons/chibi.webp";
 
     .comic-details {
       flex-direction: column;
-      gap: 0.5rem;
+      gap: 6px;
+    }
+
+    .comic-detail {
+      width: 100%;
     }
 
     .vendors-grid {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 0.5rem;
+      gap: 8px;
     }
 
-    .featured-card {
-      flex: 0 0 calc(50% - 0.375rem);
+    .vendor-name {
+      font-size: 11px;
+    }
+
+    .vendor-desc {
+      font-size: 10px;
+      -webkit-line-clamp: 2;
     }
   }
 </style>

@@ -1,6 +1,4 @@
 ---
-// Kamecon Section - Slides in after TerpCon on home page
-
 interface Vendor {
   name: string;
   social?: string;
@@ -52,14 +50,10 @@ const vendors: Vendor[] = [
 ---
 
 <div class="kamecon-section" data-kamecon-section>
-  <!-- Background with darkening overlay -->
   <div class="kamecon-section__bg" data-kamecon-bg></div>
 
-  <!-- Content wrapper - Two column layout -->
   <div class="kamecon-section__content" data-kamecon-content>
-    <!-- LEFT HALF - Carousel spanning full height -->
     <div class="kamecon-section__left">
-      <!-- Photo Carousel - Large, Apple style -->
       <div class="kamecon-carousel" data-kamecon-carousel>
         <div class="kamecon-carousel__container">
           <div class="kamecon-carousel__track" data-kamecon-track>
@@ -76,20 +70,16 @@ const vendors: Vendor[] = [
             <div class="kamecon-carousel__slide"><img src="/images/Photos/DSCF1521.webp" alt="KAMECON Photo" /></div>
             <div class="kamecon-carousel__slide"><img src="/images/Photos/DSCF1542.webp" alt="KAMECON Photo" /></div>
           </div>
-          <!-- 2025 Highlights overlay text - inside container -->
           <div class="kamecon-carousel__overlay">
             <span class="kamecon-carousel__overlay-text">2025 Highlights</span>
           </div>
         </div>
 
-        <!-- Carousel dots -->
         <div class="kamecon-carousel__dots" data-kamecon-dots></div>
       </div>
     </div>
 
-    <!-- RIGHT HALF - Title on top, then info -->
     <div class="kamecon-section__right">
-      <!-- Turtle character - top right corner touching vendors -->
       <img src="/images/Characters/turtle.webp" alt="Kamecon Turtle Mascot" class="kamecon-turtle" data-kamecon-turtle />
 
       <h1 class="kamecon-section__title" data-kamecon-title>KAMECON</h1>
@@ -115,7 +105,6 @@ const vendors: Vendor[] = [
         </div>
       </div>
 
-      <!-- Vendors section - squared cards -->
       <div class="kamecon-section__vendors" data-kamecon-vendors>
         <h3 class="kamecon-section__vendors-title">Thank You to Our 2025 Vendors!</h3>
         <div class="kamecon-section__vendors-scroll">
@@ -140,7 +129,6 @@ const vendors: Vendor[] = [
 </div>
 
 <script>
-  // Simple carousel auto-advance with visibility pausing
   document.addEventListener('DOMContentLoaded', () => {
     const track = document.querySelector('[data-kamecon-track]') as HTMLElement;
     const dotsContainer = document.querySelector('[data-kamecon-dots]') as HTMLElement;
@@ -150,10 +138,9 @@ const vendors: Vendor[] = [
     const slides = track.querySelectorAll('.kamecon-carousel__slide');
     const totalSlides = slides.length;
     let currentIndex = 0;
-    let isPaused = true; // Start paused until visible
+    let isPaused = true;
     let intervalId: number | null = null;
 
-    // Create dots
     for (let i = 0; i < totalSlides; i++) {
       const dot = document.createElement('button');
       dot.className = 'kamecon-carousel__dot' + (i === 0 ? ' active' : '');
@@ -188,7 +175,6 @@ const vendors: Vendor[] = [
       }
     }
 
-    // Use IntersectionObserver to pause when not visible
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -206,7 +192,6 @@ const vendors: Vendor[] = [
 
     observer.observe(section);
 
-    // Also pause when tab is hidden
     document.addEventListener('visibilitychange', () => {
       if (document.hidden) {
         isPaused = true;
@@ -238,7 +223,6 @@ const vendors: Vendor[] = [
     will-change: transform;
     backface-visibility: hidden;
     background-color: #0a0a0a;
-    /* Hidden until GSAP positions it off-screen */
     opacity: 0;
   }
 
@@ -258,7 +242,6 @@ const vendors: Vendor[] = [
     background: rgba(10, 10, 10, 0.85);
   }
 
-  /* Content wrapper - Two column layout */
   .kamecon-section__content {
     position: relative;
     z-index: 1;
@@ -271,7 +254,6 @@ const vendors: Vendor[] = [
     gap: clamp(1.5rem, 3vw, 3rem);
   }
 
-  /* LEFT HALF - Carousel spanning full height */
   .kamecon-section__left {
     flex: 0 0 38%;
     display: flex;
@@ -279,7 +261,6 @@ const vendors: Vendor[] = [
     height: 100%;
   }
 
-  /* Apple-style Carousel - LARGE, spanning full height */
   .kamecon-carousel {
     position: relative;
     width: 100%;
@@ -296,7 +277,6 @@ const vendors: Vendor[] = [
     min-height: 0;
     overflow: hidden;
     border-radius: clamp(16px, 2vw, 24px);
-    /* Ensure no black background shows through */
     background: #111;
   }
 
@@ -341,7 +321,6 @@ const vendors: Vendor[] = [
     object-position: center;
   }
 
-  /* 2025 Highlights overlay */
   .kamecon-carousel__overlay {
     position: absolute;
     bottom: 0;
@@ -361,11 +340,10 @@ const vendors: Vendor[] = [
     color: #ffffff;
   }
 
-  /* Carousel dots */
   .kamecon-carousel__dots {
     display: flex;
     justify-content: center;
-    gap: 8px;
+    gap: clamp(0.4rem, 0.5vw, 0.6rem);
     margin-top: 1rem;
   }
 
@@ -389,7 +367,6 @@ const vendors: Vendor[] = [
     transform: scale(1.2);
   }
 
-  /* RIGHT HALF - Title on top, then info */
   .kamecon-section__right {
     flex: 1;
     display: flex;
@@ -399,7 +376,6 @@ const vendors: Vendor[] = [
     position: relative;
   }
 
-  /* Turtle mascot - positioned at vendor list top edge */
   .kamecon-turtle {
     position: absolute;
     top: clamp(18rem, 35vw, 24rem);
@@ -412,7 +388,6 @@ const vendors: Vendor[] = [
     transform: translateX(100px);
   }
 
-  /* KAMECON Title - shadow without glow - NOW ON RIGHT SIDE */
   .kamecon-section__title {
     font-family: 'Inter', sans-serif;
     font-size: clamp(90px, 12vw, 160px);
@@ -431,7 +406,6 @@ const vendors: Vendor[] = [
     contain: layout paint;
   }
 
-  /* Info row - description and buttons */
   .kamecon-section__info-row {
     display: flex;
     flex-direction: column;
@@ -440,7 +414,6 @@ const vendors: Vendor[] = [
     flex-shrink: 0;
   }
 
-  /* Description - BIGGER */
   .kamecon-section__description {
     font-family: 'Inter', sans-serif;
     font-size: clamp(16px, 1.5vw, 22px);
@@ -452,7 +425,6 @@ const vendors: Vendor[] = [
     transform: translateY(30px);
   }
 
-  /* Action buttons */
   .kamecon-section__buttons {
     display: flex;
     gap: 1rem;
@@ -503,7 +475,6 @@ const vendors: Vendor[] = [
     transform: translateY(-2px);
   }
 
-  /* Vendors section - expand to fill remaining space to match carousel height */
   .kamecon-section__vendors {
     flex: 1;
     display: flex;
@@ -529,8 +500,7 @@ const vendors: Vendor[] = [
     scrollbar-width: thin;
     scrollbar-color: rgba(239, 83, 80, 0.3) rgba(0, 0, 0, 0.2);
     padding-right: 0.5rem;
-    /* Show exactly 3 rows: 3 cards + 2 gaps */
-    max-height: calc(260px * 3 + 1rem * 2 + 2px);
+    max-height: clamp(400px, 50vh, 800px);
   }
 
   .kamecon-section__vendors-scroll::-webkit-scrollbar {
@@ -553,7 +523,6 @@ const vendors: Vendor[] = [
     gap: clamp(0.5rem, 1vw, 1rem);
   }
 
-  /* Vendor cards - SQUARE with big text */
   .kamecon-vendor-card {
     display: flex;
     flex-direction: column;
@@ -620,7 +589,6 @@ const vendors: Vendor[] = [
     overflow: hidden;
   }
 
-  /* Responsive */
   @media (max-width: 1200px) {
     .kamecon-section__content {
       padding: 90px 2rem 2rem 2rem;

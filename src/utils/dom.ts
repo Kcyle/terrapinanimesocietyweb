@@ -1,31 +1,15 @@
-/**
- * DOM Utility Functions
- */
-
-/**
- * Safely query a single element
- */
 export function $(selector: string, parent: Document | Element = document): HTMLElement | null {
   return parent.querySelector<HTMLElement>(selector);
 }
 
-/**
- * Safely query multiple elements
- */
 export function $$(selector: string, parent: Document | Element = document): HTMLElement[] {
   return Array.from(parent.querySelectorAll<HTMLElement>(selector));
 }
 
-/**
- * Check if an element exists
- */
 export function exists(selector: string): boolean {
   return $(selector) !== null;
 }
 
-/**
- * Wait for DOM ready
- */
 export function onReady(callback: () => void): void {
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', callback);
@@ -34,9 +18,6 @@ export function onReady(callback: () => void): void {
   }
 }
 
-/**
- * Debounce function
- */
 export function debounce<T extends (...args: unknown[]) => void>(
   fn: T,
   delay: number
@@ -49,9 +30,6 @@ export function debounce<T extends (...args: unknown[]) => void>(
   };
 }
 
-/**
- * Throttle function
- */
 export function throttle<T extends (...args: unknown[]) => void>(
   fn: T,
   limit: number

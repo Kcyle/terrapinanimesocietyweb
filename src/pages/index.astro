@@ -17,11 +17,8 @@ import PartnersSection from '../components/PartnersSection.astro';
       <HeroContent
         description="The Terrapin Anime Society is established for the expressed purpose of encouraging the appreciation and discussion of anime between its members and to bring a better awareness of anime to the general public."
       />
-      <!-- Meetings content - slides in after About via scroll animation -->
       <NowScreening slot="meetings" />
-      <!-- Activities - slides in after Meetings -->
       <ActivitiesSection slot="activities" />
-      <!-- Partners - slides in after Activities -->
       <PartnersSection slot="partners" />
     </HeroSection>
   </main>
@@ -33,7 +30,6 @@ import PartnersSection from '../components/PartnersSection.astro';
   import '../animations/index';
   import { initScreeningAnimations } from '../animations/screening';
 
-  // Initialize screening animations for the meetings section
   if (typeof window !== 'undefined') {
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', () => {

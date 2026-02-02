@@ -95,7 +95,6 @@ const navItems: NavItem[] = [
   </div>
 </nav>
 
-<!-- Teleport Loading Screen -->
 <div class="teleport-loader" data-teleport-loader>
   <div class="teleport-loader__content">
     <img src="/images/Icons/chibi.webp" alt="" class="teleport-loader__icon" />
@@ -106,7 +105,6 @@ const navItems: NavItem[] = [
 </div>
 
 <style>
-  /* Teleport Loading Screen */
   .teleport-loader {
     position: fixed;
     inset: 0;
@@ -308,7 +306,6 @@ const navItems: NavItem[] = [
     color: var(--color-text-secondary);
   }
 
-  /* Chevron icon for dropdown */
   .navigation-menu__chevron {
     margin-left: auto;
     color: var(--color-text-muted);
@@ -319,7 +316,6 @@ const navItems: NavItem[] = [
     transform: rotate(180deg);
   }
 
-  /* Dropdown styles */
   .navigation-menu__dropdown {
     max-height: 0;
     overflow: hidden;
@@ -376,63 +372,50 @@ const navItems: NavItem[] = [
 </style>
 
 <script>
-  // Handle section link clicks - teleport to sections in scroll animation
   document.addEventListener('DOMContentLoaded', () => {
     const loader = document.querySelector('[data-teleport-loader]') as HTMLElement;
 
-    // Direct scroll percentages (0-1) - land AFTER slide-in animations complete
-    // Total effective units: 15.0 (3 transitions + 1.5 partners + 12 subgroups)
     const sectionPositions: Record<string, number> = {
-      '/': 0,                    // Home (Hero) at the top
-      '#about-section': 0.05,    // About page fully visible
-      '#meetings-section': 0.12, // Meetings page fully visible
-      '#activities-section': 0.35, // Activities with grid and characters
-      '#partners-section': 0.48, // Partners section fully visible
-      '#subgroups-section': 0.58, // Subgroups intro with preview cards
-      '#subgroup-animusic': 0.65, // Animusic fully visible
-      '#subgroup-cosplay': 0.73, // Cosplay fully visible
-      '#subgroup-oldanime': 0.81, // Old Anime fully visible
-      '#subgroup-bookclub': 0.89, // Book Club fully visible
-      '#subgroup-rainbow': 0.96, // Rainbow fully visible
+      '/': 0,
+      '#about-section': 0.05,
+      '#meetings-section': 0.12,
+      '#activities-section': 0.35,
+      '#partners-section': 0.48,
+      '#subgroups-section': 0.58,
+      '#subgroup-animusic': 0.65,
+      '#subgroup-cosplay': 0.73,
+      '#subgroup-oldanime': 0.81,
+      '#subgroup-bookclub': 0.89,
+      '#subgroup-rainbow': 0.96,
     };
 
-    // Teleport function with loading screen
     const teleportTo = (position: number) => {
-      // Show loading screen
       if (loader) {
         loader.setAttribute('data-active', 'true');
       }
 
-      // Close the navigation menu immediately
       const menu = document.querySelector('[data-menu]');
       if (menu) {
         menu.setAttribute('data-open', 'false');
         document.body.style.overflow = '';
       }
 
-      // Wait for loading screen to fully appear, then teleport
       setTimeout(() => {
-        // Calculate scroll position
         const docHeight = document.documentElement.scrollHeight;
         const viewportHeight = window.innerHeight;
         const maxScroll = docHeight - viewportHeight;
         const targetScroll = maxScroll * position;
 
-        // Teleport instantly
         window.scrollTo(0, targetScroll);
 
-        // Force GSAP ScrollTrigger to update and refresh
-        // @ts-ignore - ScrollTrigger is globally available
+        // @ts-ignore
         if (window.ScrollTrigger) {
           window.ScrollTrigger.update();
-          // Double update to ensure all animations are fully rendered
           requestAnimationFrame(() => {
             window.ScrollTrigger.update();
           });
         }
 
-        // Hide loading screen after GSAP has fully updated
-        // Use longer delay to ensure all animations are complete
         setTimeout(() => {
           if (loader) {
             loader.setAttribute('data-active', 'false');
@@ -441,18 +424,14 @@ const navItems: NavItem[] = [
       }, 400);
     };
 
-    // Add click handlers for each section link (including all matching links)
     Object.entries(sectionPositions).forEach(([href, position]) => {
-      // Find ALL links with this href, not just the first one
       const links = document.querySelectorAll(`a[href="${href}"]`);
 
       links.forEach(link => {
         link.addEventListener('click', (e) => {
           e.preventDefault();
 
-          // Only works on the home page with the scroll animation
           if (window.location.pathname !== '/') {
-            // Redirect to home page with hash - store position in sessionStorage for immediate teleport
             if (href.startsWith('#')) {
               sessionStorage.setItem('teleportTo', String(position));
               window.location.href = '/';
@@ -467,11 +446,9 @@ const navItems: NavItem[] = [
       });
     });
 
-    // Check if we need to teleport after arriving from another page
     const storedPosition = sessionStorage.getItem('teleportTo');
     if (storedPosition && window.location.pathname === '/') {
       sessionStorage.removeItem('teleportTo');
-      // Small delay to ensure page is ready
       setTimeout(() => {
         teleportTo(parseFloat(storedPosition));
       }, 100);

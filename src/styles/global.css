@@ -7,7 +7,7 @@
 }
 
 html {
-  font-size: 16px;
+  font-size: 13px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #0a0a0a;
@@ -44,12 +44,10 @@ img {
   object-fit: contain;
 }
 
-/* Prevent overflow on all elements */
 *, *::before, *::after {
   max-width: 100%;
 }
 
-/* Exception for elements that need to overflow */
 .card-carousel,
 .card-carousel__track,
 [data-carousel-track] {
@@ -135,16 +133,12 @@ ul, ol {
   color: #0a0a0a;
 }
 
-/* ===== RESPONSIVE ROOT VARIABLES ===== */
-
-/* Large screens */
 @media (max-width: 1400px) {
   :root {
     --page-padding: clamp(1rem, 3vw, 2rem);
   }
 }
 
-/* Medium-large screens */
 @media (max-width: 1200px) {
   :root {
     --page-padding: clamp(1rem, 3vw, 1.75rem);
@@ -155,7 +149,6 @@ ul, ol {
   }
 }
 
-/* Medium screens / tablets landscape */
 @media (max-width: 992px) {
   :root {
     --page-padding: clamp(1rem, 3vw, 1.5rem);
@@ -169,7 +162,6 @@ ul, ol {
   }
 }
 
-/* Tablets portrait */
 @media (max-width: 768px) {
   :root {
     --page-padding: 1rem;
@@ -184,7 +176,6 @@ ul, ol {
   }
 }
 
-/* Mobile */
 @media (max-width: 480px) {
   :root {
     --page-padding: 0.75rem;
@@ -199,9 +190,5 @@ ul, ol {
     --font-size-2xl: 1.125rem;
     --font-size-3xl: 1.25rem;
     --font-size-4xl: 1.5rem;
-  }
-
-  html {
-    font-size: 15px;
   }
 }

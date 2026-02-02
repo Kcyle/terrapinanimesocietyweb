@@ -1,8 +1,3 @@
-/**
- * Menu Animation Module
- * Handles navigation menu open/close animations using GSAP timelines
- */
-
 import { gsap } from 'gsap';
 
 interface MenuElements {
@@ -14,9 +9,6 @@ interface MenuElements {
 
 let menuTimeline: gsap.core.Timeline | null = null;
 
-/**
- * Creates the menu animation timeline
- */
 function createMenuTimeline(elements: MenuElements): gsap.core.Timeline {
   const { menu, backdrop, panel, items } = elements;
 
@@ -37,13 +29,11 @@ function createMenuTimeline(elements: MenuElements): gsap.core.Timeline {
     },
   });
 
-  // Fast dramatic backdrop
   tl.to(backdrop, {
     opacity: 1,
     duration: 0.15,
   });
 
-  // Panel pops in fast
   tl.to(
     panel,
     {
@@ -54,7 +44,6 @@ function createMenuTimeline(elements: MenuElements): gsap.core.Timeline {
     '<'
   );
 
-  // Items appear quickly with minimal stagger
   tl.to(
     items,
     {
@@ -69,9 +58,6 @@ function createMenuTimeline(elements: MenuElements): gsap.core.Timeline {
   return tl;
 }
 
-/**
- * Initializes menu interactions
- */
 export function initMenuAnimations(): void {
   const menu = document.querySelector<HTMLElement>('[data-menu]');
   const trigger = document.querySelector<HTMLElement>('[data-menu-trigger]');
@@ -84,7 +70,6 @@ export function initMenuAnimations(): void {
     return;
   }
 
-  // Set initial states
   gsap.set(backdrop, { opacity: 0 });
   gsap.set(panel, { x: '-100%' });
   gsap.set(items, { opacity: 0, x: -20 });
@@ -106,28 +91,22 @@ export function initMenuAnimations(): void {
     menuTimeline?.reverse();
   };
 
-  // Event listeners
   trigger.addEventListener('click', openMenu);
   closeBtn.addEventListener('click', closeMenu);
   backdrop.addEventListener('click', closeMenu);
 
-  // Close on escape key
   document.addEventListener('keydown', (e: KeyboardEvent) => {
     if (e.key === 'Escape' && menu.getAttribute('data-open') === 'true') {
       closeMenu();
     }
   });
 
-  // Close menu when clicking links
   const menuLinks = document.querySelectorAll<HTMLElement>('[data-menu-link]');
   menuLinks.forEach((link) => {
     link.addEventListener('click', closeMenu);
   });
 }
 
-/**
- * Cleanup function for menu animations
- */
 export function destroyMenuAnimations(): void {
   menuTimeline?.kill();
   menuTimeline = null;
