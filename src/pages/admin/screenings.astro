@@ -2,120 +2,150 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import screeningsData from '../../data/screenings.json';
 
-const { screenings, startDate, meetingTime } = screeningsData;
+const { screenings, startDate, meetingTime, location } = screeningsData;
 ---
 
 <BaseLayout title="Edit Screenings | Admin">
   <div class="admin">
-    <div class="admin__header">
-      <a href="/meetings?admin=true" class="admin__back">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <polyline points="15 18 9 12 15 6"></polyline>
-        </svg>
-        Back to Meetings
-      </a>
-      <h1 class="admin__title">Edit Screenings</h1>
-      <p class="admin__subtitle">Manage your weekly anime screening schedule</p>
+    <!-- Password Gate -->
+    <div class="admin__gate" id="passwordGate">
+      <div class="admin__gate-content">
+        <h1 class="admin__gate-title">Admin Access</h1>
+        <p class="admin__gate-subtitle">Enter the admin password to edit screenings</p>
+        <div class="admin__gate-form">
+          <input type="password" id="passwordInput" placeholder="Enter password" autocomplete="off" />
+          <button class="admin__btn admin__btn--primary" id="passwordSubmit">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg>
+            Unlock
+          </button>
+        </div>
+        <p class="admin__gate-error" id="passwordError"></p>
+      </div>
     </div>
 
-    <div class="admin__content">
-      <section class="admin__section">
-        <h2 class="admin__section-title">Schedule Settings</h2>
-        <div class="admin__form-grid">
-          <div class="admin__field">
-            <label for="startDate">Start Date</label>
-            <input type="date" id="startDate" value={startDate} />
-            <span class="admin__hint">First Sunday of the screening schedule</span>
+    <!-- Admin Content (hidden until password verified) -->
+    <div class="admin__main" id="adminMain" style="display: none;">
+      <div class="admin__header">
+        <a href="/meetings?admin=true" class="admin__back">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+          Back to Meetings
+        </a>
+        <h1 class="admin__title">Edit Screenings</h1>
+        <p class="admin__subtitle">Manage your weekly anime screening schedule</p>
+      </div>
+
+      <div class="admin__content">
+        <section class="admin__section">
+          <h2 class="admin__section-title">Schedule Settings</h2>
+          <div class="admin__form-grid">
+            <div class="admin__field">
+              <label for="startDate">Start Date</label>
+              <input type="date" id="startDate" value={startDate} />
+              <span class="admin__hint">First Sunday of the screening schedule</span>
+            </div>
+            <div class="admin__field">
+              <label for="meetingTime">Meeting Time</label>
+              <input type="text" id="meetingTime" value={meetingTime} placeholder="e.g., 5-7 PM" />
+            </div>
+            <div class="admin__field">
+              <label for="buildingCode">Building Code</label>
+              <input type="text" id="buildingCode" value={location?.buildingCode || 'STP'} placeholder="e.g., STP" />
+            </div>
+            <div class="admin__field">
+              <label for="roomNumber">Room Number</label>
+              <input type="text" id="roomNumber" value={location?.roomNumber || '0200'} placeholder="e.g., 0200" />
+            </div>
           </div>
-          <div class="admin__field">
-            <label for="meetingTime">Meeting Time</label>
-            <input type="text" id="meetingTime" value={meetingTime} placeholder="e.g., 5-7 PM" />
+        </section>
+
+        <section class="admin__section">
+          <div class="admin__section-header">
+            <h2 class="admin__section-title">Anime Screenings</h2>
+            <button class="admin__btn admin__btn--primary" id="addAnime">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+              </svg>
+              Add Anime
+            </button>
+          </div>
+
+          <div class="admin__list" id="screeningsList">
+            {screenings.map((anime, index) => (
+              <div class="admin__card" data-index={index} data-mal-id={anime.malId}>
+                <div class="admin__card-image">
+                  <img src={anime.image} alt={anime.title} />
+                </div>
+                <div class="admin__card-content">
+                  <div class="admin__card-header">
+                    <h3 class="admin__card-title">{anime.title}</h3>
+                    <div class="admin__card-actions">
+                      <button class="admin__icon-btn admin__icon-btn--danger" data-action="delete" title="Delete">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                          <polyline points="3 6 5 6 21 6"></polyline>
+                          <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="admin__card-meta">
+                    <span class="admin__card-episodes">{anime.episodes || '?'} Episodes</span>
+                    {anime.score && <span class="admin__card-score">★ {anime.score}</span>}
+                  </div>
+                  <p class="admin__card-synopsis">{anime.synopsis.substring(0, 150)}...</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <div class="admin__modal" id="searchModal">
+          <div class="admin__modal-content">
+            <div class="admin__modal-header">
+              <h2>Search Anime</h2>
+              <button class="admin__icon-btn" id="closeModal">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="18" y1="6" x2="6" y2="18"></line>
+                  <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+              </button>
+            </div>
+            <div class="admin__search">
+              <input type="text" id="searchInput" placeholder="Search MyAnimeList..." />
+              <button class="admin__btn admin__btn--primary" id="searchBtn">Search</button>
+            </div>
+            <div class="admin__search-results" id="searchResults">
+              <p class="admin__search-hint">Enter an anime title to search MyAnimeList</p>
+            </div>
           </div>
         </div>
-      </section>
 
-      <section class="admin__section">
-        <div class="admin__section-header">
-          <h2 class="admin__section-title">Anime Screenings</h2>
-          <button class="admin__btn admin__btn--primary" id="addAnime">
+        <div class="admin__actions">
+          <button class="admin__btn admin__btn--secondary" id="resetBtn">Reset Changes</button>
+          <button class="admin__btn admin__btn--primary" id="saveBtn">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <line x1="12" y1="5" x2="12" y2="19"></line>
-              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+              <polyline points="17 21 17 13 7 13 7 21"></polyline>
+              <polyline points="7 3 7 8 15 8"></polyline>
             </svg>
-            Add Anime
+            Save & Publish
           </button>
         </div>
 
-        <div class="admin__list" id="screeningsList">
-          {screenings.map((anime, index) => (
-            <div class="admin__card" data-index={index}>
-              <div class="admin__card-image">
-                <img src={anime.image} alt={anime.title} />
-              </div>
-              <div class="admin__card-content">
-                <div class="admin__card-header">
-                  <h3 class="admin__card-title">{anime.title}</h3>
-                  <div class="admin__card-actions">
-                    <button class="admin__icon-btn admin__icon-btn--danger" data-action="delete" title="Delete">
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <polyline points="3 6 5 6 21 6"></polyline>
-                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                      </svg>
-                    </button>
-                  </div>
-                </div>
-                <div class="admin__card-meta">
-                  <span class="admin__card-episodes">{anime.episodes || '?'} Episodes</span>
-                  {anime.score && <span class="admin__card-score">★ {anime.score}</span>}
-                </div>
-                <p class="admin__card-synopsis">{anime.synopsis.substring(0, 150)}...</p>
-              </div>
-            </div>
-          ))}
+        <div class="admin__info">
+          <h3>How It Works</h3>
+          <ol>
+            <li>Make your changes using the interface above</li>
+            <li>Click "Save & Publish" to push changes to GitHub</li>
+            <li>The site will automatically rebuild with your changes</li>
+            <li>Changes typically appear within 1-2 minutes</li>
+          </ol>
         </div>
-      </section>
-
-      <div class="admin__modal" id="searchModal">
-        <div class="admin__modal-content">
-          <div class="admin__modal-header">
-            <h2>Search Anime</h2>
-            <button class="admin__icon-btn" id="closeModal">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <line x1="18" y1="6" x2="6" y2="18"></line>
-                <line x1="6" y1="6" x2="18" y2="18"></line>
-              </svg>
-            </button>
-          </div>
-          <div class="admin__search">
-            <input type="text" id="searchInput" placeholder="Search MyAnimeList..." />
-            <button class="admin__btn admin__btn--primary" id="searchBtn">Search</button>
-          </div>
-          <div class="admin__search-results" id="searchResults">
-            <p class="admin__search-hint">Enter an anime title to search MyAnimeList</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="admin__actions">
-        <button class="admin__btn admin__btn--secondary" id="resetBtn">Reset Changes</button>
-        <button class="admin__btn admin__btn--primary" id="saveBtn">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
-            <polyline points="17 21 17 13 7 13 7 21"></polyline>
-            <polyline points="7 3 7 8 15 8"></polyline>
-          </svg>
-          Save Changes
-        </button>
-      </div>
-
-      <div class="admin__info">
-        <h3>How to Update</h3>
-        <ol>
-          <li>Make your changes using the interface above</li>
-          <li>Click "Save Changes" to download the updated JSON file</li>
-          <li>Replace <code>src/data/screenings.json</code> with the downloaded file</li>
-          <li>Commit and push the changes to update the live site</li>
-        </ol>
       </div>
     </div>
   </div>
@@ -126,6 +156,61 @@ const { screenings, startDate, meetingTime } = screeningsData;
     min-height: 100vh;
     background-color: #0a0a0a;
     color: #ffffff;
+  }
+
+  .admin__gate {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+  }
+
+  .admin__gate-content {
+    text-align: center;
+    max-width: 400px;
+  }
+
+  .admin__gate-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 36px;
+    font-weight: 700;
+    margin: 0 0 0.5rem;
+  }
+
+  .admin__gate-subtitle {
+    color: rgba(255, 255, 255, 0.5);
+    margin: 0 0 2rem;
+  }
+
+  .admin__gate-form {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .admin__gate-form input {
+    flex: 1;
+    padding: 0.75rem 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: #ffffff;
+    font-size: 14px;
+  }
+
+  .admin__gate-form input:focus {
+    outline: none;
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+
+  .admin__gate-error {
+    color: #ff6b6b;
+    font-size: 14px;
+    margin-top: 1rem;
+    min-height: 20px;
+  }
+
+  .admin__main {
     padding: 2rem;
   }
 
@@ -230,28 +315,6 @@ const { screenings, startDate, meetingTime } = screeningsData;
     color: rgba(255, 255, 255, 0.4);
   }
 
-  .admin__field select {
-    padding: 0.75rem;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
-    color: #ffffff;
-    font-size: 14px;
-    transition: border-color 0.2s;
-    cursor: pointer;
-    width: 100%;
-  }
-
-  .admin__field select:focus {
-    outline: none;
-    border-color: rgba(255, 255, 255, 0.3);
-  }
-
-  .admin__field select option {
-    background: #1a1a1a;
-    color: #ffffff;
-  }
-
   .admin__btn {
     display: inline-flex;
     align-items: center;
@@ -265,12 +328,17 @@ const { screenings, startDate, meetingTime } = screeningsData;
     transition: all 0.2s;
   }
 
+  .admin__btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
   .admin__btn--primary {
     background: #ffffff;
     color: #0a0a0a;
   }
 
-  .admin__btn--primary:hover {
+  .admin__btn--primary:hover:not(:disabled) {
     background: rgba(255, 255, 255, 0.9);
   }
 
@@ -279,7 +347,7 @@ const { screenings, startDate, meetingTime } = screeningsData;
     color: #ffffff;
   }
 
-  .admin__btn--secondary:hover {
+  .admin__btn--secondary:hover:not(:disabled) {
     background: rgba(255, 255, 255, 0.15);
   }
 
@@ -546,8 +614,12 @@ const { screenings, startDate, meetingTime } = screeningsData;
   }
 
   @media (max-width: 600px) {
-    .admin {
+    .admin__main {
       padding: 1rem;
+    }
+
+    .admin__gate-form {
+      flex-direction: column;
     }
 
     .admin__card {
@@ -566,6 +638,7 @@ const { screenings, startDate, meetingTime } = screeningsData;
 </style>
 
 <script>
+  let adminPassword = '';
   let screeningsData = {
     screenings: [] as Array<{
       malId: number;
@@ -577,25 +650,83 @@ const { screenings, startDate, meetingTime } = screeningsData;
     }>,
     startDate: '',
     meetingTime: '',
+    location: {
+      buildingCode: 'STP',
+      roomNumber: '0200',
+    },
   };
 
   document.addEventListener('DOMContentLoaded', () => {
+    setupPasswordGate();
+  });
+
+  function setupPasswordGate() {
+    const passwordInput = document.getElementById('passwordInput') as HTMLInputElement;
+    const passwordSubmit = document.getElementById('passwordSubmit');
+    const passwordError = document.getElementById('passwordError');
+
+    passwordSubmit?.addEventListener('click', validatePassword);
+    passwordInput?.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') validatePassword();
+    });
+
+    async function validatePassword() {
+      const password = passwordInput?.value;
+      if (!password) {
+        if (passwordError) passwordError.textContent = 'Please enter a password';
+        return;
+      }
+
+      try {
+        const response = await fetch(`/api/screenings?password=${encodeURIComponent(password)}`);
+        const data = await response.json();
+
+        if (data.valid) {
+          adminPassword = password;
+          showAdminPanel();
+        } else {
+          if (passwordError) passwordError.textContent = 'Invalid password';
+        }
+      } catch (error) {
+        if (passwordError) passwordError.textContent = 'Error validating password';
+      }
+    }
+  }
+
+  function showAdminPanel() {
+    const gate = document.getElementById('passwordGate');
+    const main = document.getElementById('adminMain');
+
+    if (gate) gate.style.display = 'none';
+    if (main) main.style.display = 'block';
+
+    initializeAdmin();
+  }
+
+  function initializeAdmin() {
     const startDateInput = document.getElementById('startDate') as HTMLInputElement;
     const meetingTimeInput = document.getElementById('meetingTime') as HTMLInputElement;
+    const buildingCodeInput = document.getElementById('buildingCode') as HTMLInputElement;
+    const roomNumberInput = document.getElementById('roomNumber') as HTMLInputElement;
 
     screeningsData.startDate = startDateInput?.value || '';
     screeningsData.meetingTime = meetingTimeInput?.value || '';
+    screeningsData.location = {
+      buildingCode: buildingCodeInput?.value || 'STP',
+      roomNumber: roomNumberInput?.value || '0200',
+    };
 
     const cards = document.querySelectorAll('.admin__card');
-    cards.forEach((card, index) => {
+    cards.forEach((card) => {
       const img = card.querySelector('.admin__card-image img') as HTMLImageElement;
       const title = card.querySelector('.admin__card-title')?.textContent || '';
       const synopsis = card.querySelector('.admin__card-synopsis')?.textContent?.replace('...', '') || '';
       const episodesText = card.querySelector('.admin__card-episodes')?.textContent || '';
       const scoreText = card.querySelector('.admin__card-score')?.textContent || '';
+      const malId = parseInt(card.getAttribute('data-mal-id') || '0');
 
       screeningsData.screenings.push({
-        malId: 0,
+        malId,
         title,
         synopsis,
         image: img?.src || '',
@@ -605,7 +736,7 @@ const { screenings, startDate, meetingTime } = screeningsData;
     });
 
     setupEventListeners();
-  });
+  }
 
   function setupEventListeners() {
     const addBtn = document.getElementById('addAnime');
@@ -657,6 +788,14 @@ const { screenings, startDate, meetingTime } = screeningsData;
 
     document.getElementById('meetingTime')?.addEventListener('change', (e) => {
       screeningsData.meetingTime = (e.target as HTMLInputElement).value;
+    });
+
+    document.getElementById('buildingCode')?.addEventListener('change', (e) => {
+      screeningsData.location.buildingCode = (e.target as HTMLInputElement).value;
+    });
+
+    document.getElementById('roomNumber')?.addEventListener('change', (e) => {
+      screeningsData.location.roomNumber = (e.target as HTMLInputElement).value;
     });
   }
 
@@ -752,6 +891,7 @@ const { screenings, startDate, meetingTime } = screeningsData;
     const card = document.createElement('div');
     card.className = 'admin__card';
     card.setAttribute('data-index', index.toString());
+    card.setAttribute('data-mal-id', anime.malId.toString());
     card.innerHTML = `
       <div class="admin__card-image">
         <img src="${anime.image}" alt="${anime.title}" />
@@ -794,25 +934,75 @@ const { screenings, startDate, meetingTime } = screeningsData;
     });
   }
 
-  function saveChanges() {
+  async function saveChanges() {
+    const saveBtn = document.getElementById('saveBtn') as HTMLButtonElement;
     const startDateInput = document.getElementById('startDate') as HTMLInputElement;
     const meetingTimeInput = document.getElementById('meetingTime') as HTMLInputElement;
+    const buildingCodeInput = document.getElementById('buildingCode') as HTMLInputElement;
+    const roomNumberInput = document.getElementById('roomNumber') as HTMLInputElement;
 
     screeningsData.startDate = startDateInput?.value || screeningsData.startDate;
     screeningsData.meetingTime = meetingTimeInput?.value || screeningsData.meetingTime;
+    screeningsData.location = {
+      buildingCode: buildingCodeInput?.value || 'STP',
+      roomNumber: roomNumberInput?.value || '0200',
+    };
 
-    const json = JSON.stringify(screeningsData, null, 2);
-    const blob = new Blob([json], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
+    // Disable button while saving
+    if (saveBtn) {
+      saveBtn.disabled = true;
+      saveBtn.innerHTML = `
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="spinning">
+          <circle cx="12" cy="12" r="10"></circle>
+        </svg>
+        Saving...
+      `;
+    }
 
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'screenings.json';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
+    try {
+      const response = await fetch('/api/screenings', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          password: adminPassword,
+          ...screeningsData,
+        }),
+      });
 
-    alert('File downloaded! Replace src/data/screenings.json with the downloaded file.');
+      const result = await response.json();
+
+      if (response.ok && result.success) {
+        alert('Changes saved successfully! The site will rebuild in 1-2 minutes.');
+      } else {
+        alert(`Error: ${result.error || 'Failed to save changes'}`);
+      }
+    } catch (error) {
+      alert('Error saving changes. Please try again.');
+    } finally {
+      if (saveBtn) {
+        saveBtn.disabled = false;
+        saveBtn.innerHTML = `
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+            <polyline points="17 21 17 13 7 13 7 21"></polyline>
+            <polyline points="7 3 7 8 15 8"></polyline>
+          </svg>
+          Save & Publish
+        `;
+      }
+    }
   }
 </script>
+
+<style>
+  .spinning {
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+</style>
