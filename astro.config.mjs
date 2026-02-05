@@ -3,7 +3,7 @@ import { defineConfig } from 'astro/config';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://terrapinanimesociety.org',
+  site: 'https://tas.umd.edu',
   base: '/',
   vite: {
     build: {
