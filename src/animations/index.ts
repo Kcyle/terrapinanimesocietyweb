@@ -22,14 +22,7 @@ if (typeof window !== 'undefined') {
     history.scrollRestoration = 'manual';
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-      if (performance.navigation?.type === 0 || performance.getEntriesByType('navigation')[0]?.type === 'navigate') {
-        window.scrollTo(0, 0);
-      }
-      initAnimations();
-    });
-  } else {
-    initAnimations();
+  if (performance.navigation?.type === 0 || (performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming)?.type === 'navigate') {
+    window.scrollTo(0, 0);
   }
 }

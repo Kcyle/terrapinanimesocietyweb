@@ -27,16 +27,17 @@ import PartnersSection from '../components/PartnersSection.astro';
 </BaseLayout>
 
 <script>
-  import '../animations/index';
+  import { initAnimations } from '../animations/index';
   import { initScreeningAnimations } from '../animations/screening';
 
-  if (typeof window !== 'undefined') {
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', () => {
-        initScreeningAnimations();
-      });
-    } else {
-      initScreeningAnimations();
-    }
+  function init() {
+    initAnimations();
+    initScreeningAnimations();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
   }
 </script>
