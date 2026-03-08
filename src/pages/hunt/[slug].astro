@@ -4,7 +4,7 @@ import { HUNT_PROMPTS, GOOGLE_DRIVE_UPLOAD_URL } from '../../data/hunt-prompts';
 
 export function getStaticPaths() {
   return HUNT_PROMPTS.map((prompt) => ({
-    params: { id: String(prompt.id) },
+    params: { slug: prompt.slug },
     props: { prompt },
   }));
 }

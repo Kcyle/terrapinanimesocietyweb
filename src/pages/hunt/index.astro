@@ -56,7 +56,7 @@ import { HUNT_PROMPTS } from '../../data/hunt-prompts';
 
       <div class="hunt-prompts-grid" id="prompts-grid">
         {HUNT_PROMPTS.map((prompt) => (
-          <a href={`/hunt/${prompt.id}/`} class="hunt-prompt-card" data-prompt-id={prompt.id}>
+          <a href={`/hunt/${prompt.slug}/`} class="hunt-prompt-card" data-prompt-id={prompt.id}>
             <div class="hunt-prompt-card__number">#{prompt.id}</div>
             <div class="hunt-prompt-card__content">
               <h3 class="hunt-prompt-card__title">{prompt.title}</h3>

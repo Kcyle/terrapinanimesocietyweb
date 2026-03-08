@@ -7,7 +7,7 @@ const baseUrl = 'https://tas.umd.edu';
 const qrCodes: { id: number; title: string; svg: string; url: string }[] = [];
 
 for (const prompt of HUNT_PROMPTS) {
-  const url = `${baseUrl}/hunt/${prompt.id}/`;
+  const url = `${baseUrl}/hunt/${prompt.slug}/`;
   const svg = await QRCode.toString(url, {
     type: 'svg',
     color: { dark: '#ffffff', light: '#00000000' },
