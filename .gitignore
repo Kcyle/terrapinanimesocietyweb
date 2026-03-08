@@ -17,6 +17,9 @@ pnpm-debug.log*
 .env
 .env.production
 
+# large model files
+public/models/
+
 # macOS-specific files
 .DS_Store
 

@@ -1,0 +1,502 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { HUNT_PROMPTS, GOOGLE_DRIVE_UPLOAD_URL } from '../../data/hunt-prompts';
+
+export function getStaticPaths() {
+  return HUNT_PROMPTS.map((prompt) => ({
+    params: { id: String(prompt.id) },
+    props: { prompt },
+  }));
+}
+
+const { prompt } = Astro.props;
+const driveUrl = GOOGLE_DRIVE_UPLOAD_URL;
+---
+
+<BaseLayout title={`${prompt.title} - Scavenger Hunt`}>
+  <div class="prompt-page">
+    <!-- No team overlay -->
+    <div id="no-team-overlay" class="prompt-overlay" style="display:none;">
+      <div class="prompt-overlay__card">
+        <h2>Hold up!</h2>
+        <p>You need a team first.</p>
+        <a href="/hunt/" class="hunt-btn hunt-btn--primary">Create / Join Team</a>
+      </div>
+    </div>
+
+    <div class="prompt-header">
+      <a href="/hunt/" class="prompt-back">&larr; Back to Hunt</a>
+      <div class="prompt-number">#{prompt.id}</div>
+    </div>
+
+    <div class="prompt-hero">
+      <span class="prompt-anime">{prompt.anime}</span>
+      <h1 class="prompt-title">{prompt.title}</h1>
+      <div class="prompt-people">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+          <circle cx="9" cy="7" r="4"/>
+          <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+          <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+        </svg>
+        {prompt.peopleRequired}
+      </div>
+    </div>
+
+    <div class="prompt-description">
+      <p>{prompt.description}</p>
+    </div>
+
+    <div class="prompt-rules">
+      <h3 class="prompt-rules__title">Requirements</h3>
+      <ul class="prompt-rules__list">
+        {prompt.rules.map((rule) => (
+          <li>{rule}</li>
+        ))}
+      </ul>
+    </div>
+
+    <!-- Submission Section -->
+    <div id="submission-section" class="prompt-submit">
+      <!-- Already submitted state -->
+      <div id="already-submitted" class="prompt-done" style="display:none;">
+        <div class="prompt-done__check">&#10003;</div>
+        <h3>Submitted!</h3>
+        <p>Your team has completed this prompt.</p>
+      </div>
+
+      <!-- Submit form -->
+      <div id="submit-form" style="display:none;">
+        <h3 class="prompt-submit__title">Submit Your Entry</h3>
+
+        <p class="prompt-submit__step">
+          <span class="prompt-submit__step-num">1</span>
+          Upload your {prompt.type === 'photo' ? 'photo' : 'video'} to Google Drive
+        </p>
+        <a
+          href={driveUrl}
+          target="_blank"
+          rel="noopener"
+          class="hunt-btn hunt-btn--upload"
+          id="drive-btn"
+        >
+          Open Google Drive &rarr;
+        </a>
+        <p class="prompt-submit__hint">
+          Name your file: <strong id="file-name-hint">TeamName_Prompt{prompt.id}</strong>
+        </p>
+
+        <p class="prompt-submit__step">
+          <span class="prompt-submit__step-num">2</span>
+          Confirm your submission
+        </p>
+        <textarea
+          id="notes-input"
+          class="hunt-input hunt-textarea"
+          placeholder="Optional notes (which devil you picked, which anime, etc.)"
+          rows="3"
+        ></textarea>
+
+        <button id="confirm-submit-btn" class="hunt-btn hunt-btn--primary hunt-btn--full">
+          Submit Entry
+        </button>
+        <p id="submit-error" class="hunt-error" style="display:none;"></p>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .prompt-page {
+    min-height: 100vh;
+    background: #0a0a0a;
+    padding: 1.5rem;
+    padding-bottom: 4rem;
+    max-width: 600px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .prompt-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.85);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    backdrop-filter: blur(8px);
+  }
+  .prompt-overlay__card {
+    background: #141414;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 2.5rem 2rem;
+    text-align: center;
+    max-width: 320px;
+    width: 100%;
+  }
+  .prompt-overlay__card h2 {
+    font-family: 'Bangers', cursive;
+    font-size: 1.8rem;
+    color: #fbbf24;
+    margin-bottom: 0.5rem;
+  }
+  .prompt-overlay__card p {
+    color: #888;
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .prompt-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    padding-top: 0.5rem;
+  }
+  .prompt-back {
+    font-size: 0.8rem;
+    color: #666;
+    transition: color 0.2s;
+  }
+  .prompt-back:hover { color: #fff; }
+
+  .prompt-number {
+    font-family: 'Bangers', cursive;
+    font-size: 1.2rem;
+    color: #fbbf24;
+    background: rgba(251, 191, 36, 0.1);
+    padding: 0.25rem 0.75rem;
+    border-radius: 100px;
+  }
+
+  .prompt-hero {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .prompt-anime {
+    display: inline-block;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #888;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 0.2rem 0.7rem;
+    border-radius: 100px;
+    margin-bottom: 1rem;
+  }
+
+  .prompt-title {
+    font-family: 'Bangers', cursive;
+    font-size: 2.2rem;
+    letter-spacing: 0.03em;
+    line-height: 1.15;
+    margin-bottom: 0.75rem;
+  }
+
+  .prompt-people {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.8rem;
+    color: #888;
+  }
+  .prompt-people svg { color: #fbbf24; }
+
+  .prompt-description {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 14px;
+    padding: 1.25rem 1.25rem;
+    margin-bottom: 1.25rem;
+  }
+  .prompt-description p {
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: #ccc;
+  }
+
+  .prompt-rules {
+    margin-bottom: 2rem;
+  }
+  .prompt-rules__title {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #666;
+    margin-bottom: 0.75rem;
+  }
+  .prompt-rules__list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .prompt-rules__list li {
+    font-size: 0.85rem;
+    color: #aaa;
+    padding-left: 1.25rem;
+    position: relative;
+    line-height: 1.5;
+  }
+  .prompt-rules__list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.55rem;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #fbbf24;
+  }
+
+  .prompt-submit {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 1.5rem;
+  }
+
+  .prompt-submit__title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 1.25rem;
+  }
+
+  .prompt-submit__step {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.85rem;
+    color: #ccc;
+    margin-bottom: 0.75rem;
+    margin-top: 1.25rem;
+  }
+  .prompt-submit__step:first-of-type { margin-top: 0; }
+
+  .prompt-submit__step-num {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: rgba(251, 191, 36, 0.15);
+    color: #fbbf24;
+    font-size: 0.7rem;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .prompt-submit__hint {
+    font-size: 0.75rem;
+    color: #666;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+  .prompt-submit__hint strong { color: #fbbf24; }
+
+  .hunt-btn {
+    display: inline-block;
+    padding: 0.85rem 1.5rem;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s;
+    text-align: center;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .hunt-btn--primary {
+    background: linear-gradient(135deg, #ff6b6b, #fbbf24);
+    color: #0a0a0a;
+    width: 100%;
+  }
+  .hunt-btn--primary:hover {
+    transform: translateY(-1px);
+    /* no glow */
+  }
+  .hunt-btn--primary:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .hunt-btn--upload {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px dashed rgba(255, 255, 255, 0.15);
+    color: #fff;
+    width: 100%;
+  }
+  .hunt-btn--upload:hover {
+    border-color: #fbbf24;
+    color: #fbbf24;
+  }
+
+  .hunt-btn--full { width: 100%; }
+
+  .hunt-input {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 0.8rem 1rem;
+    color: #fff;
+    font-size: 0.85rem;
+    font-family: inherit;
+    outline: none;
+    width: 100%;
+    transition: border-color 0.2s;
+    resize: none;
+  }
+  .hunt-input:focus { border-color: #fbbf24; }
+  .hunt-input::placeholder { color: #555; }
+
+  .hunt-textarea { margin-bottom: 1rem; }
+
+  .hunt-error {
+    color: #ff6b6b;
+    font-size: 0.8rem;
+    margin-top: 0.75rem;
+    text-align: center;
+  }
+
+  .prompt-done {
+    text-align: center;
+    padding: 1rem 0;
+  }
+  .prompt-done__check {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: rgba(34, 197, 94, 0.15);
+    color: #22c55e;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 0.75rem;
+  }
+  .prompt-done h3 {
+    color: #22c55e;
+    font-size: 1.1rem;
+    margin-bottom: 0.25rem;
+  }
+  .prompt-done p {
+    color: #888;
+    font-size: 0.85rem;
+  }
+</style>
+
+<script define:vars={{ promptId: prompt.id }}>
+  // Save this prompt as discovered
+  const DISCOVERED_KEY = 'tas_hunt_discovered';
+  try {
+    const raw = localStorage.getItem(DISCOVERED_KEY);
+    const discovered = raw ? JSON.parse(raw) : [];
+    if (!discovered.includes(promptId)) {
+      discovered.push(promptId);
+      localStorage.setItem(DISCOVERED_KEY, JSON.stringify(discovered));
+    }
+  } catch {}
+
+  // Make promptId available to the module script below
+  window.__huntPromptId = promptId;
+</script>
+
+<script>
+  import { createClient } from '@supabase/supabase-js';
+
+  const supabaseUrl = import.meta.env.PUBLIC_SUPABASE_URL;
+  const supabaseAnonKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
+  const supabase = createClient(supabaseUrl, supabaseAnonKey);
+
+  const TEAM_KEY = 'tas_hunt_team';
+  const promptId = (window as any).__huntPromptId;
+
+  interface TeamData {
+    id: string;
+    team_name: string;
+  }
+
+  function getSavedTeam(): TeamData | null {
+    try {
+      const raw = localStorage.getItem(TEAM_KEY);
+      return raw ? JSON.parse(raw) : null;
+    } catch { return null; }
+  }
+
+  const overlay = document.getElementById('no-team-overlay')!;
+  const alreadyDone = document.getElementById('already-submitted')!;
+  const submitForm = document.getElementById('submit-form')!;
+  const confirmBtn = document.getElementById('confirm-submit-btn')!;
+  const notesInput = document.getElementById('notes-input') as HTMLTextAreaElement;
+  const submitError = document.getElementById('submit-error')!;
+  const fileHint = document.getElementById('file-name-hint')!;
+
+  const team = getSavedTeam();
+
+  if (!team) {
+    overlay.style.display = 'flex';
+  } else {
+    fileHint.textContent = `${team.team_name}_Prompt${promptId}`;
+
+    // Check if already submitted
+    checkSubmission(team);
+  }
+
+  async function checkSubmission(team: TeamData) {
+    const { data } = await supabase
+      .from('hunt_submissions')
+      .select('id')
+      .eq('team_id', team.id)
+      .eq('prompt_id', promptId)
+      .single();
+
+    if (data) {
+      alreadyDone.style.display = 'block';
+      submitForm.style.display = 'none';
+    } else {
+      submitForm.style.display = 'block';
+    }
+  }
+
+  confirmBtn.addEventListener('click', async () => {
+    if (!team) return;
+
+    confirmBtn.setAttribute('disabled', '');
+    confirmBtn.textContent = 'Submitting...';
+    submitError.style.display = 'none';
+
+    const { error } = await supabase
+      .from('hunt_submissions')
+      .insert({
+        team_id: team.id,
+        prompt_id: promptId,
+        notes: notesInput.value.trim() || null,
+      });
+
+    if (error) {
+      if (error.code === '23505') {
+        // Already submitted (unique constraint)
+        alreadyDone.style.display = 'block';
+        submitForm.style.display = 'none';
+      } else {
+        submitError.textContent = 'Failed to submit. Try again.';
+        submitError.style.display = 'block';
+        confirmBtn.removeAttribute('disabled');
+        confirmBtn.textContent = 'Submit Entry';
+      }
+      return;
+    }
+
+    alreadyDone.style.display = 'block';
+    submitForm.style.display = 'none';
+  });
+</script>

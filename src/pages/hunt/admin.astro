@@ -1,0 +1,269 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { HUNT_PROMPTS } from '../../data/hunt-prompts';
+---
+
+<BaseLayout title="Hunt Admin - TAS">
+  <div class="admin-page">
+    <div class="admin-header">
+      <a href="/hunt/" class="admin-back">&larr; Back</a>
+      <h1 class="admin-title">Scavenger Hunt Admin</h1>
+    </div>
+
+    <!-- Password gate -->
+    <div id="auth-gate" class="admin-card">
+      <input type="password" id="admin-pw" class="admin-input" placeholder="Admin password..." />
+      <button id="admin-login" class="admin-btn">Enter</button>
+    </div>
+
+    <!-- Dashboard -->
+    <div id="admin-dashboard" style="display:none;">
+      <div class="admin-stats" id="stats-bar">
+        <div class="admin-stat">
+          <span class="admin-stat__num" id="stat-teams">-</span>
+          <span class="admin-stat__label">Teams</span>
+        </div>
+        <div class="admin-stat">
+          <span class="admin-stat__num" id="stat-submissions">-</span>
+          <span class="admin-stat__label">Submissions</span>
+        </div>
+      </div>
+
+      <h2 class="admin-section-title">Leaderboard</h2>
+      <div id="leaderboard" class="admin-leaderboard"></div>
+
+      <h2 class="admin-section-title">All Submissions</h2>
+      <div id="submissions-list" class="admin-submissions"></div>
+
+      <button id="refresh-btn" class="admin-btn admin-btn--ghost">Refresh</button>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .admin-page {
+    min-height: 100vh;
+    background: #0a0a0a;
+    padding: 1.5rem;
+    padding-bottom: 4rem;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .admin-header {
+    padding-top: 1rem;
+    margin-bottom: 2rem;
+  }
+  .admin-back {
+    font-size: 0.8rem;
+    color: #666;
+    display: block;
+    margin-bottom: 1rem;
+    transition: color 0.2s;
+  }
+  .admin-back:hover { color: #fff; }
+  .admin-title {
+    font-family: 'Bangers', cursive;
+    font-size: 1.8rem;
+    color: #fbbf24;
+  }
+
+  .admin-card {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    padding: 1.5rem;
+    display: flex;
+    gap: 0.75rem;
+  }
+
+  .admin-input {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 0.7rem 1rem;
+    color: #fff;
+    font-size: 0.9rem;
+    font-family: inherit;
+    outline: none;
+  }
+  .admin-input:focus { border-color: #fbbf24; }
+
+  .admin-btn {
+    padding: 0.7rem 1.2rem;
+    border-radius: 10px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    border: none;
+    background: linear-gradient(135deg, #ff6b6b, #fbbf24);
+    color: #0a0a0a;
+    transition: all 0.2s;
+  }
+  .admin-btn:hover { transform: translateY(-1px); }
+  .admin-btn--ghost {
+    background: rgba(255, 255, 255, 0.06);
+    color: #888;
+    width: 100%;
+    margin-top: 1rem;
+  }
+
+  .admin-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+  }
+  .admin-stat {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 12px;
+    padding: 1rem;
+    text-align: center;
+  }
+  .admin-stat__num {
+    font-family: 'Bangers', cursive;
+    font-size: 2rem;
+    color: #fbbf24;
+    display: block;
+  }
+  .admin-stat__label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #666;
+  }
+
+  .admin-section-title {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #666;
+    margin-bottom: 0.75rem;
+  }
+
+  .admin-leaderboard {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .admin-submissions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+</style>
+
+<script>
+  import { createClient } from '@supabase/supabase-js';
+  import { HUNT_PROMPTS } from '../../data/hunt-prompts';
+
+  const supabaseUrl = import.meta.env.PUBLIC_SUPABASE_URL;
+  const supabaseAnonKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
+  const supabase = createClient(supabaseUrl, supabaseAnonKey);
+
+  const gate = document.getElementById('auth-gate')!;
+  const dashboard = document.getElementById('admin-dashboard')!;
+  const pwInput = document.getElementById('admin-pw') as HTMLInputElement;
+  const loginBtn = document.getElementById('admin-login')!;
+  const refreshBtn = document.getElementById('refresh-btn')!;
+
+  const ADMIN_KEY = 'tas_hunt_admin';
+
+  // Simple client-side password check (same admin password)
+  function checkAuth() {
+    return localStorage.getItem(ADMIN_KEY) === 'true';
+  }
+
+  loginBtn.addEventListener('click', async () => {
+    const pw = pwInput.value.trim();
+    // Validate against the same admin password via the existing API
+    const res = await fetch(`/api/screenings?password=${encodeURIComponent(pw)}`);
+    if (res.ok) {
+      localStorage.setItem(ADMIN_KEY, 'true');
+      gate.style.display = 'none';
+      dashboard.style.display = 'block';
+      loadData();
+    } else {
+      pwInput.style.borderColor = '#ff6b6b';
+    }
+  });
+
+  pwInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') loginBtn.click();
+  });
+
+  if (checkAuth()) {
+    gate.style.display = 'none';
+    dashboard.style.display = 'block';
+    loadData();
+  }
+
+  refreshBtn.addEventListener('click', loadData);
+
+  async function loadData() {
+    // Get all teams
+    const { data: teams } = await supabase
+      .from('hunt_teams')
+      .select('*')
+      .order('created_at');
+
+    // Get all submissions
+    const { data: submissions } = await supabase
+      .from('hunt_submissions')
+      .select('*, hunt_teams(team_name)')
+      .order('submitted_at', { ascending: false });
+
+    const teamList = teams || [];
+    const subList = submissions || [];
+
+    document.getElementById('stat-teams')!.textContent = String(teamList.length);
+    document.getElementById('stat-submissions')!.textContent = String(subList.length);
+
+    // Leaderboard - count submissions per team
+    const teamScores: Record<string, { name: string; count: number }> = {};
+    teamList.forEach(t => {
+      teamScores[t.id] = { name: t.team_name, count: 0 };
+    });
+    subList.forEach(s => {
+      if (teamScores[s.team_id]) teamScores[s.team_id].count++;
+    });
+
+    const sorted = Object.values(teamScores).sort((a, b) => b.count - a.count);
+    const leaderboard = document.getElementById('leaderboard')!;
+    leaderboard.innerHTML = sorted.map((t, i) => `
+      <div style="display:flex;align-items:center;gap:0.75rem;padding:0.7rem 1rem;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:10px;">
+        <span style="font-family:Bangers;font-size:1.2rem;color:${i === 0 ? '#fbbf24' : i === 1 ? '#c0c0c0' : i === 2 ? '#cd7f32' : '#555'};min-width:24px;">#${i + 1}</span>
+        <span style="flex:1;font-size:0.9rem;font-weight:600;">${t.name}</span>
+        <span style="font-family:Bangers;font-size:1.1rem;color:#fbbf24;">${t.count}/${HUNT_PROMPTS.length}</span>
+      </div>
+    `).join('');
+
+    // All submissions
+    const subsList = document.getElementById('submissions-list')!;
+    const promptMap: Record<number, string> = {};
+    HUNT_PROMPTS.forEach(p => { promptMap[p.id] = p.title; });
+
+    subsList.innerHTML = subList.map(s => {
+      const teamName = (s as any).hunt_teams?.team_name || 'Unknown';
+      const time = new Date(s.submitted_at).toLocaleString();
+      return `
+        <div style="padding:0.7rem 1rem;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:10px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.25rem;">
+            <span style="font-weight:600;font-size:0.85rem;">${teamName}</span>
+            <span style="font-size:0.65rem;color:#555;">${time}</span>
+          </div>
+          <div style="font-size:0.8rem;color:#888;">
+            #${s.prompt_id} - ${promptMap[s.prompt_id] || 'Unknown'}
+            ${s.notes ? `<br><span style="color:#666;font-style:italic;">"${s.notes}"</span>` : ''}
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+</script>

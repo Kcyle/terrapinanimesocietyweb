@@ -31,6 +31,13 @@ import PartnersSection from '../components/PartnersSection.astro';
   import { initScreeningAnimations } from '../animations/screening';
 
   function init() {
+    // Force scroll to top before ScrollTrigger initializes
+    // Prevents browser scroll restoration from triggering auto-scroll
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+    window.scrollTo(0, 0);
+
     initAnimations();
     initScreeningAnimations();
   }

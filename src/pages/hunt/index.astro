@@ -1,0 +1,481 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { HUNT_PROMPTS } from '../../data/hunt-prompts';
+---
+
+<BaseLayout title="Scavenger Hunt - TAS">
+  <div class="hunt-page">
+    <div class="hunt-header">
+      <a href="/" class="hunt-back">&larr; Back to TAS</a>
+      <h1 class="hunt-title">Scavenger Hunt</h1>
+      <p class="hunt-subtitle">Find the QR codes. Complete the prompts. Win.</p>
+    </div>
+
+    <!-- Team Setup (shown when no team) -->
+    <div id="team-setup" class="hunt-section" style="display:none;">
+      <div class="hunt-card">
+        <h2 class="hunt-card__title">Create or Join a Team</h2>
+        <p class="hunt-card__desc">Enter your team name to get started. If your team already exists, you'll be connected to it.</p>
+        <div class="hunt-form">
+          <input
+            type="text"
+            id="team-name-input"
+            class="hunt-input"
+            placeholder="Enter team name..."
+            maxlength="30"
+            autocomplete="off"
+          />
+          <button id="team-submit-btn" class="hunt-btn hunt-btn--primary">
+            Join the Hunt
+          </button>
+        </div>
+        <p id="team-error" class="hunt-error" style="display:none;"></p>
+      </div>
+    </div>
+
+    <!-- Progress Dashboard (shown when team exists) -->
+    <div id="team-dashboard" class="hunt-section" style="display:none;">
+      <div class="hunt-team-banner">
+        <div class="hunt-team-info">
+          <span class="hunt-team-label">Team</span>
+          <h2 id="team-display-name" class="hunt-team-name"></h2>
+        </div>
+        <div class="hunt-progress-ring">
+          <span id="progress-count">0</span>/<span>{HUNT_PROMPTS.length}</span>
+        </div>
+        <button id="leave-team-btn" class="hunt-btn hunt-btn--ghost hunt-btn--small">Leave Team</button>
+      </div>
+
+      <div id="no-prompts-msg" class="hunt-empty" style="display:none;">
+        <p>No prompts discovered yet.</p>
+        <p class="hunt-empty__sub">Scan a QR code to unlock your first prompt!</p>
+      </div>
+
+      <div class="hunt-prompts-grid" id="prompts-grid">
+        {HUNT_PROMPTS.map((prompt) => (
+          <a href={`/hunt/${prompt.id}/`} class="hunt-prompt-card" data-prompt-id={prompt.id} style="display:none;">
+            <div class="hunt-prompt-card__number">#{prompt.id}</div>
+            <div class="hunt-prompt-card__content">
+              <h3 class="hunt-prompt-card__title">{prompt.title}</h3>
+              <span class="hunt-prompt-card__anime">{prompt.anime}</span>
+            </div>
+            <div class="hunt-prompt-card__status" data-status-id={prompt.id}>
+              <span class="hunt-prompt-card__badge hunt-prompt-card__badge--locked">Unlocked</span>
+            </div>
+          </a>
+        ))}
+      </div>
+
+      <p class="hunt-hint">Scan QR codes around the building to unlock prompts!</p>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .hunt-page {
+    min-height: 100vh;
+    background: #0a0a0a;
+    padding: 1.5rem;
+    padding-bottom: 4rem;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .hunt-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding-top: 1rem;
+  }
+
+  .hunt-back {
+    display: inline-block;
+    font-size: 0.8rem;
+    color: #666;
+    margin-bottom: 1.5rem;
+    transition: color 0.2s;
+  }
+  .hunt-back:hover { color: #fff; }
+
+  .hunt-title {
+    font-family: 'Bangers', cursive;
+    font-size: 2.8rem;
+    letter-spacing: 0.04em;
+    color: #fbbf24;
+    margin-bottom: 0.5rem;
+  }
+
+  .hunt-subtitle {
+    color: #888;
+    font-size: 0.9rem;
+  }
+
+  .hunt-section { margin-bottom: 2rem; }
+
+  .hunt-card {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 2rem 1.5rem;
+    text-align: center;
+  }
+
+  .hunt-card__title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  .hunt-card__desc {
+    color: #888;
+    font-size: 0.85rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+  }
+
+  .hunt-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .hunt-input {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 12px;
+    padding: 0.9rem 1rem;
+    color: #fff;
+    font-size: 1rem;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.2s;
+    width: 100%;
+  }
+  .hunt-input:focus {
+    border-color: #fbbf24;
+  }
+  .hunt-input::placeholder { color: #555; }
+
+  .hunt-btn {
+    padding: 0.9rem 1.5rem;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s;
+  }
+
+  .hunt-btn--primary {
+    background: linear-gradient(135deg, #ff6b6b, #fbbf24);
+    color: #0a0a0a;
+  }
+  .hunt-btn--primary:hover {
+    transform: translateY(-1px);
+    /* no glow */
+  }
+  .hunt-btn--primary:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+    /* no glow */
+  }
+
+  .hunt-btn--ghost {
+    background: transparent;
+    color: #666;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 0.5rem 1rem;
+    font-size: 0.75rem;
+  }
+  .hunt-btn--ghost:hover { color: #ff6b6b; border-color: #ff6b6b; }
+  .hunt-btn--small { padding: 0.4rem 0.8rem; font-size: 0.7rem; }
+
+  .hunt-error {
+    color: #ff6b6b;
+    font-size: 0.8rem;
+    margin-top: 0.75rem;
+  }
+
+  .hunt-team-banner {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .hunt-team-info { flex: 1; }
+
+  .hunt-team-label {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #666;
+  }
+
+  .hunt-team-name {
+    font-family: 'Bangers', cursive;
+    font-size: 1.4rem;
+    letter-spacing: 0.02em;
+    color: #fbbf24;
+  }
+
+  .hunt-progress-ring {
+    font-family: 'Bangers', cursive;
+    font-size: 1.5rem;
+    color: #fff;
+    min-width: 60px;
+    text-align: center;
+  }
+  .hunt-progress-ring span:first-child {
+    color: #fbbf24;
+    font-size: 1.8rem;
+  }
+
+  .hunt-prompts-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .hunt-prompt-card {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 12px;
+    padding: 0.9rem 1rem;
+    transition: all 0.2s;
+    text-decoration: none;
+    color: inherit;
+  }
+  .hunt-prompt-card:hover {
+    border-color: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  .hunt-prompt-card__number {
+    font-family: 'Bangers', cursive;
+    font-size: 1.1rem;
+    color: #555;
+    min-width: 30px;
+  }
+
+  .hunt-prompt-card__content { flex: 1; }
+
+  .hunt-prompt-card__title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 0.1rem;
+  }
+
+  .hunt-prompt-card__anime {
+    font-size: 0.7rem;
+    color: #666;
+  }
+
+  .hunt-prompt-card__badge {
+    font-size: 0.65rem;
+    font-weight: 600;
+    padding: 0.25rem 0.6rem;
+    border-radius: 100px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+  }
+
+  .hunt-prompt-card__badge--locked {
+    background: rgba(255, 255, 255, 0.06);
+    color: #555;
+  }
+  .hunt-prompt-card__badge--done {
+    background: rgba(34, 197, 94, 0.15);
+    color: #22c55e;
+  }
+
+  .hunt-empty {
+    text-align: center;
+    padding: 2rem 1rem;
+    color: #666;
+    font-size: 0.95rem;
+  }
+  .hunt-empty__sub {
+    font-size: 0.8rem;
+    color: #444;
+    margin-top: 0.25rem;
+  }
+
+  .hunt-prompt-card__badge--unlocked {
+    background: rgba(251, 191, 36, 0.1);
+    color: #fbbf24;
+  }
+
+  .hunt-hint {
+    text-align: center;
+    color: #555;
+    font-size: 0.8rem;
+    margin-top: 1.5rem;
+    font-style: italic;
+  }
+</style>
+
+<script>
+  import { createClient } from '@supabase/supabase-js';
+
+  const supabaseUrl = import.meta.env.PUBLIC_SUPABASE_URL;
+  const supabaseAnonKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
+  const supabase = createClient(supabaseUrl, supabaseAnonKey);
+
+  const TEAM_KEY = 'tas_hunt_team';
+  const DISCOVERED_KEY = 'tas_hunt_discovered';
+
+  interface TeamData {
+    id: string;
+    team_name: string;
+  }
+
+  function getSavedTeam(): TeamData | null {
+    try {
+      const raw = localStorage.getItem(TEAM_KEY);
+      return raw ? JSON.parse(raw) : null;
+    } catch { return null; }
+  }
+
+  function saveTeam(team: TeamData) {
+    localStorage.setItem(TEAM_KEY, JSON.stringify(team));
+  }
+
+  function clearTeam() {
+    localStorage.removeItem(TEAM_KEY);
+  }
+
+  const setupEl = document.getElementById('team-setup')!;
+  const dashboardEl = document.getElementById('team-dashboard')!;
+  const nameInput = document.getElementById('team-name-input') as HTMLInputElement;
+  const submitBtn = document.getElementById('team-submit-btn')!;
+  const errorEl = document.getElementById('team-error')!;
+  const displayName = document.getElementById('team-display-name')!;
+  const progressCount = document.getElementById('progress-count')!;
+  const leaveBtn = document.getElementById('leave-team-btn')!;
+
+  function getDiscovered(): number[] {
+    try {
+      const raw = localStorage.getItem(DISCOVERED_KEY);
+      return raw ? JSON.parse(raw) : [];
+    } catch { return []; }
+  }
+
+  async function loadDashboard(team: TeamData) {
+    displayName.textContent = team.team_name;
+    setupEl.style.display = 'none';
+    dashboardEl.style.display = 'block';
+
+    const discovered = new Set(getDiscovered());
+    const noPromptsMsg = document.getElementById('no-prompts-msg')!;
+
+    // Load submissions
+    const { data: submissions } = await supabase
+      .from('hunt_submissions')
+      .select('prompt_id')
+      .eq('team_id', team.id);
+
+    const completedIds = new Set((submissions || []).map(s => s.prompt_id));
+    progressCount.textContent = String(completedIds.size);
+
+    // Show only discovered prompts
+    let shownCount = 0;
+    document.querySelectorAll('[data-prompt-id]').forEach(el => {
+      const pid = Number((el as HTMLElement).dataset.promptId);
+      if (discovered.has(pid)) {
+        (el as HTMLElement).style.display = 'flex';
+        shownCount++;
+        // Update badge
+        const statusEl = el.querySelector(`[data-status-id="${pid}"]`);
+        if (statusEl) {
+          const badge = statusEl.querySelector('.hunt-prompt-card__badge')!;
+          if (completedIds.has(pid)) {
+            badge.textContent = 'Done';
+            badge.className = 'hunt-prompt-card__badge hunt-prompt-card__badge--done';
+          } else {
+            badge.textContent = 'Unlocked';
+            badge.className = 'hunt-prompt-card__badge hunt-prompt-card__badge--unlocked';
+          }
+        }
+      }
+    });
+
+    noPromptsMsg.style.display = shownCount === 0 ? 'block' : 'none';
+  }
+
+  // Check if already has a team
+  const existing = getSavedTeam();
+  if (existing) {
+    loadDashboard(existing);
+  } else {
+    setupEl.style.display = 'block';
+  }
+
+  // Create/join team
+  submitBtn.addEventListener('click', async () => {
+    const name = nameInput.value.trim();
+    if (!name) {
+      errorEl.textContent = 'Enter a team name';
+      errorEl.style.display = 'block';
+      return;
+    }
+
+    submitBtn.setAttribute('disabled', '');
+    submitBtn.textContent = 'Joining...';
+    errorEl.style.display = 'none';
+
+    // Try to find existing team
+    const { data: existingTeam } = await supabase
+      .from('hunt_teams')
+      .select('*')
+      .eq('team_name', name)
+      .single();
+
+    if (existingTeam) {
+      saveTeam(existingTeam);
+      loadDashboard(existingTeam);
+      return;
+    }
+
+    // Create new team
+    const { data: newTeam, error } = await supabase
+      .from('hunt_teams')
+      .insert({ team_name: name })
+      .select()
+      .single();
+
+    if (error) {
+      errorEl.textContent = 'Failed to create team. Try again.';
+      errorEl.style.display = 'block';
+      submitBtn.removeAttribute('disabled');
+      submitBtn.textContent = 'Join the Hunt';
+      return;
+    }
+
+    saveTeam(newTeam);
+    loadDashboard(newTeam);
+  });
+
+  nameInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') submitBtn.click();
+  });
+
+  // Leave team
+  leaveBtn.addEventListener('click', () => {
+    if (confirm('Leave this team?')) {
+      clearTeam();
+      dashboardEl.style.display = 'none';
+      setupEl.style.display = 'block';
+      nameInput.value = '';
+    }
+  });
+</script>
