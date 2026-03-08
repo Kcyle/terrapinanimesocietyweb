@@ -325,11 +325,7 @@ import { HUNT_PROMPTS } from '../../data/hunt-prompts';
 </style>
 
 <script>
-  import { createClient } from '@supabase/supabase-js';
-
-  const supabaseUrl = import.meta.env.PUBLIC_SUPABASE_URL;
-  const supabaseAnonKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
-  const supabase = createClient(supabaseUrl, supabaseAnonKey);
+  import { supabase } from '../../lib/supabase';
 
   const TEAM_KEY = 'tas_hunt_team';
   const DISCOVERED_KEY = 'tas_hunt_discovered';

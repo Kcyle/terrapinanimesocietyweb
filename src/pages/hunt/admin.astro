@@ -160,12 +160,8 @@ import { HUNT_PROMPTS } from '../../data/hunt-prompts';
 </style>
 
 <script>
-  import { createClient } from '@supabase/supabase-js';
+  import { supabase } from '../../lib/supabase';
   import { HUNT_PROMPTS } from '../../data/hunt-prompts';
-
-  const supabaseUrl = import.meta.env.PUBLIC_SUPABASE_URL;
-  const supabaseAnonKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
-  const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
   const gate = document.getElementById('auth-gate')!;
   const dashboard = document.getElementById('admin-dashboard')!;
