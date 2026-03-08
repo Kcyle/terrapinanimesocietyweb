@@ -15,22 +15,14 @@ import { HUNT_PROMPTS } from '../../data/hunt-prompts';
     <div id="team-setup" class="hunt-section" style="display:none;">
       <div class="hunt-card">
         <h2 class="hunt-card__title">Create or Join a Team</h2>
-        <p class="hunt-card__desc">Enter your team name and password to get started.</p>
+        <p class="hunt-card__desc">Enter your team name to get started. If your team already exists, you'll be connected to it.</p>
         <div class="hunt-form">
           <input
             type="text"
             id="team-name-input"
             class="hunt-input"
-            placeholder="Team name..."
+            placeholder="Enter team name..."
             maxlength="30"
-            autocomplete="off"
-          />
-          <input
-            type="password"
-            id="team-password-input"
-            class="hunt-input"
-            placeholder="Team password..."
-            maxlength="50"
             autocomplete="off"
           />
           <button id="team-submit-btn" class="hunt-btn hunt-btn--primary">
@@ -51,25 +43,30 @@ import { HUNT_PROMPTS } from '../../data/hunt-prompts';
         <div class="hunt-progress-ring">
           <span id="progress-count">0</span>/<span>{HUNT_PROMPTS.length}</span>
         </div>
-        <button id="leave-team-btn" class="hunt-btn hunt-btn--ghost hunt-btn--small">Log Out</button>
+        <button id="leave-team-btn" class="hunt-btn hunt-btn--ghost hunt-btn--small">Leave Team</button>
+      </div>
+
+      <div id="no-prompts-msg" class="hunt-empty" style="display:none;">
+        <p>No prompts discovered yet.</p>
+        <p class="hunt-empty__sub">Scan a QR code to unlock your first prompt!</p>
       </div>
 
       <div class="hunt-prompts-grid" id="prompts-grid">
         {HUNT_PROMPTS.map((prompt) => (
-          <a href={`/hunt/${prompt.slug}/`} class="hunt-prompt-card" data-prompt-id={prompt.id}>
+          <a href={`/hunt/${prompt.slug}/`} class="hunt-prompt-card" data-prompt-id={prompt.id} style="display:none;">
             <div class="hunt-prompt-card__number">#{prompt.id}</div>
             <div class="hunt-prompt-card__content">
               <h3 class="hunt-prompt-card__title">{prompt.title}</h3>
               <span class="hunt-prompt-card__anime">{prompt.anime}</span>
             </div>
             <div class="hunt-prompt-card__status" data-status-id={prompt.id}>
-              <span class="hunt-prompt-card__badge hunt-prompt-card__badge--locked">Not Done</span>
+              <span class="hunt-prompt-card__badge hunt-prompt-card__badge--locked">Unlocked</span>
             </div>
           </a>
         ))}
       </div>
 
-      <p class="hunt-hint">Scan QR codes around the building to find prompts!</p>
+      <p class="hunt-hint">Scan QR codes around the building to unlock prompts!</p>
     </div>
   </div>
 </BaseLayout>
@@ -299,6 +296,23 @@ import { HUNT_PROMPTS } from '../../data/hunt-prompts';
     color: #22c55e;
   }
 
+  .hunt-prompt-card__badge--unlocked {
+    background: rgba(251, 191, 36, 0.1);
+    color: #fbbf24;
+  }
+
+  .hunt-empty {
+    text-align: center;
+    padding: 2rem 1rem;
+    color: #666;
+    font-size: 0.95rem;
+  }
+  .hunt-empty__sub {
+    font-size: 0.8rem;
+    color: #444;
+    margin-top: 0.25rem;
+  }
+
   .hunt-hint {
     text-align: center;
     color: #555;
@@ -312,11 +326,11 @@ import { HUNT_PROMPTS } from '../../data/hunt-prompts';
   import { supabase } from '../../lib/supabase';
 
   const TEAM_KEY = 'tas_hunt_team';
+  const DISCOVERED_KEY = 'tas_hunt_discovered';
 
   interface TeamData {
     id: string;
     team_name: string;
-    password: string;
   }
 
   function getSavedTeam(): TeamData | null {
@@ -330,24 +344,34 @@ import { HUNT_PROMPTS } from '../../data/hunt-prompts';
     localStorage.setItem(TEAM_KEY, JSON.stringify(team));
   }
 
-  function clearTeam() {
+  function clearAllData() {
     localStorage.removeItem(TEAM_KEY);
+    localStorage.removeItem(DISCOVERED_KEY);
   }
 
   const setupEl = document.getElementById('team-setup')!;
   const dashboardEl = document.getElementById('team-dashboard')!;
   const nameInput = document.getElementById('team-name-input') as HTMLInputElement;
-  const passwordInput = document.getElementById('team-password-input') as HTMLInputElement;
   const submitBtn = document.getElementById('team-submit-btn')!;
   const errorEl = document.getElementById('team-error')!;
   const displayName = document.getElementById('team-display-name')!;
   const progressCount = document.getElementById('progress-count')!;
   const leaveBtn = document.getElementById('leave-team-btn')!;
 
+  function getDiscovered(): number[] {
+    try {
+      const raw = localStorage.getItem(DISCOVERED_KEY);
+      return raw ? JSON.parse(raw) : [];
+    } catch { return []; }
+  }
+
   async function loadDashboard(team: TeamData) {
     displayName.textContent = team.team_name;
     setupEl.style.display = 'none';
     dashboardEl.style.display = 'block';
+
+    const discovered = new Set(getDiscovered());
+    const noPromptsMsg = document.getElementById('no-prompts-msg')!;
 
     // Load submissions
     const { data: submissions } = await supabase
@@ -358,18 +382,28 @@ import { HUNT_PROMPTS } from '../../data/hunt-prompts';
     const completedIds = new Set((submissions || []).map(s => s.prompt_id));
     progressCount.textContent = String(completedIds.size);
 
-    // Update all prompt badges
+    // Show only discovered prompts
+    let shownCount = 0;
     document.querySelectorAll('[data-prompt-id]').forEach(el => {
       const pid = Number((el as HTMLElement).dataset.promptId);
-      const statusEl = el.querySelector(`[data-status-id="${pid}"]`);
-      if (statusEl) {
-        const badge = statusEl.querySelector('.hunt-prompt-card__badge')!;
-        if (completedIds.has(pid)) {
-          badge.textContent = 'Done';
-          badge.className = 'hunt-prompt-card__badge hunt-prompt-card__badge--done';
+      if (discovered.has(pid)) {
+        (el as HTMLElement).style.display = 'flex';
+        shownCount++;
+        const statusEl = el.querySelector(`[data-status-id="${pid}"]`);
+        if (statusEl) {
+          const badge = statusEl.querySelector('.hunt-prompt-card__badge')!;
+          if (completedIds.has(pid)) {
+            badge.textContent = 'Done';
+            badge.className = 'hunt-prompt-card__badge hunt-prompt-card__badge--done';
+          } else {
+            badge.textContent = 'Unlocked';
+            badge.className = 'hunt-prompt-card__badge hunt-prompt-card__badge--unlocked';
+          }
         }
       }
     });
+
+    noPromptsMsg.style.display = shownCount === 0 ? 'block' : 'none';
   }
 
   // Check if already has a team
@@ -383,14 +417,8 @@ import { HUNT_PROMPTS } from '../../data/hunt-prompts';
   // Create/join team
   submitBtn.addEventListener('click', async () => {
     const name = nameInput.value.trim();
-    const password = passwordInput.value.trim();
     if (!name) {
       errorEl.textContent = 'Enter a team name';
-      errorEl.style.display = 'block';
-      return;
-    }
-    if (!password) {
-      errorEl.textContent = 'Enter a password';
       errorEl.style.display = 'block';
       return;
     }
@@ -407,23 +435,15 @@ import { HUNT_PROMPTS } from '../../data/hunt-prompts';
       .single();
 
     if (existingTeam) {
-      // Verify password
-      if (existingTeam.password !== password) {
-        errorEl.textContent = 'Wrong password for that team.';
-        errorEl.style.display = 'block';
-        submitBtn.removeAttribute('disabled');
-        submitBtn.textContent = 'Join the Hunt';
-        return;
-      }
-      saveTeam({ id: existingTeam.id, team_name: existingTeam.team_name, password });
-      loadDashboard({ id: existingTeam.id, team_name: existingTeam.team_name, password });
+      saveTeam(existingTeam);
+      loadDashboard(existingTeam);
       return;
     }
 
     // Create new team
     const { data: newTeam, error } = await supabase
       .from('hunt_teams')
-      .insert({ team_name: name, password })
+      .insert({ team_name: name })
       .select()
       .single();
 
@@ -435,26 +455,21 @@ import { HUNT_PROMPTS } from '../../data/hunt-prompts';
       return;
     }
 
-    saveTeam({ id: newTeam.id, team_name: newTeam.team_name, password });
-    loadDashboard({ id: newTeam.id, team_name: newTeam.team_name, password });
-  });
-
-  passwordInput.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') submitBtn.click();
+    saveTeam(newTeam);
+    loadDashboard(newTeam);
   });
 
   nameInput.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') passwordInput.focus();
+    if (e.key === 'Enter') submitBtn.click();
   });
 
-  // Log out
+  // Leave team — clears everything
   leaveBtn.addEventListener('click', () => {
-    if (confirm('Log out of this team?')) {
-      clearTeam();
+    if (confirm('Leave this team? This will reset all your discovered prompts.')) {
+      clearAllData();
       dashboardEl.style.display = 'none';
       setupEl.style.display = 'block';
       nameInput.value = '';
-      passwordInput.value = '';
     }
   });
 </script>

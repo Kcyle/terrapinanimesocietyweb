@@ -7,6 +7,7 @@ export interface HuntPrompt {
   rules: string[];
   peopleRequired: string;
   type: 'video' | 'photo' | 'both';
+  confirmQuestion: string;
 }
 
 export const HUNT_PROMPTS: HuntPrompt[] = [
@@ -23,6 +24,7 @@ export const HUNT_PROMPTS: HuntPrompt[] = [
     ],
     peopleRequired: '2 people',
     type: 'video',
+    confirmQuestion: 'Which devil did you choose?',
   },
   {
     id: 2,
@@ -37,6 +39,7 @@ export const HUNT_PROMPTS: HuntPrompt[] = [
     ],
     peopleRequired: '1 person',
     type: 'video',
+    confirmQuestion: 'Which side did you choose?',
   },
   {
     id: 3,
@@ -51,6 +54,7 @@ export const HUNT_PROMPTS: HuntPrompt[] = [
     ],
     peopleRequired: '2 people',
     type: 'video',
+    confirmQuestion: 'What is your Quirk called and what does it do?',
   },
   {
     id: 4,
@@ -65,6 +69,7 @@ export const HUNT_PROMPTS: HuntPrompt[] = [
     ],
     peopleRequired: '2 people',
     type: 'video',
+    confirmQuestion: 'Which romance anime inspired your confession?',
   },
   {
     id: 5,
@@ -79,6 +84,7 @@ export const HUNT_PROMPTS: HuntPrompt[] = [
     ],
     peopleRequired: '1 person',
     type: 'video',
+    confirmQuestion: 'Which sports anime and sport did you recreate?',
   },
   {
     id: 6,
@@ -93,6 +99,7 @@ export const HUNT_PROMPTS: HuntPrompt[] = [
     ],
     peopleRequired: '1-2 people',
     type: 'video',
+    confirmQuestion: 'Which prompt did you flip and how?',
   },
   {
     id: 7,
@@ -108,20 +115,21 @@ export const HUNT_PROMPTS: HuntPrompt[] = [
     ],
     peopleRequired: 'Everyone',
     type: 'video',
+    confirmQuestion: 'What is your isekai world called and how does it work?',
   },
   {
     id: 8,
     slug: 'v9a3e2',
     title: 'Group Anime Selfie',
     anime: 'Ensemble Character Pose',
-    description: 'Take a selfie of your entire group. Each person must pose as a character from the same anime. All team members must be from the same series.',
+    description: 'Take a selfie of your entire group. Each person must pose as a different character from the same anime.',
     rules: [
-      'Each person poses as a character from the same anime',
+      'Each person poses as a different character from the same anime',
       'All members must be from the same series',
-      'Bonus: matching iconic poses, facial expressions, props',
     ],
     peopleRequired: 'Everyone',
     type: 'photo',
+    confirmQuestion: 'Which anime did your group pose as?',
   },
   {
     id: 9,
@@ -132,10 +140,10 @@ export const HUNT_PROMPTS: HuntPrompt[] = [
     rules: [
       'Include at least 3 different training scenes',
       'Examples: running, push-ups, powering up, practicing moves, yelling',
-      'Bonus points for slow-motion or narration',
     ],
     peopleRequired: '1-2 people',
     type: 'video',
+    confirmQuestion: 'Which exercises/training did you do?',
   },
 ];
 
