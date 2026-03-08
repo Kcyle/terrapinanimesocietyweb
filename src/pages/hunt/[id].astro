@@ -15,15 +15,6 @@ const driveUrl = GOOGLE_DRIVE_UPLOAD_URL;
 
 <BaseLayout title={`${prompt.title} - Scavenger Hunt`}>
   <div class="prompt-page">
-    <!-- No team overlay -->
-    <div id="no-team-overlay" class="prompt-overlay" style="display:none;">
-      <div class="prompt-overlay__card">
-        <h2>Hold up!</h2>
-        <p>You need a team first.</p>
-        <a href="/hunt/" class="hunt-btn hunt-btn--primary">Create / Join Team</a>
-      </div>
-    </div>
-
     <div class="prompt-header">
       <a href="/hunt/" class="prompt-back">&larr; Back to Hunt</a>
       <div class="prompt-number">#{prompt.id}</div>
@@ -62,15 +53,35 @@ const driveUrl = GOOGLE_DRIVE_UPLOAD_URL;
       <div id="already-submitted" class="prompt-done" style="display:none;">
         <div class="prompt-done__check">&#10003;</div>
         <h3>Submitted!</h3>
-        <p>Your team has completed this prompt.</p>
+        <p id="submitted-team-name">Your team has completed this prompt.</p>
       </div>
 
       <!-- Submit form -->
       <div id="submit-form" style="display:none;">
-        <h3 class="prompt-submit__title">Submit Your Entry</h3>
+        <h3 class="prompt-submit__title">Claim This Prompt</h3>
 
         <p class="prompt-submit__step">
           <span class="prompt-submit__step-num">1</span>
+          Select your team
+        </p>
+        <select id="team-select" class="hunt-input hunt-select">
+          <option value="">Choose your team...</option>
+        </select>
+
+        <p class="prompt-submit__step">
+          <span class="prompt-submit__step-num">2</span>
+          Enter your team password
+        </p>
+        <input
+          type="password"
+          id="team-password"
+          class="hunt-input"
+          placeholder="Team password..."
+          autocomplete="off"
+        />
+
+        <p class="prompt-submit__step">
+          <span class="prompt-submit__step-num">3</span>
           Upload your {prompt.type === 'photo' ? 'photo' : 'video'} to Google Drive
         </p>
         <a
@@ -87,7 +98,7 @@ const driveUrl = GOOGLE_DRIVE_UPLOAD_URL;
         </p>
 
         <p class="prompt-submit__step">
-          <span class="prompt-submit__step-num">2</span>
+          <span class="prompt-submit__step-num">4</span>
           Confirm your submission
         </p>
         <textarea
@@ -115,38 +126,6 @@ const driveUrl = GOOGLE_DRIVE_UPLOAD_URL;
     max-width: 600px;
     margin: 0 auto;
     position: relative;
-  }
-
-  .prompt-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.85);
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 1.5rem;
-    backdrop-filter: blur(8px);
-  }
-  .prompt-overlay__card {
-    background: #141414;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 20px;
-    padding: 2.5rem 2rem;
-    text-align: center;
-    max-width: 320px;
-    width: 100%;
-  }
-  .prompt-overlay__card h2 {
-    font-family: 'Bangers', cursive;
-    font-size: 1.8rem;
-    color: #fbbf24;
-    margin-bottom: 0.5rem;
-  }
-  .prompt-overlay__card p {
-    color: #888;
-    font-size: 0.9rem;
-    margin-bottom: 1.5rem;
   }
 
   .prompt-header {
@@ -321,7 +300,6 @@ const driveUrl = GOOGLE_DRIVE_UPLOAD_URL;
   }
   .hunt-btn--primary:hover {
     transform: translateY(-1px);
-    /* no glow */
   }
   .hunt-btn--primary:disabled {
     opacity: 0.5;
@@ -357,6 +335,19 @@ const driveUrl = GOOGLE_DRIVE_UPLOAD_URL;
   }
   .hunt-input:focus { border-color: #fbbf24; }
   .hunt-input::placeholder { color: #555; }
+
+  .hunt-select {
+    appearance: none;
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    padding-right: 2.5rem;
+  }
+  .hunt-select option {
+    background: #1a1a1a;
+    color: #fff;
+  }
 
   .hunt-textarea { margin-bottom: 1rem; }
 
@@ -395,18 +386,6 @@ const driveUrl = GOOGLE_DRIVE_UPLOAD_URL;
 </style>
 
 <script define:vars={{ promptId: prompt.id }}>
-  // Save this prompt as discovered
-  const DISCOVERED_KEY = 'tas_hunt_discovered';
-  try {
-    const raw = localStorage.getItem(DISCOVERED_KEY);
-    const discovered = raw ? JSON.parse(raw) : [];
-    if (!discovered.includes(promptId)) {
-      discovered.push(promptId);
-      localStorage.setItem(DISCOVERED_KEY, JSON.stringify(discovered));
-    }
-  } catch {}
-
-  // Make promptId available to the module script below
   window.__huntPromptId = promptId;
 </script>
 
@@ -419,6 +398,7 @@ const driveUrl = GOOGLE_DRIVE_UPLOAD_URL;
   interface TeamData {
     id: string;
     team_name: string;
+    password: string;
   }
 
   function getSavedTeam(): TeamData | null {
@@ -428,59 +408,120 @@ const driveUrl = GOOGLE_DRIVE_UPLOAD_URL;
     } catch { return null; }
   }
 
-  const overlay = document.getElementById('no-team-overlay')!;
   const alreadyDone = document.getElementById('already-submitted')!;
+  const submittedTeamName = document.getElementById('submitted-team-name')!;
   const submitForm = document.getElementById('submit-form')!;
+  const teamSelect = document.getElementById('team-select') as HTMLSelectElement;
+  const teamPassword = document.getElementById('team-password') as HTMLInputElement;
   const confirmBtn = document.getElementById('confirm-submit-btn')!;
   const notesInput = document.getElementById('notes-input') as HTMLTextAreaElement;
   const submitError = document.getElementById('submit-error')!;
   const fileHint = document.getElementById('file-name-hint')!;
 
-  const team = getSavedTeam();
+  // Load all teams into dropdown
+  async function loadTeams() {
+    const { data: teams } = await supabase
+      .from('hunt_teams')
+      .select('id, team_name')
+      .order('team_name');
 
-  if (!team) {
-    overlay.style.display = 'flex';
-  } else {
-    fileHint.textContent = `${team.team_name}_Prompt${promptId}`;
+    if (teams) {
+      teams.forEach(t => {
+        const opt = document.createElement('option');
+        opt.value = t.id;
+        opt.textContent = t.team_name;
+        teamSelect.appendChild(opt);
+      });
+    }
 
-    // Check if already submitted
-    checkSubmission(team);
-  }
-
-  async function checkSubmission(team: TeamData) {
-    const { data } = await supabase
-      .from('hunt_submissions')
-      .select('id')
-      .eq('team_id', team.id)
-      .eq('prompt_id', promptId)
-      .single();
-
-    if (data) {
-      alreadyDone.style.display = 'block';
-      submitForm.style.display = 'none';
+    // Pre-select saved team if exists
+    const saved = getSavedTeam();
+    if (saved) {
+      teamSelect.value = saved.id;
+      teamPassword.value = saved.password;
+      updateFileHint();
+      checkSubmission(saved.id);
     } else {
       submitForm.style.display = 'block';
     }
   }
 
+  // Update file name hint when team changes
+  function updateFileHint() {
+    const selectedOption = teamSelect.options[teamSelect.selectedIndex];
+    if (selectedOption && selectedOption.value) {
+      fileHint.textContent = `${selectedOption.textContent}_Prompt${promptId}`;
+    } else {
+      fileHint.textContent = `TeamName_Prompt${promptId}`;
+    }
+  }
+
+  teamSelect.addEventListener('change', updateFileHint);
+
+  async function checkSubmission(teamId: string) {
+    const { data } = await supabase
+      .from('hunt_submissions')
+      .select('id')
+      .eq('team_id', teamId)
+      .eq('prompt_id', promptId)
+      .single();
+
+    if (data) {
+      const selectedOption = teamSelect.options[teamSelect.selectedIndex];
+      submittedTeamName.textContent = `${selectedOption?.textContent || 'Your team'} has completed this prompt.`;
+      alreadyDone.style.display = 'block';
+      submitForm.style.display = 'none';
+    } else {
+      alreadyDone.style.display = 'none';
+      submitForm.style.display = 'block';
+    }
+  }
+
   confirmBtn.addEventListener('click', async () => {
-    if (!team) return;
+    const selectedTeamId = teamSelect.value;
+    const password = teamPassword.value.trim();
+
+    if (!selectedTeamId) {
+      submitError.textContent = 'Select your team.';
+      submitError.style.display = 'block';
+      return;
+    }
+    if (!password) {
+      submitError.textContent = 'Enter your team password.';
+      submitError.style.display = 'block';
+      return;
+    }
 
     confirmBtn.setAttribute('disabled', '');
     confirmBtn.textContent = 'Submitting...';
     submitError.style.display = 'none';
 
+    // Verify password
+    const { data: team } = await supabase
+      .from('hunt_teams')
+      .select('*')
+      .eq('id', selectedTeamId)
+      .single();
+
+    if (!team || team.password !== password) {
+      submitError.textContent = 'Wrong password.';
+      submitError.style.display = 'block';
+      confirmBtn.removeAttribute('disabled');
+      confirmBtn.textContent = 'Submit Entry';
+      return;
+    }
+
+    // Submit
     const { error } = await supabase
       .from('hunt_submissions')
       .insert({
-        team_id: team.id,
+        team_id: selectedTeamId,
         prompt_id: promptId,
         notes: notesInput.value.trim() || null,
       });
 
     if (error) {
       if (error.code === '23505') {
-        // Already submitted (unique constraint)
         alreadyDone.style.display = 'block';
         submitForm.style.display = 'none';
       } else {
@@ -492,7 +533,16 @@ const driveUrl = GOOGLE_DRIVE_UPLOAD_URL;
       return;
     }
 
+    // Save team to localStorage for convenience
+    localStorage.setItem(TEAM_KEY, JSON.stringify({
+      id: team.id,
+      team_name: team.team_name,
+      password,
+    }));
+
     alreadyDone.style.display = 'block';
     submitForm.style.display = 'none';
   });
+
+  loadTeams();
 </script>
