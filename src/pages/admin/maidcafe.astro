@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-const adminHash = import.meta.env.ADMIN_PASSWORD || '';
+const adminHash = import.meta.env.PUBLIC_ADMIN_PASSWORD || import.meta.env.ADMIN_PASSWORD || '';
 ---
 
 <BaseLayout title="Maid Cafe Dashboard | Admin">
