@@ -1,8 +1,10 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+const adminHash = import.meta.env.ADMIN_PASSWORD || '';
 ---
 
 <BaseLayout title="Maid Cafe Dashboard | Admin">
+  <div data-ap={adminHash} style="display:none"></div>
   <div class="mca">
     <!-- Password Gate -->
     <div class="mca__gate" id="gate">
@@ -159,22 +161,17 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   const pwBtn = document.getElementById('gate-btn')!;
   const pwError = document.getElementById('gate-error')!;
 
-  async function tryLogin() {
+  function tryLogin() {
     const pw = pwInput.value.trim();
     if (!pw) { pwError.textContent = 'Please enter a password.'; return; }
-    try {
-      const res = await fetch(`/api/screenings?password=${encodeURIComponent(pw)}`);
-      const data = await res.json();
-      if (data.valid) {
-        adminPassword = pw;
-        gate.style.display = 'none';
-        dash.style.display = 'block';
-        loadDashboard();
-      } else {
-        pwError.textContent = 'Incorrect password.';
-      }
-    } catch {
-      pwError.textContent = 'Could not verify. Try again.';
+    const expected = document.querySelector('[data-ap]')?.getAttribute('data-ap') || '';
+    if (pw === expected) {
+      adminPassword = pw;
+      gate.style.display = 'none';
+      dash.style.display = 'block';
+      loadDashboard();
+    } else {
+      pwError.textContent = 'Incorrect password.';
     }
   }
 
