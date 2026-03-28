@@ -1,349 +1,2390 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/navigation/Header.astro';
+
 ---
 
 <BaseLayout title="Maid Cafe - Terrapin Anime Society">
+  <Fragment slot="head">
+    <meta name="description" content="TAS Maid Cafe - April 5th, 2026. Reserve your spot for an unforgettable experience at the Colony Ballroom, Stamp Student Union." />
+    <script is:inline src="https://accounts.google.com/gsi/client" async defer></script>
+  </Fragment>
   <Header />
 
-  <main class="maid-cafe-page">
-    <div class="maid-cafe-section">
-      <div class="maid-cafe__bg"></div>
-      <div class="maid-cafe__content">
-        <div class="maid-cafe__hero">
-          <div class="maid-cafe__title-wrapper" data-maidcafe-title>
-            <span class="maid-cafe__background-text" aria-hidden="true">CAFE</span>
-            <h1 class="maid-cafe__title">
-              <span class="maid-cafe__title-text">Maid&nbsp;Cafe</span>
-            </h1>
+  <main class="mc">
+    <div class="mc__bg"></div>
+
+    <!-- Left: Event Info -->
+    <div class="mc__info">
+      <h1 class="mc__title">Maid&nbsp;Cafe</h1>
+      <p class="mc__date">April 5, 2026 | 2:00 — 5:00 PM</p>
+      <p class="mc__location">Colony Ballroom, Stamp Student Union</p>
+    </div>
+
+    <img src="/images/Characters/maids.webp" alt="Maid Cafe Characters" class="mc__maids" />
+
+    <div class="mc__testudo">
+      <img src="/images/Maids/Testudo Maid.png" alt="Testudo Maid" />
+    </div>
+
+    <!-- Right: Steps -->
+    <div class="mc__form-area">
+
+      <!-- ========== STEP 1: Google Sign In ========== -->
+      <div id="step-email" class="mc-step">
+        <h2 class="mc-form__title">Welcome</h2>
+        <p class="mc-step__sub">Sign in with your TerpMail account.</p>
+        <p class="mc-step__restrict">Only @terpmail.umd.edu and @umd.edu accounts are accepted.</p>
+        <div class="mc-google-signin">
+          <div id="g_id_onload"
+            data-client_id={import.meta.env.PUBLIC_GOOGLE_CLIENT_ID || ''}
+            data-callback="handleGoogleSignIn"
+            data-auto_prompt="false">
           </div>
-          <p class="maid-cafe__description" data-maidcafe-desc>
-            Our Maid Cafe was held in Stamp last spring semester serving over 100 attendees! Experience authentic Japanese cafe culture with themed refreshments, entertainment, and cosplay.
-          </p>
+          <div id="google-btn-container"></div>
+          <button type="button" id="google-signin-btn" class="mc-google-btn">
+            <svg viewBox="0 0 24 24" width="20" height="20">
+              <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.27-4.74 3.27-8.1z"/>
+              <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+              <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+              <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+            </svg>
+            Sign in with Google
+          </button>
+        </div>
+        <p id="gate-email-error" class="mc-step__error" style="display:none"></p>
+        <p class="mc-step__guest-note">If you are a non UMD student or alumni, please either have a current UMD student RSVP and add you to their reservation, or contact us directly at <strong>terrapinanimesociety@gmail.com</strong> or on our <a href="https://discord.com/invite/GJXS7aM7YQ" target="_blank" rel="noopener" style="color:#FFA500;text-decoration:underline;">Discord server</a> (<strong>@kcyle_</strong>).</p>
+      </div>
+
+      <!-- ========== VIEW RESERVATION ========== -->
+      <div id="step-view-order" class="mc-step" style="display:none">
+        <h2 class="mc-form__title">My Reservation</h2>
+        <div id="view-order-content"></div>
+        <div class="mc-confirm-actions" style="margin-top:1rem;">
+          <button type="button" id="view-order-back" class="mc-btn-secondary">Back</button>
+        </div>
+      </div>
+
+      <!-- ========== STEP 2: Event Info Agreement ========== -->
+      <div id="step-info" class="mc-step" style="display:none">
+        <h2 class="mc-form__title">Event Information</h2>
+        <div class="mc-event-info">
+          <div class="mc-event-info__header">
+            <p><strong>Sunday, April 5th, 2026</strong> | 2:00 to 5:00 PM</p>
+            <p>Colony Ballroom, Stamp Student Union, 3972 Campus Dr, College Park, MD 20742</p>
+            <p class="mc-event-info__muted">You do not have to stay the entire time, but please arrive on time!</p>
+          </div>
+
+          <div class="mc-event-info__section">
+            <p>This form is only one part of preordering. To secure your spot, send <strong>$15</strong> via <a href="https://venmo.com/u/Terrapin-Anime-Society" target="_blank" rel="noopener" style="color:#FFB6C1;text-decoration:underline;">Venmo</a> with <strong>"(Your Name) for Maid Cafe"</strong> to <strong>@Terrapin-Anime-Society</strong>.</p>
+            <p class="mc-event-info__muted">Door tickets may be available if space allows, but preordering is recommended.</p>
+          </div>
+
+          <h3 class="mc-event-info__title">Schedule (approximate)</h3>
+
+          <div class="mc-event-info__schedule">
+            <div class="mc-event-info__slot">
+              <strong>2:00 to 3:00 PM</strong>
+              <ul>
+                <li>Check in, seating, and dining with your maid or butler</li>
+                <li>Full course meal (main dish, dessert, side, and drink including strawberry shortcake and mini French pastries)</li>
+                <li>Table games such as Beyblades, cards, board games, and drawing</li>
+              </ul>
+            </div>
+            <div class="mc-event-info__slot">
+              <strong>3:00 to 4:00 PM</strong>
+              <ul>
+                <li>Group activities and events with all guests, maids, and butlers</li>
+                <li>Karaoke, musical chairs, and other large scale group games</li>
+              </ul>
+            </div>
+            <div class="mc-event-info__slot">
+              <strong>4:00 to 5:00 PM</strong>
+              <ul>
+                <li>Performances by our maids</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="mc-event-info__important">
+            <h3 class="mc-event-info__title">Important</h3>
+            <ul>
+              <li>96 seats available. Preordering is recommended.</li>
+              <li>Your reservation is not confirmed until payment is received via Venmo.</li>
+              <li>Do not promote this event outside of the UMD community.</li>
+            </ul>
+          </div>
+
+          <div class="mc-event-info__footer">
+            <a href="https://youtube.com/shorts/ReyEl3XILK8" target="_blank" rel="noopener" class="mc__directions">How to find the Colony Ballroom</a>
+            <p>Questions: <strong>terrapinanimesociety@gmail.com</strong> | <a href="https://discord.com/invite/GJXS7aM7YQ" target="_blank" rel="noopener" style="color:#FF69B4;text-decoration:underline;">Discord Server</a> | <strong>@kcyle_</strong></p>
+          </div>
+        </div>
+        <button type="button" id="gate-agree-btn" class="mc-submit">I Agree, Continue to Reservation</button>
+      </div>
+
+      <!-- ========== STEP 3: Reservation Form ========== -->
+      <form id="maidcafe-form" class="mc-form" autocomplete="off" novalidate style="display:none">
+        <h2 class="mc-form__title">Reserve Your Spot</h2>
+        <p class="mc-form__sub">$15 per person via <a href="https://venmo.com/u/Terrapin-Anime-Society" target="_blank" rel="noopener" style="color:#FFB6C1;text-decoration:underline;">Venmo</a> to <strong>@Terrapin-Anime-Society</strong></p>
+
+        <div class="mc-field">
+          <label for="full-name" class="mc-label">Full Name <span class="mc-req">*</span></label>
+          <input type="text" id="full-name" name="full_name" required class="mc-input" placeholder="Must match your Venmo display name" />
         </div>
 
-        <div class="maid-cafe__info" data-maidcafe-info>
-          <p>The next maid cafe will be held in March. Volunteering form and tickets will be available here soon!</p>
+        <div class="mc-field">
+          <label for="email" class="mc-label">Email <span class="mc-req">*</span></label>
+          <input type="email" id="email" name="email" required class="mc-input" placeholder="you@email.com" />
         </div>
 
-        <div class="maid-cafe__maid-image" data-maidcafe-image>
-          <img src="/images/Characters/maids.webp" alt="Maid Cafe" loading="eager" decoding="async" />
+        <div class="mc-field">
+          <label class="mc-label">Preferred Contact Method <span class="mc-req">*</span></label>
+          <div class="mc-radio-row">
+            <label class="mc-chip"><input type="radio" name="contact_method" value="email" required /><span>Email</span></label>
+            <label class="mc-chip"><input type="radio" name="contact_method" value="discord" /><span>Discord</span></label>
+            <label class="mc-chip"><input type="radio" name="contact_method" value="phone" /><span>Phone</span></label>
+          </div>
+          <input type="text" id="contact-value" name="contact_value" class="mc-input mc-input--contact" style="display:none" />
         </div>
-        <div class="maid-cafe__collage" data-maidcafe-collage>
-          <div class="maid-cafe__collage-inner">
-            <div class="maid-cafe__collage-item">
-              <img src="/images/Photos/maid1.webp" alt="Maid Cafe photo 1" loading="eager" decoding="async" />
-            </div>
-            <div class="maid-cafe__collage-item">
-              <img src="/images/Photos/maid2.webp" alt="Maid Cafe photo 2" loading="eager" decoding="async" />
-            </div>
-            <div class="maid-cafe__collage-item">
-              <img src="/images/Photos/maid3.webp" alt="Maid Cafe photo 3" loading="eager" decoding="async" />
-            </div>
-            <div class="maid-cafe__collage-item">
-              <img src="/images/Photos/maid4.webp" alt="Maid Cafe photo 4" loading="eager" decoding="async" />
-            </div>
+
+        <div class="mc-row">
+          <div class="mc-field mc-field--half">
+            <label for="num-guests" class="mc-label">Number of Guests in Party <span class="mc-req">*</span></label>
+            <select id="num-guests" name="num_guests" required class="mc-input mc-select">
+              <option value="1">1 (just me)</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+            </select>
+          </div>
+          <div class="mc-field mc-field--half">
+            <label class="mc-label">Preferred Maid or Butler</label>
+            <select id="staff-select" name="preferred_staff_name" class="mc-input mc-select">
+              <option value="">No preference</option>
+              <optgroup label="Maids (Solo)">
+                <option value="Ramin">Ramin</option>
+                <option value="Bakadere">Ryn (Bakadere)</option>
+                <option value="Jeremiah">Jeremiah</option>
+                <option value="Her Highness">Sarah (Her Highness)</option>
+                <option value="Bryan">Bryan</option>
+                <option value="Nerd Tsundere">Zhe (Nerd Tsundere)</option>
+                <option value="Amaya">Amaya</option>
+                <option value="Mesugaki">Julian (Mesugaki)</option>
+                <option value="Moe/Kawaii">Natalie (Moe/Kawaii)</option>
+                <option value="The Sweet Sarcastic Type">Kiara (The Sweet Sarcastic Type)</option>
+              </optgroup>
+              <optgroup label="Maids (Paired)">
+                <option value="Joyna + Nina">Joyna + Nina</option>
+                <option value="Ella + Cecile (Deredere)">Ella + Cecile (Deredere)</option>
+              </optgroup>
+              <optgroup label="Butlers (Solo)">
+                <option value="Tigger">Aahil (Tigger)</option>
+                <option value="Professional Degrader">Zayan (Professional Degrader)</option>
+                <option value="The Chalant Butler">Gabriel (The Chalant Butler)</option>
+              </optgroup>
+              <optgroup label="Maid or Butler (Either Role)">
+                <option value="Noah Cao">Noah Cao</option>
+                <option value="Noah Martin">Noah Martin (Nonchalant Tsundere)</option>
+                <option value="Adam">Adam</option>
+                <option value="Kyle Duong">Kyle Duong</option>
+                <option value="The Servant">Justin (The Servant)</option>
+                <option value="Cowboy Butler">Nikolai (Cowboy Butler)</option>
+              </optgroup>
+              <optgroup label="Maid and Butler (Paired)">
+                <option value="Joely + Zayan">Joely + Zayan</option>
+                <option value="Noah Martin + Gabriel">Noah Martin + Gabriel</option>
+                <option value="Adam + Nikolai">Adam + Nikolai</option>
+              </optgroup>
+            </select>
+            <input type="hidden" id="preferred-staff-id" name="preferred_staff_id" value="" />
           </div>
         </div>
+
+        <!-- Dynamic guest info (appears when guests > 1) -->
+        <div id="guest-info-section" style="display:none">
+          <label class="mc-label">Additional Guest Information <span class="mc-req">*</span></label>
+          <p class="mc-hint">Please provide the name and affiliation of each additional guest.</p>
+          <div id="guest-info-fields" class="mc-guest-fields"></div>
+        </div>
+
+        <div class="mc-field">
+          <label for="allergies" class="mc-label">Allergies or Dietary Restrictions <span class="mc-req">*</span></label>
+          <input type="text" id="allergies" name="allergies" required class="mc-input" placeholder="Type None if not applicable" />
+        </div>
+
+        <!-- Add-on Package -->
+        <div class="mc-addon">
+          <label class="mc-addon__toggle">
+            <input type="checkbox" id="addon-package" name="has_addon_package" />
+            <div class="mc-addon__card">
+              <div class="mc-addon__header">
+                <span class="mc-addon__title">VIP Experience Package</span>
+                <span class="mc-addon__price">+$10</span>
+              </div>
+              <ul class="mc-addon__list">
+                <li>Sparkling non alcoholic cocktail</li>
+                <li>Birthday cake celebration with singing</li>
+                <li>Pictures with the maids</li>
+                <li>Priority front row seating (Tables 2 and 3)</li>
+                <li>Possible advantage in group activities, games, and raffles</li>
+              </ul>
+              <p class="mc-addon__party-note" id="addon-party-note" style="display:none">
+                Your entire party receives priority front row seating. The package includes one birthday candle cake celebration and one sparkling cocktail bottle for the group. Everyone in your party is welcome to take pictures with the maids.
+              </p>
+            </div>
+          </label>
+        </div>
+
+        <!-- Seat Picker -->
+        <div class="mc-field">
+          <label class="mc-label">Choose Your Seats <span class="mc-req">*</span></label>
+          <p class="mc-hint">All seats must be at the same table. Click to select.</p>
+          <div class="mc-seating-legend">
+            <span class="mc-legend-item"><span class="mc-legend-dot mc-legend-dot--available"></span> Available</span>
+            <span class="mc-legend-item"><span class="mc-legend-dot mc-legend-dot--selected"></span> Selected</span>
+            <span class="mc-legend-item"><span class="mc-legend-dot mc-legend-dot--taken"></span> Taken</span>
+            <span class="mc-legend-item"><span class="mc-legend-dot mc-legend-dot--vip"></span> VIP (Tables 2 and 3)</span>
+          </div>
+          <div id="seating-diagram" class="mc-seating"></div>
+          <p id="seat-selection-summary" class="mc-seat-summary"></p>
+        </div>
+
+        <!-- Price Summary -->
+        <div class="mc-price" id="price-summary">
+          <div class="mc-price__row">
+            <span>Base ticket</span>
+            <span id="price-base">$15 x 1 = $15</span>
+          </div>
+          <div class="mc-price__row mc-price__row--addon" id="price-addon-row" style="display:none">
+            <span>VIP Package</span>
+            <span>+$10</span>
+          </div>
+          <div class="mc-price__total">
+            <span>Total</span>
+            <span id="price-total">$15</span>
+          </div>
+        </div>
+
+        <button type="submit" id="submit-btn" class="mc-submit">Continue to Checkout</button>
+      </form>
+    </div>
+
+    <!-- ============ TERMS MODAL ============ -->
+    <div id="terms-modal" class="mc-modal" style="display:none">
+      <div class="mc-modal__backdrop"></div>
+      <div class="mc-modal__content">
+        <h2>Event Information</h2>
+        <div class="mc-terms-body">
+          <p><strong>Sunday, April 5th, 2026</strong> | 2:00 to 5:00 PM</p>
+          <p>Colony Ballroom, Stamp Student Union, 3972 Campus Dr, College Park, MD 20742</p>
+          <p>You do not have to stay the entire time, but please arrive on time.</p>
+          <h3>Schedule</h3>
+          <ul>
+            <li><strong>2:00 to 3:00 PM</strong> — Check in, seating, and dining with your maid or butler. Full course meal (main dish, dessert, side, and drink including strawberry shortcake and mini French pastries). Table games like Beyblades, cards, board games, and drawing.</li>
+            <li><strong>3:00 to 4:00 PM</strong> — Group activities and events with all guests, maids, and butlers. Expect karaoke, musical chairs, and other large scale group games.</li>
+            <li><strong>4:00 to 5:00 PM</strong> — Performances by our maids.</li>
+          </ul>
+          <h3>Important</h3>
+          <ul>
+            <li>96 seats available. Preordering is recommended. Door tickets may be available if space allows.</li>
+            <li>Your reservation is not confirmed until payment is received via Venmo.</li>
+            <li>Do not promote this event outside of the UMD community.</li>
+          </ul>
+          <p><a href="https://youtube.com/shorts/ReyEl3XILK8" target="_blank" rel="noopener" style="color:#FF69B4;text-decoration:underline;">How to find the Colony Ballroom from the Stamp front pillar entrance</a></p>
+          <p>Questions: <strong>terrapinanimesociety@gmail.com</strong> | <a href="https://discord.com/invite/GJXS7aM7YQ" target="_blank" rel="noopener" style="color:#FF69B4;text-decoration:underline;">Discord Server</a> | <strong>@kcyle_</strong></p>
+        </div>
+        <button type="button" id="terms-close" class="mc-submit">Got it</button>
+      </div>
+    </div>
+
+    <!-- ============ CHECKOUT: All-in-one confirmation ============ -->
+    <div id="confirm-modal" class="mc-modal" style="display:none">
+      <div class="mc-modal__backdrop"></div>
+      <div class="mc-modal__content mc-modal__content--checkout">
+        <h2>Before You Submit</h2>
+
+        <!-- Section 1: Logistics Review -->
+        <div class="mc-checkout-section">
+          <h3 class="mc-checkout-section__title">Event Logistics</h3>
+          <p class="mc-checkout-section__text">Make sure you have read and understand all event details, schedule, location, and policies.</p>
+          <button type="button" id="checkout-view-info" class="mc-terms-link" style="font-size:0.9rem;">Review Event Information</button>
+          <div id="checkout-event-info" class="mc-checkout-event-info" style="display:none">
+            <p><strong>Sunday, April 5th, 2026</strong> | 2:00 to 5:00 PM</p>
+            <p>Colony Ballroom, Stamp Student Union, 3972 Campus Dr, College Park, MD 20742</p>
+            <p style="color:rgba(255,255,255,0.4);font-style:italic;">You do not have to stay the entire time, but please arrive on time!</p>
+            <h4>Schedule</h4>
+            <ul>
+              <li><strong>2:00 to 3:00 PM</strong> Check in, dining, table games</li>
+              <li><strong>3:00 to 4:00 PM</strong> Group activities, karaoke, games</li>
+              <li><strong>4:00 to 5:00 PM</strong> Performances by maids</li>
+            </ul>
+            <h4>Important</h4>
+            <ul>
+              <li>96 seats available. Preordering recommended.</li>
+              <li>Reservation not confirmed until Venmo payment received.</li>
+              <li>Do not promote outside the UMD community.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Section 2: Order Summary -->
+        <div class="mc-checkout-section">
+          <h3 class="mc-checkout-section__title">Your Reservation</h3>
+          <div id="confirm-summary" class="mc-confirm-summary"></div>
+        </div>
+
+        <!-- Section 3: Venmo Payment -->
+        <div class="mc-checkout-section">
+          <h3 class="mc-checkout-section__title">Payment</h3>
+          <p class="mc-checkout-venmo__amount">Amount Due: <strong id="checkout-venmo-amount">$15</strong></p>
+          <p class="mc-checkout-section__text">Send your payment via Venmo before confirming.</p>
+          <div class="mc-checkout-venmo__box">
+            <p><strong>Venmo:</strong> <a href="https://venmo.com/u/Terrapin-Anime-Society" target="_blank" rel="noopener" style="color:#FFB6C1;text-decoration:underline;">@Terrapin-Anime-Society</a></p>
+            <p><strong>Note:</strong> "(Your Name) for Maid Cafe"</p>
+          </div>
+        </div>
+
+        <!-- Section 4: Refund Policy -->
+        <div class="mc-checkout-venmo__warning">
+          <strong>No Refunds Policy:</strong> All sales are final. Refunds will only be issued under special circumstances with a valid reason. Contact terrapinanimesociety@gmail.com or @kcyle_ on <a href="https://discord.com/invite/GJXS7aM7YQ" target="_blank" rel="noopener" style="color:#FFA500;text-decoration:underline;">Discord</a> to request one.
+        </div>
+
+        <div class="mc-confirm-actions">
+          <button type="button" id="confirm-back" class="mc-btn-secondary">Go Back</button>
+          <button type="button" id="confirm-submit" class="mc-submit">I Have Paid and Confirm My Reservation</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ SUCCESS MODAL ============ -->
+    <div id="success-modal" class="mc-modal" style="display:none">
+      <div class="mc-modal__backdrop"></div>
+      <div class="mc-modal__content">
+        <h2>Reservation Submitted!</h2>
+        <div class="mc-modal__order">
+          <p>Your Order ID</p>
+          <span id="modal-order-id" class="mc-modal__id"></span>
+        </div>
+        <div class="mc-modal__payment">
+          <p>Make sure you have sent <strong id="modal-total">$15</strong> via <a href="https://venmo.com/u/Terrapin-Anime-Society" target="_blank" rel="noopener" style="color:#FFB6C1;text-decoration:underline;">Venmo</a> to <strong>@Terrapin-Anime-Society</strong></p>
+          <p>Venmo note: <strong>"(Your Name) for Maid Cafe"</strong></p>
+          <p class="mc-modal__warn">Your reservation is not confirmed until we verify your Venmo payment. Unpaid reservations may be released.</p>
+        </div>
+        <button type="button" id="modal-close" class="mc-submit">Done</button>
       </div>
     </div>
   </main>
 </BaseLayout>
 
 <script>
+  import { supabase } from '../lib/supabase';
   import gsap from 'gsap';
   import { initMenuAnimations } from '../animations/menu';
 
-  function initPageAnimations() {
-    initMenuAnimations();
-    const title = document.querySelector('[data-maidcafe-title]');
-    const desc = document.querySelector('[data-maidcafe-desc]');
-    const info = document.querySelector('[data-maidcafe-info]');
-    const image = document.querySelector('[data-maidcafe-image]');
-    const collage = document.querySelector('[data-maidcafe-collage]');
+  /* ========== GATE STEPS ========== */
+  let verifiedEmail = '';
+  let verifiedName = '';
 
-    gsap.set(title, { y: 100, scale: 0.8, opacity: 0 });
-    gsap.set(desc, { y: 50, opacity: 0 });
-    gsap.set(info, { y: 50, opacity: 0 });
-    gsap.set(image, { x: -100, opacity: 0 });
-    gsap.set(collage, { x: 100, opacity: 0 });
+  // Google Sign-In callback
+  (window as any).handleGoogleSignIn = (response: any) => {
+    const payload = JSON.parse(atob(response.credential.split('.')[1]));
+    const email = payload.email?.toLowerCase() || '';
+    const name = payload.name || '';
+    const error = document.getElementById('gate-email-error')!;
 
-    const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+    if (email.endsWith('@umd.edu') || email.endsWith('@terpmail.umd.edu')) {
+      verifiedEmail = email;
+      verifiedName = name;
+      error.style.display = 'none';
+      // Check for existing reservation
+      checkExistingReservation(email).then(hasReservation => {
+        document.getElementById('step-email')!.style.display = 'none';
+        if (hasReservation) {
+          document.getElementById('step-view-order')!.style.display = 'block';
+        } else {
+          document.getElementById('step-info')!.style.display = 'block';
+        }
+      });
+    } else {
+      error.textContent = 'Please sign in with a @umd.edu or @terpmail.umd.edu email address.';
+      error.style.display = 'block';
+    }
+  };
 
-    tl.to(title, { y: 0, scale: 1, opacity: 1, duration: 0.8 }, 0.1)
-      .to(image, { x: 0, opacity: 1, duration: 0.7 }, 0.2)
-      .to(desc, { y: 0, opacity: 1, duration: 0.6 }, 0.3)
-      .to(collage, { x: 0, opacity: 1, duration: 0.7 }, 0.35)
-      .to(info, { y: 0, opacity: 1, duration: 0.6 }, 0.4);
+  document.getElementById('google-signin-btn')!.addEventListener('click', () => {
+    if ((window as any).google?.accounts?.id) {
+      (window as any).google.accounts.id.prompt();
+    } else {
+      document.getElementById('gate-email-error')!.textContent = 'Google Sign In is still loading. Try again.';
+      document.getElementById('gate-email-error')!.style.display = 'block';
+    }
+  });
+
+  function initGoogleSignIn() {
+    const clientId = import.meta.env.PUBLIC_GOOGLE_CLIENT_ID || '';
+    if (!clientId || !(window as any).google?.accounts?.id) return;
+    (window as any).google.accounts.id.initialize({
+      client_id: clientId,
+      callback: (window as any).handleGoogleSignIn,
+      auto_select: false,
+    });
+  }
+
+
+  // Check for existing reservation
+  async function checkExistingReservation(email: string): Promise<boolean> {
+    try {
+      const { data } = await supabase
+        .from('maidcafe_reservations')
+        .select('*')
+        .eq('email', email)
+        .neq('payment_status', 'cancelled')
+        .limit(1);
+      if (data && data.length > 0) {
+        renderViewOrder(data[0]);
+        return true;
+      }
+    } catch (e) {
+      console.warn('Could not check reservation:', e);
+    }
+    return false;
+  }
+
+  function renderViewOrder(r: any) {
+    const seats = r.selected_seats ? r.selected_seats.map((s: any) => `Seat ${s.seat_number}`).join(', ') : '';
+    const statusClass = r.payment_status === 'confirmed' ? 'mc-view-status--confirmed' : r.payment_status === 'cancelled' ? 'mc-view-status--cancelled' : 'mc-view-status--pending';
+    const guests = r.additional_guests ? r.additional_guests.map((g: any, i: number) =>
+      `<div class="mc-view-row"><span>Guest ${i + 2}</span><strong>${g.name} (${g.affiliation})</strong></div>`
+    ).join('') : '';
+
+    document.getElementById('view-order-content')!.innerHTML = `
+      <div class="mc-view-card">
+        <div class="mc-view-header">
+          <div>
+            <span class="mc-view-order-id">${r.order_id}</span>
+            <span class="mc-view-status ${statusClass}">${r.payment_status}</span>
+          </div>
+        </div>
+        <div class="mc-view-rows">
+          <div class="mc-view-row"><span>Name</span><strong>${r.full_name}</strong></div>
+          <div class="mc-view-row"><span>Email</span><strong>${r.email}</strong></div>
+          <div class="mc-view-row"><span>Party Size</span><strong>${r.num_guests}</strong></div>
+          ${guests}
+          <div class="mc-view-row"><span>Table</span><strong>${r.table_number || 'Not assigned'}</strong></div>
+          <div class="mc-view-row"><span>Seats</span><strong>${seats || 'None'}</strong></div>
+          ${r.preferred_staff_name ? `<div class="mc-view-row"><span>Preferred Staff</span><strong>${r.preferred_staff_name}</strong></div>` : ''}
+          <div class="mc-view-row"><span>Package</span><strong>${r.has_addon_package ? 'VIP Experience' : 'Standard'}</strong></div>
+          ${r.allergies ? `<div class="mc-view-row"><span>Allergies</span><strong>${r.allergies}</strong></div>` : ''}
+          <div class="mc-view-row"><span>Total Paid</span><strong>$${r.total_price}</strong></div>
+          <div class="mc-view-row"><span>Reserved</span><strong>${new Date(r.created_at).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</strong></div>
+        </div>
+      </div>
+      <p class="mc-view-note">This reservation cannot be edited. For questions or changes, contact <strong>terrapinanimesociety@gmail.com</strong> or <strong>@kcyle_</strong> on <a href="https://discord.com/invite/GJXS7aM7YQ" target="_blank" rel="noopener" style="color:#FF69B4;text-decoration:underline;">Discord</a>.</p>
+    `;
+  }
+
+  // View order back button
+  document.getElementById('view-order-back')!.addEventListener('click', () => {
+    document.getElementById('step-view-order')!.style.display = 'none';
+    document.getElementById('step-email')!.style.display = 'block';
+  });
+
+  // Retry init until Google SDK loads
+  const gsiInterval = setInterval(() => {
+    if ((window as any).google?.accounts?.id) {
+      initGoogleSignIn();
+      clearInterval(gsiInterval);
+    }
+  }, 200);
+
+  document.getElementById('gate-agree-btn')!.addEventListener('click', () => {
+    document.getElementById('step-info')!.style.display = 'none';
+    const form = document.getElementById('maidcafe-form') as HTMLFormElement;
+    form.style.display = 'flex';
+    // Init custom dropdowns now that form is visible
+    setTimeout(() => initCustomDropdowns(), 100);
+    // Pre-fill fields from Google profile
+    const emailField = document.getElementById('email') as HTMLInputElement;
+    const nameField = document.getElementById('full-name') as HTMLInputElement;
+    if (emailField) {
+      emailField.value = verifiedEmail;
+      emailField.readOnly = true;
+    }
+    if (nameField && verifiedName) {
+      nameField.value = verifiedName;
+    }
+  });
+
+  /* ========== CONSTANTS ========== */
+  const BASE_PRICE = 15;
+  const ADDON_PRICE = 10;
+  const VIP_TABLES = [2, 3];
+
+  const TABLE_POSITIONS = [
+    // Row 1 (closest to stage) - VIP tables
+    { id: 1,  cx: 85,  cy: 150 },
+    { id: 2,  cx: 250, cy: 150 },
+    { id: 3,  cx: 460, cy: 150 },
+    { id: 4,  cx: 625, cy: 150 },
+    // Row 2
+    { id: 5,  cx: 85,  cy: 320 },
+    { id: 6,  cx: 250, cy: 320 },
+    { id: 7,  cx: 460, cy: 320 },
+    { id: 8,  cx: 625, cy: 320 },
+    // Row 3
+    { id: 9,  cx: 85,  cy: 490 },
+    { id: 10, cx: 250, cy: 490 },
+    { id: 11, cx: 460, cy: 490 },
+    { id: 12, cx: 625, cy: 490 },
+    // Row 4 (back of room)
+    { id: 13, cx: 85,  cy: 660 },
+    { id: 14, cx: 250, cy: 660 },
+    { id: 15, cx: 460, cy: 660 },
+    { id: 16, cx: 625, cy: 660 },
+  ];
+
+  /* ========== STATE ========== */
+  let reservedSeats = new Set<string>();
+  let selectedSeats: { table: number; seat: number }[] = [];
+  let numGuests = 1;
+  let hasAddon = false;
+
+  function seatKey(table: number, seat: number) { return `${table}-${seat}`; }
+
+  /* ========== HELPERS ========== */
+  function genOrderId(): string {
+    const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+    let id = 'MC-';
+    for (let i = 0; i < 6; i++) id += chars[Math.floor(Math.random() * chars.length)];
+    return id;
+  }
+
+  function updatePrice() {
+    numGuests = parseInt((document.getElementById('num-guests') as HTMLSelectElement).value) || 1;
+    hasAddon = (document.getElementById('addon-package') as HTMLInputElement).checked;
+    const base = BASE_PRICE * numGuests;
+    const addon = hasAddon ? ADDON_PRICE : 0;
+    const total = base + addon;
+
+    document.getElementById('price-base')!.textContent = `$${BASE_PRICE} x ${numGuests} = $${base}`;
+    document.getElementById('price-addon-row')!.style.display = hasAddon ? 'flex' : 'none';
+    document.getElementById('price-total')!.textContent = `$${total}`;
+    document.getElementById('checkout-venmo-amount')!.textContent = `$${total}`;
+
+    // Show party note for addon
+    const partyNote = document.getElementById('addon-party-note')!;
+    partyNote.style.display = (hasAddon && numGuests > 1) ? 'block' : 'none';
+
+    // If addon selected, enforce VIP tables only; clear selection if on non-VIP
+    if (hasAddon && selectedSeats.length > 0 && !VIP_TABLES.includes(selectedSeats[0].table)) {
+      selectedSeats = [];
+      updateSeatDisplay();
+      updateSeatSummary();
+    }
+
+    // Enforce seat count matches guest count
+    while (selectedSeats.length > numGuests) {
+      selectedSeats.pop();
+    }
+    updateSeatDisplay();
+    updateSeatSummary();
+  }
+
+  /* ========== SEATING DIAGRAM ========== */
+  function seatPosition(index: number, radius: number = 58) {
+    const angle = (index * 60 - 90) * (Math.PI / 180);
+    return { x: Math.cos(angle) * radius, y: Math.sin(angle) * radius };
+  }
+
+  function renderSeatingDiagram() {
+    const container = document.getElementById('seating-diagram')!;
+    container.innerHTML = '';
+
+    const svgNS = 'http://www.w3.org/2000/svg';
+    const svg = document.createElementNS(svgNS, 'svg');
+    svg.setAttribute('viewBox', '0 0 710 740');
+    svg.setAttribute('class', 'mc-seating__svg');
+
+    // Stage
+    const stageRect = document.createElementNS(svgNS, 'rect');
+    stageRect.setAttribute('x', '155');
+    stageRect.setAttribute('y', '10');
+    stageRect.setAttribute('width', '400');
+    stageRect.setAttribute('height', '40');
+    stageRect.setAttribute('rx', '8');
+    stageRect.setAttribute('fill', 'rgba(255,105,180,0.15)');
+    stageRect.setAttribute('stroke', 'rgba(255,105,180,0.4)');
+    stageRect.setAttribute('stroke-width', '1.5');
+    svg.appendChild(stageRect);
+
+    const stageText = document.createElementNS(svgNS, 'text');
+    stageText.setAttribute('x', '355');
+    stageText.setAttribute('y', '36');
+    stageText.setAttribute('text-anchor', 'middle');
+    stageText.setAttribute('fill', 'rgba(255,182,193,0.8)');
+    stageText.setAttribute('font-size', '16');
+    stageText.setAttribute('font-weight', '700');
+    stageText.setAttribute('font-family', 'Inter, sans-serif');
+    stageText.setAttribute('letter-spacing', '0.15em');
+    stageText.textContent = 'STAGE';
+    svg.appendChild(stageText);
+
+    // Center hallway line
+    const hallway = document.createElementNS(svgNS, 'line');
+    hallway.setAttribute('x1', '355');
+    hallway.setAttribute('y1', '60');
+    hallway.setAttribute('x2', '355');
+    hallway.setAttribute('y2', '720');
+    hallway.setAttribute('stroke', 'rgba(255,255,255,0.06)');
+    hallway.setAttribute('stroke-width', '1');
+    hallway.setAttribute('stroke-dasharray', '6 4');
+    svg.appendChild(hallway);
+
+    TABLE_POSITIONS.forEach(table => {
+      const g = document.createElementNS(svgNS, 'g');
+      g.setAttribute('transform', `translate(${table.cx}, ${table.cy})`);
+
+      const isVip = VIP_TABLES.includes(table.id);
+
+      // Table circle
+      const tableCircle = document.createElementNS(svgNS, 'circle');
+      tableCircle.setAttribute('r', '42');
+      tableCircle.setAttribute('fill', isVip ? 'rgba(212,175,55,0.08)' : 'rgba(255,255,255,0.03)');
+      tableCircle.setAttribute('stroke', isVip ? '#D4AF37' : 'rgba(255,255,255,0.12)');
+      tableCircle.setAttribute('stroke-width', isVip ? '2' : '1');
+      g.appendChild(tableCircle);
+
+      // Table number
+      const label = document.createElementNS(svgNS, 'text');
+      label.setAttribute('text-anchor', 'middle');
+      label.setAttribute('dominant-baseline', 'central');
+      label.setAttribute('fill', isVip ? '#D4AF37' : 'rgba(255,255,255,0.4)');
+      label.setAttribute('font-size', '11');
+      label.setAttribute('font-weight', '700');
+      label.setAttribute('font-family', 'Inter, sans-serif');
+      label.textContent = `Table #${table.id}`;
+      g.appendChild(label);
+
+      if (isVip) {
+        const vipLabel = document.createElementNS(svgNS, 'text');
+        vipLabel.setAttribute('text-anchor', 'middle');
+        vipLabel.setAttribute('y', '14');
+        vipLabel.setAttribute('fill', '#D4AF37');
+        vipLabel.setAttribute('font-size', '8');
+        vipLabel.setAttribute('font-weight', '700');
+        vipLabel.setAttribute('font-family', 'Inter, sans-serif');
+        vipLabel.setAttribute('letter-spacing', '0.1em');
+        vipLabel.textContent = 'VIP';
+        g.appendChild(vipLabel);
+      }
+
+      // Seats
+      for (let s = 1; s <= 6; s++) {
+        const pos = seatPosition(s - 1);
+        const key = seatKey(table.id, s);
+        const isReserved = reservedSeats.has(key);
+        const isSelected = selectedSeats.some(ss => ss.table === table.id && ss.seat === s);
+
+        const rotAngle = (s - 1) * 60;
+        const seatG = document.createElementNS(svgNS, 'g');
+        seatG.setAttribute('transform', `translate(${pos.x}, ${pos.y}) rotate(${rotAngle})`);
+        seatG.setAttribute('data-table', `${table.id}`);
+        seatG.setAttribute('data-seat', `${s}`);
+        seatG.classList.add('mc-seat');
+
+        if (isReserved) {
+          seatG.classList.add('mc-seat--taken');
+        } else if (isSelected) {
+          seatG.classList.add('mc-seat--selected');
+        } else {
+          seatG.classList.add('mc-seat--available');
+        }
+
+        if (!isReserved) {
+          seatG.addEventListener('click', () => handleSeatClick(table.id, s));
+        }
+
+        // Backrest (outer edge, faces away from table)
+        const back = document.createElementNS(svgNS, 'rect');
+        back.setAttribute('x', '-13');
+        back.setAttribute('y', '-16');
+        back.setAttribute('width', '26');
+        back.setAttribute('height', '7');
+        back.setAttribute('rx', '3.5');
+        back.classList.add('mc-seat__back');
+        seatG.appendChild(back);
+
+        // Seat cushion
+        const cushion = document.createElementNS(svgNS, 'rect');
+        cushion.setAttribute('x', '-11');
+        cushion.setAttribute('y', '-9');
+        cushion.setAttribute('width', '22');
+        cushion.setAttribute('height', '18');
+        cushion.setAttribute('rx', '5');
+        cushion.classList.add('mc-seat__cushion');
+        seatG.appendChild(cushion);
+
+        // Seat number
+        const seatLabel = document.createElementNS(svgNS, 'text');
+        seatLabel.setAttribute('x', '0');
+        seatLabel.setAttribute('y', '1');
+        seatLabel.setAttribute('text-anchor', 'middle');
+        seatLabel.setAttribute('dominant-baseline', 'central');
+        seatLabel.setAttribute('font-size', '10');
+        seatLabel.setAttribute('font-weight', '600');
+        seatLabel.setAttribute('font-family', 'Inter, sans-serif');
+        seatLabel.setAttribute('pointer-events', 'none');
+        seatLabel.setAttribute('transform', `rotate(${-rotAngle})`);
+        seatLabel.classList.add('mc-seat__label');
+        seatLabel.textContent = `${s}`;
+        seatG.appendChild(seatLabel);
+
+        g.appendChild(seatG);
+      }
+
+      svg.appendChild(g);
+    });
+
+    container.appendChild(svg);
+  }
+
+  function handleSeatClick(tableId: number, seatNum: number) {
+    const key = seatKey(tableId, seatNum);
+    if (reservedSeats.has(key)) return;
+
+    // VIP tables (1-4) are only for addon package holders
+    if (VIP_TABLES.includes(tableId) && !hasAddon) {
+      showToast('Tables 2 and 3 are reserved for VIP Package holders');
+      return;
+    }
+
+    // Check if clicking on a different table
+    if (selectedSeats.length > 0 && selectedSeats[0].table !== tableId) {
+      selectedSeats = [];
+    }
+
+    // Toggle seat
+    const existingIdx = selectedSeats.findIndex(s => s.table === tableId && s.seat === seatNum);
+    if (existingIdx >= 0) {
+      selectedSeats.splice(existingIdx, 1);
+    } else {
+      if (selectedSeats.length >= numGuests) {
+        showToast(`You can only select ${numGuests} seat${numGuests > 1 ? 's' : ''}`);
+        return;
+      }
+      selectedSeats.push({ table: tableId, seat: seatNum });
+    }
+
+    updateSeatDisplay();
+    updateSeatSummary();
+  }
+
+  function updateSeatDisplay() {
+    document.querySelectorAll('.mc-seat').forEach(el => {
+      const t = parseInt(el.getAttribute('data-table')!);
+      const s = parseInt(el.getAttribute('data-seat')!);
+      const key = seatKey(t, s);
+      el.classList.remove('mc-seat--available', 'mc-seat--selected', 'mc-seat--taken');
+      if (reservedSeats.has(key)) {
+        el.classList.add('mc-seat--taken');
+      } else if (selectedSeats.some(ss => ss.table === t && ss.seat === s)) {
+        el.classList.add('mc-seat--selected');
+      } else {
+        el.classList.add('mc-seat--available');
+      }
+    });
 
   }
 
+  function updateSeatSummary() {
+    const summary = document.getElementById('seat-selection-summary')!;
+    if (selectedSeats.length === 0) {
+      summary.textContent = '';
+      return;
+    }
+    const tableNum = selectedSeats[0].table;
+    const seatNums = selectedSeats.map(s => `<span class="mc-seat-tag">${s.seat}</span>`).sort().join('');
+    summary.innerHTML = `<span class="mc-seat-table-tag">Table #${tableNum}</span>${seatNums}`;
+  }
+
+  let toastTimeout: any;
+  function showToast(msg: string) {
+    let toast = document.getElementById('mc-toast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'mc-toast';
+      toast.className = 'mc-toast';
+      document.body.appendChild(toast);
+    }
+    toast.textContent = msg;
+    toast.classList.add('mc-toast--show');
+    clearTimeout(toastTimeout);
+    toastTimeout = setTimeout(() => toast!.classList.remove('mc-toast--show'), 3000);
+  }
+
+  /* ========== LOAD SEATS FROM SUPABASE ========== */
+  async function loadSeats() {
+    try {
+      const { data } = await supabase
+        .from('maidcafe_seats')
+        .select('table_number, seat_number, status');
+
+      reservedSeats.clear();
+      if (data) {
+        data.forEach((row: any) => {
+          if (row.status === 'reserved') {
+            reservedSeats.add(seatKey(row.table_number, row.seat_number));
+          }
+        });
+      }
+    } catch (e) {
+      console.warn('Could not load seats from database:', e);
+    }
+    renderSeatingDiagram();
+  }
+
+  /* ========== REALTIME ========== */
+  function setupRealtime() {
+    try {
+      supabase
+        .channel('seats-live')
+        .on('postgres_changes', {
+          event: '*',
+          schema: 'public',
+          table: 'maidcafe_seats'
+        }, (payload: any) => {
+          const row = payload.new;
+          if (!row) return;
+          const key = seatKey(row.table_number, row.seat_number);
+          if (row.status === 'reserved') {
+            reservedSeats.add(key);
+            selectedSeats = selectedSeats.filter(s => seatKey(s.table, s.seat) !== key);
+          } else {
+            reservedSeats.delete(key);
+          }
+          updateSeatDisplay();
+          updateSeatSummary();
+        })
+        .subscribe();
+    } catch (e) {
+      console.warn('Could not setup realtime:', e);
+    }
+  }
+
+  /* ========== CONTACT METHOD ========== */
+  const contactInput = document.getElementById('contact-value') as HTMLInputElement;
+  document.querySelectorAll<HTMLInputElement>('input[name="contact_method"]').forEach(r => {
+    r.addEventListener('change', () => {
+      if (r.value === 'email') {
+        contactInput.style.display = 'none';
+        contactInput.removeAttribute('required');
+      } else {
+        contactInput.style.display = 'block';
+        contactInput.setAttribute('required', '');
+        contactInput.placeholder = r.value === 'discord' ? 'Your Discord username' : 'Your phone number';
+        contactInput.type = r.value === 'phone' ? 'tel' : 'text';
+      }
+    });
+  });
+
+  /* ========== STAFF SELECT ========== */
+  const staffSelect = document.getElementById('staff-select') as HTMLSelectElement;
+  const hiddenStaffId = document.getElementById('preferred-staff-id') as HTMLInputElement;
+  staffSelect?.addEventListener('change', () => {
+    hiddenStaffId.value = staffSelect.selectedOptions[0]?.dataset.id || '';
+  });
+
+  /* ========== GUEST INFO FIELDS ========== */
+  function updateGuestFields() {
+    const section = document.getElementById('guest-info-section')!;
+    const container = document.getElementById('guest-info-fields')!;
+    if (numGuests <= 1) {
+      section.style.display = 'none';
+      container.innerHTML = '';
+      return;
+    }
+    section.style.display = 'block';
+    container.innerHTML = '';
+    for (let i = 2; i <= numGuests; i++) {
+      const row = document.createElement('div');
+      row.className = 'mc-guest-row';
+      row.innerHTML = `
+        <span class="mc-guest-row__num">Guest ${i}</span>
+        <input type="text" name="guest_${i}_name" class="mc-input" placeholder="Full name" required />
+        <select name="guest_${i}_affiliation" class="mc-input mc-select" required>
+          <option value="student">UMD Student</option>
+          <option value="alumni">Alumni</option>
+          <option value="outside">Non UMD</option>
+        </select>
+      `;
+      container.appendChild(row);
+    }
+    initCustomDropdowns();
+  }
+
+  /* ========== PRICE UPDATES ========== */
+  document.getElementById('num-guests')!.addEventListener('change', () => { updatePrice(); updateGuestFields(); });
+  document.getElementById('addon-package')!.addEventListener('change', updatePrice);
+
+  /* ========== TERMS MODAL ========== */
+  document.getElementById('terms-toggle')?.addEventListener('click', () => {
+    document.getElementById('terms-modal')!.style.display = 'flex';
+  });
+  document.getElementById('terms-close')?.addEventListener('click', () => {
+    document.getElementById('terms-modal')!.style.display = 'none';
+  });
+
+  /* ========== FORM + CONFIRMATION ========== */
+  const form = document.getElementById('maidcafe-form') as HTMLFormElement;
+  const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement;
+  const confirmModal = document.getElementById('confirm-modal')!;
+  const confirmSummary = document.getElementById('confirm-summary')!;
+  const confirmBack = document.getElementById('confirm-back')!;
+  const confirmSubmit = document.getElementById('confirm-submit') as HTMLButtonElement;
+  const successModal = document.getElementById('success-modal')!;
+  const modalOid = document.getElementById('modal-order-id')!;
+  const modalClose = document.getElementById('modal-close')!;
+
+  let pendingPayload: Record<string, any> | null = null;
+  let pendingOrderId = '';
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    // Custom validation
+    const requiredFields = form.querySelectorAll<HTMLInputElement | HTMLSelectElement>('[required]');
+    let firstInvalid: HTMLElement | null = null;
+    form.querySelectorAll('.mc-field-error').forEach(el => el.remove());
+
+    requiredFields.forEach(field => {
+      field.classList.remove('mc-input--invalid');
+      if (!field.value.trim()) {
+        field.classList.add('mc-input--invalid');
+        if (!firstInvalid) firstInvalid = field;
+        const errMsg = document.createElement('p');
+        errMsg.className = 'mc-field-error';
+        errMsg.textContent = 'This field is required';
+        field.parentNode!.appendChild(errMsg);
+      }
+    });
+
+    // Check radio groups
+    const contactMethod = form.querySelector<HTMLInputElement>('input[name="contact_method"]:checked');
+    if (!contactMethod) {
+      if (!firstInvalid) firstInvalid = form.querySelector('input[name="contact_method"]')!;
+      showToast('Please select a preferred contact method');
+    }
+
+    if (firstInvalid) {
+      firstInvalid.focus();
+      firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+
+    const fd = new FormData(form);
+    pendingOrderId = genOrderId();
+
+    // Validate seats
+    if (selectedSeats.length === 0) {
+      showToast('Please select your seats on the diagram');
+      return;
+    }
+    if (selectedSeats.length !== numGuests) {
+      showToast(`Please select exactly ${numGuests} seat${numGuests > 1 ? 's' : ''}`);
+      return;
+    }
+
+    // Validate VIP table for addon
+    if (hasAddon && !VIP_TABLES.includes(selectedSeats[0].table)) {
+      showToast('VIP package holders must sit at Tables 2 and 3');
+      return;
+    }
+
+    const totalPrice = BASE_PRICE * numGuests + (hasAddon ? ADDON_PRICE : 0);
+
+    const affiliationLabels: Record<string, string> = { student: 'UMD Student', alumni: 'Alumni', outside: 'Non UMD' };
+
+    // Collect additional guest info
+    const guests: { name: string; affiliation: string }[] = [];
+    for (let i = 2; i <= numGuests; i++) {
+      guests.push({
+        name: (fd.get(`guest_${i}_name`) as string) || '',
+        affiliation: (fd.get(`guest_${i}_affiliation`) as string) || 'student',
+      });
+    }
+
+    pendingPayload = {
+      order_id: pendingOrderId,
+      full_name: fd.get('full_name'),
+      email: fd.get('email'),
+      umd_affiliation: 'student',
+      contact_method: fd.get('contact_method'),
+      contact_value: fd.get('contact_method') === 'email' ? fd.get('email') : fd.get('contact_value'),
+      num_guests: numGuests,
+      additional_guests: guests.length > 0 ? guests : null,
+      preferred_staff_name: fd.get('preferred_staff_name') || null,
+      preferred_staff_id: fd.get('preferred_staff_id') || null,
+      allergies: fd.get('allergies') || null,
+      has_addon_package: hasAddon,
+      total_price: totalPrice,
+      table_number: selectedSeats[0].table,
+      selected_seats: selectedSeats.map(s => ({ table_number: s.table, seat_number: s.seat })),
+      agreed_to_terms: true,
+    };
+
+    const p = pendingPayload;
+    const seatNums = selectedSeats.map(s => s.seat).sort().join(', ');
+    const guestRows = guests.map((g, i) =>
+      `<div class="mc-confirm-row"><span>Guest ${i + 2}</span><strong>${g.name} (${affiliationLabels[g.affiliation] || g.affiliation})</strong></div>`
+    ).join('');
+
+    confirmSummary.innerHTML = `
+      <div class="mc-confirm-row"><span>Name</span><strong>${p.full_name}</strong></div>
+      <div class="mc-confirm-row"><span>Email</span><strong>${p.email}</strong></div>
+      <div class="mc-confirm-row"><span>Party Size</span><strong>${p.num_guests}</strong></div>
+      ${guestRows}
+      <div class="mc-confirm-row"><span>Seats</span><strong>Table ${p.table_number}, Seat${selectedSeats.length > 1 ? 's' : ''} ${seatNums}</strong></div>
+      ${p.preferred_staff_name ? `<div class="mc-confirm-row"><span>Maid or Butler</span><strong>${p.preferred_staff_name}</strong></div>` : ''}
+      ${p.has_addon_package ? `<div class="mc-confirm-row"><span>VIP Package</span><strong>Yes (+$10)</strong></div>` : ''}
+      ${p.allergies ? `<div class="mc-confirm-row"><span>Allergies</span><strong>${p.allergies}</strong></div>` : ''}
+    `;
+    document.getElementById('checkout-venmo-amount')!.textContent = `$${pendingPayload?.total_price || 15}`;
+    confirmModal.style.display = 'flex';
+  });
+
+  // Toggle event info inline
+  document.getElementById('checkout-view-info')!.addEventListener('click', () => {
+    const info = document.getElementById('checkout-event-info')!;
+    const btn = document.getElementById('checkout-view-info')!;
+    if (info.style.display === 'none') {
+      info.style.display = 'block';
+      btn.textContent = 'Hide Event Information';
+    } else {
+      info.style.display = 'none';
+      btn.textContent = 'Review Event Information';
+    }
+  });
+
+  confirmBack.addEventListener('click', () => { confirmModal.style.display = 'none'; });
+
+  confirmSubmit.addEventListener('click', async () => {
+    if (!pendingPayload) return;
+    confirmSubmit.disabled = true;
+    confirmSubmit.textContent = 'Submitting...';
+
+    // 1. Insert reservation
+    const { error: resError } = await supabase.from('maidcafe_reservations').insert(pendingPayload);
+    if (resError) {
+      alert(resError.code === '23505' ? 'A reservation with this email or order already exists.' : 'Something went wrong: ' + resError.message);
+      confirmSubmit.disabled = false;
+      confirmSubmit.textContent = 'Confirm Reservation';
+      return;
+    }
+
+    // 2. Reserve seats atomically
+    const { data: seatResult, error: seatError } = await supabase.rpc('reserve_seats', {
+      p_order_id: pendingOrderId,
+      p_seats: pendingPayload.selected_seats,
+    });
+
+    if (seatError || seatResult === false) {
+      alert('Some of your selected seats were just taken. Please go back and choose different seats.');
+      confirmSubmit.disabled = false;
+      confirmSubmit.textContent = 'Confirm Reservation';
+      confirmModal.style.display = 'none';
+      await loadSeats();
+      return;
+    }
+
+    // Success
+    confirmModal.style.display = 'none';
+    modalOid.textContent = pendingOrderId;
+    document.getElementById('modal-total')!.textContent = `$${pendingPayload.total_price}`;
+    successModal.style.display = 'flex';
+  });
+
+  modalClose.addEventListener('click', () => {
+    successModal.style.display = 'none';
+    form.querySelectorAll('input, select, textarea, button').forEach(el => (el as HTMLInputElement).disabled = true);
+    submitBtn.textContent = 'Reservation Submitted';
+  });
+
+  /* ========== CUSTOM DROPDOWNS ========== */
+  function createCustomDropdown(select: HTMLSelectElement) {
+    const wrapper = document.createElement('div');
+    wrapper.className = 'mc-dropdown';
+
+    const trigger = document.createElement('button');
+    trigger.type = 'button';
+    trigger.className = 'mc-dropdown__trigger';
+    const selectedOpt = select.options[select.selectedIndex];
+    trigger.innerHTML = `<span class="mc-dropdown__text">${selectedOpt?.text || 'Select'}</span><svg class="mc-dropdown__arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,182,193,0.6)" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>`;
+
+    const list = document.createElement('div');
+    list.className = 'mc-dropdown__list';
+
+    const children = select.children;
+    for (let c = 0; c < children.length; c++) {
+      const child = children[c];
+      if (child.tagName === 'OPTGROUP') {
+        const group = child as HTMLOptGroupElement;
+        const groupLabel = document.createElement('div');
+        groupLabel.className = 'mc-dropdown__group';
+        groupLabel.textContent = group.label;
+        list.appendChild(groupLabel);
+        Array.from(group.querySelectorAll('option')).forEach(opt => addOption(opt));
+      } else if (child.tagName === 'OPTION') {
+        addOption(child as HTMLOptionElement);
+      }
+    }
+
+    function addOption(opt: HTMLOptionElement) {
+      const item = document.createElement('div');
+      item.className = 'mc-dropdown__item' + (opt.selected ? ' mc-dropdown__item--active' : '');
+      item.textContent = opt.text;
+      item.dataset.value = opt.value;
+      item.dataset.id = opt.dataset?.id || '';
+      item.addEventListener('click', () => {
+        select.value = opt.value;
+        select.dispatchEvent(new Event('change', { bubbles: true }));
+        trigger.querySelector('.mc-dropdown__text')!.textContent = opt.text;
+        list.querySelectorAll('.mc-dropdown__item').forEach(el => el.classList.remove('mc-dropdown__item--active'));
+        item.classList.add('mc-dropdown__item--active');
+        wrapper.classList.remove('mc-dropdown--open');
+      });
+      list.appendChild(item);
+    }
+
+    trigger.addEventListener('click', (e) => {
+      e.stopPropagation();
+      document.querySelectorAll('.mc-dropdown--open').forEach(d => { if (d !== wrapper) d.classList.remove('mc-dropdown--open'); });
+      wrapper.classList.toggle('mc-dropdown--open');
+    });
+
+    select.style.display = 'none';
+    wrapper.appendChild(trigger);
+    wrapper.appendChild(list);
+    select.parentNode!.insertBefore(wrapper, select.nextSibling);
+  }
+
+  function initCustomDropdowns() {
+    document.querySelectorAll<HTMLSelectElement>('.mc-select:not([data-custom])').forEach(sel => {
+      sel.setAttribute('data-custom', 'true');
+      createCustomDropdown(sel);
+    });
+  }
+
+  // Close dropdowns on outside click
+  document.addEventListener('click', () => {
+    document.querySelectorAll('.mc-dropdown--open').forEach(d => d.classList.remove('mc-dropdown--open'));
+  });
+
+  /* ========== INIT ========== */
+  async function init() {
+    initMenuAnimations();
+    gsap.from('.mc__title', { y: 40, opacity: 0, duration: 0.6, ease: 'power3.out', delay: 0.15 });
+    gsap.from('.mc__date', { y: 20, opacity: 0, duration: 0.5, ease: 'power3.out', delay: 0.3 });
+    gsap.from('.mc__form-area', { y: 30, opacity: 0, duration: 0.6, ease: 'power3.out', delay: 0.25 });
+
+    renderSeatingDiagram();
+    updatePrice();
+    loadSeats().then(() => setupRealtime());
+  }
+
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initPageAnimations);
+    document.addEventListener('DOMContentLoaded', init);
   } else {
-    initPageAnimations();
+    init();
   }
 </script>
 
 <style>
-  .maid-cafe-page {
-    min-height: 100vh;
-    background-color: #0a0a0a;
-  }
-
-  .maid-cafe-section {
-    position: relative;
-    width: 100%;
-    min-height: 100vh;
+  .mc {
+    position: fixed;
+    inset: 0;
+    background: #0a0a0a;
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    align-items: start;
     overflow: hidden;
-    background-color: #0a0a0a;
   }
 
-  .maid-cafe__bg {
+  .mc__bg {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url('/images/Backgrounds/tas4.webp');
+    inset: 0;
+    background-image: url('/images/Backgrounds/maidsss.jpg');
     background-size: cover;
     background-position: center;
-    opacity: 0.15;
+    background-repeat: no-repeat;
+    opacity: 0.25;
     z-index: 0;
   }
 
-  .maid-cafe__content {
-    position: relative;
-    z-index: 1;
-    width: 100%;
-    min-height: 100vh;
-    padding: 2.5vw;
-    padding-top: 10.37vh;
+  /* ========== STEP SCREENS ========== */
+  .mc-step {
+    max-width: 580px;
     display: flex;
     flex-direction: column;
-    gap: 1.67vw;
-    overflow: visible;
+    gap: 1.25rem;
   }
 
-  .maid-cafe__title-wrapper {
-    opacity: 0;
-    transform: translateY(100px) scale(0.8);
-  }
-
-  .maid-cafe__description {
-    opacity: 0;
-    transform: translateY(50px);
-  }
-
-  .maid-cafe__info {
-    opacity: 0;
-    transform: translateY(50px);
-  }
-
-  .maid-cafe__maid-image {
-    opacity: 0;
-    transform: translateX(-100px);
-  }
-
-  .maid-cafe__collage {
-    opacity: 0;
-    transform: translateX(100px);
-  }
-
-  .maid-cafe__hero {
-    max-width: min(900px, 100%);
-  }
-
-  .maid-cafe__title-wrapper {
-    position: relative;
-    min-height: 5.83vw;
-  }
-
-  .maid-cafe__background-text {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    transform: translateY(-50%);
+  .mc-step__sub {
     font-family: 'Inter', sans-serif;
-    font-size: 14.58vw;
-    font-weight: 800;
-    line-height: 1;
-    color: transparent;
-    -webkit-text-stroke: 0.04vw rgba(255, 182, 193, 0.25);
-    pointer-events: none;
-    z-index: 0;
+    font-size: 1rem;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.5;
+    margin-top: -0.5rem;
   }
 
-  .maid-cafe__title {
-    position: relative;
-    z-index: 1;
-    margin: 0;
+  .mc-google-signin {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
   }
 
-  .maid-cafe__title-text {
+  .mc-google-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1.5rem;
     font-family: 'Inter', sans-serif;
-    font-size: 5.83vw;
-    font-weight: 800;
-    line-height: 0.9;
+    font-size: 1rem;
+    font-weight: 600;
     color: #fff;
-    text-transform: uppercase;
-    letter-spacing: -0.04em;
+    background: #1a1a1a;
+    border: 1.5px solid rgba(255,255,255,0.2);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    width: 100%;
+    justify-content: center;
   }
 
-  .maid-cafe__description {
+  .mc-google-btn:hover {
+    background: #222;
+    border-color: rgba(255,255,255,0.3);
+    transform: translateY(-1px);
+  }
+
+  .mc-google-btn svg {
+    flex-shrink: 0;
+  }
+
+  .mc-step__restrict {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.4);
+    margin-top: -0.75rem;
+  }
+
+  .mc-step__error {
+    font-size: 0.85rem;
+    color: #ff6b6b;
+    margin-top: -0.75rem;
+  }
+
+  .mc-step__guest-note {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.5;
+    padding: 0.75rem 1rem;
+    background: #1a1600;
+    border: 1px solid rgba(255,165,0,0.25);
+    border-radius: 10px;
+  }
+
+  .mc-step__guest-note strong { color: #FFA500; }
+
+  /* ========== EVENT INFO (Step 2) ========== */
+  .mc-event-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding-bottom: 0.5rem;
+  }
+
+  .mc-event-info__header p {
     font-family: 'Inter', sans-serif;
-    font-size: 1.17vw;
-    font-weight: 500;
-    color: #ffffff;
+    font-size: 0.95rem;
+    color: rgba(255,255,255,0.8);
     line-height: 1.6;
-    margin: 1.11vh 0 0 0;
-    max-width: 33.33vw;
-  }
-
-  .maid-cafe__info {
-    max-width: min(550px, 100%);
-  }
-
-  .maid-cafe__info p {
-    font-family: 'Inter', sans-serif;
-    font-size: 0.83vw;
-    color: #e0e0e0;
-    line-height: 1.7;
     margin: 0;
   }
 
-  .maid-cafe__maid-image {
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 55vw;
-    pointer-events: none;
-    z-index: -1;
-    opacity: 0.8;
+  .mc-event-info__header p:first-child {
+    font-size: 1.05rem;
   }
 
-  .maid-cafe__maid-image img {
+  .mc-event-info__muted {
+    color: rgba(255,255,255,0.45) !important;
+    font-style: italic;
+  }
+
+  .mc-event-info__section {
+    padding: 0.75rem 1rem;
+    background: #1a1017;
+    border: 1px solid rgba(255,105,180,0.2);
+    border-radius: 10px;
+  }
+
+  .mc-event-info__section p {
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.75);
+    line-height: 1.6;
+    margin: 0 0 0.25rem;
+  }
+
+  .mc-event-info__section strong { color: #FFB6C1; }
+
+  .mc-event-info__title {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #FFB6C1;
+    margin: 0;
+  }
+
+  .mc-event-info__schedule {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .mc-event-info__slot {
+    padding: 0.6rem 0.75rem;
+    background: #141414;
+    border-left: 3px solid #FF69B4;
+    border-radius: 0 8px 8px 0;
+  }
+
+  .mc-event-info__slot strong {
+    font-size: 0.9rem;
+    color: #fff;
+    display: block;
+    margin-bottom: 0.3rem;
+  }
+
+  .mc-event-info__slot ul {
+    list-style: disc;
+    padding-left: 1.25rem;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .mc-event-info__slot li {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.4;
+  }
+
+  .mc-event-info__important ul {
+    list-style: disc;
+    padding-left: 1.25rem;
+    margin: 0.4rem 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .mc-event-info__important li {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.4;
+  }
+
+  .mc-event-info__footer {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .mc-event-info__footer p {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.5);
+    margin: 0;
+  }
+
+  .mc-event-info__footer strong { color: rgba(255,255,255,0.7); }
+
+  /* ========== VIEW ORDER ========== */
+  :global(.mc-view-card) {
+    background: #141414;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  :global(.mc-view-header) {
+    padding: 0.75rem 1rem;
+    background: rgba(255,255,255,0.04);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  :global(.mc-view-order-id) {
+    font-size: 1.1rem;
+    font-weight: 800;
+    font-family: 'Inter', monospace;
+    color: #FFB6C1;
+    letter-spacing: 0.05em;
+    margin-right: 0.75rem;
+  }
+
+  :global(.mc-view-status) {
+    display: inline-block;
+    padding: 0.2rem 0.6rem;
+    font-size: 0.7rem;
+    font-weight: 600;
+    border-radius: 50px;
+    text-transform: capitalize;
+  }
+
+  :global(.mc-view-status--pending) { background: rgba(255,165,0,0.15); color: #FFA500; }
+  :global(.mc-view-status--confirmed) { background: rgba(80,200,120,0.15); color: #50C878; }
+  :global(.mc-view-status--cancelled) { background: rgba(255,80,80,0.15); color: #ff6b6b; }
+
+  :global(.mc-view-rows) { padding: 0.5rem 1rem; }
+
+  :global(.mc-view-row) {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+  :global(.mc-view-row:last-child) { border-bottom: none; }
+  :global(.mc-view-row span) { font-size: 0.8rem; color: rgba(255,255,255,0.4); flex-shrink: 0; }
+  :global(.mc-view-row strong) { font-size: 0.9rem; color: #fff; text-align: right; }
+
+  :global(.mc-view-note) {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.4);
+    line-height: 1.5;
+    margin-top: 0.75rem;
+  }
+
+  /* ========== CUSTOM DROPDOWN ========== */
+  :global(.mc-dropdown) {
+    position: relative;
     width: 100%;
-    height: auto;
+  }
+
+  :global(.mc-dropdown__trigger) {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 0.9rem;
+    font-size: 1rem;
+    font-family: 'Inter', sans-serif;
+    color: #fff;
+    background: #1a1a1a;
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: border-color 0.2s ease;
+    text-align: left;
+  }
+
+  :global(.mc-dropdown__trigger:hover) { border-color: rgba(255,255,255,0.3); }
+  :global(.mc-dropdown--open .mc-dropdown__trigger) { border-color: #FF69B4; }
+
+  :global(.mc-dropdown__text) {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  :global(.mc-dropdown__arrow) {
+    flex-shrink: 0;
+    transition: transform 0.2s ease;
+  }
+
+  :global(.mc-dropdown--open .mc-dropdown__arrow) {
+    transform: rotate(180deg);
+  }
+
+  :global(.mc-dropdown__list) {
+    display: none;
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: #1a1a1a;
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 10px;
+    max-height: 220px;
+    overflow-y: auto;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+  }
+
+  :global(.mc-dropdown--open .mc-dropdown__list) { display: block; }
+
+  :global(.mc-dropdown__list::-webkit-scrollbar) { width: 4px; }
+  :global(.mc-dropdown__list::-webkit-scrollbar-track) { background: transparent; }
+  :global(.mc-dropdown__list::-webkit-scrollbar-thumb) { background: rgba(255,182,193,0.2); border-radius: 2px; }
+
+  :global(.mc-dropdown__item) {
+    padding: 0.6rem 0.9rem;
+    font-size: 0.95rem;
+    font-family: 'Inter', sans-serif;
+    color: rgba(255,255,255,0.7);
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+
+  :global(.mc-dropdown__item:hover) {
+    background: #222;
+    color: #fff;
+  }
+
+  :global(.mc-dropdown__item--active) {
+    color: #FF69B4;
+    background: #1e1218;
+  }
+
+  :global(.mc-dropdown__item:first-child) { border-radius: 10px 10px 0 0; }
+  :global(.mc-dropdown__item:last-child) { border-radius: 0 0 10px 10px; }
+
+  :global(.mc-dropdown__group) {
+    padding: 0.5rem 0.9rem 0.25rem;
+    font-size: 0.7rem;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #FF69B4;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    margin-top: 0.25rem;
+  }
+
+  :global(.mc-dropdown__group:first-child) { border-top: none; margin-top: 0; }
+
+  /* ========== GUEST INFO ========== */
+  .mc-guest-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  :global(.mc-guest-row) {
+    display: grid;
+    grid-template-columns: auto 1fr 1fr;
+    gap: 0.5rem;
+    align-items: center;
+  }
+
+  :global(.mc-guest-row__num) {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: rgba(255,255,255,0.4);
+    white-space: nowrap;
+  }
+
+  /* ========== INFO SIDE ========== */
+  .mc__info {
+    position: relative;
+    z-index: 2;
+    padding: clamp(2rem, 5vw, 6rem);
+    padding-top: clamp(5rem, 12vh, 8rem);
+  }
+
+  .mc__title {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(4rem, 10vw, 10rem);
+    font-weight: 800;
+    color: #fff;
+    line-height: 0.85;
+    letter-spacing: -0.05em;
+    margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
+  }
+
+  .mc__date {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(1.25rem, 2.5vw, 2rem);
+    font-weight: 700;
+    color: #FFB6C1;
+    margin-bottom: 0.25rem;
+  }
+
+  .mc__location {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(0.85rem, 1.2vw, 1.1rem);
+    color: rgba(255,255,255,0.5);
+    line-height: 1.6;
+  }
+
+  .mc__directions {
+    display: inline-block;
+    margin-top: 0.5rem;
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(0.75rem, 1vw, 0.9rem);
+    color: #FF69B4;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: color 0.2s ease;
+  }
+
+  .mc__directions:hover { color: #FFB6C1; }
+
+  .mc__maids {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50%;
+    height: 85%;
+    object-fit: contain;
+    object-position: center bottom;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .mc__testudo {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .mc__testudo img {
+    height: clamp(300px, 45vh, 550px);
+    width: auto;
     object-fit: contain;
   }
 
-  .maid-cafe__collage {
+  /* ========== FORM SIDE ========== */
+  .mc__form-area {
+    position: relative;
+    z-index: 3;
+    padding: 0 clamp(1.5rem, 3vw, 3rem);
+    padding-top: clamp(5rem, 12vh, 8rem);
+    padding-left: 0;
+    height: calc(100vh - 4rem);
+    height: calc(100dvh - 4rem);
+    overflow-y: auto;
+  }
+
+  .mc__form-area::-webkit-scrollbar { width: 4px; }
+  .mc__form-area::-webkit-scrollbar-track { background: transparent; }
+  .mc__form-area::-webkit-scrollbar-thumb { background: rgba(255,182,193,0.2); border-radius: 2px; }
+
+  .mc-form {
+    max-width: 580px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    padding-bottom: 6rem;
+  }
+
+  .mc-form__title {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 0;
+  }
+
+  .mc-form__sub {
+    font-size: 0.95rem;
+    color: rgba(255,255,255,0.5);
+    margin-top: -0.5rem;
+  }
+
+  .mc-form__sub strong { color: #FFB6C1; }
+
+  .mc-label {
+    display: block;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 0.5rem;
+  }
+
+  .mc-req { color: #FF69B4; }
+
+  .mc-hint {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.35);
+    margin-bottom: 0.5rem;
+  }
+
+  :global(.mc-input) {
+    width: 100%;
+    padding: 0.75rem 0.9rem;
+    font-size: 1rem;
+    font-family: 'Inter', sans-serif;
+    color: #fff;
+    background: #1a1a1a;
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 10px;
+    outline: none;
+    transition: border-color 0.2s ease;
+  }
+
+  :global(.mc-input:focus) { border-color: #FF69B4; }
+  :global(.mc-input::placeholder) { color: rgba(255,255,255,0.2); }
+  :global(.mc-select) {
+    cursor: pointer;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: #1a1a1a;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='rgba(255,182,193,0.6)' stroke-width='2.5'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    padding-right: 2.25rem;
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px;
+  }
+  :global(.mc-select:focus) {
+    border-color: #FF69B4;
+  }
+  :global(.mc-select option) {
+    background: #141414;
+    color: #fff;
+    padding: 0.5rem;
+  }
+
+  .mc-input--contact { margin-top: 0.5rem; }
+
+  .mc-row { display: flex; gap: 0.75rem; }
+  .mc-field--half { flex: 1; }
+
+  .mc-radio-row {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+  }
+
+  .mc-chip { display: flex; cursor: pointer; }
+  .mc-chip input { display: none; }
+
+  .mc-chip span {
+    padding: 0.5rem 1rem;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: rgba(255,255,255,0.6);
+    background: #1a1a1a;
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 50px;
+    transition: all 0.2s ease;
+  }
+
+  .mc-chip:hover span { border-color: rgba(255,105,180,0.3); color: rgba(255,255,255,0.7); }
+  .mc-chip input:checked + span {
+    background: rgba(255,105,180,0.15);
+    border-color: #FF69B4;
+    color: #FF69B4;
+  }
+
+  .mc-notice {
+    margin-top: 0.5rem;
+    padding: 0.6rem 0.75rem;
+    background: #1a1600;
+    border: 1px solid rgba(255,165,0,0.25);
+    border-radius: 10px;
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.5;
+  }
+
+  .mc-notice strong { color: #FFA500; }
+
+  /* ========== ADDON PACKAGE ========== */
+  .mc-addon__toggle { cursor: pointer; display: block; }
+  .mc-addon__toggle input { display: none; }
+
+  .mc-addon__card {
+    background: #141414;
+    border: 1.5px solid rgba(255,255,255,0.12);
+    border-radius: 14px;
+    padding: 1rem;
+    transition: all 0.2s ease;
+  }
+
+  .mc-addon__toggle:hover .mc-addon__card { border-color: rgba(255,105,180,0.3); }
+
+  .mc-addon__toggle input:checked + .mc-addon__card {
+    border-color: #FF69B4;
+    background: rgba(255,105,180,0.06);
+  }
+
+  .mc-addon__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+  }
+
+  .mc-addon__title {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  .mc-addon__price {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    font-weight: 800;
+    color: #FF69B4;
+    background: rgba(255,105,180,0.1);
+    padding: 0.25rem 0.7rem;
+    border-radius: 50px;
+  }
+
+  .mc-addon__list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .mc-addon__list li {
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.6);
+    padding-left: 1rem;
+    position: relative;
+  }
+
+  .mc-addon__list li::before {
+    content: '';
     position: absolute;
-    right: 10vw;
-    top: 12.5%;
-    width: 45vw;
-    height: 75%;
-    z-index: 5;
+    left: 0;
+    top: 0.45em;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #FF69B4;
+    opacity: 0.5;
+  }
+
+  .mc-addon__party-note {
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    color: rgba(255,182,193,0.7);
+    font-style: italic;
+    line-height: 1.4;
+  }
+
+  /* ========== SEATING DIAGRAM ========== */
+  .mc-seating {
+    width: 100%;
+    max-width: 580px;
+    user-select: none;
+    -webkit-user-select: none;
+    background: #111;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 14px;
+    padding: 0.5rem;
+  }
+
+  .mc-seating__svg { width: 100%; height: auto; display: block; }
+
+  .mc-seating-legend {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.5rem;
+  }
+
+  .mc-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.95rem;
+    color: rgba(255,255,255,0.4);
+  }
+
+  .mc-legend-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 1.5px solid;
+  }
+
+  .mc-legend-dot--available { background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.3); }
+  .mc-legend-dot--selected { background: #FF69B4; border-color: #FF69B4; }
+  .mc-legend-dot--taken { background: rgba(255,80,80,0.4); border-color: rgba(255,80,80,0.5); }
+  .mc-legend-dot--vip { background: #D4AF37; border-color: #D4AF37; }
+
+  :global(.mc-seat) { cursor: pointer; }
+  :global(.mc-seat--taken) { cursor: not-allowed; }
+
+  :global(.mc-seat--available .mc-seat__cushion) {
+    fill: rgba(255,255,255,0.06);
+    stroke: rgba(255,255,255,0.15);
+    stroke-width: 1;
+  }
+  :global(.mc-seat--available .mc-seat__back) {
+    fill: rgba(255,255,255,0.1);
+    stroke: rgba(255,255,255,0.15);
+    stroke-width: 1;
+  }
+  :global(.mc-seat--available .mc-seat__label) { fill: rgba(255,255,255,0.35); }
+
+  :global(.mc-seat--available:hover .mc-seat__cushion) {
+    fill: rgba(255,105,180,0.2);
+    stroke: rgba(255,105,180,0.5);
+  }
+  :global(.mc-seat--available:hover .mc-seat__back) {
+    fill: rgba(255,105,180,0.25);
+    stroke: rgba(255,105,180,0.5);
+  }
+
+  :global(.mc-seat--selected .mc-seat__cushion) {
+    fill: #FF69B4;
+    stroke: #fff;
+    stroke-width: 2;
+  }
+  :global(.mc-seat--selected .mc-seat__back) {
+    fill: #FF1493;
+    stroke: #fff;
+    stroke-width: 2;
+  }
+  :global(.mc-seat--selected .mc-seat__label) { fill: #fff; font-weight: 800; }
+  :global(.mc-seat--selected) { filter: none; }
+
+  :global(.mc-seat--taken .mc-seat__cushion) {
+    fill: rgba(255,80,80,0.1);
+    stroke: rgba(255,80,80,0.3);
+    stroke-width: 1;
+  }
+  :global(.mc-seat--taken .mc-seat__back) {
+    fill: rgba(255,80,80,0.15);
+    stroke: rgba(255,80,80,0.3);
+    stroke-width: 1;
+  }
+  :global(.mc-seat--taken .mc-seat__label) { fill: rgba(255,80,80,0.4); }
+
+  .mc-seat-summary {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    align-items: center;
+    margin-top: 0.6rem;
+    min-height: 1.6em;
+  }
+
+  :global(.mc-seat-table-tag) {
+    display: inline-block;
+    padding: 0.3rem 0.7rem;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  :global(.mc-seat-tag) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    background: rgba(255,105,180,0.15);
+    border: 1.5px solid #FF69B4;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #FF69B4;
+  }
+
+  /* ========== PRICE SUMMARY ========== */
+  .mc-price {
+    background: #141414;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    padding: 0.75rem;
+  }
+
+  .mc-price__row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.95rem;
+    color: rgba(255,255,255,0.5);
+    padding: 0.25rem 0;
+  }
+
+  .mc-price__row--addon { color: #FF69B4; }
+
+  .mc-price__total {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #fff;
+    padding-top: 0.4rem;
+    margin-top: 0.3rem;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+
+  /* ========== AGREEMENT ========== */
+  .mc-agree {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    padding-top: 0.25rem;
+  }
+
+  .mc-checkbox {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    cursor: pointer;
+    font-size: 0.95rem;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.4;
+  }
+
+  .mc-checkbox input { accent-color: #FF69B4; flex-shrink: 0; margin-top: 0.15rem; }
+  .mc-checkbox strong { color: #FFB6C1; }
+
+  .mc-terms-link {
+    background: none;
+    border: none;
+    color: #FF69B4;
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: inherit;
+    font-family: inherit;
+    padding: 0;
+  }
+
+  .mc-submit {
+    width: 100%;
+    padding: 0.85rem;
+    font-size: 1.05rem;
+    font-weight: 700;
+    font-family: 'Inter', sans-serif;
+    color: #fff;
+    background: linear-gradient(135deg, #FF69B4, #FF1493);
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+
+  .mc-submit:hover { transform: translateY(-1px); }
+  .mc-submit:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+  /* ========== TOAST ========== */
+  :global(.mc-toast) {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: #1a1a1a;
+    border: 1px solid rgba(255,105,180,0.3);
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.6rem 1.25rem;
+    border-radius: 50px;
+    z-index: 10000;
+    opacity: 0;
+    transition: all 0.3s ease;
     pointer-events: none;
   }
 
-  .maid-cafe__collage-inner {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
-    gap: 0.67vw;
+  :global(.mc-toast--show) {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  /* ========== MODALS ========== */
+  .mc-modal {
+    position: fixed; inset: 0; z-index: 9999;
+    display: flex; align-items: center; justify-content: center; padding: 1rem;
+  }
+
+  .mc-modal__backdrop {
+    position: absolute; inset: 0;
+    background: rgba(0,0,0,0.85);
+    backdrop-filter: blur(8px);
+  }
+
+  .mc-modal__content {
+    position: relative;
+    background: #141414;
+    border: 1px solid rgba(255,182,193,0.15);
+    border-radius: 20px;
+    padding: clamp(1.25rem, 3vw, 2rem);
+    max-width: 520px;
     width: 100%;
-    height: 100%;
+    text-align: center;
+    max-height: 90vh;
+    overflow-y: auto;
   }
 
-  .maid-cafe__collage-item {
-    overflow: hidden;
-    border-radius: 0.67vw;
+  .mc-modal__content h2 {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 1rem;
   }
 
-  .maid-cafe__collage-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+  .mc-modal__content h3 {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #FFB6C1;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+    text-align: left;
   }
 
-  /* Tablet breakpoint */
-  @media (max-width: 992px) {
-    .maid-cafe__maid-image {
-      opacity: 0.5;
-    }
+  .mc-modal__sub { font-size: 0.8rem; color: rgba(255,255,255,0.5); margin-bottom: 0.75rem; }
 
-    .maid-cafe__collage {
-      right: 5%;
-      width: 50%;
-    }
+  .mc-terms-body {
+    text-align: left;
+    margin-bottom: 1.25rem;
   }
 
-  /* Mobile breakpoint - pixel values for readability */
-  @media (max-width: 768px) {
-    .maid-cafe__content {
-      padding: 24px;
-      padding-top: 100px;
-      gap: 20px;
-    }
-
-    .maid-cafe__title-wrapper {
-      min-height: 60px;
-    }
-
-    .maid-cafe__background-text {
-      font-size: 100px;
-    }
-
-    .maid-cafe__title-text {
-      font-size: 48px;
-    }
-
-    .maid-cafe__description {
-      font-size: 16px;
-      max-width: 100%;
-      margin-top: 12px;
-    }
-
-    .maid-cafe__info {
-      max-width: 100%;
-    }
-
-    .maid-cafe__info p {
-      font-size: 14px;
-    }
-
-    .maid-cafe__maid-image {
-      width: 100%;
-      opacity: 0.3;
-    }
-
-    .maid-cafe__collage {
-      display: none;
-    }
+  .mc-terms-body p {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.5;
+    margin-bottom: 0.4rem;
   }
 
-  /* Small mobile */
-  @media (max-width: 480px) {
-    .maid-cafe__content {
-      padding: 16px;
-      padding-top: 80px;
-      gap: 16px;
+  .mc-terms-body strong { color: #fff; }
+
+  .mc-terms-body ul {
+    list-style: disc;
+    padding-left: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .mc-terms-body li {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.5;
+  }
+
+  .mc-modal__order { margin-bottom: 1.25rem; }
+  .mc-modal__order p { font-size: 0.8rem; color: rgba(255,255,255,0.5); margin-bottom: 0.4rem; }
+  .mc-modal__id {
+    display: inline-block;
+    font-size: 1.8rem;
+    font-weight: 800;
+    font-family: 'Inter', monospace;
+    color: #FFB6C1;
+    letter-spacing: 0.1em;
+    background: rgba(255,182,193,0.08);
+    padding: 0.4rem 1.25rem;
+    border-radius: 12px;
+    border: 2px dashed rgba(255,182,193,0.25);
+  }
+
+  .mc-modal__payment {
+    text-align: left;
+    background: rgba(255,255,255,0.03);
+    border-radius: 12px;
+    padding: 1rem;
+    margin-bottom: 1.25rem;
+  }
+  .mc-modal__payment p { font-size: 0.8rem; color: rgba(255,255,255,0.7); line-height: 1.6; margin-bottom: 0.3rem; }
+  .mc-modal__payment strong { color: #FFB6C1; }
+  .mc-modal__warn { font-size: 0.75rem !important; color: #FFA500 !important; margin-top: 0.5rem !important; }
+
+  :global(.mc-confirm-summary) {
+    text-align: left;
+    background: #141414;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    padding: 0.75rem;
+    max-height: 300px;
+    overflow-y: auto;
+  }
+
+  :global(.mc-confirm-row) {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  :global(.mc-confirm-row:last-child) { border-bottom: none; }
+  :global(.mc-confirm-row span) { font-size: 0.8rem; color: rgba(255,255,255,0.4); flex-shrink: 0; min-width: 80px; }
+  :global(.mc-confirm-row strong) { font-size: 0.9rem; color: #fff; text-align: right; word-break: break-word; }
+
+  .mc-confirm-actions { display: flex; gap: 0.5rem; margin-top: 0.5rem; }
+  .mc-btn-secondary {
+    flex: 1; padding: 0.65rem; font-size: 0.85rem; font-weight: 600; font-family: 'Inter', sans-serif;
+    color: rgba(255,255,255,0.7); background: #1a1a1a; border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 12px; cursor: pointer; transition: all 0.2s ease;
+  }
+  .mc-btn-secondary:hover { background: #222; }
+  .mc-confirm-actions .mc-submit { flex: 1; }
+
+  /* ========== VALIDATION ========== */
+  :global(.mc-input--invalid) {
+    border-color: #ff6b6b !important;
+  }
+
+  :global(.mc-field-error) {
+    font-size: 0.78rem;
+    color: #ff6b6b;
+    margin-top: 0.3rem;
+    margin-bottom: 0;
+  }
+
+  /* ========== CHECKOUT SCREEN ========== */
+  .mc-modal__content--checkout {
+    max-width: 560px;
+    text-align: left;
+  }
+
+  .mc-checkout-section {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .mc-checkout-section__title {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgba(255,255,255,0.4);
+    margin: 0 0 0.4rem;
+  }
+
+  .mc-checkout-section__text {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.5;
+    margin: 0 0 0.3rem;
+  }
+
+  .mc-checkout-venmo__amount {
+    font-size: 1rem;
+    color: #fff;
+    margin: 0 0 0.3rem;
+  }
+
+  .mc-checkout-venmo__amount strong {
+    font-size: 1.3rem;
+    color: #FF69B4;
+  }
+
+  .mc-checkout-venmo__box {
+    background: #1a1017;
+    border: 1px solid rgba(255,105,180,0.2);
+    border-radius: 10px;
+    padding: 0.6rem 0.75rem;
+    margin-top: 0.4rem;
+  }
+
+  .mc-checkout-venmo__box p {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.8);
+    margin: 0 0 0.15rem;
+  }
+
+  .mc-checkout-venmo__box strong { color: #FFB6C1; }
+
+  .mc-checkout-event-info {
+    margin-top: 0.5rem;
+    padding: 0.6rem 0.75rem;
+    background: #141414;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+  }
+
+  .mc-checkout-event-info p {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.5;
+    margin: 0 0 0.2rem;
+  }
+
+  .mc-checkout-event-info h4 {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #FFB6C1;
+    margin: 0.5rem 0 0.25rem;
+  }
+
+  .mc-checkout-event-info ul {
+    list-style: disc;
+    padding-left: 1.1rem;
+    margin: 0;
+  }
+
+  .mc-checkout-event-info li {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.4;
+    margin-bottom: 0.15rem;
+  }
+
+  .mc-checkout-venmo__warning {
+    background: #1a1600;
+    border: 1px solid rgba(255,165,0,0.25);
+    border-radius: 10px;
+    padding: 0.6rem 0.75rem;
+    margin-top: 0.75rem;
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.5;
+  }
+
+  .mc-checkout-venmo__warning strong {
+    color: #FFA500;
+  }
+
+  /* ========== RESPONSIVE ========== */
+  @media (max-width: 900px) {
+    .mc {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto 1fr;
     }
 
-    .maid-cafe__title-wrapper {
-      min-height: 50px;
+    .mc__info {
+      padding: clamp(1.5rem, 4vw, 3rem);
+      padding-top: clamp(5rem, 14vh, 7rem);
+      text-align: center;
     }
 
-    .maid-cafe__background-text {
-      font-size: 70px;
+    .mc__title { font-size: clamp(3rem, 12vw, 5rem); }
+
+    .mc__form-area {
+      padding: clamp(1rem, 4vw, 2rem);
+      padding-top: 0;
+      height: 100%;
+      overflow-y: auto;
     }
 
-    .maid-cafe__title-text {
-      font-size: 36px;
-    }
+    .mc-form { max-width: 100%; margin: 0 auto; }
+    .mc__maids { display: none; }
+    .mc__testudo { display: none; }
+  }
 
-    .maid-cafe__description {
-      font-size: 14px;
-    }
-
-    .maid-cafe__info p {
-      font-size: 13px;
-    }
-
-    .maid-cafe__maid-image {
-      opacity: 0.25;
-    }
+  @media (max-width: 500px) {
+    .mc-row { flex-direction: column; gap: 1rem; }
   }
 </style>
