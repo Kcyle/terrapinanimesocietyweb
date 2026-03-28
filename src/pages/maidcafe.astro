@@ -41,7 +41,7 @@ import Header from '../components/navigation/Header.astro';
             data-callback="handleGoogleSignIn"
             data-auto_prompt="false">
           </div>
-          <div id="google-btn-container"></div>
+          <div id="google-btn-container" style="position:absolute;opacity:0;pointer-events:none;height:0;overflow:hidden;"></div>
           <button type="button" id="google-signin-btn" class="mc-google-btn">
             <svg viewBox="0 0 24 24" width="20" height="20">
               <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.27-4.74 3.27-8.1z"/>
@@ -109,7 +109,6 @@ import Header from '../components/navigation/Header.astro';
           <div class="mc-event-info__important">
             <h3 class="mc-event-info__title">Important</h3>
             <ul>
-              <li>96 seats available. Preordering is recommended.</li>
               <li>Your reservation is not confirmed until payment is received via Venmo.</li>
               <li>Do not promote this event outside of the UMD community.</li>
             </ul>
@@ -400,8 +399,8 @@ import Header from '../components/navigation/Header.astro';
       verifiedName = name;
       error.style.display = 'none';
       // Check for existing reservation
+      document.getElementById('step-email')!.style.display = 'none';
       checkExistingReservation(email).then(hasReservation => {
-        document.getElementById('step-email')!.style.display = 'none';
         if (hasReservation) {
           document.getElementById('step-view-order')!.style.display = 'block';
         } else {
@@ -414,7 +413,18 @@ import Header from '../components/navigation/Header.astro';
     }
   };
 
-  document.getElementById('google-signin-btn')!.style.display = 'none';
+  let googleReady = false;
+
+  document.getElementById('google-signin-btn')!.addEventListener('click', () => {
+    if (googleReady) {
+      const gBtn = document.querySelector('#google-btn-container iframe, #google-btn-container div[role="button"]') as HTMLElement;
+      if (gBtn) { gBtn.click(); return; }
+      (window as any).google.accounts.id.prompt();
+    } else {
+      document.getElementById('gate-email-error')!.textContent = 'Google Sign In is loading. Please wait a moment and try again.';
+      document.getElementById('gate-email-error')!.style.display = 'block';
+    }
+  });
 
   function initGoogleSignIn() {
     const clientId = import.meta.env.PUBLIC_GOOGLE_CLIENT_ID || '';
@@ -433,6 +443,7 @@ import Header from '../components/navigation/Header.astro';
         shape: 'pill',
       }
     );
+    googleReady = true;
   }
 
 
@@ -1824,7 +1835,7 @@ import Header from '../components/navigation/Header.astro';
 
   .mc-addon__toggle input:checked + .mc-addon__card {
     border-color: #FF69B4;
-    background: rgba(255,105,180,0.06);
+    background: #1e1018;
   }
 
   .mc-addon__header {
@@ -2116,7 +2127,8 @@ import Header from '../components/navigation/Header.astro';
   /* ========== MODALS ========== */
   .mc-modal {
     position: fixed; inset: 0; z-index: 9999;
-    display: flex; align-items: center; justify-content: center; padding: 1rem;
+    display: flex; align-items: flex-start; justify-content: center; padding: 2rem 1rem;
+    overflow-y: auto;
   }
 
   .mc-modal__backdrop {
@@ -2259,6 +2271,8 @@ import Header from '../components/navigation/Header.astro';
   .mc-modal__content--checkout {
     max-width: 560px;
     text-align: left;
+    max-height: none;
+    overflow-y: visible;
   }
 
   .mc-checkout-section {

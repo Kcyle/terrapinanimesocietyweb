@@ -327,13 +327,9 @@ const adminHash = import.meta.env.PUBLIC_ADMIN_PASSWORD || import.meta.env.ADMIN
   document.getElementById('detail-cancel')!.addEventListener('click', async () => {
     if (!selectedReservation || !confirm('Cancel this reservation? This will also free up their seats.')) return;
     await supabase.from('maidcafe_reservations').update({ payment_status: 'cancelled' }).eq('id', selectedReservation.id);
-    // Free seats
-    if (selectedReservation.selected_seats) {
-      for (const s of selectedReservation.selected_seats) {
-        await supabase.from('maidcafe_seats').update({ status: 'available', order_id: null, reserved_at: null })
-          .eq('table_number', s.table_number).eq('seat_number', s.seat_number);
-      }
-    }
+    // Free seats by order_id (most reliable)
+    await supabase.from('maidcafe_seats').update({ status: 'available', order_id: null, reserved_at: null })
+      .eq('order_id', selectedReservation.order_id);
     detailModal.style.display = 'none';
     await loadDashboard();
   });
