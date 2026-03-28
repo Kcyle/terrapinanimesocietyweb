@@ -7,6 +7,7 @@ import Header from '../components/navigation/Header.astro';
 <BaseLayout title="Maid Cafe - Terrapin Anime Society">
   <Fragment slot="head">
     <meta name="description" content="TAS Maid Cafe - April 5th, 2026. Reserve your spot for an unforgettable experience at the Colony Ballroom, Stamp Student Union." />
+    <style>html, body { overflow: hidden; height: 100vh; height: 100dvh; }</style>
   </Fragment>
   <Header />
 
@@ -16,15 +17,11 @@ import Header from '../components/navigation/Header.astro';
     <!-- Left: Event Info -->
     <div class="mc__info">
       <h1 class="mc__title">Maid&nbsp;Cafe</h1>
-      <p class="mc__date">April 5, 2026 | 2:00 — 5:00 PM</p>
-      <p class="mc__location">Colony Ballroom, Stamp Student Union</p>
+      <p class="mc__date">April 5, 2026</p>
+      <p class="mc__time">2:00 to 5:00 PM</p>
     </div>
 
     <img src="/images/Characters/maids.webp" alt="Maid Cafe Characters" class="mc__maids" />
-
-    <div class="mc__testudo">
-      <img src="/images/Maids/Testudo Maid.png" alt="Testudo Maid" />
-    </div>
 
     <!-- Right: Steps -->
     <div class="mc__form-area">
@@ -458,10 +455,11 @@ import Header from '../components/navigation/Header.astro';
   // Check for Supabase auth session on page load (after Google redirect)
   (async function checkAuthSession() {
     const { data: { session } } = await supabase.auth.getSession();
+    if (window.location.hash) history.replaceState(null, '', window.location.pathname);
     if (session?.user) {
       const email = session.user.email?.toLowerCase() || '';
       const name = session.user.user_metadata?.full_name || session.user.user_metadata?.name || '';
-      if (email) {
+      if (email.endsWith('@umd.edu') || email.endsWith('@terpmail.umd.edu')) {
         verifiedEmail = email;
         verifiedName = name;
         document.getElementById('step-email')!.style.display = 'none';
@@ -471,6 +469,10 @@ import Header from '../components/navigation/Header.astro';
         } else {
           document.getElementById('step-info')!.style.display = 'flex';
         }
+      } else if (email) {
+        await supabase.auth.signOut();
+        document.getElementById('gate-email-error')!.textContent = 'Only @terpmail.umd.edu and @umd.edu accounts are accepted.';
+        document.getElementById('gate-email-error')!.style.display = 'block';
       }
     }
   })();
@@ -1182,7 +1184,7 @@ import Header from '../components/navigation/Header.astro';
     inset: 0;
     background: #0a0a0a;
     display: grid;
-    grid-template-columns: 1fr 1.1fr;
+    grid-template-columns: 1fr 1fr;
     align-items: start;
     overflow: hidden;
   }
@@ -1200,7 +1202,7 @@ import Header from '../components/navigation/Header.astro';
 
   /* ========== STEP SCREENS ========== */
   .mc-step {
-    max-width: 580px;
+    max-width: 100%;
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
@@ -1571,6 +1573,9 @@ import Header from '../components/navigation/Header.astro';
     z-index: 2;
     padding: clamp(2rem, 5vw, 6rem);
     padding-top: clamp(5rem, 12vh, 8rem);
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
   }
 
   .mc__title {
@@ -1580,7 +1585,7 @@ import Header from '../components/navigation/Header.astro';
     color: #fff;
     line-height: 0.85;
     letter-spacing: -0.05em;
-    margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
+    margin-bottom: clamp(0.5rem, 1vw, 0.75rem);
   }
 
   .mc__date {
@@ -1588,14 +1593,31 @@ import Header from '../components/navigation/Header.astro';
     font-size: clamp(1.25rem, 2.5vw, 2rem);
     font-weight: 700;
     color: #FFB6C1;
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.15rem;
+  }
+
+  .mc__time {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(0.9rem, 1.5vw, 1.2rem);
+    font-weight: 500;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 0.5rem;
+  }
+
+  .mc__date-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    width: calc(100% + clamp(2rem, 5vw, 6rem));
   }
 
   .mc__location {
     font-family: 'Inter', sans-serif;
-    font-size: clamp(0.85rem, 1.2vw, 1.1rem);
-    color: rgba(255,255,255,0.5);
+    font-size: clamp(1rem, 1.5vw, 1.3rem);
+    font-weight: 500;
+    color: rgba(255,255,255,0.7);
     line-height: 1.6;
+    text-align: right;
   }
 
   .mc__directions {
@@ -1623,27 +1645,13 @@ import Header from '../components/navigation/Header.astro';
     pointer-events: none;
   }
 
-  .mc__testudo {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    z-index: 2;
-    pointer-events: none;
-  }
-
-  .mc__testudo img {
-    height: clamp(300px, 45vh, 550px);
-    width: auto;
-    object-fit: contain;
-  }
 
   /* ========== FORM SIDE ========== */
   .mc__form-area {
     position: relative;
     z-index: 3;
-    padding: 0 clamp(1.5rem, 3vw, 3rem);
+    padding: clamp(1.5rem, 3vw, 3rem);
     padding-top: clamp(5rem, 12vh, 8rem);
-    padding-left: 0;
     height: calc(100vh - 4rem);
     height: calc(100dvh - 4rem);
     overflow-y: auto;
@@ -1654,7 +1662,7 @@ import Header from '../components/navigation/Header.astro';
   .mc__form-area::-webkit-scrollbar-thumb { background: rgba(255,182,193,0.2); border-radius: 2px; }
 
   .mc-form {
-    max-width: 580px;
+    max-width: 100%;
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
@@ -1862,7 +1870,7 @@ import Header from '../components/navigation/Header.astro';
   /* ========== SEATING DIAGRAM ========== */
   .mc-seating {
     width: 100%;
-    max-width: 580px;
+    max-width: 100%;
     user-select: none;
     -webkit-user-select: none;
     background: #111;
@@ -2339,6 +2347,7 @@ import Header from '../components/navigation/Header.astro';
   /* ========== RESPONSIVE ========== */
   @media (max-width: 900px) {
     .mc {
+      position: fixed;
       grid-template-columns: 1fr;
       grid-template-rows: auto 1fr;
     }
@@ -2347,6 +2356,8 @@ import Header from '../components/navigation/Header.astro';
       padding: clamp(1.5rem, 4vw, 3rem);
       padding-top: clamp(5rem, 14vh, 7rem);
       text-align: center;
+      height: auto;
+      overflow: visible;
     }
 
     .mc__title { font-size: clamp(3rem, 12vw, 5rem); }
@@ -2360,7 +2371,6 @@ import Header from '../components/navigation/Header.astro';
 
     .mc-form { max-width: 100%; margin: 0 auto; }
     .mc__maids { display: none; }
-    .mc__testudo { display: none; }
   }
 
   @media (max-width: 500px) {
