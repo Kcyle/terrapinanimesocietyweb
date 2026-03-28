@@ -66,7 +66,7 @@ import Header from '../components/navigation/Header.astro';
           </div>
 
           <div class="mc-event-info__section">
-            <p>This form is only one part of preordering. To secure your spot, send <strong>$15</strong> via <a href="https://venmo.com/u/Terrapin-Anime-Society" target="_blank" rel="noopener" style="color:#FFB6C1;text-decoration:underline;">Venmo</a> with <strong>"(Your Name) for Maid Cafe"</strong> to <strong>@Terrapin-Anime-Society</strong>.</p>
+            <p>To secure your spot, send <strong>$15</strong> via <a href="https://venmo.com/u/Terrapin-Anime-Society" target="_blank" rel="noopener" style="color:#FFB6C1;text-decoration:underline;">Venmo</a> with <strong>"(Your Name) for Maid Cafe"</strong> to <strong>@Terrapin-Anime-Society</strong>.</p>
             <p class="mc-event-info__muted">Door tickets may be available if space allows, but preordering is recommended.</p>
           </div>
 
@@ -278,7 +278,6 @@ import Header from '../components/navigation/Header.astro';
           </ul>
           <h3>Important</h3>
           <ul>
-            <li>96 seats available. Preordering is recommended. Door tickets may be available if space allows.</li>
             <li>Your reservation is not confirmed until payment is received via Venmo.</li>
             <li>Do not promote this event outside of the UMD community.</li>
           </ul>
@@ -312,7 +311,6 @@ import Header from '../components/navigation/Header.astro';
             </ul>
             <h4>Important</h4>
             <ul>
-              <li>96 seats available. Preordering recommended.</li>
               <li>Reservation not confirmed until Venmo payment received.</li>
               <li>Do not promote outside the UMD community.</li>
             </ul>
@@ -455,7 +453,9 @@ import Header from '../components/navigation/Header.astro';
   // Check for Supabase auth session on page load (after Google redirect)
   (async function checkAuthSession() {
     const { data: { session } } = await supabase.auth.getSession();
-    if (window.location.hash) history.replaceState(null, '', window.location.pathname);
+    if (window.location.hash || window.location.href.endsWith('#')) {
+      history.replaceState(null, '', window.location.pathname);
+    }
     if (session?.user) {
       const email = session.user.email?.toLowerCase() || '';
       const name = session.user.user_metadata?.full_name || session.user.user_metadata?.name || '';
@@ -2239,7 +2239,7 @@ import Header from '../components/navigation/Header.astro';
 
   /* ========== CHECKOUT SCREEN ========== */
   .mc-modal__content--checkout {
-    max-width: 560px;
+    max-width: 90vw;
     text-align: left;
     max-height: none;
     overflow-y: visible;
