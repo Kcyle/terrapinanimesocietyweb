@@ -414,14 +414,7 @@ import Header from '../components/navigation/Header.astro';
     }
   };
 
-  document.getElementById('google-signin-btn')!.addEventListener('click', () => {
-    if ((window as any).google?.accounts?.id) {
-      (window as any).google.accounts.id.prompt();
-    } else {
-      document.getElementById('gate-email-error')!.textContent = 'Google Sign In is still loading. Try again.';
-      document.getElementById('gate-email-error')!.style.display = 'block';
-    }
-  });
+  document.getElementById('google-signin-btn')!.style.display = 'none';
 
   function initGoogleSignIn() {
     const clientId = import.meta.env.PUBLIC_GOOGLE_CLIENT_ID || '';
@@ -431,6 +424,15 @@ import Header from '../components/navigation/Header.astro';
       callback: (window as any).handleGoogleSignIn,
       auto_select: false,
     });
+    (window as any).google.accounts.id.renderButton(
+      document.getElementById('google-btn-container')!, {
+        theme: 'filled_black',
+        size: 'large',
+        width: 350,
+        text: 'signin_with',
+        shape: 'pill',
+      }
+    );
   }
 
 
