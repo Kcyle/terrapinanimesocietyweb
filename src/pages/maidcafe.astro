@@ -2255,19 +2255,51 @@ import Header from '../components/navigation/Header.astro';
 
   /* ========== CHECKOUT SCREEN ========== */
   .mc-modal__content--checkout {
-    max-width: 850px;
+    max-width: 600px;
     text-align: left;
-    max-height: none;
-    overflow: visible;
-    padding: 1.5rem;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0 1.5rem;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 1.25rem;
   }
 
-  .mc-modal__content--checkout > h2 { grid-column: 1 / -1; margin-bottom: 0.25rem; }
-  .mc-modal__content--checkout > .mc-checkout-venmo__warning { grid-column: 1 / -1; }
-  .mc-modal__content--checkout > .mc-confirm-actions { grid-column: 1 / -1; }
+  .mc-modal__content--checkout .mc-checkout-section {
+    padding: 0.35rem 0;
+    border-bottom-width: 0;
+  }
+
+  .mc-modal__content--checkout .mc-checkout-section__title {
+    font-size: 0.65rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .mc-modal__content--checkout .mc-checkout-section__text {
+    font-size: 0.8rem;
+  }
+
+  .mc-modal__content--checkout .mc-confirm-summary {
+    padding: 0.4rem;
+    max-height: none;
+    margin: 0;
+  }
+
+  :global(.mc-modal__content--checkout .mc-confirm-row) {
+    padding: 0.3rem 0;
+  }
+
+  .mc-modal__content--checkout .mc-checkout-venmo__box {
+    padding: 0.4rem 0.6rem;
+    margin-top: 0.25rem;
+  }
+
+  .mc-modal__content--checkout .mc-checkout-venmo__warning {
+    padding: 0.4rem 0.6rem;
+    margin-top: 0.5rem;
+    font-size: 0.7rem;
+  }
+
+  .mc-modal__content--checkout .mc-confirm-actions {
+    margin-top: 0.5rem;
+  }
 
   .mc-checkout-section {
     padding: 0.75rem 0;
@@ -2395,6 +2427,13 @@ import Header from '../components/navigation/Header.astro';
 
     .mc-form { max-width: 100%; margin: 0 auto; }
     .mc__maids { display: none; }
+  }
+
+  @media (max-width: 600px) {
+    .mc-modal__content--checkout {
+      max-width: 95vw;
+      padding: 1rem;
+    }
   }
 
   @media (max-width: 500px) {
