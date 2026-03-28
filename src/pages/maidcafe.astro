@@ -375,6 +375,17 @@ import Header from '../components/navigation/Header.astro';
   let verifiedEmail = '';
   let verifiedName = '';
 
+  function setMobileFullscreen(full: boolean) {
+    const info = document.querySelector('.mc__info') as HTMLElement;
+    const header = document.querySelector('.header') as HTMLElement;
+    const formArea = document.querySelector('.mc__form-area') as HTMLElement;
+    if (!info || !formArea) return;
+    if (window.innerWidth <= 900) {
+      info.style.display = full ? 'none' : '';
+      formArea.style.paddingTop = full ? 'clamp(2rem, 5vh, 3rem)' : '';
+    }
+    if (header) header.style.display = full ? 'none' : '';
+  }
 
   // Google sign-in via Supabase Auth
   document.getElementById('google-signin-btn')!.addEventListener('click', async () => {
@@ -451,6 +462,7 @@ import Header from '../components/navigation/Header.astro';
   document.getElementById('view-order-back')!.addEventListener('click', () => {
     document.getElementById('step-view-order')!.style.display = 'none';
     document.getElementById('step-email')!.style.display = 'flex';
+    setMobileFullscreen(false);
     document.querySelector('.mc__form-area')?.scrollTo(0, 0);
   });
 
@@ -467,6 +479,7 @@ import Header from '../components/navigation/Header.astro';
         verifiedEmail = email;
         verifiedName = name;
         document.getElementById('step-email')!.style.display = 'none';
+        setMobileFullscreen(true);
         const hasReservation = await checkExistingReservation(email);
         if (hasReservation) {
           document.getElementById('step-view-order')!.style.display = 'flex';
