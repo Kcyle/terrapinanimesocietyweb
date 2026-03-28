@@ -7,7 +7,6 @@ import Header from '../components/navigation/Header.astro';
 <BaseLayout title="Maid Cafe - Terrapin Anime Society">
   <Fragment slot="head">
     <meta name="description" content="TAS Maid Cafe - April 5th, 2026. Reserve your spot for an unforgettable experience at the Colony Ballroom, Stamp Student Union." />
-    <script is:inline src="https://accounts.google.com/gsi/client" async defer></script>
   </Fragment>
   <Header />
 
@@ -36,12 +35,6 @@ import Header from '../components/navigation/Header.astro';
         <p class="mc-step__sub">Sign in with your TerpMail account.</p>
         <p class="mc-step__restrict">Only @terpmail.umd.edu and @umd.edu accounts are accepted.</p>
         <div class="mc-google-signin">
-          <div id="g_id_onload"
-            data-client_id={import.meta.env.PUBLIC_GOOGLE_CLIENT_ID || ''}
-            data-callback="handleGoogleSignIn"
-            data-auto_prompt="false">
-          </div>
-          <div id="google-btn-container" style="display:none;"></div>
           <button type="button" id="google-signin-btn" class="mc-google-btn">
             <svg viewBox="0 0 24 24" width="20" height="20">
               <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.27-4.74 3.27-8.1z"/>
@@ -387,43 +380,19 @@ import Header from '../components/navigation/Header.astro';
   let verifiedEmail = '';
   let verifiedName = '';
 
-  // Google Sign-In callback
-  (window as any).handleGoogleSignIn = (response: any) => {
-    const payload = JSON.parse(atob(response.credential.split('.')[1]));
-    const email = payload.email?.toLowerCase() || '';
-    const name = payload.name || '';
-    const error = document.getElementById('gate-email-error')!;
 
-    if (email) { // TODO: restore UMD-only check before launch: email.endsWith('@umd.edu') || email.endsWith('@terpmail.umd.edu')
-      verifiedEmail = email;
-      verifiedName = name;
-      error.style.display = 'none';
-      // Check for existing reservation
-      document.getElementById('step-email')!.style.display = 'none';
-      checkExistingReservation(email).then(hasReservation => {
-        if (hasReservation) {
-          document.getElementById('step-view-order')!.style.display = 'flex';
-        } else {
-          document.getElementById('step-info')!.style.display = 'flex';
-        }
-      });
-    } else {
-      error.textContent = 'Please sign in with a @umd.edu or @terpmail.umd.edu email address.';
-      error.style.display = 'block';
-    }
-  };
-
-  const GOOGLE_CLIENT_ID = import.meta.env.PUBLIC_GOOGLE_CLIENT_ID || '';
-
-  document.getElementById('google-signin-btn')!.addEventListener('click', () => {
-    if (!GOOGLE_CLIENT_ID) {
-      document.getElementById('gate-email-error')!.textContent = 'Google Sign In is not configured.';
+  // Google sign-in via Supabase Auth
+  document.getElementById('google-signin-btn')!.addEventListener('click', async () => {
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: {
+        redirectTo: window.location.origin + window.location.pathname,
+      }
+    });
+    if (error) {
+      document.getElementById('gate-email-error')!.textContent = 'Sign in failed: ' + error.message;
       document.getElementById('gate-email-error')!.style.display = 'block';
-      return;
     }
-    const nonce = Math.random().toString(36).substring(2);
-    const redirectUri = window.location.origin + window.location.pathname;
-    window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${encodeURIComponent(GOOGLE_CLIENT_ID)}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=id_token&scope=email%20profile&nonce=${nonce}`;
   });
 
 
@@ -486,15 +455,24 @@ import Header from '../components/navigation/Header.astro';
     document.querySelector('.mc__form-area')?.scrollTo(0, 0);
   });
 
-  // Handle Google redirect callback on page load
-  (function handleGoogleRedirect() {
-    const hash = window.location.hash.substring(1);
-    if (!hash) return;
-    const params = new URLSearchParams(hash);
-    const idToken = params.get('id_token');
-    if (!idToken) return;
-    history.replaceState(null, '', window.location.pathname);
-    (window as any).handleGoogleSignIn({ credential: idToken });
+  // Check for Supabase auth session on page load (after Google redirect)
+  (async function checkAuthSession() {
+    const { data: { session } } = await supabase.auth.getSession();
+    if (session?.user) {
+      const email = session.user.email?.toLowerCase() || '';
+      const name = session.user.user_metadata?.full_name || session.user.user_metadata?.name || '';
+      if (email) {
+        verifiedEmail = email;
+        verifiedName = name;
+        document.getElementById('step-email')!.style.display = 'none';
+        const hasReservation = await checkExistingReservation(email);
+        if (hasReservation) {
+          document.getElementById('step-view-order')!.style.display = 'flex';
+        } else {
+          document.getElementById('step-info')!.style.display = 'flex';
+        }
+      }
+    }
   })();
 
   document.getElementById('gate-agree-btn')!.addEventListener('click', () => {
