@@ -1015,6 +1015,8 @@ import Header from '../components/navigation/Header.astro';
       table_number: selectedSeats[0].table,
       selected_seats: selectedSeats.map(s => ({ table_number: s.table, seat_number: s.seat })),
       agreed_to_terms: true,
+      payment_status: 'pending',
+      created_at: new Date().toISOString(),
     };
 
     const p = pendingPayload;
@@ -1081,17 +1083,12 @@ import Header from '../components/navigation/Header.astro';
       return;
     }
 
-    // Success
+    // Success - show reservation details
     confirmModal.style.display = 'none';
-    modalOid.textContent = pendingOrderId;
-    document.getElementById('modal-total')!.textContent = `$${pendingPayload.total_price}`;
-    successModal.style.display = 'flex';
-  });
-
-  modalClose.addEventListener('click', () => {
-    successModal.style.display = 'none';
-    form.querySelectorAll('input, select, textarea, button').forEach(el => (el as HTMLInputElement).disabled = true);
-    submitBtn.textContent = 'Reservation Submitted';
+    form.style.display = 'none';
+    renderViewOrder(pendingPayload);
+    document.getElementById('step-view-order')!.style.display = 'flex';
+    document.querySelector('.mc__form-area')?.scrollTo(0, 0);
   });
 
   /* ========== CUSTOM DROPDOWNS ========== */
@@ -2116,8 +2113,8 @@ import Header from '../components/navigation/Header.astro';
   /* ========== MODALS ========== */
   .mc-modal {
     position: fixed; inset: 0; z-index: 9999;
-    display: flex; align-items: flex-start; justify-content: center; padding: 2rem 1rem;
-    overflow-y: auto;
+    display: flex; align-items: center; justify-content: center; padding: 1rem;
+    overflow: hidden;
   }
 
   .mc-modal__backdrop {
@@ -2258,11 +2255,19 @@ import Header from '../components/navigation/Header.astro';
 
   /* ========== CHECKOUT SCREEN ========== */
   .mc-modal__content--checkout {
-    max-width: 90vw;
+    max-width: 850px;
     text-align: left;
     max-height: none;
-    overflow-y: visible;
+    overflow: visible;
+    padding: 1.5rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 1.5rem;
   }
+
+  .mc-modal__content--checkout > h2 { grid-column: 1 / -1; margin-bottom: 0.25rem; }
+  .mc-modal__content--checkout > .mc-checkout-venmo__warning { grid-column: 1 / -1; }
+  .mc-modal__content--checkout > .mc-confirm-actions { grid-column: 1 / -1; }
 
   .mc-checkout-section {
     padding: 0.75rem 0;
