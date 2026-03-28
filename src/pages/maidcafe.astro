@@ -439,6 +439,10 @@ import Header from '../components/navigation/Header.astro';
           <div class="mc-view-row"><span>Reserved</span><strong>${new Date(r.created_at).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</strong></div>
         </div>
       </div>
+      <div class="mc-view-venmo">
+        <p><strong>Venmo:</strong> Send <strong>$${r.total_price}</strong> via <a href="https://venmo.com/u/Terrapin-Anime-Society" target="_blank" rel="noopener" style="color:#FFB6C1;text-decoration:underline;">Venmo</a> to <strong>@Terrapin-Anime-Society</strong></p>
+        <p>Note: <strong>"${r.full_name} for Maid Cafe"</strong></p>
+      </div>
       <p class="mc-view-note">This reservation cannot be edited. For questions or changes, contact <strong>terrapinanimesociety@gmail.com</strong> or <strong>@kcyle_</strong> on <a href="https://discord.com/invite/GJXS7aM7YQ" target="_blank" rel="noopener" style="color:#FF69B4;text-decoration:underline;">Discord</a>.</p>
     `;
   }
@@ -481,6 +485,7 @@ import Header from '../components/navigation/Header.astro';
     document.getElementById('step-info')!.style.display = 'none';
     const form = document.getElementById('maidcafe-form') as HTMLFormElement;
     form.style.display = 'flex';
+    document.querySelector('.mc__form-area')?.scrollTo(0, 0);
     // Init custom dropdowns now that form is visible
     setTimeout(() => initCustomDropdowns(), 100);
     // Pre-fill fields from Google profile
@@ -1439,6 +1444,20 @@ import Header from '../components/navigation/Header.astro';
   :global(.mc-view-row:last-child) { border-bottom: none; }
   :global(.mc-view-row span) { font-size: 0.8rem; color: rgba(255,255,255,0.4); flex-shrink: 0; }
   :global(.mc-view-row strong) { font-size: 0.9rem; color: #fff; text-align: right; }
+
+  :global(.mc-view-venmo) {
+    margin-top: 0.75rem;
+    padding: 0.75rem 1rem;
+    background: #1a1017;
+    border: 1px solid rgba(255,105,180,0.2);
+    border-radius: 10px;
+  }
+
+  :global(.mc-view-venmo p) {
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.8);
+    margin: 0 0 0.2rem;
+  }
 
   :global(.mc-view-note) {
     font-size: 0.8rem;
