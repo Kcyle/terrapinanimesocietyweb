@@ -2430,9 +2430,15 @@ import Header from '../components/navigation/Header.astro';
   }
 
   @media (max-width: 600px) {
+    .mc-modal {
+      padding: 0;
+    }
     .mc-modal__content--checkout {
-      max-width: 95vw;
-      padding: 1rem;
+      max-width: 100%;
+      max-height: 100vh;
+      max-height: 100dvh;
+      border-radius: 0;
+      padding: 1.5rem 1rem;
     }
   }
 
