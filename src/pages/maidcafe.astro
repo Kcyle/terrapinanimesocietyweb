@@ -402,9 +402,9 @@ import Header from '../components/navigation/Header.astro';
       document.getElementById('step-email')!.style.display = 'none';
       checkExistingReservation(email).then(hasReservation => {
         if (hasReservation) {
-          document.getElementById('step-view-order')!.style.display = 'block';
+          document.getElementById('step-view-order')!.style.display = 'flex';
         } else {
-          document.getElementById('step-info')!.style.display = 'block';
+          document.getElementById('step-info')!.style.display = 'flex';
         }
       });
     } else {
@@ -413,32 +413,18 @@ import Header from '../components/navigation/Header.astro';
     }
   };
 
-  let googleReady = false;
+  const GOOGLE_CLIENT_ID = import.meta.env.PUBLIC_GOOGLE_CLIENT_ID || '';
 
   document.getElementById('google-signin-btn')!.addEventListener('click', () => {
-    if (googleReady) {
-      (window as any).google.accounts.id.prompt((notification: any) => {
-        if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
-          document.getElementById('gate-email-error')!.textContent = 'Google popup was blocked. Please allow popups and try again.';
-          document.getElementById('gate-email-error')!.style.display = 'block';
-        }
-      });
-    } else {
-      document.getElementById('gate-email-error')!.textContent = 'Google Sign In is loading. Please wait a moment and try again.';
+    if (!GOOGLE_CLIENT_ID) {
+      document.getElementById('gate-email-error')!.textContent = 'Google Sign In is not configured.';
       document.getElementById('gate-email-error')!.style.display = 'block';
+      return;
     }
+    const nonce = Math.random().toString(36).substring(2);
+    const redirectUri = window.location.origin + window.location.pathname;
+    window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${encodeURIComponent(GOOGLE_CLIENT_ID)}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=id_token&scope=email%20profile&nonce=${nonce}`;
   });
-
-  function initGoogleSignIn() {
-    const clientId = import.meta.env.PUBLIC_GOOGLE_CLIENT_ID || '';
-    if (!clientId || !(window as any).google?.accounts?.id) return;
-    (window as any).google.accounts.id.initialize({
-      client_id: clientId,
-      callback: (window as any).handleGoogleSignIn,
-      auto_select: false,
-    });
-    googleReady = true;
-  }
 
 
   // Check for existing reservation
@@ -496,17 +482,20 @@ import Header from '../components/navigation/Header.astro';
   // View order back button
   document.getElementById('view-order-back')!.addEventListener('click', () => {
     document.getElementById('step-view-order')!.style.display = 'none';
-    document.getElementById('step-email')!.style.display = 'block';
+    document.getElementById('step-email')!.style.display = 'flex';
     document.querySelector('.mc__form-area')?.scrollTo(0, 0);
   });
 
-  // Retry init until Google SDK loads
-  const gsiInterval = setInterval(() => {
-    if ((window as any).google?.accounts?.id) {
-      initGoogleSignIn();
-      clearInterval(gsiInterval);
-    }
-  }, 200);
+  // Handle Google redirect callback on page load
+  (function handleGoogleRedirect() {
+    const hash = window.location.hash.substring(1);
+    if (!hash) return;
+    const params = new URLSearchParams(hash);
+    const idToken = params.get('id_token');
+    if (!idToken) return;
+    history.replaceState(null, '', window.location.pathname);
+    (window as any).handleGoogleSignIn({ credential: idToken });
+  })();
 
   document.getElementById('gate-agree-btn')!.addEventListener('click', () => {
     document.getElementById('step-info')!.style.display = 'none';
