@@ -395,7 +395,7 @@ import Header from '../components/navigation/Header.astro';
     const name = payload.name || '';
     const error = document.getElementById('gate-email-error')!;
 
-    if (email.endsWith('@umd.edu') || email.endsWith('@terpmail.umd.edu')) {
+    if (email) { // TODO: restore UMD-only check before launch: email.endsWith('@umd.edu') || email.endsWith('@terpmail.umd.edu')
       verifiedEmail = email;
       verifiedName = name;
       error.style.display = 'none';
@@ -492,6 +492,7 @@ import Header from '../components/navigation/Header.astro';
   document.getElementById('view-order-back')!.addEventListener('click', () => {
     document.getElementById('step-view-order')!.style.display = 'none';
     document.getElementById('step-email')!.style.display = 'block';
+    document.querySelector('.mc__form-area')?.scrollTo(0, 0);
   });
 
   // Retry init until Google SDK loads
@@ -1230,21 +1231,21 @@ import Header from '../components/navigation/Header.astro';
     max-width: 580px;
     display: flex;
     flex-direction: column;
-    gap: 1.25rem;
+    gap: 1.5rem;
   }
 
   .mc-step__sub {
     font-family: 'Inter', sans-serif;
-    font-size: 1rem;
-    color: rgba(255,255,255,0.6);
+    font-size: 1.15rem;
+    color: rgba(255,255,255,0.7);
     line-height: 1.5;
-    margin-top: -0.5rem;
+    margin-top: -0.75rem;
   }
 
   .mc-google-signin {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: stretch;
   }
 
   .mc-google-btn {
@@ -1276,9 +1277,9 @@ import Header from '../components/navigation/Header.astro';
   }
 
   .mc-step__restrict {
-    font-size: 0.85rem;
+    font-size: 0.95rem;
     color: rgba(255,255,255,0.4);
-    margin-top: -0.75rem;
+    margin-top: -1rem;
   }
 
   .mc-step__error {
