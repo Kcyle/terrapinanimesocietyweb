@@ -7,7 +7,7 @@ import Header from '../components/navigation/Header.astro';
 <BaseLayout title="Maid Cafe - Terrapin Anime Society">
   <Fragment slot="head">
     <meta name="description" content="TAS Maid Cafe - April 5th, 2026. Reserve your spot for an unforgettable experience at the Colony Ballroom, Stamp Student Union." />
-    <style>html, body { overflow: hidden !important; height: 100vh !important; height: 100dvh !important; position: fixed !important; width: 100% !important; }</style>
+    <style>html, body { overflow: hidden !important; height: 100vh !important; height: 100dvh !important; width: 100% !important; }</style>
   </Fragment>
   <Header />
 
@@ -929,6 +929,7 @@ import Header from '../components/navigation/Header.astro';
 
   /* ========== FORM + SUBMISSION ========== */
   const form = document.getElementById('maidcafe-form') as HTMLFormElement;
+  const confirmSummary = document.getElementById('confirm-summary')!;
 
   let pendingPayload: Record<string, any> | null = null;
   let pendingOrderId = '';
