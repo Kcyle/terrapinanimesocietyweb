@@ -7,17 +7,7 @@ import Header from '../components/navigation/Header.astro';
 <BaseLayout title="Maid Cafe - Terrapin Anime Society">
   <Fragment slot="head">
     <meta name="description" content="TAS Maid Cafe - April 5th, 2026. Reserve your spot for an unforgettable experience at the Colony Ballroom, Stamp Student Union." />
-    <style>html, body { margin: 0; padding: 0; overflow: hidden; height: 100%; width: 100%; }</style>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
-    <script is:inline>
-      document.addEventListener('touchmove', function(e) {
-        var formArea = document.querySelector('.mc__form-area');
-        if (formArea && formArea.contains(e.target)) return;
-        e.preventDefault();
-      }, { passive: false });
-      document.addEventListener('gesturestart', function(e) { e.preventDefault(); });
-      document.addEventListener('gesturechange', function(e) { e.preventDefault(); });
-    </script>
   </Fragment>
   <Header />
 
@@ -2490,9 +2480,12 @@ import Header from '../components/navigation/Header.astro';
   /* ========== RESPONSIVE ========== */
   @media (max-width: 900px) {
     .mc {
-      position: fixed;
-      grid-template-columns: 1fr;
-      grid-template-rows: auto 1fr;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      min-height: 100dvh;
+      overflow: auto;
     }
 
     .mc__info {
@@ -2508,11 +2501,12 @@ import Header from '../components/navigation/Header.astro';
     .mc__form-area {
       padding: clamp(1rem, 4vw, 2rem);
       padding-top: 0;
-      height: 100%;
-      overflow-y: auto;
+      height: auto;
+      overflow: visible;
+      flex: 1;
     }
 
-    .mc-form { max-width: 100%; margin: 0 auto; }
+    .mc-form { max-width: 100%; margin: 0 auto; padding-bottom: 4rem; }
     .mc__maids { display: none; }
   }
 
