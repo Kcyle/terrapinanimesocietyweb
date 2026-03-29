@@ -7,8 +7,17 @@ import Header from '../components/navigation/Header.astro';
 <BaseLayout title="Maid Cafe - Terrapin Anime Society">
   <Fragment slot="head">
     <meta name="description" content="TAS Maid Cafe - April 5th, 2026. Reserve your spot for an unforgettable experience at the Colony Ballroom, Stamp Student Union." />
-    <style>html, body { margin: 0; padding: 0; overflow: hidden; height: 100vh; height: -webkit-fill-available; width: 100vw; }</style>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+    <style>html, body { margin: 0; padding: 0; overflow: hidden; height: 100%; width: 100%; }</style>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <script is:inline>
+      document.addEventListener('touchmove', function(e) {
+        var formArea = document.querySelector('.mc__form-area');
+        if (formArea && formArea.contains(e.target)) return;
+        e.preventDefault();
+      }, { passive: false });
+      document.addEventListener('gesturestart', function(e) { e.preventDefault(); });
+      document.addEventListener('gesturechange', function(e) { e.preventDefault(); });
+    </script>
   </Fragment>
   <Header />
 
