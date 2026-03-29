@@ -7,7 +7,7 @@ import Header from '../components/navigation/Header.astro';
 <BaseLayout title="Maid Cafe - Terrapin Anime Society">
   <Fragment slot="head">
     <meta name="description" content="TAS Maid Cafe - April 5th, 2026. Reserve your spot for an unforgettable experience at the Colony Ballroom, Stamp Student Union." />
-    <style>html, body { overflow: hidden !important; height: 100% !important; width: 100% !important; overscroll-behavior: none !important; touch-action: none !important; } .mc__form-area { touch-action: pan-y !important; -webkit-overflow-scrolling: touch !important; overscroll-behavior: contain !important; }</style>
+    <style>html { position: fixed; overflow: hidden; height: 100%; width: 100%; } body { position: fixed; overflow: hidden; height: 100%; width: 100%; }</style>
   </Fragment>
   <Header />
 
