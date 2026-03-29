@@ -59,59 +59,37 @@ import Header from '../components/navigation/Header.astro';
       <!-- ========== STEP 2: Event Info Agreement ========== -->
       <div id="step-info" class="mc-step" style="display:none">
         <h2 class="mc-form__title">Event Information</h2>
-        <div class="mc-event-info">
+        <div class="mc-event-info mc-event-info--compact">
           <div class="mc-event-info__header">
             <p><strong>Sunday, April 5th, 2026</strong> | 2:00 to 5:00 PM</p>
             <p>Colony Ballroom, Stamp Student Union, 3972 Campus Dr, College Park, MD 20742</p>
-            <p class="mc-event-info__muted">You do not have to stay the entire time, but please arrive on time!</p>
           </div>
 
-          <div class="mc-event-info__section">
-            <p>To secure your spot, send <strong>$15</strong> via <a href="https://venmo.com/u/Terrapin-Anime-Society" target="_blank" rel="noopener" style="color:#FFB6C1;text-decoration:underline;">Venmo</a> with <strong>"(Your Name) for Maid Cafe"</strong> to <strong>@Terrapin-Anime-Society</strong>. You don't need to pay immediately, just make sure it's sent before you check in!</p>
-            <p class="mc-event-info__muted">Tickets will be available at the door, but it is recommended to reserve your spot in advance.</p>
-          </div>
-
-          <h3 class="mc-event-info__title">Schedule (approximate)</h3>
-
-          <div class="mc-event-info__schedule">
-            <div class="mc-event-info__slot">
-              <strong>2:00 to 3:00 PM</strong>
-              <ul>
-                <li>Check in, seating, and dining with your maid or butler</li>
-                <li>Full course meal (main dish, dessert, side, and drink including strawberry shortcake and mini French pastries)</li>
-                <li>Table games such as Beyblades, cards, board games, and drawing</li>
-              </ul>
+          <div class="mc-event-info__two-col">
+            <div class="mc-event-info__section">
+              <h3 class="mc-event-info__title">What to Expect</h3>
+              <p>Guests will be served a full course meal including a main dish, dessert, side, and drink (featuring items like strawberry shortcake and mini French pastries). The experience also includes table games, competitions with prizes, karaoke, group activities, and performances by our maids and butlers.</p>
             </div>
-            <div class="mc-event-info__slot">
-              <strong>3:00 to 4:00 PM</strong>
-              <ul>
-                <li>Group activities and events with all guests, maids, and butlers</li>
-                <li>Karaoke, musical chairs, and other large scale group games</li>
-              </ul>
-            </div>
-            <div class="mc-event-info__slot">
-              <strong>4:00 to 5:00 PM</strong>
-              <ul>
-                <li>Performances by our maids</li>
-              </ul>
+
+            <div class="mc-event-info__section">
+              <h3 class="mc-event-info__title">Please Note</h3>
+              <p>While we are not doing different time blocks this year, you are still welcome to arrive late. The first hour is primarily dedicated to dining, while the remainder focuses on activities and performances.</p>
             </div>
           </div>
 
-          <div class="mc-event-info__important">
-            <h3 class="mc-event-info__title">Important</h3>
-            <ul>
-              <li>If you are unable to make it at 2:00 PM, you are still welcome to come later and will be served food. However, to get the full Maid Cafe experience, we recommend arriving on time.</li>
-              <li>Your reservation is not confirmed until payment is received via Venmo.</li>
-              <li>Do not promote this event outside of the UMD community.</li>
-            </ul>
-          </div>
-
-          <div class="mc-event-info__footer">
-            <a href="https://youtube.com/shorts/ReyEl3XILK8" target="_blank" rel="noopener" class="mc__directions">How to find the Colony Ballroom</a>
-            <p>Questions: <strong>terrapinanimesociety@gmail.com</strong> | <a href="https://discord.com/invite/GJXS7aM7YQ" target="_blank" rel="noopener" style="color:#FF69B4;text-decoration:underline;">Discord Server</a> | <strong>@kcyle_</strong></p>
+          <div class="mc-event-info__row">
+            <div class="mc-event-info__section mc-event-info__section--sm">
+              <h3 class="mc-event-info__title">Payment</h3>
+              <p>To secure your spot, send <strong>$15</strong> via <a href="https://venmo.com/u/Terrapin-Anime-Society" target="_blank" rel="noopener" style="color:#FFB6C1;text-decoration:underline;">Venmo</a> with <strong>"(Your Name) for Maid Cafe"</strong> to <strong>@Terrapin-Anime-Society</strong>. You don't need to pay immediately, just make sure it's sent before you check in!</p>
+            </div>
           </div>
         </div>
-        <button type="button" id="gate-agree-btn" class="mc-submit">I Agree, Continue to Reservation</button>
+        <div class="mc-event-info__bottom">
+          <div class="mc-event-info__contact">
+            <span>Questions: <strong>terrapinanimesociety@gmail.com</strong> | <a href="https://discord.com/invite/GJXS7aM7YQ" target="_blank" rel="noopener" style="color:#FF69B4;text-decoration:underline;">Discord</a> (<strong>@kcyle_</strong>) | <a href="https://youtube.com/shorts/ReyEl3XILK8" target="_blank" rel="noopener" style="color:#FF69B4;text-decoration:underline;">How to find the Colony Ballroom</a></span>
+          </div>
+          <button type="button" id="gate-agree-btn" class="mc-submit">Continue to Reservation</button>
+        </div>
       </div>
 
       <!-- ========== STEP 3: Reservation Form ========== -->
@@ -412,6 +390,7 @@ import Header from '../components/navigation/Header.astro';
     verifiedName = '';
     document.getElementById('step-email')!.style.display = 'none';
     document.getElementById('step-info')!.style.display = 'flex';
+    (document.querySelector('.mc__form-area') as HTMLElement).style.height = '100vh';
     setMobileFullscreen(true);
   });
 
@@ -447,7 +426,6 @@ import Header from '../components/navigation/Header.astro';
         <div class="mc-view-header">
           <div>
             <span class="mc-view-order-id">${r.order_id}</span>
-            <span class="mc-view-status ${statusClass}">${r.payment_status}</span>
           </div>
         </div>
         <div class="mc-view-rows">
@@ -499,6 +477,7 @@ import Header from '../components/navigation/Header.astro';
           document.getElementById('step-view-order')!.style.display = 'flex';
         } else {
           document.getElementById('step-info')!.style.display = 'flex';
+          (document.querySelector('.mc__form-area') as HTMLElement).style.height = '100vh';
         }
       } else if (email) {
         await supabase.auth.signOut();
@@ -525,6 +504,8 @@ import Header from '../components/navigation/Header.astro';
     if (nameField && verifiedName) {
       nameField.value = verifiedName;
     }
+    // Restore form area height with gap for scrolling
+    (document.querySelector('.mc__form-area') as HTMLElement).style.height = 'calc(100vh - 4rem)';
   });
 
   /* ========== CONSTANTS ========== */
@@ -946,16 +927,8 @@ import Header from '../components/navigation/Header.astro';
     document.getElementById('terms-modal')!.style.display = 'none';
   });
 
-  /* ========== FORM + CONFIRMATION ========== */
+  /* ========== FORM + SUBMISSION ========== */
   const form = document.getElementById('maidcafe-form') as HTMLFormElement;
-  const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement;
-  const confirmModal = document.getElementById('confirm-modal')!;
-  const confirmSummary = document.getElementById('confirm-summary')!;
-  const confirmBack = document.getElementById('confirm-back')!;
-  const confirmSubmit = document.getElementById('confirm-submit') as HTMLButtonElement;
-  const successModal = document.getElementById('success-modal')!;
-  const modalOid = document.getElementById('modal-order-id')!;
-  const modalClose = document.getElementById('modal-close')!;
 
   let pendingPayload: Record<string, any> | null = null;
   let pendingOrderId = '';
@@ -1029,7 +1002,7 @@ import Header from '../components/navigation/Header.astro';
       order_id: pendingOrderId,
       full_name: fd.get('full_name'),
       email: fd.get('email'),
-      umd_affiliation: 'student',
+      umd_affiliation: isGuest ? 'guest' : 'student',
       contact_method: fd.get('contact_method'),
       contact_value: fd.get('contact_method') === 'email' ? fd.get('email') : fd.get('contact_value'),
       num_guests: numGuests,
@@ -1288,6 +1261,66 @@ import Header from '../components/navigation/Header.astro';
   .mc-step__guest-note strong { color: #FFA500; }
 
   /* ========== EVENT INFO (Step 2) ========== */
+  .mc-event-info--compact { gap: 0.6rem; }
+
+  .mc-event-info__bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: auto;
+  }
+
+  .mc-event-info__contact {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.4);
+  }
+
+  .mc-event-info__contact strong { color: rgba(255,255,255,0.6); }
+
+  .mc-event-info__bottom .mc-submit {
+    flex-shrink: 0;
+    width: auto;
+    padding: 0.65rem 2rem;
+  }
+
+  .mc-event-info__two-col {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .mc-event-info__row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .mc-event-info__section--sm p {
+    font-size: 0.8rem !important;
+    margin: 0 0 0.15rem !important;
+  }
+
+  @media (max-width: 600px) {
+    .mc-event-info__two-col,
+    .mc-event-info__row {
+      grid-template-columns: 1fr;
+    }
+
+    .mc-event-info__bottom {
+      flex-direction: column-reverse;
+      gap: 0.5rem;
+    }
+
+    .mc-event-info__bottom .mc-submit {
+      width: 100%;
+    }
+
+    .mc-event-info__contact {
+      text-align: center;
+      font-size: 0.7rem;
+    }
+  }
   .mc-event-info {
     display: flex;
     flex-direction: column;
