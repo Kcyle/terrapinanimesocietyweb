@@ -7,7 +7,8 @@ import Header from '../components/navigation/Header.astro';
 <BaseLayout title="Maid Cafe - Terrapin Anime Society">
   <Fragment slot="head">
     <meta name="description" content="TAS Maid Cafe - April 5th, 2026. Reserve your spot for an unforgettable experience at the Colony Ballroom, Stamp Student Union." />
-    <style>html { position: fixed; overflow: hidden; height: 100%; width: 100%; } body { position: fixed; overflow: hidden; height: 100%; width: 100%; }</style>
+    <style>html, body { margin: 0; padding: 0; overflow: hidden; height: 100vh; height: -webkit-fill-available; width: 100vw; }</style>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
   </Fragment>
   <Header />
 
