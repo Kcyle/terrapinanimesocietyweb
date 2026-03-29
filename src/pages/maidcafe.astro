@@ -43,7 +43,8 @@ import Header from '../components/navigation/Header.astro';
           </button>
         </div>
         <p id="gate-email-error" class="mc-step__error" style="display:none"></p>
-        <p class="mc-step__guest-note">If you are a non UMD student or alumni, please either have a current UMD student RSVP and add you to their reservation, or contact us directly at <strong>terrapinanimesociety@gmail.com</strong> or on our <a href="https://discord.com/invite/GJXS7aM7YQ" target="_blank" rel="noopener" style="color:#FFA500;text-decoration:underline;">Discord server</a> (<strong>@kcyle_</strong>).</p>
+        <div class="mc-step__divider">or</div>
+        <button type="button" id="guest-signin-btn" class="mc-btn-secondary" style="width:100%;text-align:center;">Continue as Guest</button>
       </div>
 
       <!-- ========== VIEW RESERVATION ========== -->
@@ -403,6 +404,17 @@ import Header from '../components/navigation/Header.astro';
     }
   });
 
+  let isGuest = false;
+
+  document.getElementById('guest-signin-btn')!.addEventListener('click', () => {
+    isGuest = true;
+    verifiedEmail = '';
+    verifiedName = '';
+    document.getElementById('step-email')!.style.display = 'none';
+    document.getElementById('step-info')!.style.display = 'flex';
+    setMobileFullscreen(true);
+  });
+
 
   // Check for existing reservation
   async function checkExistingReservation(email: string): Promise<boolean> {
@@ -503,10 +515,10 @@ import Header from '../components/navigation/Header.astro';
     document.querySelector('.mc__form-area')?.scrollTo(0, 0);
     // Init custom dropdowns now that form is visible
     setTimeout(() => initCustomDropdowns(), 100);
-    // Pre-fill fields from Google profile
+    // Pre-fill fields from Google profile (not for guests)
     const emailField = document.getElementById('email') as HTMLInputElement;
     const nameField = document.getElementById('full-name') as HTMLInputElement;
-    if (emailField) {
+    if (emailField && verifiedEmail) {
       emailField.value = verifiedEmail;
       emailField.readOnly = true;
     }
@@ -1081,7 +1093,12 @@ import Header from '../components/navigation/Header.astro';
     // Success - show reservation details
     form.style.display = 'none';
     renderViewOrder(pendingPayload);
+    if (isGuest) {
+      const viewContent = document.getElementById('view-order-content')!;
+      viewContent.innerHTML = `<div class="mc-view-save-warning">Please save or screenshot this page. As a guest, you will not be able to view this reservation again.</div>` + viewContent.innerHTML;
+    }
     document.getElementById('step-view-order')!.style.display = 'flex';
+    if (isGuest) document.getElementById('view-order-back')!.style.display = 'none';
     document.querySelector('.mc__form-area')?.scrollTo(0, 0);
   });
 
@@ -1456,6 +1473,38 @@ import Header from '../components/navigation/Header.astro';
     line-height: 1.5;
     margin-top: 0.75rem;
   }
+
+  :global(.mc-view-save-warning) {
+    padding: 0.75rem 1rem;
+    background: #1a1600;
+    border: 1px solid rgba(255,165,0,0.25);
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #FFA500;
+    text-align: center;
+    margin-bottom: 0.75rem;
+  }
+
+  .mc-step__divider {
+    text-align: center;
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.3);
+    position: relative;
+  }
+
+  .mc-step__divider::before,
+  .mc-step__divider::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 40%;
+    height: 1px;
+    background: rgba(255,255,255,0.1);
+  }
+
+  .mc-step__divider::before { left: 0; }
+  .mc-step__divider::after { right: 0; }
 
   /* ========== CUSTOM DROPDOWN ========== */
   :global(.mc-dropdown) {
