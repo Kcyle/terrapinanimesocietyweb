@@ -66,8 +66,8 @@ import Header from '../components/navigation/Header.astro';
           </div>
 
           <div class="mc-event-info__section">
-            <p>To secure your spot, send <strong>$15</strong> via <a href="https://venmo.com/u/Terrapin-Anime-Society" target="_blank" rel="noopener" style="color:#FFB6C1;text-decoration:underline;">Venmo</a> with <strong>"(Your Name) for Maid Cafe"</strong> to <strong>@Terrapin-Anime-Society</strong>.</p>
-            <p class="mc-event-info__muted">Door tickets may be available if space allows, but preordering is recommended.</p>
+            <p>To secure your spot, send <strong>$15</strong> via <a href="https://venmo.com/u/Terrapin-Anime-Society" target="_blank" rel="noopener" style="color:#FFB6C1;text-decoration:underline;">Venmo</a> with <strong>"(Your Name) for Maid Cafe"</strong> to <strong>@Terrapin-Anime-Society</strong>. You don't need to pay immediately, just make sure it's sent before you check in!</p>
+            <p class="mc-event-info__muted">Tickets will be available at the door, but it is recommended to reserve your spot in advance.</p>
           </div>
 
           <h3 class="mc-event-info__title">Schedule (approximate)</h3>
@@ -99,7 +99,7 @@ import Header from '../components/navigation/Header.astro';
           <div class="mc-event-info__important">
             <h3 class="mc-event-info__title">Important</h3>
             <ul>
-              <li>You may arrive at any time during the event with a valid ticket, but late arrivals may not receive the full meal.</li>
+              <li>If you are unable to make it at 2:00 PM, you are still welcome to come later and will be served food. However, to get the full Maid Cafe experience, we recommend arriving on time.</li>
               <li>Your reservation is not confirmed until payment is received via Venmo.</li>
               <li>Do not promote this event outside of the UMD community.</li>
             </ul>
@@ -258,7 +258,7 @@ import Header from '../components/navigation/Header.astro';
           </div>
         </div>
 
-        <button type="submit" id="submit-btn" class="mc-submit">Continue to Checkout</button>
+        <button type="submit" id="submit-btn" class="mc-submit">Confirm Reservation</button>
       </form>
     </div>
 
@@ -948,7 +948,7 @@ import Header from '../components/navigation/Header.astro';
   let pendingPayload: Record<string, any> | null = null;
   let pendingOrderId = '';
 
-  form.addEventListener('submit', (e) => {
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
     // Custom validation
@@ -1050,36 +1050,17 @@ import Header from '../components/navigation/Header.astro';
       ${p.has_addon_package ? `<div class="mc-confirm-row"><span>VIP Package</span><strong>Yes (+$10)</strong></div>` : ''}
       ${p.allergies ? `<div class="mc-confirm-row"><span>Allergies</span><strong>${p.allergies}</strong></div>` : ''}
     `;
-    document.getElementById('checkout-venmo-amount')!.textContent = `$${pendingPayload?.total_price || 15}`;
-    confirmModal.style.display = 'flex';
-  });
-
-  // Toggle event info inline
-  document.getElementById('checkout-view-info')!.addEventListener('click', () => {
-    const info = document.getElementById('checkout-event-info')!;
-    const btn = document.getElementById('checkout-view-info')!;
-    if (info.style.display === 'none') {
-      info.style.display = 'block';
-      btn.textContent = 'Hide Event Information';
-    } else {
-      info.style.display = 'none';
-      btn.textContent = 'Review Event Information';
-    }
-  });
-
-  confirmBack.addEventListener('click', () => { confirmModal.style.display = 'none'; });
-
-  confirmSubmit.addEventListener('click', async () => {
-    if (!pendingPayload) return;
-    confirmSubmit.disabled = true;
-    confirmSubmit.textContent = 'Submitting...';
+    // Submit directly
+    const submitButton = document.getElementById('submit-btn') as HTMLButtonElement;
+    submitButton.disabled = true;
+    submitButton.textContent = 'Submitting...';
 
     // 1. Insert reservation
     const { error: resError } = await supabase.from('maidcafe_reservations').insert(pendingPayload);
     if (resError) {
       alert(resError.code === '23505' ? 'A reservation with this email or order already exists.' : 'Something went wrong: ' + resError.message);
-      confirmSubmit.disabled = false;
-      confirmSubmit.textContent = 'Confirm Reservation';
+      submitButton.disabled = false;
+      submitButton.textContent = 'Confirm Reservation';
       return;
     }
 
@@ -1090,16 +1071,14 @@ import Header from '../components/navigation/Header.astro';
     });
 
     if (seatError || seatResult === false) {
-      alert('Some of your selected seats were just taken. Please go back and choose different seats.');
-      confirmSubmit.disabled = false;
-      confirmSubmit.textContent = 'Confirm Reservation';
-      confirmModal.style.display = 'none';
+      alert('Someone already reserved one of your selected seats. Please choose different seats.');
+      submitButton.disabled = false;
+      submitButton.textContent = 'Confirm Reservation';
       await loadSeats();
       return;
     }
 
     // Success - show reservation details
-    confirmModal.style.display = 'none';
     form.style.display = 'none';
     renderViewOrder(pendingPayload);
     document.getElementById('step-view-order')!.style.display = 'flex';
