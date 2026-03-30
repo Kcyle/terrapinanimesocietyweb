@@ -37,7 +37,7 @@ import Header from '../components/navigation/Header.astro';
 
           <div class="mc-event-info__section">
             <h3 class="mc-event-info__title">What to Expect</h3>
-            <p>For the $15 ticket price, all guests will be served a full course meal, including a build your own onigiri station. There will be table activities (Beyblades, card games, drawing, Bean Boozled, etc.), competitions with all guests for prizes, live maid performances, and more!</p>
+            <p>For the $15 ticket price, all guests will be served a full course meal, including getting to build your own onigiri! There will be table activities (Beyblades, card games, drawing, Bean Boozled, etc.), competitions with all guests for prizes, live maid performances, and more!</p>
           </div>
 
           <div class="mc-event-info__section">
@@ -396,6 +396,7 @@ import Header from '../components/navigation/Header.astro';
     document.getElementById('step-email')!.style.display = 'none';
     const guestForm = document.getElementById('maidcafe-form') as HTMLFormElement;
     guestForm.style.display = 'flex';
+    pushStep('form');
     (document.querySelector('.mc__form-area') as HTMLElement).style.height = 'calc(100vh - 4rem)';
     setTimeout(() => initCustomDropdowns(), 100);
     document.querySelector('.mc__form-area')?.scrollTo(0, 0);
@@ -485,9 +486,11 @@ import Header from '../components/navigation/Header.astro';
         const hasReservation = await checkExistingReservation(email);
         if (hasReservation) {
           document.getElementById('step-view-order')!.style.display = 'flex';
+          pushStep('reservation');
         } else {
           const authForm = document.getElementById('maidcafe-form') as HTMLFormElement;
           authForm.style.display = 'flex';
+          pushStep('form');
           (document.querySelector('.mc__form-area') as HTMLElement).style.height = 'calc(100vh - 4rem)';
           setTimeout(() => initCustomDropdowns(), 100);
           const emailField = document.getElementById('email') as HTMLInputElement;
@@ -1069,6 +1072,7 @@ import Header from '../components/navigation/Header.astro';
       viewContent.innerHTML = `<div class="mc-view-save-warning">Please save or screenshot this page. As a guest, you will not be able to view this reservation again.</div>` + viewContent.innerHTML;
     }
     document.getElementById('step-view-order')!.style.display = 'flex';
+    pushStep('reservation');
     if (isGuest) document.getElementById('view-order-back')!.style.display = 'none';
     document.querySelector('.mc__form-area')?.scrollTo(0, 0);
   });
@@ -1144,6 +1148,40 @@ import Header from '../components/navigation/Header.astro';
   });
 
   /* ========== INIT ========== */
+  // Track current step for browser back button
+  function pushStep(step: string) {
+    history.pushState({ step }, '', window.location.pathname);
+  }
+
+  window.addEventListener('popstate', (e) => {
+    const step = e.state?.step || 'welcome';
+    const stepEmail = document.getElementById('step-email')!;
+    const stepViewOrder = document.getElementById('step-view-order')!;
+    const form = document.getElementById('maidcafe-form') as HTMLFormElement;
+
+    stepEmail.style.display = 'none';
+    stepViewOrder.style.display = 'none';
+    form.style.display = 'none';
+
+    if (step === 'welcome') {
+      stepEmail.style.display = 'flex';
+      setMobileFullscreen(false);
+      document.querySelector('.mc__form-area')?.scrollTo(0, 0);
+    } else if (step === 'home') {
+      window.location.href = '/';
+      return;
+    } else if (step === 'form') {
+      form.style.display = 'flex';
+    } else if (step === 'reservation') {
+      stepViewOrder.style.display = 'flex';
+    }
+    document.querySelector('.mc__form-area')?.scrollTo(0, 0);
+  });
+
+  // Set initial state - back from welcome goes to home
+  history.replaceState({ step: 'home' }, '', window.location.pathname);
+  history.pushState({ step: 'welcome' }, '', window.location.pathname);
+
   async function init() {
     initMenuAnimations();
     gsap.from('.mc__title', { y: 40, opacity: 0, duration: 0.6, ease: 'power3.out', delay: 0.15 });
