@@ -402,9 +402,10 @@ import Header from '../components/navigation/Header.astro';
     (document.querySelector('.mc__form-area') as HTMLElement).style.height = 'calc(100vh - 4rem)';
     setTimeout(() => {
       initCustomDropdowns();
-      const fa = document.querySelector('.mc__form-area') as HTMLElement;
-      if (fa) { fa.scrollTop = 0; fa.scrollTo(0, 0); }
+      document.querySelector('.mc__form-area')?.scrollTo(0, 0);
       window.scrollTo(0, 0);
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
     }, 50);
     setMobileFullscreen(true);
   });
@@ -504,9 +505,10 @@ import Header from '../components/navigation/Header.astro';
           if (emailField && verifiedEmail) { emailField.value = verifiedEmail; emailField.readOnly = true; }
           if (nameField && verifiedName) { nameField.value = verifiedName; }
           setTimeout(() => {
-            const fa = document.querySelector('.mc__form-area') as HTMLElement;
-            if (fa) { fa.scrollTop = 0; fa.scrollTo(0, 0); }
+            document.querySelector('.mc__form-area')?.scrollTo(0, 0);
             window.scrollTo(0, 0);
+            document.documentElement.scrollTop = 0;
+            document.body.scrollTop = 0;
           }, 50);
         }
       } else if (email) {
@@ -2679,6 +2681,8 @@ import Header from '../components/navigation/Header.astro';
     .mc-event-info { text-align: center; width: 100%; }
     .mc-event-info__section { text-align: left; }
     .mc-google-signin { width: 100%; }
+    .mc-google-btn { width: 100%; justify-content: center; }
+    .mc-reserve-actions { width: 100%; }
     .mc__maids { display: none; }
   }
 
