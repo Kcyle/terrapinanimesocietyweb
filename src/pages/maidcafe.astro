@@ -376,17 +376,21 @@ import Header from '../components/navigation/Header.astro';
   }
 
   // Google sign-in via Supabase Auth
-  document.getElementById('google-signin-btn')!.addEventListener('click', async () => {
-    const { error } = await supabase.auth.signInWithOAuth({
+  document.getElementById('google-signin-btn')!.addEventListener('click', () => {
+    supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
         redirectTo: window.location.origin + window.location.pathname,
+        skipBrowserRedirect: true,
+      }
+    }).then(({ data, error }) => {
+      if (error) {
+        document.getElementById('gate-email-error')!.textContent = 'Sign in failed: ' + error.message;
+        document.getElementById('gate-email-error')!.style.display = 'block';
+      } else if (data?.url) {
+        window.location.href = data.url;
       }
     });
-    if (error) {
-      document.getElementById('gate-email-error')!.textContent = 'Sign in failed: ' + error.message;
-      document.getElementById('gate-email-error')!.style.display = 'block';
-    }
   });
 
   let isGuest = false;
