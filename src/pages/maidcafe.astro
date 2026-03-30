@@ -380,6 +380,24 @@ import Header from '../components/navigation/Header.astro';
       provider: 'google',
       options: {
         redirectTo: window.location.origin + window.location.pathname,
+        skipBrowserRedirect: true,
+      }
+    }).then(({ data }) => {
+      if (data?.url) {
+        // Open popup for auth
+        const popup = window.open(data.url, '_blank', 'width=500,height=600');
+        // Poll for session after popup closes
+        const pollInterval = setInterval(async () => {
+          if (popup?.closed) {
+            clearInterval(pollInterval);
+            const { data: { session } } = await supabase.auth.getSession();
+            if (session) handleAuthUser(session);
+          }
+        }, 500);
+        // Fallback: if popup blocked, redirect instead
+        if (!popup) {
+          window.location.href = data.url;
+        }
       }
     });
   });
