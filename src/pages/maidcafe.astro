@@ -380,14 +380,6 @@ import Header from '../components/navigation/Header.astro';
       provider: 'google',
       options: {
         redirectTo: window.location.origin + window.location.pathname,
-        skipBrowserRedirect: true,
-      }
-    }).then(({ data, error }) => {
-      if (error) {
-        document.getElementById('gate-email-error')!.textContent = 'Sign in failed: ' + error.message;
-        document.getElementById('gate-email-error')!.style.display = 'block';
-      } else if (data?.url) {
-        window.location.href = data.url;
       }
     });
   });
