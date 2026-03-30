@@ -39,7 +39,6 @@ import Header from '../components/navigation/Header.astro';
             </svg>
             Reserve with TerpMail
           </button>
-          <p class="mc-step__restrict">Only @terpmail.umd.edu and @umd.edu accounts are accepted.</p>
           <p id="gate-email-error" class="mc-step__error" style="display:none"></p>
           <div class="mc-step__divider">or</div>
           <button type="button" id="guest-signin-btn" class="mc-submit">RSVP as Guest</button>
@@ -480,53 +479,65 @@ import Header from '../components/navigation/Header.astro';
     document.querySelector('.mc__form-area')?.scrollTo(0, 0);
   });
 
-  // Check for Supabase auth session on page load (after Google redirect)
-  (async function checkAuthSession() {
-    const { data: { session } } = await supabase.auth.getSession();
-    if (window.location.hash || window.location.href.endsWith('#')) {
-      history.replaceState(null, '', window.location.pathname);
-    }
-    if (session?.user) {
-      const email = session.user.email?.toLowerCase() || '';
-      const name = session.user.user_metadata?.full_name || session.user.user_metadata?.name || '';
-      if (email.endsWith('@umd.edu') || email.endsWith('@terpmail.umd.edu')) {
-        verifiedEmail = email;
-        verifiedName = name;
-        document.getElementById('step-email')!.style.display = 'none';
-        setMobileFullscreen(true);
-        const hasReservation = await checkExistingReservation(email);
-        if (hasReservation) {
-          document.getElementById('step-view-order')!.style.display = 'flex';
-          pushStep('reservation');
-        } else {
-          const authForm = document.getElementById('maidcafe-form') as HTMLFormElement;
-          authForm.style.display = 'flex';
-          pushStep('form');
-          (document.querySelector('.mc__form-area') as HTMLElement).style.height = 'calc(100vh - 4rem)';
-          setTimeout(() => initCustomDropdowns(), 100);
-          const emailField = document.getElementById('email') as HTMLInputElement;
-          const nameField = document.getElementById('full-name') as HTMLInputElement;
-          if (emailField && verifiedEmail) { emailField.value = verifiedEmail; emailField.readOnly = true; }
-          if (nameField && verifiedName) { nameField.value = verifiedName; }
-          setTimeout(() => {
-            document.querySelector('.mc__form-area')?.scrollTo(0, 0);
-            window.scrollTo(0, 0);
-            document.documentElement.scrollTop = 0;
-            document.body.scrollTop = 0;
-          }, 50);
-        }
-      } else if (email) {
-        await supabase.auth.signOut();
-        document.getElementById('gate-email-error')!.textContent = 'Only @terpmail.umd.edu and @umd.edu accounts are accepted.';
-        document.getElementById('gate-email-error')!.style.display = 'block';
+  // Handle auth state changes (works on redirect return)
+  let authHandled = false;
+  async function handleAuthUser(session: any) {
+    if (authHandled || !session?.user) return;
+    authHandled = true;
+    if (window.location.hash) history.replaceState(null, '', window.location.pathname);
+
+    const email = session.user.email?.toLowerCase() || '';
+    const name = session.user.user_metadata?.full_name || session.user.user_metadata?.name || '';
+
+    if (email.endsWith('@umd.edu') || email.endsWith('@terpmail.umd.edu')) {
+      verifiedEmail = email;
+      verifiedName = name;
+      document.getElementById('step-email')!.style.display = 'none';
+      setMobileFullscreen(true);
+      const hasReservation = await checkExistingReservation(email);
+      if (hasReservation) {
+        document.getElementById('step-view-order')!.style.display = 'flex';
+        pushStep('reservation');
+      } else {
+        const authForm = document.getElementById('maidcafe-form') as HTMLFormElement;
+        authForm.style.display = 'flex';
+        pushStep('form');
+        (document.querySelector('.mc__form-area') as HTMLElement).style.height = 'calc(100vh - 4rem)';
+        setTimeout(() => initCustomDropdowns(), 100);
+        const emailField = document.getElementById('email') as HTMLInputElement;
+        const nameField = document.getElementById('full-name') as HTMLInputElement;
+        if (emailField) { emailField.value = email; emailField.readOnly = true; }
+        if (nameField && name) { nameField.value = name; }
+        setTimeout(() => {
+          document.querySelector('.mc__form-area')?.scrollTo(0, 0);
+          window.scrollTo(0, 0);
+          document.documentElement.scrollTop = 0;
+          document.body.scrollTop = 0;
+        }, 50);
       }
+    } else if (email) {
+      await supabase.auth.signOut();
+      document.getElementById('gate-email-error')!.textContent = 'Only @terpmail.umd.edu and @umd.edu accounts are accepted.';
+      document.getElementById('gate-email-error')!.style.display = 'block';
     }
-    // Set history state after auth is processed
+  }
+
+  // Listen for auth state changes
+  supabase.auth.onAuthStateChange((event, session) => {
+    if (event === 'SIGNED_IN' || event === 'INITIAL_SESSION') {
+      handleAuthUser(session);
+    }
+  });
+
+  // Also check existing session
+  supabase.auth.getSession().then(({ data: { session } }) => {
+    handleAuthUser(session);
+    if (window.location.hash) history.replaceState(null, '', window.location.pathname);
     if (!history.state?.step) {
       history.replaceState({ step: 'home' }, '', window.location.pathname);
       history.pushState({ step: 'welcome' }, '', window.location.pathname);
     }
-  })();
+  });
 
 
   /* ========== CONSTANTS ========== */
