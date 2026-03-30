@@ -37,7 +37,7 @@ import Header from '../components/navigation/Header.astro';
 
           <div class="mc-event-info__section">
             <h3 class="mc-event-info__title">What to Expect</h3>
-            <p>For the $15 ticket price, all guests will be served a full course meal, including getting to build your own onigiri! There will be table activities (Beyblades, card games, drawing, Bean Boozled, etc.), competitions with all guests for prizes, live maid performances, and more!</p>
+            <p>For the $15 ticket price (you may reserve now and pay at the door), all guests will be served a full course meal, including getting to build your own onigiri! There will be table activities (Beyblades, card games, drawing, Bean Boozled, etc.), competitions with all guests for prizes, live maid performances, and more!</p>
           </div>
 
           <div class="mc-event-info__section">
@@ -83,7 +83,7 @@ import Header from '../components/navigation/Header.astro';
 
         <div class="mc-field">
           <label for="full-name" class="mc-label">Full Name <span class="mc-req">*</span></label>
-          <input type="text" id="full-name" name="full_name" required class="mc-input" placeholder="Must match your Venmo display name" />
+          <input type="text" id="full-name" name="full_name" required class="mc-input" placeholder="Your full name" />
         </div>
 
         <div class="mc-field">
@@ -142,7 +142,7 @@ import Header from '../components/navigation/Header.astro';
                 <option value="Noah Cao">Noah Cao</option>
                 <option value="Noah Martin">Noah Martin (Nonchalant Tsundere)</option>
                 <option value="Adam">Adam</option>
-                <option value="Kyle Duong">Kyle Duong</option>
+                <option value="Kyle (not president Kyle)">Kyle (not president Kyle)</option>
                 <option value="The Servant">Justin (The Servant)</option>
                 <option value="Cowboy Butler">Nikolai (Cowboy Butler)</option>
               </optgroup>
@@ -398,8 +398,12 @@ import Header from '../components/navigation/Header.astro';
     guestForm.style.display = 'flex';
     pushStep('form');
     (document.querySelector('.mc__form-area') as HTMLElement).style.height = 'calc(100vh - 4rem)';
-    setTimeout(() => initCustomDropdowns(), 100);
-    document.querySelector('.mc__form-area')?.scrollTo(0, 0);
+    setTimeout(() => {
+      initCustomDropdowns();
+      const fa = document.querySelector('.mc__form-area') as HTMLElement;
+      if (fa) { fa.scrollTop = 0; fa.scrollTo(0, 0); }
+      window.scrollTo(0, 0);
+    }, 50);
     setMobileFullscreen(true);
   });
 
@@ -497,7 +501,11 @@ import Header from '../components/navigation/Header.astro';
           const nameField = document.getElementById('full-name') as HTMLInputElement;
           if (emailField && verifiedEmail) { emailField.value = verifiedEmail; emailField.readOnly = true; }
           if (nameField && verifiedName) { nameField.value = verifiedName; }
-          document.querySelector('.mc__form-area')?.scrollTo(0, 0);
+          setTimeout(() => {
+            const fa = document.querySelector('.mc__form-area') as HTMLElement;
+            if (fa) { fa.scrollTop = 0; fa.scrollTo(0, 0); }
+            window.scrollTo(0, 0);
+          }, 50);
         }
       } else if (email) {
         await supabase.auth.signOut();
