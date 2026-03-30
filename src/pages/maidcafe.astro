@@ -517,6 +517,11 @@ import Header from '../components/navigation/Header.astro';
         document.getElementById('gate-email-error')!.style.display = 'block';
       }
     }
+    // Set history state after auth is processed
+    if (!history.state?.step) {
+      history.replaceState({ step: 'home' }, '', window.location.pathname);
+      history.pushState({ step: 'welcome' }, '', window.location.pathname);
+    }
   })();
 
 
@@ -1190,9 +1195,6 @@ import Header from '../components/navigation/Header.astro';
     document.querySelector('.mc__form-area')?.scrollTo(0, 0);
   });
 
-  // Set initial state - back from welcome goes to home
-  history.replaceState({ step: 'home' }, '', window.location.pathname);
-  history.pushState({ step: 'welcome' }, '', window.location.pathname);
 
   async function init() {
     initMenuAnimations();
