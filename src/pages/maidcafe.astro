@@ -515,30 +515,22 @@ import Header from '../components/navigation/Header.astro';
     }
   }
 
-  // Listen for auth state changes
-  supabase.auth.onAuthStateChange((event, session) => {
-    if (event === 'SIGNED_IN' || event === 'INITIAL_SESSION') {
-      handleAuthUser(session);
-    }
-  });
-
-  // Check existing session, with retry for mobile
-  async function tryGetSession(retries = 3) {
-    for (let i = 0; i < retries; i++) {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (session) {
-        handleAuthUser(session);
-        break;
-      }
-      if (i < retries - 1) await new Promise(r => setTimeout(r, 500));
-    }
+  // Check for auth session on page load
+  supabase.auth.getSession().then(({ data: { session } }) => {
+    if (session) handleAuthUser(session);
     if (window.location.hash) history.replaceState(null, '', window.location.pathname);
     if (!history.state?.step) {
       history.replaceState({ step: 'home' }, '', window.location.pathname);
       history.pushState({ step: 'welcome' }, '', window.location.pathname);
     }
-  }
-  tryGetSession();
+  });
+
+  // Also listen for auth changes (catches redirect tokens)
+  supabase.auth.onAuthStateChange((event, session) => {
+    if (session && (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED')) {
+      handleAuthUser(session);
+    }
+  });
 
 
   /* ========== CONSTANTS ========== */
