@@ -29,7 +29,9 @@ import Header from '../components/navigation/Header.astro';
       <!-- ========== STEP 1: Sign In + Event Info ========== -->
       <div id="step-email" class="mc-step">
         <!-- Reserve buttons first -->
-        <button type="button" id="guest-signin-btn" class="mc-submit">Reserve Now</button>
+        <button type="button" id="guest-signin-btn" class="mc-submit" style="border:1px solid rgba(255,182,193,0.2);">Reserve Now</button>
+
+        <div style="border-bottom:1px solid rgba(255,255,255,0.06);margin:0.25rem 0;"></div>
 
         <!-- Event details below -->
         <h2 class="mc-form__title">Event Information</h2>
@@ -362,15 +364,6 @@ import Header from '../components/navigation/Header.astro';
     if (header) header.style.display = full ? 'none' : '';
   }
 
-  // Google sign-in via Supabase Auth
-  document.getElementById('google-signin-btn')!.addEventListener('click', () => {
-    supabase.auth.signInWithOAuth({
-      provider: 'google',
-      options: {
-        redirectTo: window.location.origin + window.location.pathname,
-      }
-    });
-  });
 
   let isGuest = false;
 
