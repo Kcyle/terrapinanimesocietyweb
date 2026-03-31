@@ -358,6 +358,7 @@ import Header from '../components/navigation/Header.astro';
   import gsap from 'gsap';
   import { initMenuAnimations } from '../animations/menu';
 
+
   /* ========== GATE STEPS ========== */
   let verifiedEmail = '';
   let verifiedName = '';
@@ -380,24 +381,6 @@ import Header from '../components/navigation/Header.astro';
       provider: 'google',
       options: {
         redirectTo: window.location.origin + window.location.pathname,
-        skipBrowserRedirect: true,
-      }
-    }).then(({ data }) => {
-      if (data?.url) {
-        // Open popup for auth
-        const popup = window.open(data.url, '_blank', 'width=500,height=600');
-        // Poll for session after popup closes
-        const pollInterval = setInterval(async () => {
-          if (popup?.closed) {
-            clearInterval(pollInterval);
-            const { data: { session } } = await supabase.auth.getSession();
-            if (session) handleAuthUser(session);
-          }
-        }, 500);
-        // Fallback: if popup blocked, redirect instead
-        if (!popup) {
-          window.location.href = data.url;
-        }
       }
     });
   });
@@ -539,15 +522,23 @@ import Header from '../components/navigation/Header.astro';
     }
   });
 
-  // Also check existing session
-  supabase.auth.getSession().then(({ data: { session } }) => {
-    handleAuthUser(session);
+  // Check existing session, with retry for mobile
+  async function tryGetSession(retries = 3) {
+    for (let i = 0; i < retries; i++) {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        handleAuthUser(session);
+        break;
+      }
+      if (i < retries - 1) await new Promise(r => setTimeout(r, 500));
+    }
     if (window.location.hash) history.replaceState(null, '', window.location.pathname);
     if (!history.state?.step) {
       history.replaceState({ step: 'home' }, '', window.location.pathname);
       history.pushState({ step: 'welcome' }, '', window.location.pathname);
     }
-  });
+  }
+  tryGetSession();
 
 
   /* ========== CONSTANTS ========== */
