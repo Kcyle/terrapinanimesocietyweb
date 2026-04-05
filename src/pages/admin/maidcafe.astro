@@ -238,6 +238,7 @@ const adminHash = import.meta.env.PUBLIC_ADMIN_PASSWORD || import.meta.env.ADMIN
           <div class="mca__checkin-card-right">
             <div class="mca__checkin-table">Table ${r.table_number}</div>
             <div class="mca__checkin-seats">Seat${seats.includes(',') ? 's' : ''} ${seats}</div>
+            ${r.preferred_staff_name ? `<div class="mca__checkin-staff">Maid: ${r.preferred_staff_name}</div>` : ''}
             <div class="mca__checkin-party">${r.num_guests} guest${r.num_guests > 1 ? 's' : ''} | $${r.total_price}</div>
           </div>
         </div>
@@ -982,6 +983,12 @@ const adminHash = import.meta.env.PUBLIC_ADMIN_PASSWORD || import.meta.env.ADMIN
   :global(.mca__checkin-seats) {
     font-size: 0.85rem;
     color: rgba(255,255,255,0.6);
+  }
+
+  :global(.mca__checkin-staff) {
+    font-size: 0.8rem;
+    color: #FFB6C1;
+    font-weight: 600;
   }
 
   :global(.mca__checkin-party) {
