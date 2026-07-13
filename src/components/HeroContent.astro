@@ -22,7 +22,6 @@ const {
   <div class="hero-content__buttons">
     <a href="#meetings-section" class="hero-content__button hero-content__button--primary">Meetings</a>
     <a href="/terpcon" class="hero-content__button hero-content__button--secondary">TerpCon 2026</a>
-    <a href="/maidcafe" class="hero-content__button hero-content__button--secondary">Maid Cafe 2026</a>
     <a href="/kamecon" class="hero-content__button hero-content__button--secondary">KAMECON</a>
   </div>
 </div>
@@ -61,7 +60,6 @@ const {
       <div class="about-content__detail-item">
         <span class="about-content__detail-label">Major Events</span>
         <div class="about-content__events">
-          <a href="/maidcafe" class="about-content__event-btn">Maid Café <span>Spring</span></a>
           <a href="/kamecon" class="about-content__event-btn">KAMECON <span>Fall</span></a>
         </div>
       </div>
@@ -133,7 +131,7 @@ const {
 
   .hero-content__title-wrapper {
     position: relative;
-    /* Pure vw units for zoom-consistent scaling (80% zoom @ 1920x1080 = 2400px effective) */
+
     min-height: 7.5vw;
   }
 
@@ -174,7 +172,6 @@ const {
     display: block;
     text-shadow: 0 4px 40px rgba(0, 0, 0, 0.9), 0 2px 10px rgba(0, 0, 0, 0.7);
   }
-
 
   .hero-content__description {
     position: relative;
@@ -230,7 +227,6 @@ const {
     border-color: rgba(255, 255, 255, 0.6);
   }
 
-  /* Ticket banner - top right */
   .hero-content__ticket-banner {
     position: fixed;
     top: 13.33vh;
@@ -267,7 +263,7 @@ const {
     z-index: 10;
     min-height: 0;
     overflow: hidden;
-    /* Stop before the mascot area */
+
     width: 65vw;
     -webkit-mask-image: linear-gradient(to right, black 85%, transparent 100%);
     mask-image: linear-gradient(to right, black 85%, transparent 100%);
@@ -283,7 +279,6 @@ const {
     margin: 0;
   }
 
-  /* ===== ABOUT CONTENT STYLES ===== */
   .about-content {
     position: absolute;
     top: 0;
@@ -301,7 +296,6 @@ const {
     z-index: 5;
   }
 
-  /* Background div that slides in - solid color with image overlay */
   .about-content__bg {
     position: absolute;
     top: 0;
@@ -312,7 +306,6 @@ const {
     z-index: 0;
   }
 
-  /* Background image on top of solid color */
   .about-content__bg::after {
     content: '';
     position: absolute;
@@ -334,7 +327,7 @@ const {
 
   .about-content__background-text {
     position: absolute;
-    /* Position at same place as hero */
+
     top: calc(4.17vw * 0.9);
     left: 0;
     transform: translateY(-50%);
@@ -551,7 +544,6 @@ const {
     border-color: rgba(255, 255, 255, 0.6);
   }
 
-  /* Gallery section with collage - positioned on right side */
   .about-content__gallery {
     position: absolute;
     top: 22%;
@@ -571,7 +563,6 @@ const {
     margin: 0 0 0.75rem 0;
   }
 
-  /* Photo Collage - varied sizes mosaic with slant, uses all 11 images */
   .about-content__collage {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
@@ -590,8 +581,6 @@ const {
     border-radius: 4px;
   }
 
-  /* Varied sizes for mosaic layout - all 11 images fit perfectly */
-  /* Row 1: Large image + 2 small squares */
   .about-content__collage-item:nth-child(1) {
     grid-column: span 3;
     grid-row: span 2;
@@ -605,7 +594,6 @@ const {
     grid-row: span 1;
   }
 
-  /* Row 2: Wide image + tall image */
   .about-content__collage-item:nth-child(4) {
     grid-column: span 2;
     grid-row: span 1;
@@ -615,7 +603,6 @@ const {
     grid-row: span 2;
   }
 
-  /* Row 3: Small + wide + small */
   .about-content__collage-item:nth-child(6) {
     grid-column: span 1;
     grid-row: span 1;
@@ -629,7 +616,6 @@ const {
     grid-row: span 1;
   }
 
-  /* Row 4: Wide + wide + small */
   .about-content__collage-item:nth-child(9) {
     grid-column: span 2;
     grid-row: span 1;
@@ -655,10 +641,9 @@ const {
     transform: scale(1.05);
   }
 
-  /* C.C. Mascot container - positioned at top right of collage */
   .about-content__mascot-container {
     position: absolute;
-    /* Top set by JS to anchor to collage */
+
     right: 0;
     width: 20.83vw;
     height: auto;
@@ -668,7 +653,6 @@ const {
     z-index: 30;
   }
 
-  /* C.C. Mascot - sitting on top of collage at top right */
   .about__mascot {
     position: relative;
     width: 100%;
@@ -682,10 +666,6 @@ const {
     contain: layout paint;
   }
 
-  /* ===== RESPONSIVE STYLES ===== */
-  /* Most elements now use clamp() for fluid scaling - only layout changes here */
-
-  /* Medium screens / tablets landscape */
   @media (max-width: 992px) {
     .hero-content__buttons {
       flex-wrap: wrap;
@@ -697,13 +677,13 @@ const {
     }
 
     .about-content__gallery {
-      /* Left set by JS */
+
       top: 25%;
     }
 
     .about-content__mascot-container {
       width: clamp(200px, 30vw, 300px);
-      /* Top set by JS */
+
     }
 
     .about__mascot {
@@ -716,7 +696,6 @@ const {
     }
   }
 
-  /* Tablets portrait - pixel values for readability */
   @media (max-width: 768px) {
     .hero-content__title-wrapper {
       min-height: 80px;
@@ -874,7 +853,6 @@ const {
     }
   }
 
-  /* Mobile - layout changes only */
   @media (max-width: 480px) {
     .about-content__gallery {
       height: 200px;
@@ -886,7 +864,6 @@ const {
       gap: 0.25rem;
     }
 
-    /* Even simpler grid for mobile */
     .about-content__collage-item:nth-child(1) {
       grid-column: span 2;
       grid-row: span 1;
@@ -899,7 +876,7 @@ const {
       grid-column: span 1;
       grid-row: span 1;
     }
-    /* Hide extra images on mobile */
+
     .about-content__collage-item:nth-child(7),
     .about-content__collage-item:nth-child(8),
     .about-content__collage-item:nth-child(9),
@@ -953,38 +930,30 @@ const {
     }
   }
 
-  /* Large display media query removed - pure vw/vh units scale automatically */
-
 </style>
 
 <script>
-  // Anchor C.C. mascot to top right corner of the photo collage
+
   function anchorCCToCollage() {
     const mascotContainer = document.querySelector('.about-content__mascot-container') as HTMLElement;
     const mascotImg = document.querySelector('.about__mascot') as HTMLImageElement;
 
     if (!mascotContainer || !mascotImg) return;
 
-    // Wait for image to load to get accurate height
     if (!mascotImg.complete) {
       mascotImg.addEventListener('load', anchorCCToCollage, { once: true });
       return;
     }
 
-    // Get the mascot image height
     const mascotHeight = mascotImg.offsetHeight;
 
-    // Position mascot so she sits on top of collage
-    // 75% above collage, 25% overlapping
     mascotContainer.style.top = `${-(mascotHeight * 0.75)}px`;
   }
 
-  // Run on load and resize
   if (typeof window !== 'undefined') {
     window.addEventListener('load', anchorCCToCollage);
     window.addEventListener('resize', anchorCCToCollage);
 
-    // Also run immediately if DOM is ready
     if (document.readyState !== 'loading') {
       anchorCCToCollage();
     }

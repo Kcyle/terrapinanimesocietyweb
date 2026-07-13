@@ -30,7 +30,6 @@ const navItems: NavItem[] = [
     children: [
       { label: 'TerpCon 2026', href: '/terpcon' },
       { label: 'Kamecon', href: '/kamecon' },
-      { label: 'Maid Cafe', href: '/maidcafe' },
     ]
   },
 ];
@@ -375,21 +374,18 @@ const navItems: NavItem[] = [
   document.addEventListener('DOMContentLoaded', () => {
     const loader = document.querySelector('[data-teleport-loader]') as HTMLElement;
 
-    // Timeline positions mapped to scroll percentages
-    // effectiveUnits = 16.5 (3 transitions + 1.5 partners + 12 subgroups)
-    // Land AFTER all enter animations have completed (with extra buffer)
     const sectionPositions: Record<string, number> = {
       '/': 0,
-      '#about-section': 0.06,      // ~1.0 / 16.5 - about at rest
-      '#meetings-section': 0.12,   // ~2.0 / 16.5 - meetings at rest
-      '#activities-section': 0.19, // ~3.1 / 16.5 - first card just landed
-      '#partners-section': 0.39,   // ~6.4 / 16.5 - all 3 partners fully slid in
-      '#subgroups-section': 0.50,  // ~8.2 / 16.5 - 5 preview cards settled
-      '#subgroup-animusic': 0.57,  // ~9.4 / 16.5 - animusic fully settled
-      '#subgroup-cosplay': 0.66,   // ~10.9 / 16.5 - cosplay fully settled
-      '#subgroup-oldanime': 0.75,  // ~12.4 / 16.5 - old anime fully settled
-      '#subgroup-bookclub': 0.83,  // ~13.7 / 16.5 - book club fully settled
-      '#subgroup-rainbow': 0.93,   // ~15.3 / 16.5 - rainbow fully settled
+      '#about-section': 0.06,
+      '#meetings-section': 0.12,
+      '#activities-section': 0.19,
+      '#partners-section': 0.39,
+      '#subgroups-section': 0.50,
+      '#subgroup-animusic': 0.57,
+      '#subgroup-cosplay': 0.66,
+      '#subgroup-oldanime': 0.75,
+      '#subgroup-bookclub': 0.83,
+      '#subgroup-rainbow': 0.93,
     };
 
     const teleportTo = (position: number) => {
@@ -411,7 +407,6 @@ const navItems: NavItem[] = [
 
         window.scrollTo(0, targetScroll);
 
-        // @ts-ignore
         if (window.ScrollTrigger) {
           window.ScrollTrigger.update();
           requestAnimationFrame(() => {

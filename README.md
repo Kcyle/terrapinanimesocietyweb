@@ -2,25 +2,18 @@
 
 The official website for the **Terrapin Anime Society (TAS)** at the University of Maryland, live at **[tas.umd.edu](https://tas.umd.edu)**.
 
-It covers the club's weekly screenings, events (KameCon, TerpCon), and the Maid Cafe - including an online reservation and check-in system.
+It covers the club's weekly screenings and events (KameCon, TerpCon). It is a fully static site with no backend, database, or login required.
 
-- **Framework:** [Astro](https://astro.build) (static site)
+- **Framework:** [Astro](https://astro.build)
 - **Language:** TypeScript + `.astro` components
 - **Animation:** [GSAP](https://gsap.com)
-- **Maid Cafe backend:** [Supabase](https://supabase.com) (reservations + live seat map)
 - **Hosting:** GitHub Pages, auto-deployed on every push to `main`
 
 ---
 
-## New here? Start with these
+## New here? Start with this
 
-| I want to...                                             | Read this                                        |
-| :----------------------------------------------------- | :----------------------------------------------- |
-| Change site content (screenings, text, photos, maids)  | **[docs/EDITING-GUIDE.md](docs/EDITING-GUIDE.md)** |
-| Run the site on my computer or set up the services     | **[docs/SETUP-AND-DEPLOY.md](docs/SETUP-AND-DEPLOY.md)** |
-| Take over the project from the previous owner          | [Handoff checklist](docs/SETUP-AND-DEPLOY.md#handoff-checklist) |
-
-If you only want to update what's on the site (not the code), the **Editing Guide** is the only file you need.
+To change what's on the site (screenings, text, photos), you don't need to touch the code. Read the **[Editing Guide](docs/EDITING-GUIDE.md)** first.
 
 ---
 
@@ -35,11 +28,13 @@ npm run dev      # start the site locally at http://localhost:4321
 
 Edit any file and the browser refreshes automatically. Press `Ctrl+C` in the terminal to stop.
 
-| Command           | What it does                                  |
-| :---------------- | :-------------------------------------------- |
-| `npm run dev`     | Live preview at `localhost:4321`              |
-| `npm run build`   | Build the production site into `dist/`        |
-| `npm run preview` | Preview the built site before deploying       |
+| Command           | What it does                             |
+| :---------------- | :--------------------------------------- |
+| `npm run dev`     | Live preview at `localhost:4321`         |
+| `npm run build`   | Build the production site into `dist/`   |
+| `npm run preview` | Preview the built site before deploying  |
+
+No environment variables or accounts are needed to run or build the site.
 
 ---
 
@@ -49,37 +44,28 @@ Everything the club actually edits lives in **`src/data/`** and **`public/images
 
 ```text
 terrapinanimesocietyweb/
-├── public/                       Static files served as-is
+├── public/
 │   ├── CNAME                     Custom domain (tas.umd.edu)
 │   └── images/                   All images, grouped by purpose
 │       ├── Artwork/  Backgrounds/  Cards/  Characters/
-│       └── Icons/    Maids/       Photos/  Vendors/
+│       └── Icons/    Photos/       Vendors/
 ├── src/
 │   ├── pages/                    Each file is one page (its filename = its URL)
 │   │   ├── index.astro           Home            -> /
 │   │   ├── about.astro           About the club  -> /about
 │   │   ├── meetings.astro        Meetings + map  -> /meetings
 │   │   ├── kamecon.astro         KameCon event   -> /kamecon
-│   │   ├── terpcon.astro         TerpCon event   -> /terpcon
-│   │   ├── maidcafe.astro        Maid Cafe + reservations -> /maidcafe
-│   │   ├── admin/                Password-gated admin tools
-│   │   │   ├── screenings.astro  Screening editor       -> /admin/screenings
-│   │   │   └── maidcafe.astro    Maid Cafe check-in desk -> /admin/maidcafe
-│   │   └── api/screenings.ts     Server endpoint used by the screening editor
-│   ├── sections/                 Big page sections (hero, about, event blocks)
+│   │   └── terpcon.astro         TerpCon event   -> /terpcon
+│   ├── sections/HeroSection.astro  The home-page hero wrapper
 │   ├── components/               Reusable pieces (header, footer, carousel, icons)
 │   ├── layouts/BaseLayout.astro  Shared page shell (head, fonts, meta tags)
 │   ├── data/                     <- Editable content (see the Editing Guide)
 │   │   ├── screenings.json       Screening lineup + meeting time & location
-│   │   ├── maidcafe-staff.ts     Maid / butler roster
 │   │   └── umd-buildings.json    UMD building codes -> names + map coordinates
-│   ├── lib/supabase.ts           Supabase client for the Maid Cafe
 │   ├── utils/                    Small helpers (DOM, anime API)
 │   ├── animations/               GSAP scroll / hero / menu animations
 │   └── styles/global.css         Global styles and color variables
-├── maidcafe-schema.sql           Supabase database setup script
 ├── astro.config.mjs              Build config (site URL, base path)
-├── .env.example                  Template listing the secrets the site needs
 └── .github/workflows/deploy.yml  Auto-deploy to GitHub Pages on push to main
 ```
 
@@ -93,4 +79,15 @@ terrapinanimesocietyweb/
 2. The workflow in `.github/workflows/deploy.yml` builds the site and publishes it to GitHub Pages.
 3. A minute or two later, the change is live at [tas.umd.edu](https://tas.umd.edu).
 
-You do not need to build or upload anything by hand. Full details, including the required GitHub secrets, are in **[docs/SETUP-AND-DEPLOY.md](docs/SETUP-AND-DEPLOY.md)**.
+You do not need to build or upload anything by hand, and there are no secrets to configure. The custom domain comes from [`public/CNAME`](public/CNAME).
+
+---
+
+## Handing off to the next owner
+
+When passing the club (and this site) to the next person:
+
+1. **Add them to the repo** (Settings -> Collaborators), or transfer the repo to them or to a club-owned GitHub organization.
+2. **Confirm the domain:** in Settings -> Pages, make sure the custom domain `tas.umd.edu` is still set, and that whoever manages the `umd.edu` DNS knows the new contact.
+3. **Update contact details** on the site if they change (see the [Editing Guide](docs/EDITING-GUIDE.md)).
+4. **Do a test deploy:** make a small edit, push to `main`, and confirm it goes live. That proves the whole pipeline works for the new owner.

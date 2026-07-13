@@ -296,7 +296,6 @@
     text-shadow: 0 2px 15px rgba(0, 0, 0, 0.8);
   }
 
-  /* ===== CARD PILE ===== */
   .activities__card-pile {
     position: absolute;
     left: 7.25vw;
@@ -328,7 +327,6 @@
       inset 0 0 0 0.083vw #000;
   }
 
-  /* Screentone halftone dot pattern - classic manga shading */
   .activities__card::before {
     content: '';
     position: absolute;
@@ -340,7 +338,6 @@
     z-index: 0;
   }
 
-  /* Speed lines radiating from corner - manga action effect */
   .activities__card::after {
     content: '';
     position: absolute;
@@ -406,7 +403,6 @@
     width: 100%;
   }
 
-  /* Mobile - pixel values for readability */
   @media (max-width: 768px) {
     .activities__main {
       padding: 1rem;
@@ -461,9 +457,6 @@
     }
   }
 
-  /* Large display media query removed - pure vw/vh units scale automatically */
-
-  /* ===== SKY BIOMES CONTAINER ===== */
   .activities__void {
     position: absolute;
     inset: 0;
@@ -476,26 +469,23 @@
     overflow: hidden;
   }
 
-  /* Base biome layer */
   .activities__sky-biome {
     position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
     opacity: 0;
-    background: #0a0a18; /* Dark fallback */
+    background: #0a0a18;
     overflow: hidden;
   }
 
-  /* First biome starts hidden - intro screen shows first */
   .activities__sky-biome:first-child {
     opacity: 0;
   }
 
-  /* Blurred background layer - fills gaps smoothly */
   .sky-biome-blur {
     position: absolute;
-    inset: -20px; /* Extend beyond edges to prevent blur gaps */
+    inset: -20px;
     width: calc(100% + 40px);
     height: calc(100% + 40px);
     object-fit: cover;
@@ -505,7 +495,6 @@
     z-index: 1;
   }
 
-  /* Main image - sharp, centered, with soft edge blending */
   .sky-biome-img {
     position: absolute;
     inset: 0;
@@ -514,12 +503,11 @@
     object-fit: contain;
     object-position: center;
     z-index: 2;
-    /* Ultra-smooth edge mask - very gradual fade into blurred background */
+
     -webkit-mask-image: radial-gradient(ellipse 75% 85% at center, black 30%, rgba(0,0,0,0.8) 50%, rgba(0,0,0,0.4) 70%, transparent 95%);
     mask-image: radial-gradient(ellipse 75% 85% at center, black 30%, rgba(0,0,0,0.8) 50%, rgba(0,0,0,0.4) 70%, transparent 95%);
   }
 
-  /* ===== SUBGROUPS INTRO SCREEN - Clean Apple-style ===== */
   .subgroups-intro {
     position: absolute;
     inset: 0;
@@ -569,7 +557,6 @@
     margin-top: 1.5vh;
   }
 
-  /* Large preview cards - take up the page */
   .subgroups-intro__previews {
     display: flex;
     justify-content: center;
@@ -619,13 +606,11 @@
     text-shadow: 0 2px 6px rgba(0, 0, 0, 0.9);
   }
 
-  /* Book club image has black bars - zoom in to fill */
   .subgroups-intro__card--bookclub .subgroups-intro__card-img {
     transform: scale(1.4);
     object-position: center center;
   }
 
-  /* ===== SUBGROUP CONTENT - Title top-left, info bottom-right ===== */
   .subgroup {
     position: absolute;
     inset: 0;
@@ -645,7 +630,7 @@
     will-change: transform, opacity;
     overflow: visible;
     position: absolute;
-    /* Apple-style frosted glass */
+
     background: rgba(0, 0, 0, 0.35);
     -webkit-backdrop-filter: blur(20px) saturate(180%);
     backdrop-filter: blur(20px) saturate(180%);
@@ -733,9 +718,6 @@
     opacity: 0.85;
   }
 
-  /* ===== SUBGROUP COLOR THEMES ===== */
-
-  /* Animusic - Pink/Cyan */
   .subgroup--animusic .subgroup__name {
     background: linear-gradient(135deg, #ff6ec7 0%, #00d4ff 100%);
     -webkit-background-clip: text;
@@ -748,7 +730,6 @@
     text-shadow: 0 2px 20px rgba(0,0,0,0.5);
   }
 
-  /* Cosplay - Warm Orange/Gold */
   .subgroup--cosplay .subgroup__name {
     background: linear-gradient(135deg, #ff9f43 0%, #ffd32a 100%);
     -webkit-background-clip: text;
@@ -761,7 +742,6 @@
     text-shadow: 0 2px 20px rgba(0,0,0,0.5);
   }
 
-  /* Cosplay photos - top right and bottom left */
   .subgroup__photo {
     position: absolute;
     z-index: 41;
@@ -783,7 +763,6 @@
     top: 5vh;
   }
 
-  /* Old Anime - White/Gray */
   .subgroup--oldanime .subgroup__name {
     color: #ffffff;
     text-shadow: 2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000;
@@ -794,7 +773,6 @@
     text-shadow: 1px 1px 0 #000;
   }
 
-  /* Book Club - Warm Purple */
   .subgroup--bookclub .subgroup__name {
     background: linear-gradient(135deg, #e8b4f8 0%, #a855f7 100%);
     -webkit-background-clip: text;
@@ -807,7 +785,6 @@
     text-shadow: 0 2px 20px rgba(0,0,0,0.5);
   }
 
-  /* Rainbow - Pride Gradient */
   .subgroup--rainbow .subgroup__name {
     background: linear-gradient(135deg,
       #e74c3c 0%, #e67e22 20%, #f1c40f 40%,
@@ -897,5 +874,4 @@
     }
   }
 
-  /* Large display media query removed - pure vw/vh units scale automatically */
 </style>

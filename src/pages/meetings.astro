@@ -26,7 +26,7 @@ import NowScreening from '../components/NowScreening.astro';
     if (!mapContainer) return;
 
     const checkLeaflet = setInterval(() => {
-      // @ts-ignore
+
       if (window.L) {
         clearInterval(checkLeaflet);
         initializeMap(mapContainer);
@@ -37,10 +37,10 @@ import NowScreening from '../components/NowScreening.astro';
   }
 
   function initializeMap(container: HTMLElement) {
-    // @ts-ignore
+
     const L = window.L;
 
-    if (map) return; // Already initialized
+    if (map) return;
 
     const lat = parseFloat(container.dataset.lat || '38.9869');
     const lng = parseFloat(container.dataset.lng || '-76.9426');
@@ -66,75 +66,15 @@ import NowScreening from '../components/NowScreening.astro';
     }, 100);
   }
 
-  const ADMIN_PASSWORD = 'animeclubadmin';
-
-  function initLoginModal() {
-    const loginBtn = document.getElementById('adminLoginBtn');
-    const loginModal = document.getElementById('loginModal');
-    const closeLoginBtn = document.getElementById('closeLoginModal');
-    const loginForm = document.getElementById('loginForm') as HTMLFormElement;
-    const passwordInput = document.getElementById('adminPassword') as HTMLInputElement;
-    const errorEl = document.getElementById('loginError');
-
-    if (!loginBtn || !loginModal || !loginForm) return;
-
-    if (sessionStorage.getItem('adminLoggedIn') === 'true') {
-      document.body.classList.add('admin-mode');
-    }
-
-    loginBtn.addEventListener('click', () => {
-      loginModal.classList.add('active');
-      passwordInput?.focus();
-    });
-
-    closeLoginBtn?.addEventListener('click', () => {
-      loginModal.classList.remove('active');
-      if (errorEl) errorEl.textContent = '';
-      if (passwordInput) passwordInput.value = '';
-    });
-
-    loginModal.addEventListener('click', (e) => {
-      if (e.target === loginModal) {
-        loginModal.classList.remove('active');
-        if (errorEl) errorEl.textContent = '';
-        if (passwordInput) passwordInput.value = '';
-      }
-    });
-
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && loginModal.classList.contains('active')) {
-        loginModal.classList.remove('active');
-        if (errorEl) errorEl.textContent = '';
-        if (passwordInput) passwordInput.value = '';
-      }
-    });
-
-    loginForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const password = passwordInput?.value;
-
-      if (password === ADMIN_PASSWORD) {
-        sessionStorage.setItem('adminLoggedIn', 'true');
-        window.location.href = '/admin/screenings';
-      } else {
-        if (errorEl) errorEl.textContent = 'Incorrect password';
-        passwordInput?.focus();
-        passwordInput?.select();
-      }
-    });
-  }
-
   if (typeof window !== 'undefined') {
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', () => {
         initScreeningAnimations();
         initMap();
-        initLoginModal();
       });
     } else {
       initScreeningAnimations();
       initMap();
-      initLoginModal();
     }
   }
 </script>

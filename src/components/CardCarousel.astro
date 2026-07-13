@@ -90,7 +90,6 @@ const duplicatedImages = [...images, ...images];
     backface-visibility: hidden;
   }
 
-  /* Pause animation when carousel is not visible */
   .card-carousel.paused .card-carousel__track {
     animation-play-state: paused;
   }
@@ -98,7 +97,7 @@ const duplicatedImages = [...images, ...images];
   .card-carousel__slide {
     position: relative;
     flex-shrink: 0;
-    /* Fill available height from parent */
+
     height: 100%;
     aspect-ratio: 2 / 3;
     border: 1px solid rgba(255, 255, 255, 0.15);
@@ -163,7 +162,7 @@ const duplicatedImages = [...images, ...images];
       transform: translateX(0);
     }
     100% {
-      /* Card width = height * 2/3, plus gap (1.33vw) */
+
       transform: translateX(calc((40vh * 2 / 3 + 1.33vw) * -31));
     }
   }
@@ -176,9 +175,6 @@ const duplicatedImages = [...images, ...images];
     padding-bottom: 1.11vh;
   }
 
-  /* Large display media query removed - pure vw/vh units scale automatically */
-
-  /* Mobile - pixel values for readability */
   @media (max-width: 768px) {
     .card-carousel__track {
       gap: 1rem;
@@ -207,12 +203,11 @@ const duplicatedImages = [...images, ...images];
 </style>
 
 <script>
-  // Pause carousel animation when not visible to save GPU resources
+
   function initCarouselOptimization() {
     const carousel = document.querySelector('[data-card-carousel]');
     if (!carousel) return;
 
-    // Use IntersectionObserver to pause when not visible
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -228,12 +223,11 @@ const duplicatedImages = [...images, ...images];
 
     observer.observe(carousel);
 
-    // Also pause when tab is not visible
     document.addEventListener('visibilitychange', () => {
       if (document.hidden) {
         carousel.classList.add('paused');
       } else {
-        // Check if carousel is in viewport before resuming
+
         const rect = carousel.getBoundingClientRect();
         const inViewport = rect.top < window.innerHeight && rect.bottom > 0;
         if (inViewport) {
@@ -243,7 +237,6 @@ const duplicatedImages = [...images, ...images];
     });
   }
 
-  // Initialize when DOM is ready
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initCarouselOptimization);
   } else {
