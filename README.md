@@ -1,8 +1,8 @@
-# Terrapin Anime Society — Website
+# Terrapin Anime Society - Website
 
 The official website for the **Terrapin Anime Society (TAS)** at the University of Maryland, live at **[tas.umd.edu](https://tas.umd.edu)**.
 
-It covers the club's weekly screenings, events (KameCon, TerpCon), and the Maid Cafe — including an online reservation and check-in system.
+It covers the club's weekly screenings, events (KameCon, TerpCon), and the Maid Cafe - including an online reservation and check-in system.
 
 - **Framework:** [Astro](https://astro.build) (static site)
 - **Language:** TypeScript + `.astro` components
@@ -14,7 +14,7 @@ It covers the club's weekly screenings, events (KameCon, TerpCon), and the Maid 
 
 ## New here? Start with these
 
-| I want to…                                             | Read this                                        |
+| I want to...                                             | Read this                                        |
 | :----------------------------------------------------- | :----------------------------------------------- |
 | Change site content (screenings, text, photos, maids)  | **[docs/EDITING-GUIDE.md](docs/EDITING-GUIDE.md)** |
 | Run the site on my computer or set up the services     | **[docs/SETUP-AND-DEPLOY.md](docs/SETUP-AND-DEPLOY.md)** |
@@ -56,23 +56,23 @@ terrapinanimesocietyweb/
 │       └── Icons/    Maids/       Photos/  Vendors/
 ├── src/
 │   ├── pages/                    Each file is one page (its filename = its URL)
-│   │   ├── index.astro           Home            → /
-│   │   ├── about.astro           About the club  → /about
-│   │   ├── meetings.astro        Meetings + map  → /meetings
-│   │   ├── kamecon.astro         KameCon event   → /kamecon
-│   │   ├── terpcon.astro         TerpCon event   → /terpcon
-│   │   ├── maidcafe.astro        Maid Cafe + reservations → /maidcafe
+│   │   ├── index.astro           Home            -> /
+│   │   ├── about.astro           About the club  -> /about
+│   │   ├── meetings.astro        Meetings + map  -> /meetings
+│   │   ├── kamecon.astro         KameCon event   -> /kamecon
+│   │   ├── terpcon.astro         TerpCon event   -> /terpcon
+│   │   ├── maidcafe.astro        Maid Cafe + reservations -> /maidcafe
 │   │   ├── admin/                Password-gated admin tools
-│   │   │   ├── screenings.astro  Screening editor       → /admin/screenings
-│   │   │   └── maidcafe.astro    Maid Cafe check-in desk → /admin/maidcafe
+│   │   │   ├── screenings.astro  Screening editor       -> /admin/screenings
+│   │   │   └── maidcafe.astro    Maid Cafe check-in desk -> /admin/maidcafe
 │   │   └── api/screenings.ts     Server endpoint used by the screening editor
 │   ├── sections/                 Big page sections (hero, about, event blocks)
 │   ├── components/               Reusable pieces (header, footer, carousel, icons)
 │   ├── layouts/BaseLayout.astro  Shared page shell (head, fonts, meta tags)
-│   ├── data/                     ← Editable content (see the Editing Guide)
+│   ├── data/                     <- Editable content (see the Editing Guide)
 │   │   ├── screenings.json       Screening lineup + meeting time & location
 │   │   ├── maidcafe-staff.ts     Maid / butler roster
-│   │   └── umd-buildings.json    UMD building codes → names + map coordinates
+│   │   └── umd-buildings.json    UMD building codes -> names + map coordinates
 │   ├── lib/supabase.ts           Supabase client for the Maid Cafe
 │   ├── utils/                    Small helpers (DOM, anime API)
 │   ├── animations/               GSAP scroll / hero / menu animations
