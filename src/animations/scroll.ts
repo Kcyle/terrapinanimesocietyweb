@@ -26,7 +26,7 @@ let mainScrollTrigger: ScrollTrigger | null = null;
  * One master ScrollTrigger pins for entire duration
  * Each transition uses fixed absolute positions (no percentages)
  *
- * Flow: Hero → About → Meetings → Activities
+ * Flow: Hero -> About -> Meetings -> Activities
  */
 export function initScrollTransition(): void {
   const heroSection = document.querySelector('[data-hero]') as HTMLElement;
@@ -259,10 +259,10 @@ export function initScrollTransition(): void {
   // CALCULATE TOTAL SCROLL NEEDED
   // ============================================
 
-  // Flow: Hero→About→Meetings→Activities (+ card pile)
-  let numTransitions = 1; // Base: Hero→About
-  if (hasMeetings) numTransitions += 1; // About→Meetings
-  if (hasActivities) numTransitions += 1; // Meetings→Activities
+  // Flow: Hero->About->Meetings->Activities (+ card pile)
+  let numTransitions = 1; // Base: Hero->About
+  if (hasMeetings) numTransitions += 1; // About->Meetings
+  if (hasActivities) numTransitions += 1; // Meetings->Activities
 
   // Extra scroll units for partners (1.5) + intro screen + 5 sky biomes
   // Partners: 1.5 units, Intro: 1.5 units, 5 biomes x 1.5 units each = 12 total
@@ -368,7 +368,7 @@ export function initScrollTransition(): void {
   });
 
   // ============================================
-  // TRANSITION 1: HERO → ABOUT (position 0 to 1)
+  // TRANSITION 1: HERO -> ABOUT (position 0 to 1)
   // ============================================
 
   // Hero elements staggered to prevent glitch when scrolling back
@@ -389,7 +389,7 @@ export function initScrollTransition(): void {
   if (aboutMascot) masterTl.to(aboutMascot, { y: 0, duration: 0.4, ease: 'power2.out' }, 0.5);
 
   // ============================================
-  // TRANSITION 2: ABOUT → MEETINGS (position 1 to 2)
+  // TRANSITION 2: ABOUT -> MEETINGS (position 1 to 2)
   // ============================================
 
   if (hasMeetings) {
@@ -413,7 +413,7 @@ export function initScrollTransition(): void {
   }
 
   // ============================================
-  // TRANSITION 3: MEETINGS → ACTIVITIES (position 2 to 3)
+  // TRANSITION 3: MEETINGS -> ACTIVITIES (position 2 to 3)
   // Makima bg fades in slowly/cinematically first,
   // then Chainsaw Man slides in from bottom-right,
   // then Activities title enters
@@ -484,7 +484,7 @@ export function initScrollTransition(): void {
       });
 
       // ============================================
-      // TRANSITION 4: ACTIVITIES → PARTNERS (position 5.0 to 6.5)
+      // TRANSITION 4: ACTIVITIES -> PARTNERS (position 5.0 to 6.5)
       // Cards explode outward from pile and disappear
       // ============================================
 
@@ -654,7 +654,7 @@ export function initScrollTransition(): void {
         masterTl.to(subgroup1, { opacity: 0, duration: 0.15, ease: 'none' }, 9.4);
       }
 
-      // Biome 1 → Biome 2 (position 9.5)
+      // Biome 1 -> Biome 2 (position 9.5)
       if (skyBiome1) {
         masterTl.to(skyBiome1, { opacity: 0, duration: 0.3, ease: 'power1.inOut' }, 9.5);
       }
@@ -696,7 +696,7 @@ export function initScrollTransition(): void {
         masterTl.to(subgroup2, { opacity: 0, duration: 0.15, ease: 'none' }, 10.9);
       }
 
-      // Biome 2 → Biome 3 (position 11.0)
+      // Biome 2 -> Biome 3 (position 11.0)
       if (skyBiome2) {
         masterTl.to(skyBiome2, { opacity: 0, duration: 0.3, ease: 'power1.inOut' }, 11.0);
       }
@@ -738,7 +738,7 @@ export function initScrollTransition(): void {
         masterTl.to(subgroup3, { opacity: 0, duration: 0.15, ease: 'none' }, 12.4);
       }
 
-      // Biome 3 → Biome 4 (position 12.5)
+      // Biome 3 -> Biome 4 (position 12.5)
       if (skyBiome3) {
         masterTl.to(skyBiome3, { opacity: 0, duration: 0.3, ease: 'power1.inOut' }, 12.5);
       }
@@ -766,7 +766,7 @@ export function initScrollTransition(): void {
         masterTl.to(subgroup4, { opacity: 0, duration: 0.15, ease: 'none' }, 13.9);
       }
 
-      // Biome 4 → Biome 5 (position 14.0)
+      // Biome 4 -> Biome 5 (position 14.0)
       if (skyBiome4) {
         masterTl.to(skyBiome4, { opacity: 0, duration: 0.3, ease: 'power1.inOut' }, 14.0);
       }
