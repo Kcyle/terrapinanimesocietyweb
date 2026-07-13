@@ -1,43 +1,96 @@
-# Astro Starter Kit: Minimal
+# Terrapin Anime Society — Website
+
+The official website for the **Terrapin Anime Society (TAS)** at the University of Maryland, live at **[tas.umd.edu](https://tas.umd.edu)**.
+
+It covers the club's weekly screenings, events (KameCon, TerpCon), and the Maid Cafe — including an online reservation and check-in system.
+
+- **Framework:** [Astro](https://astro.build) (static site)
+- **Language:** TypeScript + `.astro` components
+- **Animation:** [GSAP](https://gsap.com)
+- **Maid Cafe backend:** [Supabase](https://supabase.com) (reservations + live seat map)
+- **Hosting:** GitHub Pages, auto-deployed on every push to `main`
+
+---
+
+## New here? Start with these
+
+| I want to…                                             | Read this                                        |
+| :----------------------------------------------------- | :----------------------------------------------- |
+| Change site content (screenings, text, photos, maids)  | **[docs/EDITING-GUIDE.md](docs/EDITING-GUIDE.md)** |
+| Run the site on my computer or set up the services     | **[docs/SETUP-AND-DEPLOY.md](docs/SETUP-AND-DEPLOY.md)** |
+| Take over the project from the previous owner          | [Handoff checklist](docs/SETUP-AND-DEPLOY.md#handoff-checklist) |
+
+If you only want to update what's on the site (not the code), the **Editing Guide** is the only file you need.
+
+---
+
+## Quick start
+
+You need [Node.js](https://nodejs.org) 20 or newer.
 
 ```sh
-npm create astro@latest -- --template minimal
+npm install      # install dependencies (first time only)
+npm run dev      # start the site locally at http://localhost:4321
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+Edit any file and the browser refreshes automatically. Press `Ctrl+C` in the terminal to stop.
 
-## 🚀 Project Structure
+| Command           | What it does                                  |
+| :---------------- | :-------------------------------------------- |
+| `npm run dev`     | Live preview at `localhost:4321`              |
+| `npm run build`   | Build the production site into `dist/`        |
+| `npm run preview` | Preview the built site before deploying       |
 
-Inside of your Astro project, you'll see the following folders and files:
+---
+
+## Project map
+
+Everything the club actually edits lives in **`src/data/`** and **`public/images/`**.
 
 ```text
-/
-├── public/
+terrapinanimesocietyweb/
+├── public/                       Static files served as-is
+│   ├── CNAME                     Custom domain (tas.umd.edu)
+│   └── images/                   All images, grouped by purpose
+│       ├── Artwork/  Backgrounds/  Cards/  Characters/
+│       └── Icons/    Maids/       Photos/  Vendors/
 ├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+│   ├── pages/                    Each file is one page (its filename = its URL)
+│   │   ├── index.astro           Home            → /
+│   │   ├── about.astro           About the club  → /about
+│   │   ├── meetings.astro        Meetings + map  → /meetings
+│   │   ├── kamecon.astro         KameCon event   → /kamecon
+│   │   ├── terpcon.astro         TerpCon event   → /terpcon
+│   │   ├── maidcafe.astro        Maid Cafe + reservations → /maidcafe
+│   │   ├── admin/                Password-gated admin tools
+│   │   │   ├── screenings.astro  Screening editor       → /admin/screenings
+│   │   │   └── maidcafe.astro    Maid Cafe check-in desk → /admin/maidcafe
+│   │   └── api/screenings.ts     Server endpoint used by the screening editor
+│   ├── sections/                 Big page sections (hero, about, event blocks)
+│   ├── components/               Reusable pieces (header, footer, carousel, icons)
+│   ├── layouts/BaseLayout.astro  Shared page shell (head, fonts, meta tags)
+│   ├── data/                     ← Editable content (see the Editing Guide)
+│   │   ├── screenings.json       Screening lineup + meeting time & location
+│   │   ├── maidcafe-staff.ts     Maid / butler roster
+│   │   └── umd-buildings.json    UMD building codes → names + map coordinates
+│   ├── lib/supabase.ts           Supabase client for the Maid Cafe
+│   ├── utils/                    Small helpers (DOM, anime API)
+│   ├── animations/               GSAP scroll / hero / menu animations
+│   └── styles/global.css         Global styles and color variables
+├── maidcafe-schema.sql           Supabase database setup script
+├── astro.config.mjs              Build config (site URL, base path)
+├── .env.example                  Template listing the secrets the site needs
+└── .github/workflows/deploy.yml  Auto-deploy to GitHub Pages on push to main
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+**How Astro routing works:** any `.astro` file in `src/pages/` automatically becomes a page. `src/pages/about.astro` is served at `/about`. There is no separate router to configure.
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+---
 
-Any static assets, like images, can be placed in the `public/` directory.
+## How deployment works
 
-## 🧞 Commands
+1. You push a change to the `main` branch on GitHub.
+2. The workflow in `.github/workflows/deploy.yml` builds the site and publishes it to GitHub Pages.
+3. A minute or two later, the change is live at [tas.umd.edu](https://tas.umd.edu).
 
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+You do not need to build or upload anything by hand. Full details, including the required GitHub secrets, are in **[docs/SETUP-AND-DEPLOY.md](docs/SETUP-AND-DEPLOY.md)**.

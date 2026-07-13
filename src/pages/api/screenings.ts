@@ -76,7 +76,7 @@ export const POST: APIRoute = async ({ request }) => {
           message: 'Update screenings via admin panel',
           content: contentBase64,
           sha: currentSha,
-          branch: 'master',
+          branch: 'main',
         }),
       }
     );

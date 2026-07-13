@@ -1,7 +1,10 @@
 {
-  "name": "opposite-osiris",
+  "name": "terrapin-anime-society-web",
+  "description": "Official website for the Terrapin Anime Society at the University of Maryland.",
   "type": "module",
-  "version": "0.0.1",
+  "version": "1.0.0",
+  "private": true,
+  "homepage": "https://tas.umd.edu",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
@@ -9,7 +12,6 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/vercel": "^9.0.4",
     "@supabase/supabase-js": "^2.96.0",
     "astro": "^5.16.11",
     "gsap": "^3.14.2",

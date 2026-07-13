@@ -23,3 +23,7 @@ pnpm-debug.log*
 # jetbrains setting folder
 .idea/
 nul
+
+# editor / AI tooling config (kept local, not committed)
+.claude/
+.vercel/
