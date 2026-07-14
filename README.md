@@ -28,13 +28,13 @@ Most of the website's content is stored as JSON files in `src/data/`. In most ca
 | `src/data/kamecon.json`    | KameCon description, links, photos, and vendors                    |
 | `src/data/terpcon.json`    | TerpCon date, time, location, vendors, and featured artists        |
 
-Every field in every one of these files is used by the site. If you change a value there, it changes on the website. Nothing in `src/data/` is decorative.
+Every field in every one of these files is used by the site. If you change a value there, it changes on the website. Everthing in `src/data/` is essential content.
 
 For instructions on each of these files, see `docs/EDITING.md`. If you are only updating website content, that guide is all you need.
 
 ## Finding the text you want to change
 
-You do not need to memorize which file holds what. The quickest approach is to search for text you can already see on the live website.
+***You do not need to memorize which file holds what. The quickest approach is to search for text you can already see on the live website.***
 
 On GitHub, open the repository, press the `/` key, and type a sentence from the site. In VS Code, press Ctrl and Shift and F together, or Cmd and Shift and F on a Mac, and do the same. To search inside a file you already have open, press Ctrl and F.
 
@@ -42,9 +42,9 @@ For example, if you want to change the meeting time on the home page, search for
 
 ## Editing JSON without breaking the site
 
-The content files use a format called JSON. It is only text, but it is strict about punctuation, and nearly every failed build comes down to one of three rules.
+The content files use a format called JSON. It is only text, but it is strict about punctuation, and most failed builds comes down to one of three things.
 
-Text goes inside double quotes, so `"leader": "Annie"` is correct and `"leader": Annie` is not. Items in a list are separated by commas, and the last item in a list has no comma after it. Finally, do not delete a `{`, `}`, `[`, or `]` unless you are deliberately removing a whole block.
+Text goes inside double quotes, so `"President": "Annie"` is correct and `"President": Annie` is not. Items in a list are separated by commas, and the last item in a list has no comma after it. Finally, do not delete a `{`, `}`, `[`, or `]` unless you are deliberately removing a whole block.
 
 The safest way to add something new is to copy an existing block, paste it directly below, and change the values inside it. The punctuation is then already correct.
 
@@ -85,7 +85,7 @@ If you would rather not use commands, GitHub Desktop lets you commit and push by
 
 Images live in `public/images/`, sorted into folders by purpose: Backgrounds, Photos, Cards, Characters, Vendors, Artwork, and Icons.
 
-To add a new image, put the file in the folder that fits, then reference it in the JSON without the word `public` in the path. An image saved at `public/images/Photos/newphoto.webp` is written in the JSON as `/images/Photos/newphoto.webp`. Leaving `public` in the path is the most common mistake people make here.
+To add a new image, put the file in the folder that fits, then reference it in the JSON without the word `public` in the path. An image saved at `public/images/Photos/newphoto.webp` is written in the JSON as `/images/Photos/newphoto.webp`. Leaving `public` in the path is the most common mistake.
 
 Save images in `.webp` format when you can. They look the same as a JPG or PNG but are much smaller, which keeps the site quick on phones.
 
@@ -134,9 +134,9 @@ To check whether a deployment worked, open the Actions tab in the repository. A 
 
 If a deployment fails, click the failed run and read the step that broke. Most failures are a formatting mistake in whichever file was edited last.
 
-The deployment workflow itself lives in `.github/workflows/`. Unless you are changing how the site is deployed, you should not need to edit anything in that folder.
+The deployment workflow itself is in `.github/workflows/`. Unless you are changing how the site is deployed, you should not need to edit anything in that folder.
 
-If the live site does not seem to update, wait a minute and refresh. Browsers often serve a cached copy of the previous version, which makes a successful deployment look like it did nothing. Pressing Ctrl and Shift and R forces a fresh copy.
+If the live site does not seem to update, wait a minute and refresh (Browsers display a cached copy of the previous version) so a successful deployment sometimes looks like it did nothing. On windows, Pressing Ctrl + Shift + R forces a fresh copy.
 
 ## Undoing a mistake
 
@@ -184,11 +184,9 @@ That gives you a simple way to tell the two apart. If GitHub Actions is deployin
 nslookup tas.umd.edu
 ```
 
-It should report a canonical name ending in `.github.io`.
+It should report a canonical name (CNAME) ending in `.github.io`.
 
-There is a catch when the repository changes hands. The DNS record points at one specific GitHub account, so if the repository is transferred to a different account, the record still points at the old one and tas.umd.edu breaks even though the website itself is fine. Someone at the university has to repoint the record before the domain works again.
-
-This is the main reason to move the repository into a GitHub organization owned by the club. You ask the university to repoint the record once, at the organization, and it never has to change again regardless of how many times the presidency turns over. Handing the repository from one president to the next instead means asking the university for a DNS change every year.
+The DNS record points at one specific GitHub account, so if the repository is transferred to a different account, the record still points at the old one and tas.umd.edu breaks even though the website itself is fine. Someone at the university has to repoint the record before the domain works again (I plan to transfer the domain to the clubs github account soon so this should never have to be changed).
 
 DNS for anything ending in umd.edu is handled by the Division of Information Technology through the IT Service Desk. The request form, used both for a new domain and for renewing or changing an existing one, is at:
 
@@ -198,53 +196,23 @@ General documentation on university web addresses and hosting is at:
 
 https://itsupport.umd.edu/itsupport/?id=kb_article_view&sysparm_article=KB0015063
 
-A university hostname given to a student organization is normally sponsored by a department or a faculty advisor rather than by a student directly. In practice this means the club's faculty advisor will most likely have to submit the request, or at least approve it, before the Division of IT will act on it. This is rarely instant, so start it early rather than in the week you need it.
-
-The most useful thing an outgoing officer can pass on is the answer to two questions: which department or advisor sponsors the tas.umd.edu record, and what ticket number was used to create it. Write both down somewhere the club keeps permanently. That is the information that tends to get lost between officers, and without it the next person has to start the conversation with the university from nothing.
-
-Sponsorship rules and renewal timing are set by the university and do change, so confirm the current process through the links above rather than assuming last year's process still applies.
-
-## Moving the repository to a club organization
-
-This is the recommended long term setup. It lets several officers hold access at once, and it means the university never has to touch DNS again. It is worth doing while someone who understands the site is still around.
-
-The reason it is worth the effort is that the DNS record has to point at whoever owns the repository. If the repository is handed to each new president in turn, the university has to change that record every year, and each of those requests needs advisor approval and can stall. If the record points at an organization owned by the club instead, you ask for that change once and it stays correct. Officers are then added and removed inside the organization, which needs no university involvement at all.
-
-Do this during a quiet week rather than in the days before an event.
-
-Start by creating the organization at github.com/organizations/plan and choosing the Free plan, which allows unlimited public repositories and unlimited members at no cost. Choose the name carefully, because the organization name becomes the DNS target. An organization called `terrapinanimesociety` means the record points at `terrapinanimesociety.github.io`. Renaming the organization later would break the domain again, so pick a name the club can keep.
-
-Next, add the other officers. In the organization, open People, then Invite member. Give the current president the Owner role. Add other officers as members, then create a team such as Web and give that team Write access to the repository. Adding a new officer after that is just a matter of adding them to the team. Always keep at least two Owners, because if the only owner graduates and loses access to their account, nobody can administer the organization.
-
-Request the DNS change before you transfer anything. Submit the request using the form linked in the previous section, and have the faculty advisor approve or submit it. Ask for something along these lines:
-
-> Please update the DNS record for tas.umd.edu. It is currently a CNAME pointing to kcyle.github.io. It needs to point to terrapinanimesociety.github.io instead, because the website repository is moving to a GitHub organization owned by the student group.
-
-Ask them when the change will actually be applied and wait for that answer before you go further. Requesting the change first is what keeps the gap short.
-
-Then transfer the repository. In the repository, open Settings, then General, scroll to the Danger Zone, and choose Transfer ownership, selecting the organization as the new owner. The `public/CNAME` file is committed to the repository, so it travels with it and that half of the setup stays correct on its own.
-
-Reconfigure Pages immediately after the transfer rather than leaving it for later. In the transferred repository, open Settings, then Pages, set the source to GitHub Actions, and enter tas.umd.edu as the custom domain. Setting the custom domain also claims it on GitHub, which stops anyone else pointing their own site at the address while the record is in transition. Then open the Actions tab and run the deployment workflow once so the site rebuilds under its new owner.
-
-Finally, once the university confirms the DNS change has been applied, run `nslookup tas.umd.edu` again. The canonical name should now be the organization rather than `kcyle.github.io`. Load the site in a browser to confirm, then go back to Settings, then Pages, and turn on Enforce HTTPS.
-
-There may be a short period after the transfer where the record still points at the old account. The site may keep serving during that window, but do not count on it. Keep the gap between the transfer and the DNS change as short as you can. There are no repository secrets to migrate, because the site is static and does not need any.
+A university hostname given to a student organization is normally sponsored by a department or a faculty advisor rather than by a student directly. The anime club's faculty advisor will most likely have to submit the request, or at least approve it, before the Division of IT will act on it. In my experience it took about a week or so to get a decision back followed by an approval or denial with a reason.
 
 ## Adding a backend later
 
-The site is static at the moment, which is why it is free and needs no maintenance. If a future officer needs real functionality such as ticket sales, RSVPs, or a signup form, it can be added without throwing the site away.
+The site is static at the moment, which is why it is free and needs no maintenance. If a future eboard member needs more functionality such as ticket sales, RSVPs, or a signup form, it can be added.
 
-The limitation to understand first is that GitHub Pages only serves files. It cannot run server code. Astro supports server routes in `src/pages/api/`, but those will not run on GitHub Pages. An earlier version of this site had exactly that problem, and the affected feature quietly did nothing once deployed.
+The limitation however is GitHub Pages only serves files. It cannot run server code. Astro supports server routes in `src/pages/api/`, but those will not run on GitHub Pages.
 
-The approach that does work is Supabase, a hosted database with a free tier. The visitor's browser talks to it directly, so it works on a static site with no server of your own. An earlier version of this website used precisely that setup to run maid cafe ticketing, including a live seat map.
+The approach that does work is Supabase, a hosted database with a free tier. There are a few other providers but i would recommend this one. It works on a static site without a need of a server.
 
 To add it, create a free account and a new project at supabase.com, open the SQL Editor in your project, and create your tables. Turn on Row Level Security on every table, which is covered below and is not optional. Go to Settings, then API, and copy the Project URL and the anon public key. Install the client library with `npm install @supabase/supabase-js`. Store the two values as `PUBLIC_SUPABASE_URL` and `PUBLIC_SUPABASE_ANON_KEY`, since Astro only exposes a variable to the browser when its name begins with `PUBLIC_`. Then add the same two values as repository secrets under Settings, then Secrets and variables, then Actions, and reference them in the build step of `.github/workflows/deploy.yml`. Without that last step the deployed site will not have them even though it works on your own computer.
 
-The security point that matters is this. The anon key is designed to sit in a browser and is safe to publish, but it is only safe because Row Level Security controls what it is allowed to do. If you create tables and leave Row Level Security off, anyone who opens the browser console can read, change, and delete everything in your database. Turn it on and write policies before you put any real data in.
+The anon key is designed to sit in a browser and is safe to publish, but it is only safe because Row Level Security controls what it is allowed to do. If you create tables and leave Row Level Security off, anyone who opens the browser console can read, change, and delete everything in your database. Turn it on and write policies before you put any actual data in.
 
-If you genuinely need server side code, for example to process payments or use a private API key that must never reach a browser, GitHub Pages is the wrong host. Move the site to Vercel or Netlify, both of which run Astro server routes and both of which have free tiers. The site code itself does not need to change.
+If you need server side code, for example to process payments or use a private API key that can't reach a browser, move the site to Vercel or Netlify, both of which run Astro server routes and both of which have free tiers.
 
-The old maid cafe database schema was not thrown away. It is still in this repository's history, so if you want to restore ticketing rather than design it from scratch, you can recover the original Supabase schema with:
+The old maid cafe database code still exists. It is in this repository's history, so if you want to restore ticketing rather than design it from scratch, you can recover the original Supabase schema with:
 
 ```bash
 git show 518c8c1:maidcafe-schema.sql > maidcafe-schema.sql
@@ -254,11 +222,11 @@ That file contains the reservations table, the seat table, and a function that s
 
 ## Passing the project on
 
-The next maintainer needs write access to this repository. They cannot publish anything without it, and it is the first thing people forget.
+The next eboard member who runs the website needs write access to this repository. They cannot publish anything without it.
 
-The simplest arrangement is to transfer the repository to a GitHub organization owned by the club, as described above. If you do that, add the next officer as an Owner or maintainer before you remove yourself, otherwise nobody is left with access. Officers can then be added and removed without transferring the repository again. To transfer directly to another personal account instead, use Settings, then Transfer ownership.
+The simplest thing to do is to transfer the repository to a GitHub organization owned by the club, as described above. If you do that, add the next officer as an Owner or maintainer before you remove yourself, otherwise nobody is left with access. Officers can then be added and removed without transferring the repository again. To transfer directly to another personal account instead, use Settings, then Transfer ownership.
 
-Before handing the project over, give the new maintainer write access and confirm they can actually push. Open Settings, then Pages, and check that tas.umd.edu is still listed as the custom domain. Read the domain section above, because if ownership of the repository changes then the university has to repoint the DNS record, and this is the most common way a handoff goes wrong. Write down who sponsors the tas.umd.edu record at the university and pass that on with the repository. Finally, have the new maintainer make a small change and push it while you are still there, so they see the whole deployment process once before you leave.
+Before handing the project over, give the new maintainer write access and confirm they can actually push. Open Settings, then Pages, and check that tas.umd.edu is still listed as the custom domain. Read the domain section above, because if ownership of the repository changes then the university has to repoint the DNS record. Write down who sponsors the tas.umd.edu record at the university and pass that on with the repository. Finally, have the new eboard member make a small change and push it while you are still there, so they see the whole deployment process once before you leave.
 
 ## Getting help
 
