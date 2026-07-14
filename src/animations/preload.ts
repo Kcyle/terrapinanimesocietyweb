@@ -1,21 +1,13 @@
 const criticalImages = [
-  '/images/Photos/maid1.webp',
-  '/images/Photos/maid2.webp',
-  '/images/Photos/maid3.webp',
-  '/images/Photos/maid4.webp',
   '/images/Backgrounds/tas4.webp',
   '/images/Backgrounds/background.webp',
   '/images/Backgrounds/kamecon.webp',
-  '/images/Backgrounds/terpcon.webp',
   '/images/Backgrounds/tas1.webp',
-  '/images/Characters/maids.webp',
   '/images/Characters/punch.webp',
   '/images/Characters/Reze.webp',
-  '/images/Characters/samurai.webp',
   '/images/Characters/Tess-chan.webp',
   '/images/Characters/turtle.webp',
   '/images/Characters/c.c.webp',
-  '/images/Characters/falling.webp',
 ];
 
 const secondaryImages = [
@@ -25,10 +17,8 @@ const secondaryImages = [
   '/images/Photos/tas6.webp',
   '/images/Photos/tas7.webp',
   '/images/Photos/tas8.webp',
-  '/images/Photos/KAMECON Poster.webp',
   '/images/Photos/Cosplay 1.webp',
   '/images/Photos/Cosplay 2.webp',
-  '/images/Photos/Cosplay 3.webp',
   '/images/Artwork/1.webp',
   '/images/Artwork/2.webp',
   '/images/Artwork/3.webp',
@@ -52,13 +42,12 @@ async function preloadBatch(images: string[], batchSize = 3): Promise<void> {
   }
 }
 
-export function initPreloader(): void {
+function initPreloader(): void {
   const schedulePreload = window.requestIdleCallback || ((cb: () => void) => setTimeout(cb, 100));
 
   schedulePreload(async () => {
     await preloadBatch(criticalImages, 4);
     await preloadBatch(secondaryImages, 3);
-    console.log('[Preloader] All images preloaded');
   });
 }
 

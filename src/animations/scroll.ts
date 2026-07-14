@@ -23,7 +23,6 @@ export function initScrollTransition(): void {
   const heroContent = document.querySelector('[data-hero-content]') as HTMLElement;
   const heroMascot = document.querySelector('[data-hero-mascot]') as HTMLElement;
   const heroCarousel = document.querySelector('[data-hero-carousel]') as HTMLElement;
-  const ticketBanner = document.querySelector('[data-ticket-banner]') as HTMLElement;
   const heroBg = document.querySelector('.hero__bg') as HTMLElement;
 
   const aboutContent = document.querySelector('[data-about-content]') as HTMLElement;
@@ -44,7 +43,6 @@ export function initScrollTransition(): void {
   const meetingsViewer = document.querySelector('.meetings__viewer') as HTMLElement;
   const meetingsThumbnails = document.querySelector('.meetings__thumbnails') as HTMLElement;
   const meetingsLocationSection = document.querySelector('.meetings__location-section') as HTMLElement;
-  const meetingsSchedulerBtn = document.querySelector('.meetings__admin-btn') as HTMLElement;
 
   const activitiesContent = document.querySelector('[data-activities-content]') as HTMLElement;
   const activitiesBg = document.querySelector('[data-activities-bg]') as HTMLElement;
@@ -115,25 +113,12 @@ export function initScrollTransition(): void {
   applyGPUHints(activitiesBg);
   applyGPUHints(activitiesContent);
 
-  console.log('[Scroll] Elements found:', {
-    heroContent: !!heroContent,
-    aboutContent: !!aboutContent,
-    hasMeetings,
-    hasActivities,
-    hasPartners,
-    partnersContent: !!partnersContent,
-    partnersBg: !!partnersBg,
-    partnersHeader: !!partnersHeader,
-    partnersTrinity: !!partnersTrinity,
-    partnerItems: partnerItems.length
-  });
 
   void document.body.offsetHeight;
 
   gsap.set(heroContent, { x: 0, zIndex: 10 });
   if (heroMascot) gsap.set(heroMascot, { y: 0 });
   if (heroCarousel) gsap.set(heroCarousel, { x: 0, autoAlpha: 1 });
-  if (ticketBanner) gsap.set(ticketBanner, { x: 0, autoAlpha: 1 });
 
   if (aboutBg) gsap.set(aboutBg, { yPercent: 100, visibility: 'visible' });
   if (aboutContent) gsap.set(aboutContent, { visibility: 'visible', opacity: 1, zIndex: 5 });
@@ -153,7 +138,6 @@ export function initScrollTransition(): void {
   if (meetingsViewer) gsap.set(meetingsViewer, { y: '100vh' });
   if (meetingsThumbnails) gsap.set(meetingsThumbnails, { x: '100vw' });
   if (meetingsLocationSection) gsap.set(meetingsLocationSection, { y: '100vh' });
-  if (meetingsSchedulerBtn) gsap.set(meetingsSchedulerBtn, { y: '100vh', opacity: 0 });
 
   if (activitiesBg) gsap.set(activitiesBg, { autoAlpha: 0 });
   if (activitiesContent) gsap.set(activitiesContent, { visibility: 'visible', opacity: 1 });
@@ -223,7 +207,6 @@ export function initScrollTransition(): void {
   if (hasActivities) effectiveUnits += 12;
   const totalScrollVh = effectiveUnits * 150;
 
-  console.log('[Scroll] Transitions:', numTransitions, 'Effective units:', effectiveUnits, 'Total scroll:', totalScrollVh + 'vh');
 
   let currentSection = 0;
   const transitionSize = 1 / effectiveUnits;
@@ -316,7 +299,6 @@ export function initScrollTransition(): void {
   masterTl.fromTo(heroContent, { x: 0 }, { x: '-100vw', duration: 0.4, ease: 'none' }, 0.1);
   if (heroMascot) masterTl.fromTo(heroMascot, { y: 0 }, { y: '100vh', duration: 0.4, ease: 'none' }, 0.15);
   if (heroCarousel) masterTl.fromTo(heroCarousel, { x: 0, autoAlpha: 1 }, { x: '-100vw', autoAlpha: 0, duration: 0.4, ease: 'none', immediateRender: true }, 0.12);
-  if (ticketBanner) masterTl.fromTo(ticketBanner, { x: 0, autoAlpha: 1 }, { x: '100vw', autoAlpha: 0, duration: 0.4, ease: 'none', immediateRender: true }, 0.18);
 
   if (heroBg) masterTl.to(heroBg, { autoAlpha: 0, duration: 0.3, ease: 'none' }, 0.25);
 
@@ -346,7 +328,6 @@ export function initScrollTransition(): void {
     if (meetingsViewer) masterTl.to(meetingsViewer, { y: 0, duration: 0.35, ease: 'none' }, 1.42);
     if (meetingsThumbnails) masterTl.to(meetingsThumbnails, { x: 0, duration: 0.35, ease: 'none' }, 1.44);
     if (meetingsLocationSection) masterTl.to(meetingsLocationSection, { y: 0, duration: 0.35, ease: 'none' }, 1.46);
-    if (meetingsSchedulerBtn) masterTl.to(meetingsSchedulerBtn, { y: 0, opacity: 1, duration: 0.35, ease: 'none' }, 1.42);
   }
 
   if (hasActivities && hasMeetings) {
@@ -356,7 +337,6 @@ export function initScrollTransition(): void {
     if (meetingsViewer) masterTl.to(meetingsViewer, { y: '100vh', duration: 0.35, ease: 'none' }, 2.12);
     if (meetingsThumbnails) masterTl.to(meetingsThumbnails, { x: '100vw', duration: 0.35, ease: 'none' }, 2.12);
     if (meetingsLocationSection) masterTl.to(meetingsLocationSection, { y: '100vh', duration: 0.35, ease: 'none' }, 2.14);
-    if (meetingsSchedulerBtn) masterTl.to(meetingsSchedulerBtn, { y: '100vh', opacity: 0, duration: 0.35, ease: 'none' }, 2.14);
     if (meetingsPunch) masterTl.to(meetingsPunch, { x: '100vw', duration: 0.35, ease: 'none' }, 2.15);
     if (meetingsReze) masterTl.to(meetingsReze, { x: '-100vw', duration: 0.35, ease: 'none' }, 2.15);
 
@@ -683,12 +663,6 @@ export function initAboutToMeetingsTransition(): void {
 
 }
 
-export function destroyScrollTransition(): void {
-  scrollTriggerInstances.forEach(st => {
-    if (st) st.kill();
-  });
-  scrollTriggerInstances.length = 0;
-}
 
 export function handleHashNavigation(): void {
 

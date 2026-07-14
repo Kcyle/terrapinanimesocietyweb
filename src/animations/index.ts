@@ -1,6 +1,6 @@
-import { initMenuAnimations, destroyMenuAnimations } from './menu';
-import { initHeroAnimations, destroyHeroAnimations } from './hero';
-import { initScrollTransition, initAboutToMeetingsTransition, destroyScrollTransition, handleHashNavigation } from './scroll';
+import { initMenuAnimations } from './menu';
+import { initHeroAnimations } from './hero';
+import { initScrollTransition, initAboutToMeetingsTransition, handleHashNavigation } from './scroll';
 import './preload';
 
 export function initAnimations(): void {
@@ -9,12 +9,6 @@ export function initAnimations(): void {
   initScrollTransition();
   initAboutToMeetingsTransition();
   handleHashNavigation();
-}
-
-export function destroyAnimations(): void {
-  destroyMenuAnimations();
-  destroyHeroAnimations();
-  destroyScrollTransition();
 }
 
 if (typeof window !== 'undefined') {

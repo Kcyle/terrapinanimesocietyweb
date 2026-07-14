@@ -22,10 +22,8 @@ function createHeroTimeline(): gsap.core.Timeline {
   const heroCarousel = document.querySelector('.hero-carousel-wrapper');
   const heroMascot = document.querySelector('.hero__mascot');
   const backgroundText = document.querySelector('.hero-content__background-text');
-  const ticketBanner = document.querySelector('[data-ticket-banner]');
 
   if (heroCarousel) gsap.set(heroCarousel, { x: '-100vw' });
-  if (ticketBanner) gsap.set(ticketBanner, { xPercent: 120 });
 
   if (heroCarousel) {
     tl.to(
@@ -39,17 +37,6 @@ function createHeroTimeline(): gsap.core.Timeline {
     );
   }
 
-  if (ticketBanner) {
-    tl.to(
-      ticketBanner,
-      {
-        xPercent: 0,
-        duration: 0.6,
-        ease: 'power2.out',
-      },
-      0.5
-    );
-  }
 
   return tl;
 }
@@ -70,7 +57,3 @@ export function initHeroAnimations(): void {
   }
 }
 
-export function destroyHeroAnimations(): void {
-  heroTimeline?.kill();
-  heroTimeline = null;
-}

@@ -107,7 +107,3 @@ export function initMenuAnimations(): void {
   });
 }
 
-export function destroyMenuAnimations(): void {
-  menuTimeline?.kill();
-  menuTimeline = null;
-}
