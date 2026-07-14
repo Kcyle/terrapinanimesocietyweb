@@ -234,7 +234,7 @@ If you need to change the site's layout or functionality, the Astro documentatio
 
 Most routine updates only require editing the files in `src/data/` and never require touching the framework itself.
 
-## A checklist before you make changes
+## Before you make changes
 
 1. Pull the latest version of the repository.
 2. Make your edits.
