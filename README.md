@@ -4,8 +4,6 @@ This repository contains the source code for **tas.umd.edu**. If you're taking o
 
 The site is entirely static. There is no server, database, user accounts, or hosting costs. To make changes, edit the appropriate files, commit them to GitHub, and push to the `main` branch. The website will usually update within a minute or two after deployment.
 
-You do not need to be a programmer to maintain this site. Most updates are a matter of changing text inside a file and saving it.
-
 ## Making a change
 
 There are two ways to edit the site. Pick whichever you're comfortable with.
