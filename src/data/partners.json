@@ -1,0 +1,53 @@
+{
+  "title": "Our Partners",
+  "logos": [
+    {
+      "name": "UMD Gaming",
+      "url": "https://terplink.umd.edu/organization/gaming",
+      "image": "/images/Icons/Gaming logo.png",
+      "position": "left"
+    },
+    {
+      "name": "Sony Pictures",
+      "url": "https://www.sonypictures.com/movies/anime",
+      "image": "/images/Artwork/Sony_Pictures_Inc._logo.svg.png",
+      "position": "center"
+    },
+    {
+      "name": "XR Club",
+      "url": "https://terplink.umd.edu/organization/xr-club",
+      "image": "/images/Icons/xr (2).png",
+      "position": "right"
+    }
+  ],
+  "showcase": {
+    "headlineBefore": "In partnership with",
+    "headlinePartner": "Sony Pictures",
+    "headlineMiddle": ", our members receive",
+    "headlineHighlight": "completely free",
+    "headlineAfter": "exclusive early access to theatrical anime screenings",
+    "posters": [
+      {
+        "title": "Demon Slayer",
+        "image": "/images/Photos/Demon Slayer.jpg",
+        "status": "Screened",
+        "featured": false,
+        "upcoming": false
+      },
+      {
+        "title": "Chainsaw Man: Reze",
+        "image": "/images/Photos/reze.webp",
+        "status": "Screened",
+        "featured": true,
+        "upcoming": false
+      },
+      {
+        "title": "Scarlet",
+        "image": "/images/Photos/scarlet.webp",
+        "status": "Upcoming",
+        "featured": false,
+        "upcoming": true
+      }
+    ]
+  }
+}

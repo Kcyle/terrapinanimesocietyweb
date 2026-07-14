@@ -1,28 +1,25 @@
 ---
 import CardCarousel from './CardCarousel.astro';
+import home from '../data/home.json';
+import site from '../data/site.json';
 
-interface Props {
-  description?: string;
-}
-
-const {
-  description = 'Encouraging the appreciation and discussion of anime between members and bringing awareness to the general public.'
-} = Astro.props;
+const { hero, about } = home;
 ---
 
 <div class="hero-content" data-hero-content>
   <div class="hero-content__title-wrapper">
     <span class="hero-content__background-text" aria-hidden="true">TAS</span>
     <h1 class="hero-content__title">
-      <span class="hero-content__title-line">Terrapin Anime</span>
-      <span class="hero-content__title-line">Society</span>
+      {hero.titleLines.map((line) => (
+        <span class="hero-content__title-line">{line}</span>
+      ))}
     </h1>
   </div>
-  <p class="hero-content__description">{description}</p>
+  <p class="hero-content__description">{hero.description}</p>
   <div class="hero-content__buttons">
-    <a href="#meetings-section" class="hero-content__button hero-content__button--primary">Meetings</a>
-    <a href="/terpcon" class="hero-content__button hero-content__button--secondary">TerpCon 2026</a>
-    <a href="/kamecon" class="hero-content__button hero-content__button--secondary">KAMECON</a>
+    {hero.buttons.map((button) => (
+      <a href={button.url} class={`hero-content__button hero-content__button--${button.variant}`}>{button.label}</a>
+    ))}
   </div>
 </div>
 
@@ -35,80 +32,51 @@ const {
   <div class="about-content__title-wrapper">
     <span class="about-content__background-text" aria-hidden="true">TAS</span>
     <h2 class="about-content__title">
-      <span class="about-content__title-line">About</span>
+      <span class="about-content__title-line">{about.heading}</span>
     </h2>
   </div>
   <div class="about-content__info">
-    <p class="about-content__description">The Anime Club welcomes all students who are interested in anime. To get involved, join our <a href="https://discord.gg/fzKBsnS" target="_blank" rel="noopener noreferrer" class="about-content__discord-link">Discord</a> and introduce yourself in the <span class="about-content__highlight">#intro</span> channel to receive the member role.</p>
+    <p class="about-content__description" set:html={about.descriptionHtml}></p>
 
     <div class="about-content__details">
       <div class="about-content__detail-item">
-        <span class="about-content__detail-label">Meetings</span>
-        <p class="about-content__detail-text">Every Sunday from 5:00–7:00 PM. The first half features anime activities like dubbing competitions, Guess the Anime, and anime-themed Jeopardy. The second half is a screening of two anime episodes.</p>
+        <span class="about-content__detail-label">{about.meetingsLabel}</span>
+        <p class="about-content__detail-text">{about.meetingsText}</p>
       </div>
       <div class="about-content__detail-item">
-        <span class="about-content__detail-label">Subgroups</span>
+        <span class="about-content__detail-label">{about.subgroupsLabel}</span>
         <div class="about-content__subgroups">
-          <a href="/subgroups#animusic" class="about-content__subgroup-btn">Animusic</a>
-          <a href="/subgroups#cosplay" class="about-content__subgroup-btn">Cosplay</a>
-          <a href="/subgroups#manga" class="about-content__subgroup-btn">Manga</a>
-          <a href="/subgroups#gaming" class="about-content__subgroup-btn">Gaming</a>
-          <a href="/subgroups#old-school" class="about-content__subgroup-btn">Old School</a>
-          <a href="/subgroups#rainbow" class="about-content__subgroup-btn">Rainbow</a>
+          {about.subgroupLinks.map((link) => (
+            <a href={link.url} class="about-content__subgroup-btn">{link.label}</a>
+          ))}
         </div>
       </div>
       <div class="about-content__detail-item">
-        <span class="about-content__detail-label">Major Events</span>
+        <span class="about-content__detail-label">{about.eventsLabel}</span>
         <div class="about-content__events">
-          <a href="/kamecon" class="about-content__event-btn">KAMECON <span>Fall</span></a>
+          {about.eventLinks.map((event) => (
+            <a href={event.url} class="about-content__event-btn">{event.label} <span>{event.note}</span></a>
+          ))}
         </div>
       </div>
     </div>
   </div>
   <div class="about-content__buttons">
-    <a href="https://terplink.umd.edu/organization/terrapin-anime-society" target="_blank" rel="noopener noreferrer" class="about-content__button about-content__button--primary">Join Us</a>
-    <a href="/contact" class="about-content__button about-content__button--secondary">Contact</a>
+    <a href={site.joinUrl} target="_blank" rel="noopener noreferrer" class="about-content__button about-content__button--primary">{about.joinLabel}</a>
+    <a href={about.contactUrl} class="about-content__button about-content__button--secondary">{about.contactLabel}</a>
   </div>
   <div class="about-content__gallery">
     <div class="about-content__collage">
-      <div class="about-content__collage-item">
-        <img src="/images/Backgrounds/tas1.webp" alt="TAS club meeting" loading="lazy" />
-      </div>
-      <div class="about-content__collage-item">
-        <img src="/images/Photos/tas2.webp" alt="TAS members" loading="lazy" />
-      </div>
-      <div class="about-content__collage-item">
-        <img src="/images/Photos/tas3.webp" alt="TAS event" loading="lazy" />
-      </div>
-      <div class="about-content__collage-item">
-        <img src="/images/Backgrounds/tas4.webp" alt="TAS gathering" loading="lazy" />
-      </div>
-      <div class="about-content__collage-item">
-        <img src="/images/Photos/tas5.webp" alt="TAS activity" loading="lazy" />
-      </div>
-      <div class="about-content__collage-item">
-        <img src="/images/Photos/tas6.webp" alt="TAS screening" loading="lazy" />
-      </div>
-      <div class="about-content__collage-item">
-        <img src="/images/Photos/tas7.webp" alt="TAS community" loading="lazy" />
-      </div>
-      <div class="about-content__collage-item">
-        <img src="/images/Photos/tas8.webp" alt="TAS friends" loading="lazy" />
-      </div>
-      <div class="about-content__collage-item">
-        <img src="/images/Photos/tas9.webp" alt="TAS fun" loading="lazy" />
-      </div>
-      <div class="about-content__collage-item">
-        <img src="/images/Photos/tas10.webp" alt="TAS memories" loading="lazy" />
-      </div>
-      <div class="about-content__collage-item">
-        <img src="/images/Photos/tas11.webp" alt="TAS moments" loading="lazy" />
-      </div>
+      {about.galleryImages.map((image) => (
+        <div class="about-content__collage-item">
+          <img src={image.src} alt={image.alt} loading="lazy" />
+        </div>
+      ))}
     </div>
     <div class="about-content__mascot-container">
       <img
-        src="/images/Characters/c.c.webp"
-        alt="C.C. mascot"
+        src={about.mascotImage}
+        alt={about.mascotAlt}
         class="about__mascot"
         data-about-mascot
       />

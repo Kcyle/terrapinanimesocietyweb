@@ -1,0 +1,61 @@
+{
+  "title": "Activities",
+  "description": "From anime themed Jeopardy and movie screenings to creating your own anime dubs, the Terrapin Anime Society offers a wide range of fun activities for people with all kinds of interests. All activities are announced in advance on our Discord!",
+  "cards": [
+    {
+      "id": "bingo",
+      "name": "Movie Bingo",
+      "description": "Create your own bingo cards filled with anime tropes, clichés, and common story beats. As we watch a movie together, players mark off predictions as they happen."
+    },
+    {
+      "id": "jeopardy",
+      "name": "Anime Jeopardy",
+      "description": "A fast paced trivia game featuring anime themed questions across different categories and difficulty levels. Compete in teams to test your knowledge of series, characters, studios, openings, and more."
+    },
+    {
+      "id": "pictionary",
+      "name": "Charades & Picture Guessing",
+      "description": "Guess anime characters, scenes, or events through charades, drawings, or images. This game focuses on teamwork, quick thinking, and recognizing iconic moments from across anime history."
+    },
+    {
+      "id": "questions",
+      "name": "20 Questions",
+      "feature": "Anime Edition",
+      "description": "Players try to guess the mystery anime, character, or concept by asking yes or no questions. A simple but competitive game that rewards clever questions and deep fandom knowledge."
+    },
+    {
+      "id": "hottakes",
+      "name": "Hot Takes Night",
+      "description": "Members share their most controversial anime opinions, from overrated series to unpopular character rankings. After each take, the group votes and discusses, keeping the debate fun and engaging."
+    },
+    {
+      "id": "magicboy",
+      "name": "Magic Boy Screening",
+      "feature": "feat. Professor Stevens",
+      "description": "A special screening of Magic Boy, often considered one of the first anime films shown in the United States. Includes historical context led by Professor Stevens."
+    },
+    {
+      "id": "chainsaw",
+      "name": "Chainsaw Man Event",
+      "feature": "Sony Partnership",
+      "description": "A large scale themed event held in partnership with Sony to promote the Chainsaw Man: Reze movie. Featuring exclusive posters, merchandise giveaways, and themed games."
+    },
+    {
+      "id": "scavenger",
+      "name": "Anime Scavenger Hunt",
+      "description": "Anime themed questions and clues are scattered across multiple subjects. Teams work together to solve prompts and track down answers, blending anime knowledge with creative problem solving."
+    },
+    {
+      "id": "fandubs",
+      "name": "Live Fandubs",
+      "description": "Members dub over anime scenes in real time while the group watches. A lighthearted event that encourages creativity, voice acting, and humor."
+    },
+    {
+      "id": "presentations",
+      "name": "Make Your Own Presentation",
+      "description": "Create and present a short presentation on any anime related topic of your choice. Topics range from favorite series and characters to themes, studios, history, or personal interpretations."
+    }
+  ],
+  "characterImage": "/images/Characters/chainsawman.png",
+  "characterAlt": "Chainsaw Man"
+}

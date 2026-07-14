@@ -1,55 +1,44 @@
 ---
+import partners from '../data/partners.json';
+
+const { logos, showcase } = partners;
 ---
 
 <div class="partners" data-partners-content>
   <div class="partners__bg" data-partners-bg></div>
   <div class="partners__container">
     <div class="partners__header" data-partners-header>
-      <h2 class="partners__title">Our Partners</h2>
+      <h2 class="partners__title">{partners.title}</h2>
     </div>
     <div class="partners__sides" data-partners-trinity>
-      <a href="https://terplink.umd.edu/organization/gaming" target="_blank" rel="noopener" class="partner partner--side partner--left" data-partner>
-        <img class="partner__logo" src="/images/Icons/Gaming logo.png" alt="UMD Gaming" />
-      </a>
-      <a href="https://www.sonypictures.com/movies/anime" target="_blank" rel="noopener" class="partner partner--center" data-partner>
-        <img class="partner__logo" src="/images/Artwork/Sony_Pictures_Inc._logo.svg.png" alt="Sony Pictures" />
-      </a>
-      <a href="https://terplink.umd.edu/organization/xr-club" target="_blank" rel="noopener" class="partner partner--side partner--right" data-partner>
-        <img class="partner__logo" src="/images/Icons/xr (2).png" alt="XR Club" />
-      </a>
+      {logos.map((logo) => (
+        <a
+          href={logo.url}
+          target="_blank"
+          rel="noopener"
+          class={logo.position === 'center' ? 'partner partner--center' : `partner partner--side partner--${logo.position}`}
+          data-partner
+        >
+          <img class="partner__logo" src={logo.image} alt={logo.name} />
+        </a>
+      ))}
     </div>
     <div class="partners__showcase" data-partners-showcase>
       <p class="showcase__headline">
-        In partnership with <strong>Sony Pictures</strong>, our members receive <strong>completely free</strong> exclusive early access to theatrical anime screenings
+        {showcase.headlineBefore} <strong>{showcase.headlinePartner}</strong>{showcase.headlineMiddle} <strong>{showcase.headlineHighlight}</strong> {showcase.headlineAfter}
       </p>
       <div class="showcase__theater">
-        <div class="showcase__poster">
-          <div class="showcase__poster-frame">
-            <img src="/images/Photos/Demon Slayer.jpg" alt="Demon Slayer" />
+        {showcase.posters.map((poster) => (
+          <div class={poster.featured ? 'showcase__poster showcase__poster--featured' : 'showcase__poster'}>
+            <div class="showcase__poster-frame">
+              <img src={poster.image} alt={poster.title} />
+            </div>
+            <div class="showcase__poster-info">
+              <span class="showcase__poster-title">{poster.title}</span>
+              <span class={poster.upcoming ? 'showcase__poster-status showcase__poster-status--upcoming' : 'showcase__poster-status'}>{poster.status}</span>
+            </div>
           </div>
-          <div class="showcase__poster-info">
-            <span class="showcase__poster-title">Demon Slayer</span>
-            <span class="showcase__poster-status">Screened</span>
-          </div>
-        </div>
-        <div class="showcase__poster showcase__poster--featured">
-          <div class="showcase__poster-frame">
-            <img src="/images/Photos/reze.webp" alt="Chainsaw Man: Reze Arc" />
-          </div>
-          <div class="showcase__poster-info">
-            <span class="showcase__poster-title">Chainsaw Man: Reze</span>
-            <span class="showcase__poster-status">Screened</span>
-          </div>
-        </div>
-        <div class="showcase__poster">
-          <div class="showcase__poster-frame">
-            <img src="/images/Photos/scarlet.webp" alt="Scarlet" />
-          </div>
-          <div class="showcase__poster-info">
-            <span class="showcase__poster-title">Scarlet</span>
-            <span class="showcase__poster-status showcase__poster-status--upcoming">Upcoming</span>
-          </div>
-        </div>
+        ))}
       </div>
     </div>
   </div>

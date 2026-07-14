@@ -1,55 +1,9 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/navigation/Header.astro';
+import kamecon from '../data/kamecon.json';
 
-interface Vendor {
-  name: string;
-  social?: string;
-  socialDisplay?: string;
-  description: string;
-}
-
-const vendors: Vendor[] = [
-  { name: "GinkgoMART", social: "https://ginkgomart.bigcartel.com", socialDisplay: "ginkgomart.bigcartel.com", description: "Anime/manga/game fanart prints, keychains, buttons, and stickers" },
-  { name: "Inywiny", social: "https://inywiny.carrd.co", socialDisplay: "inywiny.carrd.co", description: "Handmade trinkets, acrylic charms, stickers, and prints" },
-  { name: "Meshi Market", social: "https://meshimarket.carrd.co", socialDisplay: "meshimarket.carrd.co", description: "Food-themed magnets, charms, pins, prints, keychains, and stickers" },
-  { name: "B.S. Warren", social: "https://bswarren.carrd.co", socialDisplay: "bswarren.carrd.co", description: "Fantasy novels and merchandise" },
-  { name: "Lord Detaur Art", social: "https://lorddetaur.etsy.com", socialDisplay: "lorddetaur.etsy.com", description: "Anime and video game themed key chains, stickers, prints" },
-  { name: "cy-chin", social: "https://cychin.carrd.co", socialDisplay: "cychin.carrd.co", description: "Anime-themed artwork (prints, stickers, buttons, keychains)" },
-  { name: "Bonemealed", social: "https://bonemealed.carrd.co", socialDisplay: "bonemealed.carrd.co", description: "Anime artwork: prints, charms, stickers, shirts, and stationary" },
-  { name: "Mewychu", social: "https://mewychu.carrd.co", socialDisplay: "mewychu.carrd.co", description: "Anime inspired stickers, prints, keychains" },
-  { name: "Pops-A-Plenty, LLC", description: "Custom artwork Funko Pops and shadowboxes" },
-  { name: "Kyomi Star", description: "Button pins, stickers, prints, notepads, keychain & hairclips with Anime designs" },
-  { name: "Novi Mochi", social: "https://novimochi.carrd.co", socialDisplay: "novimochi.carrd.co", description: "Anime themed prints, stickers, buttons, and keychains" },
-  { name: "SvvLinh", social: "https://svvlinh.weebly.com", socialDisplay: "svvlinh.weebly.com", description: "Anime and gaming themed artwork/prints, stationary and small accessories" },
-  { name: "Summ.art", description: "Vibrant anime, video game, and superhero art: framed prints, apparel, keychains, stickers, pins" },
-  { name: "Teashot", description: "Handmade prints, stickers, tote bags, keychains, t-shirts, and canvas patches based on anime" },
-  { name: "Smogfrogg", social: "https://smogfrogg.com", socialDisplay: "smogfrogg.com", description: "Fanart and original artwork: prints, stickers, pins, acrylic keychains, comics, tote bags" },
-  { name: "Luniarci Art", social: "https://tumblr.com/luniarci", socialDisplay: "tumblr.com/luniarci", description: "Anime-themed artwork and prints, laser cut wooden keychains" },
-  { name: "Lumikha Cosplay Resale", social: "https://linktr.ee/lumikha", socialDisplay: "linktr.ee/lumikha", description: "Secondhand cosplays" },
-  { name: "Kaimatic", social: "https://kaimaticportfolio.carrd.co", socialDisplay: "kaimaticportfolio.carrd.co", description: "Genshin Impact, Splatoon, OMORI, Pokemon, JJK: stickers, buttons, charms, acrylic stands, prints" },
-  { name: "Dracolegus", social: "https://linktr.ee/dracolegus", socialDisplay: "linktr.ee/dracolegus", description: "Fanart prints of pokemon, dungeon meshi, arcane, and mythical creatures" },
-  { name: "saeuchelle", social: "https://saeuchelle.bigcartel.com", socialDisplay: "saeuchelle.bigcartel.com", description: "Cute character artworks: keychains, apparel, plushies, pins, stickers, prints" },
-  { name: "PassionPhantom", social: "https://passionphantom.wixsite.com", socialDisplay: "passionphantom.wixsite.com", description: "Art books, zines, comics, OC Art, Anime Fan Art, key charms, stickers, prints, buttons" },
-  { name: "Blue bean crochet", description: "Hand made crochet plushies: Pokemon, characters from games/shows, animals" },
-  { name: "AnxiousLilies", social: "https://lilyibe.myportfolio.com", socialDisplay: "lilyibe.myportfolio.com", description: "Anime-themed artwork and prints, stickers and keychains" },
-  { name: "Mezurashii", social: "https://mezurashii.store", socialDisplay: "mezurashii.store", description: "Anime figurines, Monchhichis, anime keychains and phone charms, Japanese trinkets" },
-  { name: "quzzyplayground", social: "https://quzzyplayground.carrd.co", socialDisplay: "quzzyplayground.carrd.co", description: "Handmade anime keychains and prints" },
-  { name: "Chiimeshop", social: "https://instagram.com/chiime_", socialDisplay: "instagram.com/chiime_", description: "Fanart/original works, keychains, stickers, apparel, prints and pouches" },
-  { name: "Melina Rivera", social: "https://watermeloooms.myportfolio.com", socialDisplay: "watermeloooms.myportfolio.com", description: "Art prints, stickers, t-shirts with Japanese alternative themes" },
-  { name: "Somintso", social: "https://linktr.ee/somintso", socialDisplay: "linktr.ee/somintso", description: "Anime styled prints, keychains, stickers, and zines" },
-  { name: "Sophuia Liu", description: "Original art prints, postcards, acrylic keychains, acrylic stand" },
-  { name: "Artisfired Studio", social: "https://artisfired.carrd.co", socialDisplay: "artisfired.carrd.co", description: "Anime/Video Game Inspired Prints, Keychains, and Stickers" },
-  { name: "marclouart", description: "Large prints 11x17, Small prints 5.5x8.5, 3 inch stickers, 2 inch clay figures" },
-  { name: "rivertylart", description: "Prints, Stickers (genshin/hsr fanart, original art like kitsune and sushi creatures)" },
-  { name: "SnarkFish", description: "Geeky t-shirts, gaming dice, 3D-printed gaming wares, Pokemon finger puppets, plushies, trading cards" },
-  { name: "Art Club", description: "Student vendors selling a wide range of their own artwork" },
-  { name: "Caitlin Goh", description: "Student vendor selling hand made crochet plushies" },
-  { name: "Akuunosoku", social: "https://akuunosuke.carrd.co", socialDisplay: "akuunosuke.carrd.co", description: "Prints, charms, enamel pins, stickers & more (Genshin Impact, ALNST, BSD, etc.)" },
-  { name: "Liramic", social: "https://liramic.etsy.com", socialDisplay: "liramic.etsy.com", description: "Art prints and posters, charms, pins, buttons, tote bags, fanart includes Genshin Impact, TGCF, SVSSS, etc." },
-  { name: "Ari Inkart", social: "https://ariinkart.carrd.co", socialDisplay: "ariinkart.carrd.co", description: "Vocaloid and Project Sekai key chains and pin buttons" },
-  { name: "Anxious Lilies", social: "https://linktr.ee/anxious_lilies", socialDisplay: "linktr.ee/anxious_lilies", description: "Commissions, stickers, holographics" },
-];
+const { vendors } = kamecon;
 ---
 
 <BaseLayout title="KAMECON 2025 - Terrapin Anime Society">
@@ -63,53 +17,44 @@ const vendors: Vendor[] = [
           <div class="kamecon-carousel" data-kamecon-carousel>
             <div class="kamecon-carousel__container">
               <div class="kamecon-carousel__track" data-kamecon-track>
-                <div class="kamecon-carousel__slide"><img src="/images/Photos/DSCF1467.webp" alt="KAMECON Photo" /></div>
-                <div class="kamecon-carousel__slide"><img src="/images/Photos/DSCF1482.webp" alt="KAMECON Photo" /></div>
-                <div class="kamecon-carousel__slide"><img src="/images/Photos/DSCF1483.webp" alt="KAMECON Photo" /></div>
-                <div class="kamecon-carousel__slide"><img src="/images/Photos/DSCF1488.webp" alt="KAMECON Photo" /></div>
-                <div class="kamecon-carousel__slide"><img src="/images/Photos/DSCF1495.webp" alt="KAMECON Photo" /></div>
-                <div class="kamecon-carousel__slide"><img src="/images/Photos/DSCF1497.webp" alt="KAMECON Photo" /></div>
-                <div class="kamecon-carousel__slide"><img src="/images/Photos/DSCF1498.webp" alt="KAMECON Photo" /></div>
-                <div class="kamecon-carousel__slide"><img src="/images/Photos/DSCF1499.webp" alt="KAMECON Photo" /></div>
-                <div class="kamecon-carousel__slide"><img src="/images/Photos/DSCF1505.webp" alt="KAMECON Photo" /></div>
-                <div class="kamecon-carousel__slide"><img src="/images/Photos/DSCF1509.webp" alt="KAMECON Photo" /></div>
-                <div class="kamecon-carousel__slide"><img src="/images/Photos/DSCF1521.webp" alt="KAMECON Photo" /></div>
-                <div class="kamecon-carousel__slide"><img src="/images/Photos/DSCF1542.webp" alt="KAMECON Photo" /></div>
+                {kamecon.photos.map((photo) => (
+                  <div class="kamecon-carousel__slide"><img src={photo} alt="KAMECON Photo" /></div>
+                ))}
               </div>
               <div class="kamecon-carousel__overlay">
-                <span class="kamecon-carousel__overlay-text">2025 Highlights</span>
+                <span class="kamecon-carousel__overlay-text">{kamecon.highlightsLabel}</span>
               </div>
             </div>
             <div class="kamecon-carousel__dots" data-kamecon-dots></div>
           </div>
         </div>
         <div class="kamecon-section__right">
-          <img src="/images/Characters/turtle.webp" alt="Kamecon Turtle Mascot" class="kamecon-turtle" data-kamecon-turtle />
+          <img src={kamecon.mascotImage} alt="Kamecon Turtle Mascot" class="kamecon-turtle" data-kamecon-turtle />
 
-          <h1 class="kamecon-section__title" data-kamecon-title>KAMECON</h1>
+          <h1 class="kamecon-section__title" data-kamecon-title>{kamecon.title}</h1>
 
           <div class="kamecon-section__info-row">
-            <p class="kamecon-section__description" data-kamecon-desc>KAMECON is an annual anime convention held at the University of Maryland in the Stamp Student Union and is open to the public. First held in 2017, the convention made its long awaited return in Fall 2025, welcoming over 700 attendees. The event featured a live concert, artist and vendor alley, cosplay competition, gaming hall, and many other exciting activities. With KAMECON's successful comeback, plans are already underway for KAMECON 2026, stay tuned for more updates!</p>
+            <p class="kamecon-section__description" data-kamecon-desc>{kamecon.description}</p>
 
             <div class="kamecon-section__buttons" data-kamecon-buttons>
-              <a href="https://www.youtube.com/playlist?list=PLMH_PlKQsMXAqFixQTorreqpBu1tEuMYp" target="_blank" rel="noopener noreferrer" class="kamecon-section__btn kamecon-section__btn--primary">
+              <a href={kamecon.concertVideosUrl} target="_blank" rel="noopener noreferrer" class="kamecon-section__btn kamecon-section__btn--primary">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/>
                 </svg>
-                Concert Videos
+                {kamecon.concertVideosLabel}
               </a>
-              <a href="https://adobe.ly/3JVx4td" target="_blank" rel="noopener noreferrer" class="kamecon-section__btn kamecon-section__btn--secondary">
+              <a href={kamecon.photosUrl} target="_blank" rel="noopener noreferrer" class="kamecon-section__btn kamecon-section__btn--secondary">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
                   <circle cx="8.5" cy="8.5" r="1.5"></circle>
                   <polyline points="21 15 16 10 5 21"></polyline>
                 </svg>
-                KAMECON Photos
+                {kamecon.photosLabel}
               </a>
             </div>
           </div>
           <div class="kamecon-section__vendors" data-kamecon-vendors>
-            <h3 class="kamecon-section__vendors-title">Thank You to Our 2025 Vendors!</h3>
+            <h3 class="kamecon-section__vendors-title">{kamecon.vendorsHeading}</h3>
             <div class="kamecon-section__vendors-scroll">
               <div class="kamecon-section__vendors-grid">
                 {vendors.map((vendor) => (

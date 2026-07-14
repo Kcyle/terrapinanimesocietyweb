@@ -1,18 +1,21 @@
 ---
+import site from '../data/site.json';
+
 const currentYear = new Date().getFullYear();
+const { footer } = site;
 ---
 
 <footer class="footer" data-footer>
   <div class="footer__left">
     <p class="footer__copyright">
-      &copy; {currentYear} TERRAPIN ANIME SOCIETY
+      &copy; {currentYear} {footer.copyrightName}
     </p>
-    <p class="footer__rights">ALL RIGHTS RESERVED</p>
+    <p class="footer__rights">{footer.rights}</p>
   </div>
 
   <div class="footer__right">
-    <p class="footer__location">University of Maryland</p>
-    <p class="footer__college">College Park, MD</p>
+    <p class="footer__location">{footer.university}</p>
+    <p class="footer__college">{footer.city}</p>
   </div>
 </footer>
 

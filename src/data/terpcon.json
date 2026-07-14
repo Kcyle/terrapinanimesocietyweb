@@ -1,0 +1,360 @@
+{
+  "title": "TERPCON",
+  "year": "2026",
+  "tagline": "Vendor & Artist Alley",
+  "description": "The Terrapin Anime Society will be hosting a Vendor & Artist Alley for TERPCON 2026. Please see the official UMD site for more details.",
+  "date": "FRI, FEB 6TH",
+  "time": "5PM TO 12AM",
+  "location": "STAMP STUDENT UNION",
+  "ctaLabel": "UMD OFFICIAL SITE",
+  "ctaUrl": "https://stamp.umd.edu/AllNiter",
+  "fallbackImage": "/images/Icons/chibi.webp",
+  "vendors": [
+    {
+      "name": "BowLaces",
+      "social": "https://bsky.app/profile/bowlaces.bsky.social",
+      "socialDisplay": "@bowlaces.bsky.social",
+      "description": "Prints, full size prints, stickers",
+      "image": "/images/Vendors/1.webp"
+    },
+    {
+      "name": "Inywiny",
+      "social": "https://inywiny.carrd.co",
+      "socialDisplay": "inywiny.carrd.co",
+      "description": "Keychains, trinkets, prints, jewelry, stickers",
+      "image": "/images/Vendors/2.webp"
+    },
+    {
+      "name": "Zeph",
+      "social": "https://x.com/YouInsolentFool",
+      "socialDisplay": "x.com/YouInsolentFool",
+      "description": "HSR merch, prints, cards, keychains",
+      "image": "/images/Vendors/3.webp"
+    },
+    {
+      "name": "Nagihiko_dayo",
+      "social": "https://nagihikodayo.carrd.co/",
+      "socialDisplay": "nagihikodayo.carrd.co",
+      "description": "Prints, stickers, charms, chibi commissions",
+      "image": "/images/Vendors/4.webp"
+    },
+    {
+      "name": "Mezurashii",
+      "description": "Anime and Japanese trinkets"
+    },
+    {
+      "name": "Liramic",
+      "description": "Prints, bookmarks, keychains, pins, deskmats"
+    },
+    {
+      "name": "akuunosuke",
+      "social": "https://akuunosuke.carrd.co",
+      "socialDisplay": "akuunosuke.carrd.co",
+      "description": "Charms, standees, pins, stickers, prints",
+      "image": "/images/Vendors/5.webp"
+    },
+    {
+      "name": "Otaku553",
+      "social": "https://otaku553.carrd.co",
+      "socialDisplay": "otaku553.carrd.co",
+      "description": "Prints and keychains of anime/game characters",
+      "image": "/images/Vendors/6.webp"
+    },
+    {
+      "name": "rivertylart",
+      "social": "https://linktr.ee/rivertyl",
+      "socialDisplay": "linktr.ee/rivertyl",
+      "description": "Prints and stickers (Genshin, HSR, original)",
+      "image": "/images/Vendors/7.webp"
+    },
+    {
+      "name": "Bonemealed",
+      "social": "https://bonemealed.carrd.co/",
+      "socialDisplay": "bonemealed.carrd.co",
+      "description": "Prints, charms, stickers, shirts",
+      "image": "/images/Vendors/8.webp"
+    },
+    {
+      "name": "sincerelydanidesign",
+      "social": "https://sincerelydanidesign.etsy.com/",
+      "socialDisplay": "sincerelydanidesign.etsy.com",
+      "description": "Handmade crochet items and bracelets",
+      "image": "/images/Vendors/9.webp"
+    },
+    {
+      "name": "GinkgoMART",
+      "social": "https://ginkgomart.bigcartel.com/",
+      "socialDisplay": "ginkgomart.bigcartel.com",
+      "description": "Prints, keychains, stickers, buttons, comics",
+      "image": "/images/Vendors/10.webp"
+    },
+    {
+      "name": "Dracolegus Art",
+      "social": "https://linktr.ee/dracolegus",
+      "socialDisplay": "linktr.ee/dracolegus",
+      "description": "Prints, stickers, buttons, keychains",
+      "image": "/images/Vendors/11.webp"
+    },
+    {
+      "name": "Ari Inkart",
+      "social": "https://sites.google.com/view/ari-inkart-portfolio/home",
+      "socialDisplay": "ari-inkart-portfolio",
+      "description": "Keychains, pin buttons, art prints",
+      "image": "/images/Vendors/12.webp"
+    },
+    {
+      "name": "Smogfrogg",
+      "social": "https://smogfrogg.com/",
+      "socialDisplay": "smogfrogg.com",
+      "description": "Prints, stickers, pins, keychains, tote bags",
+      "image": "/images/Vendors/13.webp"
+    },
+    {
+      "name": "Tea Shot",
+      "social": "https://linktr.ee/teashot",
+      "socialDisplay": "linktr.ee/teashot",
+      "description": "Stickers, keychains, prints, zines, patches",
+      "image": "/images/Vendors/14.webp"
+    },
+    {
+      "name": "Chiimeshop",
+      "social": "https://svu-illustration.com",
+      "socialDisplay": "svu-illustration.com",
+      "description": "Prints, keychains, buttons, shirts",
+      "image": "/images/Vendors/15.webp"
+    },
+    {
+      "name": "Vertebra Confit",
+      "description": "Prints, stickers, live sketch commissions"
+    },
+    {
+      "name": "marclouart",
+      "social": "https://instagram.com/marclouart",
+      "socialDisplay": "instagram.com/marclouart",
+      "description": "Anime posters, clay figures, keychains",
+      "image": "/images/Vendors/16.webp"
+    },
+    {
+      "name": "Novi Mochi",
+      "social": "https://novimochi.carrd.co/",
+      "socialDisplay": "novimochi.carrd.co",
+      "description": "Charms, prints, buttons, stickers",
+      "image": "/images/Vendors/17.webp"
+    },
+    {
+      "name": "cy-chin",
+      "social": "https://cychin.carrd.co/",
+      "socialDisplay": "cychin.carrd.co",
+      "description": "Anime-style stickers, keychains, prints, buttons",
+      "image": "/images/Vendors/18.webp"
+    },
+    {
+      "name": "SnarkFish T-Shirts",
+      "social": "https://www.snarkfishtshirts.com",
+      "socialDisplay": "snarkfishtshirts.com",
+      "description": "T-shirts, plushies, pins, prints, gaming",
+      "image": "/images/Vendors/19.webp"
+    },
+    {
+      "name": "Artisfired Studio",
+      "social": "https://artisfired.carrd.co/",
+      "socialDisplay": "artisfired.carrd.co",
+      "description": "Anime & game charms, prints, stickers",
+      "image": "/images/Vendors/20.webp"
+    },
+    {
+      "name": "Biodegradable Scribble Worms",
+      "description": "Stickers, prints, keychains",
+      "longName": true
+    },
+    {
+      "name": "soapshoe",
+      "social": "https://linktr.ee/soapshoe",
+      "socialDisplay": "linktr.ee/soapshoe",
+      "description": "Prints, stickers, keychains (anime & gacha)",
+      "image": "/images/Vendors/21.webp"
+    },
+    {
+      "name": "Canaryhare",
+      "description": "Bird stickers & prints"
+    },
+    {
+      "name": "Meshi Market",
+      "social": "https://meshimarket.carrd.co/",
+      "socialDisplay": "meshimarket.carrd.co",
+      "description": "Stickers, charms, pins, magnets, prints",
+      "image": "/images/Vendors/22.webp"
+    },
+    {
+      "name": "Holly Mitchell",
+      "social": "https://www.instagram.com/plzhollystop",
+      "socialDisplay": "instagram.com/plzhollystop",
+      "description": "Live charcoal portraits, watercolor originals",
+      "image": "/images/Vendors/23.webp"
+    },
+    {
+      "name": "Mewychu",
+      "social": "https://mewychu.carrd.co/",
+      "socialDisplay": "mewychu.carrd.co",
+      "description": "Prints, stickers, commissions, plush/figures",
+      "image": "/images/Vendors/24.webp"
+    },
+    {
+      "name": "worstkiddotcom",
+      "social": "https://linktr.ee/worstkiddotcom",
+      "socialDisplay": "linktr.ee/worstkiddotcom",
+      "description": "Prints, stickers, charms, totes, magnets",
+      "image": "/images/Vendors/25.webp"
+    },
+    {
+      "name": "Quzzyland",
+      "social": "https://quzzyplayground.carrd.com",
+      "socialDisplay": "quzzyplayground.carrd.com",
+      "description": "Plush keychains, prints, mini zines",
+      "image": "/images/Vendors/26.webp"
+    },
+    {
+      "name": "Kyomi Star",
+      "social": "https://www.instagram.com/kyomi_star",
+      "socialDisplay": "instagram.com/kyomi_star",
+      "description": "Stickers, prints, pins, keychains, hair clips",
+      "image": "/images/Vendors/27.webp"
+    },
+    {
+      "name": "Luniarci",
+      "description": "Prints, stickers, keychains, earrings"
+    },
+    {
+      "name": "Jayce the Creature Creator",
+      "social": "https://www.instagram.com/jaycethecreaturecreator",
+      "socialDisplay": "instagram.com/jaycethecreaturecreator",
+      "description": "Stickers, prints, original illustrations",
+      "image": "/images/Vendors/28.webp",
+      "longName": true
+    },
+    {
+      "name": "Deca",
+      "social": "https://x.com/122deca__art",
+      "socialDisplay": "x.com/122deca__art",
+      "description": "Prints, posters, photocards, charms, keychains",
+      "image": "/images/Vendors/29.webp"
+    },
+    {
+      "name": "SparkLemon",
+      "description": "Bookmarks, bracelets, cards, artwork, necklaces"
+    },
+    {
+      "name": "Chengt",
+      "social": "https://www.instagram.com/chengt_art",
+      "socialDisplay": "instagram.com/chengt_art",
+      "description": "Art prints, keychains, art goods",
+      "image": "/images/Vendors/30.webp"
+    },
+    {
+      "name": "Koifishin",
+      "description": "Prints, stickers, jewelry"
+    },
+    {
+      "name": "jsunnyart",
+      "social": "https://twitter.com/jsunnyart",
+      "socialDisplay": "twitter.com/jsunnyart",
+      "description": "Prints, charms, stickers, sticker sheets",
+      "image": "/images/Vendors/31.webp"
+    },
+    {
+      "name": "Somintso",
+      "social": "https://www.instagram.com/somintso/",
+      "socialDisplay": "instagram.com/somintso",
+      "description": "Anime prints, keychains, tarot cards, stickers",
+      "image": "/images/Vendors/32.webp"
+    },
+    {
+      "name": "Soft Peach art",
+      "social": "https://www.etsy.com/shop/SoftpeachArt",
+      "socialDisplay": "etsy.com/shop/SoftpeachArt",
+      "description": "Keychains, stickers, art prints",
+      "image": "/images/Vendors/33.webp"
+    },
+    {
+      "name": "Astrateia Art",
+      "description": "Prints, stickers, live portrait commissions"
+    }
+  ],
+  "featuredArtists": [
+    {
+      "name": "Bonemealed",
+      "social": "https://bonemealed.carrd.co/",
+      "socialDisplay": "bonemealed.carrd.co",
+      "artwork": "/images/Artwork/1.webp",
+      "avatar": "/images/Vendors/8.webp"
+    },
+    {
+      "name": "Dracolegus Art",
+      "social": "https://linktr.ee/dracolegus",
+      "socialDisplay": "linktr.ee/dracolegus",
+      "artwork": "/images/Artwork/2.webp",
+      "avatar": "/images/Vendors/11.webp"
+    },
+    {
+      "name": "worstkiddotcom",
+      "social": "https://linktr.ee/worstkiddotcom",
+      "socialDisplay": "linktr.ee/worstkiddotcom",
+      "artwork": "/images/Artwork/3.webp",
+      "avatar": "/images/Vendors/25.webp"
+    },
+    {
+      "name": "jsunnyart",
+      "social": "https://twitter.com/jsunnyart",
+      "socialDisplay": "twitter.com/jsunnyart",
+      "artwork": "/images/Artwork/4.webp",
+      "avatar": "/images/Vendors/31.webp"
+    },
+    {
+      "name": "Zeph",
+      "social": "https://x.com/YouInsolentFool",
+      "socialDisplay": "x.com/YouInsolentFool",
+      "artwork": "/images/Artwork/5.webp",
+      "avatar": "/images/Vendors/3.webp"
+    },
+    {
+      "name": "Koifishin",
+      "artwork": "/images/Artwork/6.png",
+      "avatar": "/images/Icons/chibi.webp"
+    },
+    {
+      "name": "Mewychu",
+      "social": "https://mewychu.carrd.co/",
+      "socialDisplay": "mewychu.carrd.co",
+      "artwork": "/images/Artwork/7.jpeg",
+      "avatar": "/images/Vendors/24.webp"
+    },
+    {
+      "name": "Artisfired Studio",
+      "social": "https://artisfired.carrd.co/",
+      "socialDisplay": "artisfired.carrd.co",
+      "artwork": "/images/Artwork/8.png",
+      "avatar": "/images/Vendors/20.webp"
+    },
+    {
+      "name": "Tea Shot",
+      "social": "https://linktr.ee/teashot",
+      "socialDisplay": "linktr.ee/teashot",
+      "artwork": "/images/Artwork/9.png",
+      "avatar": "/images/Vendors/14.webp"
+    },
+    {
+      "name": "Jayce the Creature Creator",
+      "social": "https://www.instagram.com/jaycethecreaturecreator",
+      "socialDisplay": "instagram.com/jaycethecreaturecreator",
+      "artwork": "/images/Artwork/10.png",
+      "avatar": "/images/Vendors/28.webp"
+    },
+    {
+      "name": "Inywiny",
+      "social": "https://inywiny.carrd.co",
+      "socialDisplay": "inywiny.carrd.co",
+      "artwork": "/images/Artwork/11.png",
+      "avatar": "/images/Vendors/2.webp"
+    }
+  ]
+}

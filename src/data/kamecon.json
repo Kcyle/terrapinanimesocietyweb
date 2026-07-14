@@ -1,0 +1,239 @@
+{
+  "title": "KAMECON",
+  "description": "KAMECON is an annual anime convention held at the University of Maryland in the Stamp Student Union and is open to the public. First held in 2017, the convention made its long awaited return in Fall 2025, welcoming over 700 attendees. The event featured a live concert, artist and vendor alley, cosplay competition, gaming hall, and many other exciting activities. With KAMECON's successful comeback, plans are already underway for KAMECON 2026, stay tuned for more updates!",
+  "highlightsLabel": "2025 Highlights",
+  "vendorsHeading": "Thank You to Our 2025 Vendors!",
+  "concertVideosUrl": "https://www.youtube.com/playlist?list=PLMH_PlKQsMXAqFixQTorreqpBu1tEuMYp",
+  "concertVideosLabel": "Concert Videos",
+  "photosUrl": "https://adobe.ly/3JVx4td",
+  "photosLabel": "KAMECON Photos",
+  "mascotImage": "/images/Characters/turtle.webp",
+  "photos": [
+    "/images/Photos/DSCF1467.webp",
+    "/images/Photos/DSCF1482.webp",
+    "/images/Photos/DSCF1483.webp",
+    "/images/Photos/DSCF1488.webp",
+    "/images/Photos/DSCF1495.webp",
+    "/images/Photos/DSCF1497.webp",
+    "/images/Photos/DSCF1498.webp",
+    "/images/Photos/DSCF1499.webp",
+    "/images/Photos/DSCF1505.webp",
+    "/images/Photos/DSCF1509.webp",
+    "/images/Photos/DSCF1521.webp",
+    "/images/Photos/DSCF1542.webp"
+  ],
+  "vendors": [
+    {
+      "name": "GinkgoMART",
+      "social": "https://ginkgomart.bigcartel.com",
+      "socialDisplay": "ginkgomart.bigcartel.com",
+      "description": "Anime/manga/game fanart prints, keychains, buttons, and stickers"
+    },
+    {
+      "name": "Inywiny",
+      "social": "https://inywiny.carrd.co",
+      "socialDisplay": "inywiny.carrd.co",
+      "description": "Handmade trinkets, acrylic charms, stickers, and prints"
+    },
+    {
+      "name": "Meshi Market",
+      "social": "https://meshimarket.carrd.co",
+      "socialDisplay": "meshimarket.carrd.co",
+      "description": "Food-themed magnets, charms, pins, prints, keychains, and stickers"
+    },
+    {
+      "name": "B.S. Warren",
+      "social": "https://bswarren.carrd.co",
+      "socialDisplay": "bswarren.carrd.co",
+      "description": "Fantasy novels and merchandise"
+    },
+    {
+      "name": "Lord Detaur Art",
+      "social": "https://lorddetaur.etsy.com",
+      "socialDisplay": "lorddetaur.etsy.com",
+      "description": "Anime and video game themed key chains, stickers, prints"
+    },
+    {
+      "name": "cy-chin",
+      "social": "https://cychin.carrd.co",
+      "socialDisplay": "cychin.carrd.co",
+      "description": "Anime-themed artwork (prints, stickers, buttons, keychains)"
+    },
+    {
+      "name": "Bonemealed",
+      "social": "https://bonemealed.carrd.co",
+      "socialDisplay": "bonemealed.carrd.co",
+      "description": "Anime artwork: prints, charms, stickers, shirts, and stationary"
+    },
+    {
+      "name": "Mewychu",
+      "social": "https://mewychu.carrd.co",
+      "socialDisplay": "mewychu.carrd.co",
+      "description": "Anime inspired stickers, prints, keychains"
+    },
+    {
+      "name": "Pops-A-Plenty, LLC",
+      "description": "Custom artwork Funko Pops and shadowboxes"
+    },
+    {
+      "name": "Kyomi Star",
+      "description": "Button pins, stickers, prints, notepads, keychain & hairclips with Anime designs"
+    },
+    {
+      "name": "Novi Mochi",
+      "social": "https://novimochi.carrd.co",
+      "socialDisplay": "novimochi.carrd.co",
+      "description": "Anime themed prints, stickers, buttons, and keychains"
+    },
+    {
+      "name": "SvvLinh",
+      "social": "https://svvlinh.weebly.com",
+      "socialDisplay": "svvlinh.weebly.com",
+      "description": "Anime and gaming themed artwork/prints, stationary and small accessories"
+    },
+    {
+      "name": "Summ.art",
+      "description": "Vibrant anime, video game, and superhero art: framed prints, apparel, keychains, stickers, pins"
+    },
+    {
+      "name": "Teashot",
+      "description": "Handmade prints, stickers, tote bags, keychains, t-shirts, and canvas patches based on anime"
+    },
+    {
+      "name": "Smogfrogg",
+      "social": "https://smogfrogg.com",
+      "socialDisplay": "smogfrogg.com",
+      "description": "Fanart and original artwork: prints, stickers, pins, acrylic keychains, comics, tote bags"
+    },
+    {
+      "name": "Luniarci Art",
+      "social": "https://tumblr.com/luniarci",
+      "socialDisplay": "tumblr.com/luniarci",
+      "description": "Anime-themed artwork and prints, laser cut wooden keychains"
+    },
+    {
+      "name": "Lumikha Cosplay Resale",
+      "social": "https://linktr.ee/lumikha",
+      "socialDisplay": "linktr.ee/lumikha",
+      "description": "Secondhand cosplays"
+    },
+    {
+      "name": "Kaimatic",
+      "social": "https://kaimaticportfolio.carrd.co",
+      "socialDisplay": "kaimaticportfolio.carrd.co",
+      "description": "Genshin Impact, Splatoon, OMORI, Pokemon, JJK: stickers, buttons, charms, acrylic stands, prints"
+    },
+    {
+      "name": "Dracolegus",
+      "social": "https://linktr.ee/dracolegus",
+      "socialDisplay": "linktr.ee/dracolegus",
+      "description": "Fanart prints of pokemon, dungeon meshi, arcane, and mythical creatures"
+    },
+    {
+      "name": "saeuchelle",
+      "social": "https://saeuchelle.bigcartel.com",
+      "socialDisplay": "saeuchelle.bigcartel.com",
+      "description": "Cute character artworks: keychains, apparel, plushies, pins, stickers, prints"
+    },
+    {
+      "name": "PassionPhantom",
+      "social": "https://passionphantom.wixsite.com",
+      "socialDisplay": "passionphantom.wixsite.com",
+      "description": "Art books, zines, comics, OC Art, Anime Fan Art, key charms, stickers, prints, buttons"
+    },
+    {
+      "name": "Blue bean crochet",
+      "description": "Hand made crochet plushies: Pokemon, characters from games/shows, animals"
+    },
+    {
+      "name": "AnxiousLilies",
+      "social": "https://lilyibe.myportfolio.com",
+      "socialDisplay": "lilyibe.myportfolio.com",
+      "description": "Anime-themed artwork and prints, stickers and keychains"
+    },
+    {
+      "name": "Mezurashii",
+      "social": "https://mezurashii.store",
+      "socialDisplay": "mezurashii.store",
+      "description": "Anime figurines, Monchhichis, anime keychains and phone charms, Japanese trinkets"
+    },
+    {
+      "name": "quzzyplayground",
+      "social": "https://quzzyplayground.carrd.co",
+      "socialDisplay": "quzzyplayground.carrd.co",
+      "description": "Handmade anime keychains and prints"
+    },
+    {
+      "name": "Chiimeshop",
+      "social": "https://instagram.com/chiime_",
+      "socialDisplay": "instagram.com/chiime_",
+      "description": "Fanart/original works, keychains, stickers, apparel, prints and pouches"
+    },
+    {
+      "name": "Melina Rivera",
+      "social": "https://watermeloooms.myportfolio.com",
+      "socialDisplay": "watermeloooms.myportfolio.com",
+      "description": "Art prints, stickers, t-shirts with Japanese alternative themes"
+    },
+    {
+      "name": "Somintso",
+      "social": "https://linktr.ee/somintso",
+      "socialDisplay": "linktr.ee/somintso",
+      "description": "Anime styled prints, keychains, stickers, and zines"
+    },
+    {
+      "name": "Sophuia Liu",
+      "description": "Original art prints, postcards, acrylic keychains, acrylic stand"
+    },
+    {
+      "name": "Artisfired Studio",
+      "social": "https://artisfired.carrd.co",
+      "socialDisplay": "artisfired.carrd.co",
+      "description": "Anime/Video Game Inspired Prints, Keychains, and Stickers"
+    },
+    {
+      "name": "marclouart",
+      "description": "Large prints 11x17, Small prints 5.5x8.5, 3 inch stickers, 2 inch clay figures"
+    },
+    {
+      "name": "rivertylart",
+      "description": "Prints, Stickers (genshin/hsr fanart, original art like kitsune and sushi creatures)"
+    },
+    {
+      "name": "SnarkFish",
+      "description": "Geeky t-shirts, gaming dice, 3D-printed gaming wares, Pokemon finger puppets, plushies, trading cards"
+    },
+    {
+      "name": "Art Club",
+      "description": "Student vendors selling a wide range of their own artwork"
+    },
+    {
+      "name": "Caitlin Goh",
+      "description": "Student vendor selling hand made crochet plushies"
+    },
+    {
+      "name": "Akuunosoku",
+      "social": "https://akuunosuke.carrd.co",
+      "socialDisplay": "akuunosuke.carrd.co",
+      "description": "Prints, charms, enamel pins, stickers & more (Genshin Impact, ALNST, BSD, etc.)"
+    },
+    {
+      "name": "Liramic",
+      "social": "https://liramic.etsy.com",
+      "socialDisplay": "liramic.etsy.com",
+      "description": "Art prints and posters, charms, pins, buttons, tote bags, fanart includes Genshin Impact, TGCF, SVSSS, etc."
+    },
+    {
+      "name": "Ari Inkart",
+      "social": "https://ariinkart.carrd.co",
+      "socialDisplay": "ariinkart.carrd.co",
+      "description": "Vocaloid and Project Sekai key chains and pin buttons"
+    },
+    {
+      "name": "Anxious Lilies",
+      "social": "https://linktr.ee/anxious_lilies",
+      "socialDisplay": "linktr.ee/anxious_lilies",
+      "description": "Commissions, stickers, holographics"
+    }
+  ]
+}

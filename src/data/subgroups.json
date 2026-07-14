@@ -1,0 +1,89 @@
+{
+  "heading": "Subgroups",
+  "subtitle": "Explore Our Communities",
+  "list": [
+    {
+      "id": "animusic",
+      "name": "Animusic",
+      "tagline": "Anime Music & J-Music",
+      "meets": "Saturdays 4-7pm",
+      "leader": "Annie",
+      "description": "Please check #subgroup-announcements and #animusic in the Discord server for any updates! Any questions please DM ricottarat214",
+      "previewImage": "/images/Backgrounds/animusic.png",
+      "photos": [
+        {
+          "src": "/images/Characters/ani1.png",
+          "alt": "Animusic character",
+          "side": "right"
+        },
+        {
+          "src": "/images/Characters/ani2.png",
+          "alt": "Animusic character",
+          "side": "left"
+        }
+      ]
+    },
+    {
+      "id": "cosplay",
+      "name": "Cosplay",
+      "tagline": "Workshops & Events",
+      "meets": "",
+      "leader": "Nikolai",
+      "description": "A hands on subgroup focused on cosplay workshops and event preparation. Members collaborate on builds, share techniques, and help support major club events like the Maid Café. Check the cosplay channel for updates.",
+      "previewImage": "/images/Backgrounds/cosplay.jpg",
+      "photos": [
+        {
+          "src": "/images/Photos/Cosplay 1.webp",
+          "alt": "Cosplay photo",
+          "side": "left"
+        },
+        {
+          "src": "/images/Photos/Cosplay 2.webp",
+          "alt": "Cosplay photo",
+          "side": "right"
+        }
+      ]
+    },
+    {
+      "id": "oldanime",
+      "name": "Old Anime",
+      "tagline": "Classic & Retro",
+      "meets": "",
+      "leader": "Dylan",
+      "description": "A small group for long time anime fans interested in classic series and deeper discussion. Open to anyone who wants to learn more about older anime and its influence.",
+      "previewImage": "/images/Backgrounds/old anime.jpg",
+      "photos": [
+        {
+          "src": "/images/Characters/old1.png",
+          "alt": "Old anime character",
+          "side": "right"
+        },
+        {
+          "src": "/images/Characters/old2.png",
+          "alt": "Old anime character",
+          "side": "left"
+        }
+      ]
+    },
+    {
+      "id": "bookclub",
+      "name": "Book Club",
+      "tagline": "Manga & Light Novels",
+      "meets": "",
+      "leader": "Joseph",
+      "description": "A relaxed subgroup for manga, light novels, and anime related reading. Flexible and open to growth. If you are interested in joining or helping lead, contact Joseph.",
+      "previewImage": "/images/Backgrounds/book club.png",
+      "photos": []
+    },
+    {
+      "id": "rainbow",
+      "name": "Rainbow",
+      "tagline": "LGBTQ+ Community",
+      "meets": "",
+      "leader": "Corvidae",
+      "description": "A welcoming space for LGBTQ+ anime fans and allies. Open to everyone and focused on community connection, representation, and discussion.",
+      "previewImage": "/images/Backgrounds/rainbow.png",
+      "photos": []
+    }
+  ]
+}

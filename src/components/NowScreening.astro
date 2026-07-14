@@ -1,12 +1,12 @@
 ---
 import screeningsData from '../data/screenings.json';
-import umdBuildings from '../data/umd-buildings.json';
-import { generateScreeningDates, formatScreeningDate } from '../utils/anime-api';
+import buildingsData from '../data/buildings.json';
+import { generateScreeningDates, formatScreeningDate } from '../utils/anime';
 
 const { screenings, startDate, meetingTime, location } = screeningsData;
 const dates = generateScreeningDates(startDate, screenings.length);
 
-const building = umdBuildings.buildings.find(b => b.code === location.buildingCode) || umdBuildings.buildings[0];
+const building = buildingsData.buildings.find(b => b.code === location.buildingCode) || buildingsData.buildings[0];
 const locationDisplay = `${building.shortName} ${location.roomNumber}`;
 
 const schedule = screenings.map((screening, index) => ({

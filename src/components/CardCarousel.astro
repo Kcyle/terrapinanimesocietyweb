@@ -1,43 +1,11 @@
 ---
+import home from '../data/home.json';
+
 interface Props {
   images?: string[];
 }
 
-const defaultImages = [
-  '/images/Cards/1.webp',
-  '/images/Cards/2.webp',
-  '/images/Cards/3.webp',
-  '/images/Cards/4.webp',
-  '/images/Cards/5.webp',
-  '/images/Cards/6.webp',
-  '/images/Cards/7.webp',
-  '/images/Cards/8.webp',
-  '/images/Cards/9.webp',
-  '/images/Cards/10.webp',
-  '/images/Cards/11.webp',
-  '/images/Cards/12.webp',
-  '/images/Cards/13.webp',
-  '/images/Cards/14.webp',
-  '/images/Cards/15.webp',
-  '/images/Cards/16.webp',
-  '/images/Cards/17.webp',
-  '/images/Cards/18.webp',
-  '/images/Cards/19.webp',
-  '/images/Cards/20.webp',
-  '/images/Cards/21.webp',
-  '/images/Cards/22.webp',
-  '/images/Cards/23.webp',
-  '/images/Cards/24.webp',
-  '/images/Cards/25.webp',
-  '/images/Cards/26.webp',
-  '/images/Cards/27.webp',
-  '/images/Cards/28.webp',
-  '/images/Cards/29.webp',
-  '/images/Cards/30.webp',
-  '/images/Cards/31.webp',
-];
-
-const { images = defaultImages } = Astro.props;
+const { images = home.cardCarousel } = Astro.props;
 const duplicatedImages = [...images, ...images];
 ---
 

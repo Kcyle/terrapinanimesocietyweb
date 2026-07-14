@@ -1,196 +1,81 @@
+---
+import subgroups from '../data/subgroups.json';
+import activities from '../data/activities.json';
+
+const { list } = subgroups;
+---
+
 <div class="activities__bg" data-activities-bg></div>
 
 <div class="activities__void" data-activities-void>
-  <div class="activities__sky-biome" data-sky-biome-1>
-    <img src="/images/Backgrounds/animusic.png" alt="" class="sky-biome-blur" />
-    <img src="/images/Backgrounds/animusic.png" alt="" class="sky-biome-img" />
-  </div>
-  <div class="activities__sky-biome" data-sky-biome-2>
-    <img src="/images/Backgrounds/cosplay.jpg" alt="" class="sky-biome-blur" />
-    <img src="/images/Backgrounds/cosplay.jpg" alt="" class="sky-biome-img" />
-  </div>
-  <div class="activities__sky-biome" data-sky-biome-3>
-    <img src="/images/Backgrounds/old anime.jpg" alt="" class="sky-biome-blur" />
-    <img src="/images/Backgrounds/old anime.jpg" alt="" class="sky-biome-img" />
-  </div>
-  <div class="activities__sky-biome" data-sky-biome-4>
-    <img src="/images/Backgrounds/book club.png" alt="" class="sky-biome-blur" />
-    <img src="/images/Backgrounds/book club.png" alt="" class="sky-biome-img" />
-  </div>
-  <div class="activities__sky-biome" data-sky-biome-5>
-    <img src="/images/Backgrounds/rainbow.png" alt="" class="sky-biome-blur" />
-    <img src="/images/Backgrounds/rainbow.png" alt="" class="sky-biome-img" />
-  </div>
+  {list.map((subgroup, index) => (
+    <div class="activities__sky-biome" {...{ [`data-sky-biome-${index + 1}`]: true }}>
+      <img src={subgroup.previewImage} alt="" class="sky-biome-blur" />
+      <img src={subgroup.previewImage} alt="" class="sky-biome-img" />
+    </div>
+  ))}
 </div>
 
 <div class="subgroups-intro" data-subgroups-intro>
   <div class="subgroups-intro__bg"></div>
   <div class="subgroups-intro__content">
-    <h2 class="subgroups-intro__heading" data-subgroups-heading>Subgroups</h2>
-    <p class="subgroups-intro__subtitle" data-subgroups-subtitle>Explore Our Communities</p>
+    <h2 class="subgroups-intro__heading" data-subgroups-heading>{subgroups.heading}</h2>
+    <p class="subgroups-intro__subtitle" data-subgroups-subtitle>{subgroups.subtitle}</p>
     <div class="subgroups-intro__previews" data-subgroups-previews>
-      <div class="subgroups-intro__card">
-        <img src="/images/Backgrounds/animusic.png" alt="Animusic" class="subgroups-intro__card-img" />
-        <span class="subgroups-intro__card-name">Animusic</span>
-      </div>
-      <div class="subgroups-intro__card">
-        <img src="/images/Backgrounds/cosplay.jpg" alt="Cosplay" class="subgroups-intro__card-img" />
-        <span class="subgroups-intro__card-name">Cosplay</span>
-      </div>
-      <div class="subgroups-intro__card">
-        <img src="/images/Backgrounds/old anime.jpg" alt="Old Anime" class="subgroups-intro__card-img" />
-        <span class="subgroups-intro__card-name">Old Anime</span>
-      </div>
-      <div class="subgroups-intro__card subgroups-intro__card--bookclub">
-        <img src="/images/Backgrounds/book club.png" alt="Book Club" class="subgroups-intro__card-img" />
-        <span class="subgroups-intro__card-name">Book Club</span>
-      </div>
-      <div class="subgroups-intro__card">
-        <img src="/images/Backgrounds/rainbow.png" alt="Rainbow" class="subgroups-intro__card-img" />
-        <span class="subgroups-intro__card-name">Rainbow</span>
-      </div>
+      {list.map((subgroup) => (
+        <div class={subgroup.id === 'bookclub' ? 'subgroups-intro__card subgroups-intro__card--bookclub' : 'subgroups-intro__card'}>
+          <img src={subgroup.previewImage} alt={subgroup.name} class="subgroups-intro__card-img" />
+          <span class="subgroups-intro__card-name">{subgroup.name}</span>
+        </div>
+      ))}
     </div>
   </div>
 </div>
 
-<div class="subgroup subgroup--animusic" data-subgroup-1>
-  <div class="subgroup__left" data-subgroup-1-left>
-    <h3 class="subgroup__name subgroup__name--animusic">Animusic</h3>
-    <p class="subgroup__tagline">Anime Music & J-Music</p>
-  </div>
-  <div class="subgroup__right" data-subgroup-1-right>
-    <div class="subgroup__info">
-      <p class="subgroup__time"><span class="subgroup__label">Meets</span>Saturdays 4-7pm</p>
-      <p class="subgroup__leader"><span class="subgroup__label">Leader</span>Annie</p>
-      <p class="subgroup__desc">Please check #subgroup-announcements and #animusic in the Discord server for any updates! Any questions please DM ricottarat214</p>
+{list.map((subgroup, index) => (
+  <div class={`subgroup subgroup--${subgroup.id}`} {...{ [`data-subgroup-${index + 1}`]: true }}>
+    <div class="subgroup__left" {...{ [`data-subgroup-${index + 1}-left`]: true }}>
+      <h3 class={`subgroup__name subgroup__name--${subgroup.id}`}>{subgroup.name}</h3>
+      <p class="subgroup__tagline">{subgroup.tagline}</p>
     </div>
-  </div>
-  <div class="subgroup__photo subgroup__photo--right" data-subgroup-1-photo-right>
-    <img src="/images/Characters/ani1.png" alt="Animusic character" />
-  </div>
-  <div class="subgroup__photo subgroup__photo--left" data-subgroup-1-photo-left>
-    <img src="/images/Characters/ani2.png" alt="Animusic character" />
-  </div>
-</div>
-
-<div class="subgroup subgroup--cosplay" data-subgroup-2>
-  <div class="subgroup__left" data-subgroup-2-left>
-    <h3 class="subgroup__name subgroup__name--cosplay">Cosplay</h3>
-    <p class="subgroup__tagline">Workshops & Events</p>
-  </div>
-  <div class="subgroup__right" data-subgroup-2-right>
-    <div class="subgroup__info">
-      <p class="subgroup__leader"><span class="subgroup__label">Leader</span>Nikolai</p>
-      <p class="subgroup__desc">A hands on subgroup focused on cosplay workshops and event preparation. Members collaborate on builds, share techniques, and help support major club events like the Maid Café. Check the cosplay channel for updates.</p>
+    <div class="subgroup__right" {...{ [`data-subgroup-${index + 1}-right`]: true }}>
+      <div class="subgroup__info">
+        {subgroup.meets && (
+          <p class="subgroup__time"><span class="subgroup__label">Meets</span>{subgroup.meets}</p>
+        )}
+        <p class="subgroup__leader"><span class="subgroup__label">Leader</span>{subgroup.leader}</p>
+        <p class="subgroup__desc">{subgroup.description}</p>
+      </div>
     </div>
+    {subgroup.photos.map((photo) => (
+      <div
+        class={`subgroup__photo subgroup__photo--${photo.side}`}
+        {...{ [`data-subgroup-${index + 1}-photo-${photo.side}`]: true }}
+      >
+        <img src={photo.src} alt={photo.alt} />
+      </div>
+    ))}
   </div>
-  <div class="subgroup__photo subgroup__photo--left" data-subgroup-2-photo-left>
-    <img src="/images/Photos/Cosplay 1.webp" alt="Cosplay photo" />
-  </div>
-  <div class="subgroup__photo subgroup__photo--right" data-subgroup-2-photo-right>
-    <img src="/images/Photos/Cosplay 2.webp" alt="Cosplay photo" />
-  </div>
-</div>
-
-<div class="subgroup subgroup--oldanime" data-subgroup-3>
-  <div class="subgroup__left" data-subgroup-3-left>
-    <h3 class="subgroup__name subgroup__name--oldanime">Old Anime</h3>
-    <p class="subgroup__tagline">Classic & Retro</p>
-  </div>
-  <div class="subgroup__right" data-subgroup-3-right>
-    <div class="subgroup__info">
-      <p class="subgroup__leader"><span class="subgroup__label">Leader</span>Dylan</p>
-      <p class="subgroup__desc">A small group for long time anime fans interested in classic series and deeper discussion. Open to anyone who wants to learn more about older anime and its influence.</p>
-    </div>
-  </div>
-  <div class="subgroup__photo subgroup__photo--right" data-subgroup-3-photo-right>
-    <img src="/images/Characters/old1.png" alt="Old anime character" />
-  </div>
-  <div class="subgroup__photo subgroup__photo--left" data-subgroup-3-photo-left>
-    <img src="/images/Characters/old2.png" alt="Old anime character" />
-  </div>
-</div>
-
-<div class="subgroup subgroup--bookclub" data-subgroup-4>
-  <div class="subgroup__left" data-subgroup-4-left>
-    <h3 class="subgroup__name subgroup__name--bookclub">Book Club</h3>
-    <p class="subgroup__tagline">Manga & Light Novels</p>
-  </div>
-  <div class="subgroup__right" data-subgroup-4-right>
-    <div class="subgroup__info">
-      <p class="subgroup__leader"><span class="subgroup__label">Leader</span>Joseph</p>
-      <p class="subgroup__desc">A relaxed subgroup for manga, light novels, and anime related reading. Flexible and open to growth. If you are interested in joining or helping lead, contact Joseph.</p>
-    </div>
-  </div>
-</div>
-
-<div class="subgroup subgroup--rainbow" data-subgroup-5>
-  <div class="subgroup__left" data-subgroup-5-left>
-    <h3 class="subgroup__name subgroup__name--rainbow">Rainbow</h3>
-    <p class="subgroup__tagline">LGBTQ+ Community</p>
-  </div>
-  <div class="subgroup__right" data-subgroup-5-right>
-    <div class="subgroup__info">
-      <p class="subgroup__leader"><span class="subgroup__label">Leader</span>Corvidae</p>
-      <p class="subgroup__desc">A welcoming space for LGBTQ+ anime fans and allies. Open to everyone and focused on community connection, representation, and discussion.</p>
-    </div>
-  </div>
-</div>
+))}
 
 <div class="activities-content" data-activities-content>
   <div class="activities__character" data-activities-character>
-    <img src="/images/Characters/chainsawman.png" alt="Chainsaw Man" class="activities__character-image" />
+    <img src={activities.characterImage} alt={activities.characterAlt} class="activities__character-image" />
   </div>
 
   <div class="activities__main">
-    <h1 class="activities__title" data-activities-title>Activities</h1>
-    <p class="activities__description" data-activities-description>From anime themed Jeopardy and movie screenings to creating your own anime dubs, the Terrapin Anime Society offers a wide range of fun activities for people with all kinds of interests. All activities are announced in advance on our Discord!</p>
+    <h1 class="activities__title" data-activities-title>{activities.title}</h1>
+    <p class="activities__description" data-activities-description>{activities.description}</p>
   </div>
 
   <div class="activities__card-pile">
-    <div class="activities__card card--bingo" data-activity-card>
-      <h3 class="activities__card-name">Movie Bingo</h3>
-      <p class="activities__card-desc">Create your own bingo cards filled with anime tropes, clichés, and common story beats. As we watch a movie together, players mark off predictions as they happen.</p>
-    </div>
-    <div class="activities__card card--jeopardy" data-activity-card>
-      <h3 class="activities__card-name">Anime Jeopardy</h3>
-      <p class="activities__card-desc">A fast-paced trivia game featuring anime-themed questions across different categories and difficulty levels. Compete in teams to test your knowledge of series, characters, studios, openings, and more.</p>
-    </div>
-    <div class="activities__card card--pictionary" data-activity-card>
-      <h3 class="activities__card-name">Charades &amp; Picture Guessing</h3>
-      <p class="activities__card-desc">Guess anime characters, scenes, or events through charades, drawings, or images. This game focuses on teamwork, quick thinking, and recognizing iconic moments from across anime history.</p>
-    </div>
-    <div class="activities__card card--questions" data-activity-card>
-      <h3 class="activities__card-name">20 Questions</h3>
-      <span class="activities__card-feat">Anime Edition</span>
-      <p class="activities__card-desc">Players try to guess the mystery anime, character, or concept by asking yes-or-no questions. A simple but competitive game that rewards clever questions and deep fandom knowledge.</p>
-    </div>
-    <div class="activities__card card--hottakes" data-activity-card>
-      <h3 class="activities__card-name">Hot Takes Night</h3>
-      <p class="activities__card-desc">Members share their most controversial anime opinions, from overrated series to unpopular character rankings. After each take, the group votes and discusses, keeping the debate fun and engaging.</p>
-    </div>
-    <div class="activities__card card--magicboy" data-activity-card>
-      <h3 class="activities__card-name">Magic Boy Screening</h3>
-      <span class="activities__card-feat">feat. Professor Stevens</span>
-      <p class="activities__card-desc">A special screening of Magic Boy, often considered one of the first anime films shown in the United States. Includes historical context led by Professor Stevens.</p>
-    </div>
-    <div class="activities__card card--chainsaw" data-activity-card>
-      <h3 class="activities__card-name">Chainsaw Man Event</h3>
-      <span class="activities__card-feat">Sony Partnership</span>
-      <p class="activities__card-desc">A large-scale themed event held in partnership with Sony to promote the Chainsaw Man: Reze movie. Featuring exclusive posters, merchandise giveaways, and themed games.</p>
-    </div>
-    <div class="activities__card card--scavenger" data-activity-card>
-      <h3 class="activities__card-name">Anime Scavenger Hunt</h3>
-      <p class="activities__card-desc">Anime-themed questions and clues are scattered across multiple subjects. Teams work together to solve prompts and track down answers, blending anime knowledge with creative problem-solving.</p>
-    </div>
-    <div class="activities__card card--fandubs" data-activity-card>
-      <h3 class="activities__card-name">Live Fandubs</h3>
-      <p class="activities__card-desc">Members dub over anime scenes in real time while the group watches. A lighthearted event that encourages creativity, voice acting, and humor.</p>
-    </div>
-    <div class="activities__card card--presentations" data-activity-card>
-      <h3 class="activities__card-name">Make Your Own Presentation</h3>
-      <p class="activities__card-desc">Create and present a short presentation on any anime-related topic of your choice. Topics range from favorite series and characters to themes, studios, history, or personal interpretations.</p>
-    </div>
+    {activities.cards.map((card) => (
+      <div class={`activities__card card--${card.id}`} data-activity-card>
+        <h3 class="activities__card-name">{card.name}</h3>
+        {card.feature && <span class="activities__card-feat">{card.feature}</span>}
+        <p class="activities__card-desc">{card.description}</p>
+      </div>
+    ))}
   </div>
 </div>
 

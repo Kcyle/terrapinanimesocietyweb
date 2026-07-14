@@ -1,0 +1,151 @@
+{
+  "hero": {
+    "titleLines": [
+      "Terrapin Anime",
+      "Society"
+    ],
+    "description": "The Terrapin Anime Society is established for the expressed purpose of encouraging the appreciation and discussion of anime between its members and to bring a better awareness of anime to the general public.",
+    "buttons": [
+      {
+        "label": "Meetings",
+        "url": "#meetings-section",
+        "variant": "primary"
+      },
+      {
+        "label": "TerpCon 2026",
+        "url": "/terpcon",
+        "variant": "secondary"
+      },
+      {
+        "label": "KAMECON",
+        "url": "/kamecon",
+        "variant": "secondary"
+      }
+    ]
+  },
+  "about": {
+    "heading": "About",
+    "descriptionHtml": "The Anime Club welcomes all students who are interested in anime. To get involved, join our <a href=\"https://discord.gg/fzKBsnS\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"about-content__discord-link\">Discord</a> and introduce yourself in the <span class=\"about-content__highlight\">#intro</span> channel to receive the member role.",
+    "meetingsLabel": "Meetings",
+    "meetingsText": "Every Sunday from 5:00 to 7:00 PM. The first half features anime activities like dubbing competitions, Guess the Anime, and anime themed Jeopardy. The second half is a screening of two anime episodes.",
+    "subgroupsLabel": "Subgroups",
+    "subgroupLinks": [
+      {
+        "label": "Animusic",
+        "url": "/subgroups#animusic"
+      },
+      {
+        "label": "Cosplay",
+        "url": "/subgroups#cosplay"
+      },
+      {
+        "label": "Manga",
+        "url": "/subgroups#manga"
+      },
+      {
+        "label": "Gaming",
+        "url": "/subgroups#gaming"
+      },
+      {
+        "label": "Old School",
+        "url": "/subgroups#old-school"
+      },
+      {
+        "label": "Rainbow",
+        "url": "/subgroups#rainbow"
+      }
+    ],
+    "eventsLabel": "Major Events",
+    "eventLinks": [
+      {
+        "label": "KAMECON",
+        "note": "Fall",
+        "url": "/kamecon"
+      }
+    ],
+    "joinLabel": "Join Us",
+    "contactLabel": "Contact",
+    "contactUrl": "/contact",
+    "mascotImage": "/images/Characters/c.c.webp",
+    "mascotAlt": "C.C. mascot",
+    "galleryImages": [
+      {
+        "src": "/images/Backgrounds/tas1.webp",
+        "alt": "TAS club meeting"
+      },
+      {
+        "src": "/images/Photos/tas2.webp",
+        "alt": "TAS members"
+      },
+      {
+        "src": "/images/Photos/tas3.webp",
+        "alt": "TAS event"
+      },
+      {
+        "src": "/images/Backgrounds/tas4.webp",
+        "alt": "TAS gathering"
+      },
+      {
+        "src": "/images/Photos/tas5.webp",
+        "alt": "TAS activity"
+      },
+      {
+        "src": "/images/Photos/tas6.webp",
+        "alt": "TAS screening"
+      },
+      {
+        "src": "/images/Photos/tas7.webp",
+        "alt": "TAS community"
+      },
+      {
+        "src": "/images/Photos/tas8.webp",
+        "alt": "TAS friends"
+      },
+      {
+        "src": "/images/Photos/tas9.webp",
+        "alt": "TAS fun"
+      },
+      {
+        "src": "/images/Photos/tas10.webp",
+        "alt": "TAS memories"
+      },
+      {
+        "src": "/images/Photos/tas11.webp",
+        "alt": "TAS moments"
+      }
+    ]
+  },
+  "cardCarousel": [
+    "/images/Cards/1.webp",
+    "/images/Cards/2.webp",
+    "/images/Cards/3.webp",
+    "/images/Cards/4.webp",
+    "/images/Cards/5.webp",
+    "/images/Cards/6.webp",
+    "/images/Cards/7.webp",
+    "/images/Cards/8.webp",
+    "/images/Cards/9.webp",
+    "/images/Cards/10.webp",
+    "/images/Cards/11.webp",
+    "/images/Cards/12.webp",
+    "/images/Cards/13.webp",
+    "/images/Cards/14.webp",
+    "/images/Cards/15.webp",
+    "/images/Cards/16.webp",
+    "/images/Cards/17.webp",
+    "/images/Cards/18.webp",
+    "/images/Cards/19.webp",
+    "/images/Cards/20.webp",
+    "/images/Cards/21.webp",
+    "/images/Cards/22.webp",
+    "/images/Cards/23.webp",
+    "/images/Cards/24.webp",
+    "/images/Cards/25.webp",
+    "/images/Cards/26.webp",
+    "/images/Cards/27.webp",
+    "/images/Cards/28.webp",
+    "/images/Cards/29.webp",
+    "/images/Cards/30.webp",
+    "/images/Cards/31.webp"
+  ]
+}
