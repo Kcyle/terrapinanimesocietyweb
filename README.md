@@ -198,7 +198,7 @@ https://itsupport.umd.edu/itsupport/?id=kb_article_view&sysparm_article=KB001506
 
 A university hostname given to a student organization is normally sponsored by a department or a faculty advisor rather than by a student directly. The anime club's faculty advisor will most likely have to submit the request, or at least approve it, before the Division of IT will act on it. In my experience it took about a week or so to get a decision back followed by an approval or denial with a reason.
 
-## Adding a backend later
+## Adding a backend
 
 The site is static at the moment, which is why it is free and needs no "real" maintenance. If a future eboard member needs more functionality such as ticket sales, RSVPs, or a signup form, it can be added.
 
