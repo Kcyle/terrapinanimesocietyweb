@@ -1,10 +1,10 @@
 # Editing Guide
 
-This guide covers every content file on the site and explains exactly what each field does. The main `README.md` covers the basics of making a change, finding text, and publishing. Read that first if you haven't.
+This guide covers every content file on the site and explains what each field does. The main README covers the basics of making a change, finding text, and publishing, so read that first if you have not.
 
 Every file described here lives in `src/data/` and is plain text. You do not need to write any code to change what the website says.
 
-## A reminder before you start
+## Before you start
 
 The content files use JSON, which is strict about punctuation. Text goes inside double quotes, items in a list are separated by commas, and the last item in a list has no comma after it. The safest way to add anything new is to copy an existing block, paste it below, and change the values inside it.
 
@@ -12,9 +12,7 @@ If a build fails after you edit, check the file you just changed. It is nearly a
 
 ## The screening schedule
 
-**File:** `src/data/screenings.json`
-
-This single file controls the anime lineup shown on both the home page and the meetings page, along with the meeting details.
+This lives in `src/data/screenings.json`, and it is the single file that controls the anime lineup on both the home page and the meetings page, along with the meeting details.
 
 Each show is one block:
 
@@ -29,16 +27,16 @@ Each show is one block:
 }
 ```
 
-Every value comes from the show's page on **MyAnimeList**.
+Every value comes from the show's page on MyAnimeList.
 
-| Field      | Where it comes from                                                    |
-| ---------- | ---------------------------------------------------------------------- |
-| `malId`    | The number in the MyAnimeList address bar for that show                |
-| `title`    | The show's title as you want it displayed                              |
-| `synopsis` | The description shown on the card                                      |
-| `image`    | Right click the poster on MyAnimeList and choose **Copy Image Address** |
-| `episodes` | Episode count                                                          |
-| `score`    | The rating shown on MyAnimeList                                        |
+| Field      | Where it comes from                                                |
+| ---------- | ------------------------------------------------------------------ |
+| `malId`    | The number in the MyAnimeList address bar for that show            |
+| `title`    | The show's title, written how you want it displayed                |
+| `synopsis` | The description shown on the card                                  |
+| `image`    | Right click the poster on MyAnimeList and choose Copy Image Address |
+| `episodes` | Episode count                                                      |
+| `score`    | The rating shown on MyAnimeList                                    |
 
 To add a show, copy an existing block, paste it inside the `"screenings": [ ... ]` list, and change the values. To remove a show, delete its block along with the comma that follows it.
 
@@ -53,13 +51,11 @@ At the bottom of the same file are the meeting details:
 }
 ```
 
-`startDate` is the date of the first screening of the semester, written as year, month, day. The site counts forward from this date to work out when each show plays, so update it at the start of every semester. `meetingTime` appears on the site exactly as you type it. `buildingCode` must match a building listed in `buildings.json`.
+`startDate` is the date of the first screening of the semester, written as year, month, day. The site counts forward from that date to work out when each show plays, so it needs updating at the start of every semester. `meetingTime` appears on the site exactly as you type it. `buildingCode` has to match a building listed in `buildings.json`.
 
 ## Moving meetings to a different building
 
-**File:** `src/data/buildings.json`
-
-The meetings page shows a campus map with a pin on the meeting location. The pin comes from this list. If you enter a `buildingCode` in `screenings.json` that does not appear here, the map will not find it, so add the building first:
+This lives in `src/data/buildings.json`. The meetings page shows a campus map with a pin on the meeting location, and the pin comes from this list. If you enter a `buildingCode` in `screenings.json` that does not appear here, the map cannot find it, so add the building first:
 
 ```json
 {
@@ -71,13 +67,11 @@ The meetings page shows a campus map with a pin on the meeting location. The pin
 }
 ```
 
-`code` is the short code you reference from `screenings.json`. `shortName` is what appears on the site. To find `lat` and `lng`, locate the building on Google Maps, right click it, and copy the two numbers it displays.
+`code` is the short code you reference from `screenings.json`, and `shortName` is what appears on the site. To find `lat` and `lng`, locate the building on Google Maps, right click it, and copy the two numbers it shows you.
 
 ## Subgroups
 
-**File:** `src/data/subgroups.json`
-
-Each subgroup has a leader, a meeting time, and a description. These change most often when club leadership turns over.
+These live in `src/data/subgroups.json`. Each subgroup has a leader, a meeting time, and a description, and these change most often when club leadership turns over.
 
 ```json
 {
@@ -92,17 +86,15 @@ Each subgroup has a leader, a meeting time, and a description. These change most
 }
 ```
 
-You can change `name`, `tagline`, `meets`, `leader`, `description`, and the images freely.
+You can change the name, tagline, meeting time, leader, description, and images freely.
 
-**Leave `id` alone.** Each subgroup's colors and layout are tied to its `id`, so changing it will break the styling for that section.
+Leave `id` alone. Each subgroup's colors and layout are tied to its `id`, so changing it will break the styling for that section.
 
-If you set `meets` to an empty value of `""`, the meeting time line simply disappears from the site rather than showing a blank label.
+If you set `meets` to an empty value of `""`, the meeting time line disappears from the site rather than showing a blank label.
 
 ## Activities
 
-**File:** `src/data/activities.json`
-
-This holds the Activities heading, the paragraph beneath it, and every activity card.
+These live in `src/data/activities.json`, which holds the Activities heading, the paragraph underneath it, and every activity card.
 
 ```json
 {
@@ -113,13 +105,11 @@ This holds the Activities heading, the paragraph beneath it, and every activity 
 }
 ```
 
-`feature` is the small label that appears above the description. It is optional, so if a card doesn't need one, leave the line out entirely. As with subgroups, leave `id` alone, because each card's appearance is tied to it.
+`feature` is the small label that appears above the description. It is optional, so if a card does not need one, leave the line out entirely. As with subgroups, leave `id` alone, because each card's appearance is tied to it.
 
 ## KameCon and TerpCon
 
-**Files:** `src/data/kamecon.json` and `src/data/terpcon.json`
-
-The event details sit at the top of each file, so the date, time, location, description, and links are all in one place. Below them is the vendor list, where each vendor is one block:
+These live in `src/data/kamecon.json` and `src/data/terpcon.json`. The event details sit at the top of each file, so the date, time, location, description, and links are all in one place. Below them is the vendor list, where each vendor is one block:
 
 ```json
 {
@@ -130,46 +120,38 @@ The event details sit at the top of each file, so the date, time, location, desc
 }
 ```
 
-`social` is the address the link points to. `socialDisplay` is the text visitors actually see. If a vendor has no website, leave both of those lines out and provide only a `name` and a `description`.
+`social` is the address the link points to, and `socialDisplay` is the text visitors actually see. If a vendor has no website, leave both of those lines out and give only a name and a description.
 
-`terpcon.json` also contains a `featuredArtists` list, which powers the artwork gallery. Each entry pairs an artist with a piece of their artwork and a small avatar image.
+`terpcon.json` also has a `featuredArtists` list, which fills the artwork gallery. Each entry pairs an artist with a piece of their artwork and a small avatar image.
 
-Updating these files each year is usually the largest single job on the site, so expect the vendor list to be long.
+Updating these two files each year is usually the largest single job on the site, so expect the vendor lists to be long.
 
 ## The home page
 
-**File:** `src/data/home.json`
+This lives in `src/data/home.json`, which contains the large heading, the club description below it, the buttons, the whole About section, the photo gallery, and the list of images in the rotating card carousel.
 
-This contains the large heading, the club description below it, the buttons, the entire About section, the photo gallery, and the list of images in the rotating card carousel.
-
-One field behaves differently from the rest. `descriptionHtml` contains a link to the Discord written in HTML. You can safely rewrite the words around it, but leave the sections beginning with `<a` and `<span` untouched, because they create the link and the highlighted channel name.
+One field behaves differently from the rest. `descriptionHtml` contains a link to the Discord written in HTML. You can rewrite the words around it safely, but leave the parts beginning with `<a` and `<span` untouched, because they create the link and the highlighted channel name.
 
 ## Club wide details
 
-**File:** `src/data/site.json`
-
-The club name, the Discord invite, the Join Us link, and the text in the footer are all here. If the Discord invite ever expires or the club changes its TerpLink page, this is the only file you need to update.
+These live in `src/data/site.json`. The club name, the Discord invite, the Join Us link, and the text in the footer are all here. If the Discord invite expires or the club changes its TerpLink page, this is the only file you need to update.
 
 ## Images
 
-**Folder:** `public/images/`
+Images live in `public/images/`, sorted into folders by purpose: Backgrounds, Photos, Cards, Characters, Vendors, Artwork, and Icons.
 
-Images are sorted into folders by purpose: `Backgrounds`, `Photos`, `Cards`, `Characters`, `Vendors`, `Artwork`, and `Icons`.
+To use a new image, put the file into the folder that fits, then reference it in the JSON without the word `public` in the path. An image saved at `public/images/Photos/newphoto.webp` is written as `/images/Photos/newphoto.webp`.
 
-To use a new image, place the file into the folder that fits, then reference it in the JSON **without the word `public`** in the path. An image saved at `public/images/Photos/newphoto.webp` is written as `/images/Photos/newphoto.webp`.
-
-Save images as `.webp` whenever possible. They look identical to a JPG or PNG but are considerably smaller, which keeps the site fast on phones.
+Save images as `.webp` when you can. They look the same as a JPG or PNG but are considerably smaller, which keeps the site fast on phones.
 
 ## Colors and fonts
 
-**File:** `src/styles/global.css`
+These live in `src/styles/global.css`. The colors, fonts, and spacing used across the site are defined once as variables at the top of the file, on the lines beginning with `--`. Changing a value there updates it everywhere, so you never need to find and replace the same color in several files.
 
-The colors, fonts, and spacing used across the site are defined once as variables at the top of this file, on the lines beginning with `--`. Changing a value there updates it everywhere, so you never need to find and replace the same color in several files.
+## Finding things quickly
 
-## Finding anything quickly
-
-Rather than guessing which file holds a piece of text, search for the text itself. Press **/** on GitHub or **Ctrl + Shift + F** in VS Code, then paste in a sentence exactly as it appears on the live site. The results will take you directly to the file and line that produces it.
+Rather than guessing which file holds a piece of text, search for the text itself. Press `/` on GitHub, or Ctrl and Shift and F in VS Code, then paste in a sentence exactly as it appears on the live site. The results take you straight to the file and line that produces it.
 
 ## Before you publish
 
-If you're working on your own computer, run `npm run build` before pushing. A successful build means the site is safe to publish. A failure almost always points back to punctuation in the last JSON file you touched.
+If you are working on your own computer, run `npm run build` before pushing. A successful build means the site is safe to publish. A failure almost always points back to punctuation in the last JSON file you touched.
