@@ -1,32 +1,24 @@
 # Editing Guide
 
-Plain-English instructions for updating the site's content. **You do not need to be a programmer to use this guide** - most updates are typing into a text file.
+Everything in here can be done by someone who has never written a line of code. If you can edit a Google Doc, you can do all of this. Most of it is just typing into a text file and hitting save.
 
-## Two ways to make an edit
+## Two ways to make a change
 
-**Option A - Edit directly on GitHub (easiest for small text or data changes)**
+**From your browser, which is what you'll do most of the time.**
 
-1. Open the repository on [github.com](https://github.com/Kcyle/terrapinanimesocietyweb).
-2. Click into the file you want to change (paths are given below).
-3. Click the edit (pencil) icon in the top-right of the file.
-4. Make your change, then click **Commit changes** at the top.
-5. The site rebuilds and goes live in about 1-2 minutes.
+Open the repo on github.com, click into the file you want, click the little pencil icon in the top right, make your change, then hit "Commit changes" at the top. Give it a minute or two and it's live on tas.umd.edu. You don't have to install anything.
 
-**Option B - Edit on your computer (better for bigger changes)**
+**From your computer, which is better for anything bigger.**
 
-Run `npm install` once, then `npm run dev`, and preview at `http://localhost:4321` while you edit. When you're happy, commit and push to `main`.
+Run `npm install` once, then `npm run dev`, and you get a live preview at `http://localhost:4321` that updates as you type. When you're happy with it, commit and push to `main`.
 
-> **Tip - finding anything fast:** In VS Code press `Ctrl+Shift+F` (or on GitHub, press `/`) and type the exact words you see on the live site. That search takes you straight to the file and line that produces it. This is the fastest way to locate any piece of text.
+**The trick that saves you the most time:** press `/` on GitHub, or `Ctrl+Shift+F` in VS Code, then paste in the exact sentence you can see on the live site. It takes you straight to the file and the line that produces it. Use this instead of digging through folders.
 
----
-
-## The screening schedule (`/meetings` and the home page)
+## Changing the screening schedule
 
 **File:** [`src/data/screenings.json`](../src/data/screenings.json)
 
-This one file controls the anime lineup shown on the home page and the meetings page, plus the meeting time and location.
-
-Each anime is one block like this:
+This one file controls the anime lineup on both the home page and the meetings page, plus the meeting time and where it's held. Each show is a block that looks like this:
 
 ```json
 {
@@ -39,13 +31,11 @@ Each anime is one block like this:
 }
 ```
 
-- `malId` - the anime's ID on [MyAnimeList](https://myanimelist.net). Open the anime's MAL page and copy the number from its URL (`myanimelist.net/anime/44511/...`).
-- `title`, `synopsis`, `episodes`, `score` - shown on the card. Copy these from the MAL page.
-- `image` - the poster image URL. Right-click the poster on MAL and choose "Copy Image Address".
+All of that comes straight off the show's [MyAnimeList](https://myanimelist.net) page. The `malId` is the number sitting in the MAL URL (`myanimelist.net/anime/44511/...`). For `image`, right click the poster on MAL and choose "Copy Image Address". The rest you can read off the page.
 
-**To add an anime:** copy an existing block, paste it inside the `"screenings": [ ... ]` list, and change the values. Put a comma between blocks. **To remove one:** delete its block (and the comma).
+To add a show, copy an existing block, paste it inside the `"screenings": [ ... ]` list, and change the values. Make sure there's a comma between blocks. To drop a show, delete its block and its comma.
 
-At the **bottom** of the same file are the meeting details:
+Scroll to the **bottom** of the same file and you'll find the meeting details:
 
 ```json
 "startDate": "2025-02-08",
@@ -56,20 +46,13 @@ At the **bottom** of the same file are the meeting details:
 }
 ```
 
-- `startDate` - the date the first screening starts (format `YYYY-MM-DD`).
-- `meetingTime` - shown as-is, e.g. `"5-7 PM"`.
-- `location.buildingCode` - a UMD building code (see next section).
-- `location.roomNumber` - the room, e.g. `"0200"`.
+`startDate` is when the first screening of the semester happens, written as year, month, day. `meetingTime` shows up on the site exactly as you type it. `buildingCode` has to match a building in the file described next, and `roomNumber` is just the room.
 
----
-
-## The meeting location on the map
-
-The meetings page shows the location on a UMD map. Building codes and their map pins come from:
+## Moving the meeting to a different building
 
 **File:** [`src/data/umd-buildings.json`](../src/data/umd-buildings.json)
 
-If you set a `buildingCode` in `screenings.json` that isn't listed here, add it:
+The meetings page shows a little campus map with a pin on it. The pin location comes from this file. If you put a `buildingCode` in `screenings.json` that isn't listed in here, the map won't know where to go, so add the building first:
 
 ```json
 {
@@ -81,67 +64,46 @@ If you set a `buildingCode` in `screenings.json` that isn't listed here, add it:
 }
 ```
 
-Get the `lat`/`lng` by finding the building on [Google Maps](https://maps.google.com), right-clicking it, and copying the two numbers.
+To get `lat` and `lng`, find the building on [Google Maps](https://maps.google.com), right click it, and copy the two numbers it gives you.
 
----
+## Changing the words on a page
 
-## Text on a page
+Every page is one file inside [`src/pages/`](../src/pages), and the text you see on the site is written right there in plain English. Open the file that matches the page and type over it.
 
-Each page is a single file in [`src/pages/`](../src/pages). Open the one that matches the URL and edit the text between the tags. The text you see on the site is written right there in plain English.
+The home page is a little different. `src/pages/index.astro` is mostly a shell, and the actual words (the big heading, the club description, the buttons, the About blurb) live in [`src/components/HeroContent.astro`](../src/components/HeroContent.astro). If you're hunting for home page text, look there.
 
-| Page on the site   | File to edit                                             |
-| :----------------- | :------------------------------------------------------ |
-| Home               | [`src/pages/index.astro`](../src/pages/index.astro) and [`src/components/HeroContent.astro`](../src/components/HeroContent.astro) |
-| About              | [`src/pages/about.astro`](../src/pages/about.astro)     |
-| Meetings           | [`src/pages/meetings.astro`](../src/pages/meetings.astro) |
-| KameCon            | [`src/pages/kamecon.astro`](../src/pages/kamecon.astro) |
-| TerpCon            | [`src/pages/terpcon.astro`](../src/pages/terpcon.astro) |
+The rest are straightforward: `about.astro`, `meetings.astro`, `kamecon.astro`, `terpcon.astro`.
 
-Remember the search tip: type the exact sentence you want to change into `Ctrl+Shift+F` and it will jump you to the right spot.
+Honestly though, don't bother remembering which file is which. Just use the search trick at the top of this page.
 
-The list of vendors for KameCon is a list near the top of [`src/pages/kamecon.astro`](../src/pages/kamecon.astro) - copy an existing `{ name: ..., social: ..., description: ... }` line to add a vendor.
+## KameCon vendors
 
----
+The vendor list is near the top of [`src/pages/kamecon.astro`](../src/pages/kamecon.astro). It's a plain list, one line per vendor. Copy an existing line and change the name, the link, and the description to add a new one.
 
-## Club links (Discord, TerpLink, etc.)
+## Discord and club links
 
-- **Main Discord invite** appears in [`src/components/navigation/DiscordLink.astro`](../src/components/navigation/DiscordLink.astro) and [`src/components/HeroContent.astro`](../src/components/HeroContent.astro) - search for `discord.gg`.
-- **TerpLink "Join Us" link** - search for `terplink.umd.edu`.
-- **Partner clubs** shown on the home page - [`src/components/PartnersSection.astro`](../src/components/PartnersSection.astro).
+The Discord invite shows up in a couple of places, so search for `discord.gg` and you'll find them all. Same idea for the "Join Us" button, search for `terplink.umd.edu`. The partner club logos on the home page are in [`src/components/PartnersSection.astro`](../src/components/PartnersSection.astro).
 
----
+## Photos and images
 
-## Images and photos
+Everything lives in [`public/images/`](../public/images), sorted into folders by what it's for: `Backgrounds`, `Photos`, `Cards` (the carousel on the home page), `Characters`, `Vendors`, `Artwork`, and `Icons`.
 
-**Folder:** [`public/images/`](../public/images) - organized by purpose:
+To add one, drop the file into whichever folder fits, then point at it in the code **without** the word "public" in the path. A file saved at `public/images/Photos/newphoto.webp` gets written in the code as `/images/Photos/newphoto.webp`. That trips up everybody the first time.
 
-| Folder         | Used for                                  |
-| :------------- | :---------------------------------------- |
-| `Backgrounds/` | Large background images behind sections   |
-| `Photos/`      | Event and cosplay photos                  |
-| `Cards/`       | Home-page card carousel images            |
-| `Characters/`  | Character artwork                         |
-| `Vendors/`     | KameCon vendor logos                      |
-| `Artwork/` and `Icons/` | Misc artwork and small icons     |
-
-**To add an image:** drop the file into the matching folder, then reference it in code by its path **without** the word `public`. A file at `public/images/Photos/newphoto.webp` is written as `/images/Photos/newphoto.webp`.
-
-**Tip:** use `.webp` images where possible - they look the same but load much faster, which keeps the site quick.
-
----
+Save your images as `.webp` if you can. They look identical and they're a fraction of the size, which keeps the site from feeling sluggish on phones.
 
 ## Colors and fonts
 
-**File:** [`src/styles/global.css`](../src/styles/global.css) - site-wide colors, fonts, and spacing live at the top as CSS variables (lines starting with `--`). Change a value there and it updates everywhere it's used.
+**File:** [`src/styles/global.css`](../src/styles/global.css)
 
----
+The site's colors, fonts, and spacing are all defined as variables at the very top of this file (the lines that start with `--`). Change one there and it updates everywhere that uses it, so you're not hunting down the same color in twelve places.
 
-## Before you publish
+## One thing to do before you publish
 
-If you edited on your computer, run this once to make sure nothing is broken:
+If you edited on your computer rather than in the browser, run this first:
 
 ```sh
 npm run build
 ```
 
-If it finishes without errors, you're safe to commit and push. If it reports an error, it usually means a missing comma or quotation mark in a `.json` file - double-check your last edit.
+If it finishes without complaining, you're good to push. If it throws an error, don't panic, it's almost always a missing comma or a missing quote mark in a `.json` file. Go look at whatever you edited last.

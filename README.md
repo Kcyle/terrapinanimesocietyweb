@@ -1,93 +1,81 @@
-# Terrapin Anime Society - Website
+# Terrapin Anime Society Website
 
-The official website for the **Terrapin Anime Society (TAS)** at the University of Maryland, live at **[tas.umd.edu](https://tas.umd.edu)**.
+This is the code behind [tas.umd.edu](https://tas.umd.edu). If you just took over the club, this page should tell you everything you need to keep the site running.
 
-It covers the club's weekly screenings and events (KameCon, TerpCon). It is a fully static site with no backend, database, or login required.
+The good news up front: there is no server to babysit, no database, no logins, and nothing to pay for. It's a plain static website. You change a file, push it to GitHub, and about a minute later the live site updates itself.
 
-- **Framework:** [Astro](https://astro.build)
-- **Language:** TypeScript + `.astro` components
-- **Animation:** [GSAP](https://gsap.com)
-- **Hosting:** GitHub Pages, auto-deployed on every push to `main`
+## If you only want to change what's on the site
 
----
+You probably don't need to touch code at all. The things people actually ask you to update (which anime are screening, the meeting time, the room, photos, the text on a page) all live in a few obvious files. Open [docs/EDITING-GUIDE.md](docs/EDITING-GUIDE.md) and follow it. Most of it you can do straight from github.com in your browser without installing a single thing.
 
-## New here? Start with this
+The one trick worth learning: press `/` on GitHub, or `Ctrl+Shift+F` in VS Code, and paste in the exact sentence you see on the live site. It jumps you straight to the file that produces it. That works for basically any text anywhere on the site, and it will save you more time than anything else in this README.
 
-To change what's on the site (screenings, text, photos), you don't need to touch the code. Read the **[Editing Guide](docs/EDITING-GUIDE.md)** first.
+## Running it on your own computer
 
----
-
-## Quick start
-
-You need [Node.js](https://nodejs.org) 20 or newer.
+Install Node.js 20 or newer from [nodejs.org](https://nodejs.org), then:
 
 ```sh
-npm install      # install dependencies (first time only)
-npm run dev      # start the site locally at http://localhost:4321
+npm install
+npm run dev
 ```
 
-Edit any file and the browser refreshes automatically. Press `Ctrl+C` in the terminal to stop.
+That gives you a live preview at `http://localhost:4321` that refreshes as you type. `Ctrl+C` stops it.
 
-| Command           | What it does                             |
-| :---------------- | :--------------------------------------- |
-| `npm run dev`     | Live preview at `localhost:4321`         |
-| `npm run build`   | Build the production site into `dist/`   |
-| `npm run preview` | Preview the built site before deploying  |
+Before you push anything, run `npm run build`. If it finishes clean, you're fine. If it fails, nine times out of ten it's a missing comma or a missing quote mark in one of the `.json` files you just edited.
 
-No environment variables or accounts are needed to run or build the site.
-
----
-
-## Project map
-
-Everything the club actually edits lives in **`src/data/`** and **`public/images/`**.
+## Where everything lives
 
 ```text
-terrapinanimesocietyweb/
-├── public/
-│   ├── CNAME                     Custom domain (tas.umd.edu)
-│   └── images/                   All images, grouped by purpose
-│       ├── Artwork/  Backgrounds/  Cards/  Characters/
-│       └── Icons/    Photos/       Vendors/
-├── src/
-│   ├── pages/                    Each file is one page (its filename = its URL)
-│   │   ├── index.astro           Home            -> /
-│   │   ├── about.astro           About the club  -> /about
-│   │   ├── meetings.astro        Meetings + map  -> /meetings
-│   │   ├── kamecon.astro         KameCon event   -> /kamecon
-│   │   └── terpcon.astro         TerpCon event   -> /terpcon
-│   ├── sections/HeroSection.astro  The home-page hero wrapper
-│   ├── components/               Reusable pieces (header, footer, carousel, icons)
-│   ├── layouts/BaseLayout.astro  Shared page shell (head, fonts, meta tags)
-│   ├── data/                     <- Editable content (see the Editing Guide)
-│   │   ├── screenings.json       Screening lineup + meeting time & location
-│   │   └── umd-buildings.json    UMD building codes -> names + map coordinates
-│   ├── utils/                    Small helpers (DOM, anime API)
-│   ├── animations/               GSAP scroll / hero / menu animations
-│   └── styles/global.css         Global styles and color variables
-├── astro.config.mjs              Build config (site URL, base path)
-└── .github/workflows/deploy.yml  Auto-deploy to GitHub Pages on push to main
+public/
+  CNAME               The custom domain. Leave this alone or tas.umd.edu breaks.
+  images/             Every image on the site, sorted into folders.
+
+src/
+  pages/              One file per page. The filename becomes the URL.
+    index.astro         the home page
+    about.astro         /about
+    meetings.astro      /meetings
+    kamecon.astro       /kamecon
+    terpcon.astro       /terpcon
+  data/               The two files you'll actually open. See below.
+  components/         Reusable pieces: header, footer, card carousel, icons.
+  sections/           The home page hero wrapper.
+  layouts/            BaseLayout.astro, the shared HTML shell every page uses.
+  animations/         The GSAP scroll and menu animations.
+  styles/global.css   Colors, fonts, spacing. All variables at the top.
+  utils/              Small helpers.
 ```
 
-**How Astro routing works:** any `.astro` file in `src/pages/` automatically becomes a page. `src/pages/about.astro` is served at `/about`. There is no separate router to configure.
+The two files you'll open constantly:
 
----
+`src/data/screenings.json` holds the anime lineup, and at the bottom of that same file, the meeting time, the start date, and the room number. Changing the semester's schedule is really just editing this one file.
 
-## How deployment works
+`src/data/umd-buildings.json` is the list of campus buildings with their map coordinates. The meetings page uses it to drop the pin on the map. If you move the meeting to a building that isn't in this list, add it here or the map won't find it.
 
-1. You push a change to the `main` branch on GitHub.
-2. The workflow in `.github/workflows/deploy.yml` builds the site and publishes it to GitHub Pages.
-3. A minute or two later, the change is live at [tas.umd.edu](https://tas.umd.edu).
+For images, drop the file into the right folder under `public/images`, then refer to it in the code without the word "public". So `public/images/Photos/newphoto.webp` gets written as `/images/Photos/newphoto.webp`. Save things as `.webp` when you can, they look the same and load much faster.
 
-You do not need to build or upload anything by hand, and there are no secrets to configure. The custom domain comes from [`public/CNAME`](public/CNAME).
+## How it goes live
 
----
+Push to the `main` branch. That's the whole process. A GitHub Action builds the site and publishes it to GitHub Pages, and tas.umd.edu picks it up a minute or two later. You can watch it happen in the Actions tab.
 
-## Handing off to the next owner
+If a deploy ever goes red, click into the failed run and read the step that broke. It's almost always a typo in whatever file was edited last.
 
-When passing the club (and this site) to the next person:
+## Things that are already broken, so you don't go hunting
 
-1. **Add them to the repo** (Settings -> Collaborators), or transfer the repo to them or to a club-owned GitHub organization.
-2. **Confirm the domain:** in Settings -> Pages, make sure the custom domain `tas.umd.edu` is still set, and that whoever manages the `umd.edu` DNS knows the new contact.
-3. **Update contact details** on the site if they change (see the [Editing Guide](docs/EDITING-GUIDE.md)).
-4. **Do a test deploy:** make a small edit, push to `main`, and confirm it goes live. That proves the whole pipeline works for the new owner.
+Being straight with you about what you're inheriting:
+
+The nav menu and the home page both link to `/subgroups` and `/contact`, but neither page was ever built, so those links go nowhere. Either build the two pages or pull the links out. They're in `src/components/navigation/NavigationMenu.astro` and `src/components/HeroContent.astro`.
+
+`src/layouts/BaseLayout.astro` asks for `/favicon.svg`, but there's no favicon in `public/`, so the site has no icon in the browser tab. Drop a `favicon.svg` into `public/` and it will just start working.
+
+There's an `/about` page that still exists, but nothing links to it anymore, because the "About" item in the nav points at a section on the home page instead. Keep it or delete it, your call.
+
+## Passing it on
+
+When your term ends, the cleanest move is to put this repo inside a GitHub organization owned by the club, one time. After that you never transfer anything again, you just add the next president as an owner and remove yourself. If you'd rather keep it simple, go to Settings, scroll to the bottom, and transfer the repo straight to their account.
+
+Whichever way you go, do these three things before you hand over the keys:
+
+1. Check that Settings then Pages still has `tas.umd.edu` set as the custom domain.
+2. Make sure whoever manages the `umd.edu` DNS knows who the new contact is.
+3. Sit with the new person while they make one tiny edit and push it, so they've watched the whole thing go live once with their own eyes. That single run through is worth more than this entire README.
