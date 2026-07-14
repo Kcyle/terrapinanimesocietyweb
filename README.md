@@ -176,7 +176,7 @@ The `/about` page still exists, but nothing links to it, because the About item 
 
 The domain is the one part of this project the club does not control on its own, so it is worth reading this section before you need it.
 
-The DNS record that points tas.umd.edu at GitHub lives on university systems, not in this repository. Nothing you change here can fix it. At the moment that record is a CNAME aimed at `kcyle.github.io`. GitHub then compares the incoming domain against the `public/CNAME` file in this repository, which contains the single line `tas.umd.edu`, and serves the site. Both halves have to agree or the domain stops working.
+The DNS record that points tas.umd.edu at GitHub is on university systems, not in this repository. Nothing you change here can fix it. At the moment that record is a CNAME routed to `kcyle.github.io`. GitHub then compares the incoming domain against the `public/CNAME` file in this repository, which contains the single line `tas.umd.edu`, and serves the site.
 
 That gives you a simple way to tell the two apart. If GitHub Actions is deploying successfully but tas.umd.edu will not load, the problem is almost certainly the university's DNS configuration rather than the website. You can confirm the GitHub side under Settings, then Pages, where the custom domain should appear with a green check and Enforce HTTPS turned on. You can check the university side by running:
 
