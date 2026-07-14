@@ -40,7 +40,7 @@ On GitHub, open the repository, press the `/` key, and type a sentence from the 
 
 For example, if you want to change the meeting time on the home page, search for the time exactly as it appears on the site. The results will point you to the file and the line that produces it. This works for almost any text, link, or image on the website, and it is much faster than opening files one at a time.
 
-## Editing JSON without breaking the site
+## Editing JSON
 
 The content files use a format called JSON. It is only text, but it is strict about punctuation, and most failed builds comes down to one of three things.
 
