@@ -1,12 +1,13 @@
 ---
 import '../styles/global.css';
+import site from '../data/site.json';
 
 interface Props {
   title: string;
   description?: string;
 }
 
-const { title, description = 'Terrapin Anime Society - University of Maryland' } = Astro.props;
+const { title, description = site.metaDescription } = Astro.props;
 ---
 
 <!doctype html>

@@ -1,12 +1,13 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import site from '../data/site.json';
 import Header from '../components/navigation/Header.astro';
 import kamecon from '../data/kamecon.json';
 
 const { vendors } = kamecon;
 ---
 
-<BaseLayout title="KAMECON 2025 - Terrapin Anime Society">
+<BaseLayout title={site.pageTitles.kamecon}>
   <Header />
 
   <main class="kamecon-page">

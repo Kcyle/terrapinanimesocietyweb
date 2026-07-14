@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import site from '../data/site.json';
 import Header from '../components/navigation/Header.astro';
 import terpcon from '../data/terpcon.json';
 
@@ -7,7 +8,7 @@ const { vendors, featuredArtists } = terpcon;
 const defaultImage = terpcon.fallbackImage;
 ---
 
-<BaseLayout title="TERPCON 2026 - Terrapin Anime Society">
+<BaseLayout title={site.pageTitles.terpcon}>
   <Header />
 
   <main class="comic-page">

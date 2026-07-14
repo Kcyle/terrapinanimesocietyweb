@@ -16,17 +16,19 @@ The second is to edit on your own computer, which is better for larger changes b
 
 Most of the website's content is stored as JSON files in `src/data/`. In most cases you can update text, links, images, and other information without modifying any of the site's code.
 
-| File                       | Purpose                                                      |
-| -------------------------- | ------------------------------------------------------------ |
-| `src/data/site.json`       | Club name, Discord invite, Join Us link, and footer          |
-| `src/data/home.json`       | Home page heading, About section, gallery, and card carousel |
-| `src/data/screenings.json` | Anime schedule, meeting time, start date, and room           |
-| `src/data/buildings.json`  | Campus buildings and map coordinates                         |
-| `src/data/subgroups.json`  | Subgroup leaders, meeting times, and descriptions            |
-| `src/data/activities.json` | Activities section and activity cards                        |
-| `src/data/partners.json`   | Partner logos and Sony screening showcase                     |
-| `src/data/kamecon.json`    | KameCon description, links, photos, and vendors              |
-| `src/data/terpcon.json`    | TerpCon date, time, location, vendors, and featured artists  |
+| File                       | Purpose                                                            |
+| -------------------------- | ------------------------------------------------------------------ |
+| `src/data/site.json`       | Discord invite, Join Us link, navigation menu, page titles, footer |
+| `src/data/home.json`       | Home page heading, About section, gallery, and card carousel       |
+| `src/data/about.json`      | The `/about` page                                                  |
+| `src/data/screenings.json` | Anime schedule, start date, and the meeting location               |
+| `src/data/subgroups.json`  | Subgroup leaders, meeting times, and descriptions                  |
+| `src/data/activities.json` | Activities section and activity cards                              |
+| `src/data/partners.json`   | Partner logos and Sony screening showcase                          |
+| `src/data/kamecon.json`    | KameCon description, links, photos, and vendors                    |
+| `src/data/terpcon.json`    | TerpCon date, time, location, vendors, and featured artists        |
+
+Every field in every one of these files is used by the site. If you change a value there, it changes on the website. Nothing in `src/data/` is decorative.
 
 For instructions on each of these files, see `docs/EDITING.md`. If you are only updating website content, that guide is all you need.
 

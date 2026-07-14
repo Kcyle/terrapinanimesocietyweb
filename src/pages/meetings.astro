@@ -1,11 +1,12 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import site from '../data/site.json';
 import Header from '../components/navigation/Header.astro';
 import Footer from '../components/Footer.astro';
 import NowScreening from '../components/NowScreening.astro';
 ---
 
-<BaseLayout title="Meetings | Terrapin Anime Society">
+<BaseLayout title={site.pageTitles.meetings}>
   <Header />
 
   <main>
@@ -19,62 +20,13 @@ import NowScreening from '../components/NowScreening.astro';
   import '../animations/index';
   import { initScreeningAnimations } from '../animations/screening';
 
-  let map: any = null;
-
-  function initMap() {
-    const mapContainer = document.getElementById('screeningMap');
-    if (!mapContainer) return;
-
-    const checkLeaflet = setInterval(() => {
-
-      if (window.L) {
-        clearInterval(checkLeaflet);
-        initializeMap(mapContainer);
-      }
-    }, 50);
-
-    setTimeout(() => clearInterval(checkLeaflet), 5000);
-  }
-
-  function initializeMap(container: HTMLElement) {
-
-    const L = window.L;
-
-    if (map) return;
-
-    const lat = parseFloat(container.dataset.lat || '38.9869');
-    const lng = parseFloat(container.dataset.lng || '-76.9426');
-    const name = container.dataset.name || 'UMD';
-
-    map = L.map('screeningMap', {
-      center: [lat, lng],
-      zoom: 17,
-      zoomControl: true,
-      scrollWheelZoom: false,
-    });
-
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '© OpenStreetMap',
-      maxZoom: 19,
-    }).addTo(map);
-
-    const marker = L.marker([lat, lng]).addTo(map);
-    marker.bindPopup(`<strong>${name}</strong>`).openPopup();
-
-    setTimeout(() => {
-      map.invalidateSize();
-    }, 100);
-  }
-
   if (typeof window !== 'undefined') {
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', () => {
         initScreeningAnimations();
-        initMap();
       });
     } else {
       initScreeningAnimations();
-      initMap();
     }
   }
 </script>

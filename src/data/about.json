@@ -1,0 +1,27 @@
+{
+  "heading": "About",
+  "description": "The Terrapin Anime Society is a welcoming community of anime enthusiasts at the University of Maryland. Whether you're a longtime fan or just getting started, you'll find a place here to share your passion for Japanese animation and culture.",
+  "sectionTitle": "Welcome to TAS",
+  "paragraphs": [
+    "Founded with the goal of bringing anime fans together, we host weekly meetings, movie nights, and special events throughout the year. Our club is open to all UMD students, regardless of experience level.",
+    "From casual watch parties to our annual KAMECON convention and Maid Cafe, there's always something exciting happening. Join us to make new friends, discover new anime, and be part of a vibrant community.",
+    "We meet every Sunday from 5-7 PM for screenings, discussions, and good times. Everyone is welcome!"
+  ],
+  "ctaLabel": "Join Us",
+  "collageImages": [
+    { "src": "/images/Backgrounds/tas1.webp", "alt": "TAS club meeting" },
+    { "src": "/images/Photos/tas2.webp", "alt": "TAS members" },
+    { "src": "/images/Photos/tas3.webp", "alt": "TAS event" },
+    { "src": "/images/Backgrounds/tas4.webp", "alt": "TAS gathering" },
+    { "src": "/images/Photos/tas5.webp", "alt": "TAS activity" },
+    { "src": "/images/Photos/tas6.webp", "alt": "TAS screening" }
+  ],
+  "galleryTitle": "Our Community",
+  "galleryImages": [
+    { "src": "/images/Photos/tas7.webp", "alt": "TAS community" },
+    { "src": "/images/Photos/tas8.webp", "alt": "TAS friends" },
+    { "src": "/images/Photos/tas9.webp", "alt": "TAS fun" },
+    { "src": "/images/Photos/tas10.webp", "alt": "TAS memories" },
+    { "src": "/images/Photos/tas11.webp", "alt": "TAS moments" }
+  ]
+}

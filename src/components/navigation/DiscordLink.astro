@@ -1,12 +1,13 @@
 ---
 import DiscordIcon from '../icons/DiscordIcon.astro';
 import ArrowIcon from '../icons/ArrowIcon.astro';
+import site from '../../data/site.json';
 
 interface Props {
   href?: string;
 }
 
-const { href = 'https://discord.gg/fzKBsnS' } = Astro.props;
+const { href = site.discordUrl } = Astro.props;
 ---
 
 <a

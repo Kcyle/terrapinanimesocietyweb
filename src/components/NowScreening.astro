@@ -1,13 +1,9 @@
 ---
 import screeningsData from '../data/screenings.json';
-import buildingsData from '../data/buildings.json';
 import { generateScreeningDates, formatScreeningDate } from '../utils/anime';
 
-const { screenings, startDate, meetingTime, location } = screeningsData;
+const { screenings, startDate, location } = screeningsData;
 const dates = generateScreeningDates(startDate, screenings.length);
-
-const building = buildingsData.buildings.find(b => b.code === location.buildingCode) || buildingsData.buildings[0];
-const locationDisplay = `${building.shortName} ${location.roomNumber}`;
 
 const schedule = screenings.map((screening, index) => ({
   ...screening,
@@ -33,12 +29,12 @@ const schedule = screenings.map((screening, index) => ({
   </div>
 
   <div class="meetings__main">
-    <h1 class="meetings__hero-title">Meetings</h1>
+    <h1 class="meetings__hero-title">{screeningsData.meetingsHeading}</h1>
 
     <div class="meetings__screenings-section">
       <div class="meetings__section-header">
-        <h2 class="meetings__section-title">This Week's Screening Options</h2>
-        <p class="meetings__section-subtitle">During each meeting, we will select a episode from two different anime series to watch</p>
+        <h2 class="meetings__section-title">{screeningsData.screeningsTitle}</h2>
+        <p class="meetings__section-subtitle">{screeningsData.screeningsSubtitle}</p>
       </div>
 
       <div class="meetings__viewer" data-anime-viewer>
@@ -113,19 +109,18 @@ const schedule = screenings.map((screening, index) => ({
           <img src="/images/Photos/sociology.webp" alt="Parren J Mitchell Art-Sociology Building" />
         </div>
         <div class="meetings__location-info">
-          <h3 class="meetings__location-name">PARREN J MITCHELL ART-SOCIOLOGY</h3>
-          <p class="meetings__location-address">3834 Campus Dr, College Park, MD 20740</p>
+          <h3 class="meetings__location-name">{location.building}</h3>
+          <p class="meetings__location-address">{location.address}</p>
           <div class="meetings__location-rooms">
-            <div class="meetings__location-room">
-              <span class="meetings__location-room-label">Regular Meetings</span>
-              <span class="meetings__location-room-value">Room 3207 (Classroom)</span>
-            </div>
-            <div class="meetings__location-room">
-              <span class="meetings__location-room-label">Special Events</span>
-              <span class="meetings__location-room-value">Room 2203 (Lecture Hall)</span>
-            </div>
+            {location.rooms.map((room) => (
+              <div class="meetings__location-room">
+                <span class="meetings__location-room-label">{room.label}</span>
+                <span class="meetings__location-room-value">{room.value}</span>
+              </div>
+            ))}
           </div>
         </div>
+      </div>
       </div>
     </div>
   </div>

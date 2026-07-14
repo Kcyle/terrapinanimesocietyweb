@@ -4,6 +4,7 @@ import home from '../data/home.json';
 import site from '../data/site.json';
 
 const { hero, about } = home;
+const aboutHtml = about.descriptionHtml.replace('{discordUrl}', site.discordUrl);
 ---
 
 <div class="hero-content" data-hero-content>
@@ -36,7 +37,7 @@ const { hero, about } = home;
     </h2>
   </div>
   <div class="about-content__info">
-    <p class="about-content__description" set:html={about.descriptionHtml}></p>
+    <p class="about-content__description" set:html={aboutHtml}></p>
 
     <div class="about-content__details">
       <div class="about-content__detail-item">

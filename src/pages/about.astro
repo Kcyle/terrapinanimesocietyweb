@@ -1,10 +1,12 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import site from '../data/site.json';
+import about from '../data/about.json';
 import Header from '../components/navigation/Header.astro';
 import Footer from '../components/Footer.astro';
 ---
 
-<BaseLayout title="About | Terrapin Anime Society">
+<BaseLayout title={site.pageTitles.about}>
   <Header />
 
   <main class="about">
@@ -13,69 +15,38 @@ import Footer from '../components/Footer.astro';
         <div class="about__title-wrapper">
           <span class="about__background-text" aria-hidden="true">TAS</span>
           <h1 class="about__title">
-            <span class="about__title-line">About</span>
+            <span class="about__title-line">{about.heading}</span>
           </h1>
         </div>
-        <p class="about__description">
-          The Terrapin Anime Society is a welcoming community of anime enthusiasts at the University of Maryland. Whether you're a longtime fan or just getting started, you'll find a place here to share your passion for Japanese animation and culture.
-        </p>
+        <p class="about__description">{about.description}</p>
       </div>
 
       <div class="about__main">
         <div class="about__text-section">
-          <h2 class="about__section-title">Welcome to TAS</h2>
-          <p class="about__text">
-            Founded with the goal of bringing anime fans together, we host weekly meetings, movie nights, and special events throughout the year. Our club is open to all UMD students, regardless of experience level.
-          </p>
-          <p class="about__text">
-            From casual watch parties to our annual KAMECON convention and Maid Cafe, there's always something exciting happening. Join us to make new friends, discover new anime, and be part of a vibrant community.
-          </p>
-          <p class="about__text">
-            We meet every Sunday from 5-7 PM for screenings, discussions, and good times. Everyone is welcome!
-          </p>
-          <a href="https://terplink.umd.edu/organization/terrapin-anime-society" target="_blank" rel="noopener noreferrer" class="about__cta">Join Us</a>
+          <h2 class="about__section-title">{about.sectionTitle}</h2>
+          {about.paragraphs.map((paragraph) => (
+            <p class="about__text">{paragraph}</p>
+          ))}
+          <a href={site.joinUrl} target="_blank" rel="noopener noreferrer" class="about__cta">{about.ctaLabel}</a>
         </div>
 
         <div class="about__collage">
-          <div class="about__collage-item about__collage-item--1">
-            <img src="/images/Backgrounds/tas1.webp" alt="TAS club meeting" loading="lazy" />
-          </div>
-          <div class="about__collage-item about__collage-item--2">
-            <img src="/images/Photos/tas2.webp" alt="TAS members" loading="lazy" />
-          </div>
-          <div class="about__collage-item about__collage-item--3">
-            <img src="/images/Photos/tas3.webp" alt="TAS event" loading="lazy" />
-          </div>
-          <div class="about__collage-item about__collage-item--4">
-            <img src="/images/Backgrounds/tas4.webp" alt="TAS gathering" loading="lazy" />
-          </div>
-          <div class="about__collage-item about__collage-item--5">
-            <img src="/images/Photos/tas5.webp" alt="TAS activity" loading="lazy" />
-          </div>
-          <div class="about__collage-item about__collage-item--6">
-            <img src="/images/Photos/tas6.webp" alt="TAS screening" loading="lazy" />
-          </div>
+          {about.collageImages.map((image, index) => (
+            <div class={`about__collage-item about__collage-item--${index + 1}`}>
+              <img src={image.src} alt={image.alt} loading="lazy" />
+            </div>
+          ))}
         </div>
       </div>
 
       <div class="about__gallery">
-        <h2 class="about__section-title">Our Community</h2>
+        <h2 class="about__section-title">{about.galleryTitle}</h2>
         <div class="about__gallery-grid">
-          <div class="about__gallery-item">
-            <img src="/images/Photos/tas7.webp" alt="TAS community" loading="lazy" />
-          </div>
-          <div class="about__gallery-item">
-            <img src="/images/Photos/tas8.webp" alt="TAS friends" loading="lazy" />
-          </div>
-          <div class="about__gallery-item">
-            <img src="/images/Photos/tas9.webp" alt="TAS fun" loading="lazy" />
-          </div>
-          <div class="about__gallery-item">
-            <img src="/images/Photos/tas10.webp" alt="TAS memories" loading="lazy" />
-          </div>
-          <div class="about__gallery-item">
-            <img src="/images/Photos/tas11.webp" alt="TAS moments" loading="lazy" />
-          </div>
+          {about.galleryImages.map((image) => (
+            <div class="about__gallery-item">
+              <img src={image.src} alt={image.alt} loading="lazy" />
+            </div>
+          ))}
         </div>
       </div>
     </div>

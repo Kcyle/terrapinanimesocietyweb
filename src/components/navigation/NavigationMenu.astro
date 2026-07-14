@@ -1,38 +1,8 @@
 ---
 import CloseIcon from '../icons/CloseIcon.astro';
+import site from '../../data/site.json';
 
-interface NavItem {
-  label: string;
-  href: string;
-  children?: { label: string; href: string }[];
-}
-
-const navItems: NavItem[] = [
-  { label: 'Home', href: '/' },
-  { label: 'About', href: '#about-section' },
-  { label: 'Meetings', href: '#meetings-section' },
-  { label: 'Activities', href: '#activities-section' },
-  { label: 'Partners', href: '#partners-section' },
-  {
-    label: 'Subgroups',
-    href: '#subgroups-section',
-    children: [
-      { label: 'Animusic', href: '#subgroup-animusic' },
-      { label: 'Cosplay', href: '#subgroup-cosplay' },
-      { label: 'Old Anime', href: '#subgroup-oldanime' },
-      { label: 'Book Club', href: '#subgroup-bookclub' },
-      { label: 'Rainbow', href: '#subgroup-rainbow' },
-    ]
-  },
-  {
-    label: 'Events',
-    href: '#',
-    children: [
-      { label: 'TerpCon 2026', href: '/terpcon' },
-      { label: 'Kamecon', href: '/kamecon' },
-    ]
-  },
-];
+const navItems = site.nav;
 ---
 
 <nav
@@ -47,7 +17,7 @@ const navItems: NavItem[] = [
     <div class="navigation-menu__header">
       <div class="navigation-menu__title-wrapper">
         <img src="/images/Icons/chibi.webp" alt="" class="navigation-menu__icon" />
-        <span class="navigation-menu__title">Navigation</span>
+        <span class="navigation-menu__title">{site.navTitle}</span>
       </div>
       <button
         class="navigation-menu__close"
@@ -89,7 +59,7 @@ const navItems: NavItem[] = [
     </ul>
 
     <div class="navigation-menu__footer">
-      <p class="navigation-menu__footer-text">University of Maryland</p>
+      <p class="navigation-menu__footer-text">{site.footer.university}</p>
     </div>
   </div>
 </nav>

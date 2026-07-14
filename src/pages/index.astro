@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import site from '../data/site.json';
 import Header from '../components/navigation/Header.astro';
 import Footer from '../components/Footer.astro';
 import HeroSection from '../sections/HeroSection.astro';
@@ -9,7 +10,7 @@ import ActivitiesSection from '../components/ActivitiesSection.astro';
 import PartnersSection from '../components/PartnersSection.astro';
 ---
 
-<BaseLayout title="Terrapin Anime Society">
+<BaseLayout title={site.pageTitles.home}>
   <Header />
 
   <main>

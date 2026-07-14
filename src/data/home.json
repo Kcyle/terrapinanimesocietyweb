@@ -25,7 +25,7 @@
   },
   "about": {
     "heading": "About",
-    "descriptionHtml": "The Anime Club welcomes all students who are interested in anime. To get involved, join our <a href=\"https://discord.gg/fzKBsnS\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"about-content__discord-link\">Discord</a> and introduce yourself in the <span class=\"about-content__highlight\">#intro</span> channel to receive the member role.",
+    "descriptionHtml": "The Anime Club welcomes all students who are interested in anime. To get involved, join our <a href=\"{discordUrl}\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"about-content__discord-link\">Discord</a> and introduce yourself in the <span class=\"about-content__highlight\">#intro</span> channel to receive the member role.",
     "meetingsLabel": "Meetings",
     "meetingsText": "Every Sunday from 5:00 to 7:00 PM. The first half features anime activities like dubbing competitions, Guess the Anime, and anime themed Jeopardy. The second half is a screening of two anime episodes.",
     "subgroupsLabel": "Subgroups",

@@ -1,12 +1,81 @@
 {
-  "clubName": "Terrapin Anime Society",
-  "shortName": "TAS",
+  "metaDescription": "Terrapin Anime Society at the University of Maryland",
   "discordUrl": "https://discord.gg/fzKBsnS",
   "joinUrl": "https://terplink.umd.edu/organization/terrapin-anime-society",
+  "pageTitles": {
+    "home": "Terrapin Anime Society",
+    "about": "About | Terrapin Anime Society",
+    "meetings": "Meetings | Terrapin Anime Society",
+    "kamecon": "KAMECON 2025 | Terrapin Anime Society",
+    "terpcon": "TERPCON 2026 | Terrapin Anime Society"
+  },
+  "nav": [
+    {
+      "label": "Home",
+      "href": "/"
+    },
+    {
+      "label": "About",
+      "href": "#about-section"
+    },
+    {
+      "label": "Meetings",
+      "href": "#meetings-section"
+    },
+    {
+      "label": "Activities",
+      "href": "#activities-section"
+    },
+    {
+      "label": "Partners",
+      "href": "#partners-section"
+    },
+    {
+      "label": "Subgroups",
+      "href": "#subgroups-section",
+      "children": [
+        {
+          "label": "Animusic",
+          "href": "#subgroup-animusic"
+        },
+        {
+          "label": "Cosplay",
+          "href": "#subgroup-cosplay"
+        },
+        {
+          "label": "Old Anime",
+          "href": "#subgroup-oldanime"
+        },
+        {
+          "label": "Book Club",
+          "href": "#subgroup-bookclub"
+        },
+        {
+          "label": "Rainbow",
+          "href": "#subgroup-rainbow"
+        }
+      ]
+    },
+    {
+      "label": "Events",
+      "href": "#",
+      "children": [
+        {
+          "label": "TerpCon 2026",
+          "href": "/terpcon"
+        },
+        {
+          "label": "Kamecon",
+          "href": "/kamecon"
+        }
+      ]
+    }
+  ],
   "footer": {
     "copyrightName": "TERRAPIN ANIME SOCIETY",
     "rights": "ALL RIGHTS RESERVED",
     "university": "University of Maryland",
     "city": "College Park, MD"
-  }
+  },
+  "navTitle": "Navigation"
 }
