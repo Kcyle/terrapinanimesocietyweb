@@ -186,4 +186,4 @@ Rather than guessing which file holds a piece of text, search for the text itsel
 
 ## Before you publish
 
-If you are working on your own computer, run `npm run build` before pushing. A successful build means the site is safe to publish. A failure almost always points back to punctuation in the last JSON file you touched.
+If you are working on your own computer, run `npm run build` before pushing. A successful build means the site is safe to publish. If it fails the culprit is likely the last JSON file you touched.
