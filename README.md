@@ -200,7 +200,7 @@ A university hostname given to a student organization is normally sponsored by a
 
 ## Adding a backend later
 
-The site is static at the moment, which is why it is free and needs no maintenance. If a future eboard member needs more functionality such as ticket sales, RSVPs, or a signup form, it can be added.
+The site is static at the moment, which is why it is free and needs no "real" maintenance. If a future eboard member needs more functionality such as ticket sales, RSVPs, or a signup form, it can be added.
 
 The limitation however is GitHub Pages only serves files. It cannot run server code. Astro supports server routes in `src/pages/api/`, but those will not run on GitHub Pages.
 
