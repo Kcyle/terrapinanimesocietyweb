@@ -214,6 +214,48 @@ This is the strongest argument for moving the repository into a **GitHub organiz
 
 Sponsorship rules and renewal timing are set by the university and do change, so confirm the current process using the links above rather than assuming what worked last year still applies.
 
+## Moving the repository to a club organization
+
+This is the recommended long term setup, and it is worth doing once while someone who understands the site is still around. It lets several officers hold access at the same time, and it means the university never has to touch DNS again.
+
+**Why it is worth the effort.** The DNS record has to point at whoever owns the repository. If you hand the repository to each new president in turn, the university has to change that record every single year, and every one of those requests needs advisor approval and can stall. If instead you point the record at an organization owned by the club, you ask for that change once and it is correct forever. Officers are then added and removed inside the organization, which needs no university involvement at all.
+
+Do this during a quiet week, not in the days before an event.
+
+**Step 1. Create the organization.** Go to **github.com/organizations/plan** and choose the **Free** plan, which allows unlimited public repositories and unlimited members at no cost.
+
+Choose the name carefully. The organization name becomes the DNS target, so `terrapinanimesociety` would mean the record points at `terrapinanimesociety.github.io`. Renaming the organization later would break the domain again, so pick a name the club can live with permanently.
+
+**Step 2. Add the other officers.** In the organization, open **People**, then **Invite member**. Give the current president the **Owner** role. Add other officers as members, then create a team such as **Web** and grant that team **Write** access to the repository. From then on, adding a new officer is a matter of adding them to the team.
+
+Always keep at least **two Owners**. If the only owner graduates and loses access to their account, nobody can administer the organization.
+
+**Step 3. Request the DNS change before you transfer anything.** Submit the request using the form linked in the domain section above, and have the faculty advisor approve or submit it. Ask for something along these lines:
+
+> Please update the DNS record for `tas.umd.edu`. It is currently a CNAME pointing to `kcyle.github.io`. It needs to point to `terrapinanimesociety.github.io` instead, because the website repository is moving to a GitHub organization owned by the student group.
+
+Ask them to tell you when the change will actually be applied, and wait for that answer before moving on. Requesting the change first is what keeps the outage short.
+
+**Step 4. Transfer the repository.** In the repository, open **Settings**, then **General**, scroll to the **Danger Zone**, and choose **Transfer ownership**. Select the organization as the new owner.
+
+The `public/CNAME` file is committed to the repository, so it travels with it and that half of the setup stays correct automatically.
+
+**Step 5. Reconfigure Pages immediately after the transfer.** Do not leave this for later. In the transferred repository, open **Settings**, then **Pages**, set the source to **GitHub Actions**, and enter `tas.umd.edu` as the custom domain. Setting the custom domain also claims the domain on GitHub, which prevents anyone else from pointing their own site at it while the record is in transition.
+
+Then open the **Actions** tab and run the deployment workflow once so the site rebuilds under its new owner.
+
+**Step 6. Verify.** Once the university confirms the DNS change has been applied, run:
+
+```bash
+nslookup tas.umd.edu
+```
+
+The canonical name it reports should now be your organization rather than `kcyle.github.io`. Load `https://tas.umd.edu` in a browser to confirm, then return to **Settings**, then **Pages**, and enable **Enforce HTTPS**.
+
+**What to expect in between.** There may be a short period after the transfer where the record still points at the old account. The site may continue to serve normally during that window, but do not rely on it. Keep the gap between the transfer and the DNS change as short as you can, and do not leave the domain unclaimed on GitHub, which is why Step 5 matters.
+
+There are no repository secrets to migrate, because the site is static and needs none.
+
 ## Adding a backend later
 
 This site is currently static, which is why it is free and requires no maintenance. If a future officer needs real functionality such as ticket sales, RSVPs, or a signup form, here is how to do it without throwing the site away.
