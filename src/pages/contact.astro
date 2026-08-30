@@ -1,0 +1,297 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import site from '../data/site.json';
+import Header from '../components/navigation/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<BaseLayout title={site.pageTitles.contact}>
+  <Header />
+
+  <main class="contact">
+    <div class="contact__content">
+      <div class="contact__hero">
+        <div class="contact__title-wrapper">
+          <span class="contact__background-text" aria-hidden="true">TAS</span>
+          <h1 class="contact__title">
+            <span class="contact__title-line">Contact Us</span>
+          </h1>
+        </div>
+        <p class="contact__description">
+          Have a question, suggestion, or just want to say hi? Send us a message below and we'll get back to you.
+        </p>
+      </div>
+
+      <div class="contact__main">
+        <form class="contact__form" data-contact-form novalidate>
+          <div class="contact__field">
+            <label for="contact-topic" class="contact__label">Topic</label>
+            <input
+              type="text"
+              id="contact-topic"
+              name="topic"
+              class="contact__input"
+              placeholder="What's this about?"
+              required
+            />
+          </div>
+
+          <div class="contact__field">
+            <label for="contact-message" class="contact__label">Message</label>
+            <textarea
+              id="contact-message"
+              name="message"
+              class="contact__textarea"
+              rows="8"
+              placeholder="Write your message here..."
+              required
+            ></textarea>
+          </div>
+
+          <button type="submit" class="contact__submit">Send Message</button>
+
+          <p class="contact__note">
+            Sending opens your email app with this message addressed to
+            <a href={`mailto:${site.contactEmail}`} class="contact__note-link">{site.contactEmail}</a>.
+          </p>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<script define:vars={{ contactEmail: site.contactEmail }}>
+  const form = document.querySelector('[data-contact-form]');
+
+  if (form) {
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+
+      const topicInput = document.getElementById('contact-topic');
+      const messageInput = document.getElementById('contact-message');
+
+      const topic = topicInput && 'value' in topicInput ? topicInput.value.trim() : '';
+      const message = messageInput && 'value' in messageInput ? messageInput.value.trim() : '';
+
+      if (!topic || !message) {
+        return;
+      }
+
+      const subject = encodeURIComponent(topic);
+      const body = encodeURIComponent(message);
+
+      window.location.href = `mailto:${contactEmail}?subject=${subject}&body=${body}`;
+    });
+  }
+</script>
+
+<script>
+  import '../animations/index';
+</script>
+
+<style>
+  .contact {
+    position: relative;
+    min-height: 100vh;
+    background-color: #0a0a0a;
+  }
+
+  .contact__content {
+    position: relative;
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: var(--page-padding, 3rem);
+    padding-top: 14vh;
+    padding-bottom: 6rem;
+  }
+
+  .contact__hero {
+    margin-bottom: 3.5rem;
+  }
+
+  .contact__title-wrapper {
+    position: relative;
+    min-height: calc(140px * 0.9);
+    margin-bottom: 1.5rem;
+  }
+
+  .contact__background-text {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    font-family: 'Inter', sans-serif;
+    font-size: 300px;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.35);
+    pointer-events: none;
+    user-select: none;
+    z-index: 0;
+  }
+
+  .contact__title {
+    position: relative;
+    z-index: 1;
+    margin: 0;
+  }
+
+  .contact__title-line {
+    font-family: 'Inter', sans-serif;
+    font-size: 90px;
+    font-weight: 800;
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+    color: #ffffff;
+    text-transform: uppercase;
+    display: block;
+  }
+
+  .contact__description {
+    position: relative;
+    z-index: 1;
+    font-family: 'Inter', sans-serif;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 1.5;
+    color: #a0a0a0;
+    max-width: 640px;
+    margin-top: 1.5rem;
+  }
+
+  .contact__main {
+    display: flex;
+  }
+
+  .contact__form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 100%;
+    background-color: #141414;
+    border: 1px solid #2a2a2a;
+    border-radius: 12px;
+    padding: 2rem;
+  }
+
+  .contact__field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .contact__label {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: #a0a0a0;
+  }
+
+  .contact__input,
+  .contact__textarea {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    color: #ffffff;
+    background-color: #0a0a0a;
+    border: 1px solid #2a2a2a;
+    border-radius: 8px;
+    padding: 0.85rem 1rem;
+    transition: border-color 0.2s ease;
+  }
+
+  .contact__input::placeholder,
+  .contact__textarea::placeholder {
+    color: #666666;
+  }
+
+  .contact__input:focus,
+  .contact__textarea:focus {
+    outline: none;
+    border-color: #e0102b;
+  }
+
+  .contact__textarea {
+    resize: vertical;
+    min-height: 160px;
+    line-height: 1.5;
+  }
+
+  .contact__submit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 32px;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 12px;
+    background-color: #e0102b;
+    color: #ffffff;
+    border: 1px solid #e0102b;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    width: fit-content;
+  }
+
+  .contact__submit:hover {
+    background-color: #a10c1f;
+  }
+
+  .contact__note {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    color: #666666;
+    margin: 0;
+  }
+
+  .contact__note-link {
+    color: #e0102b;
+    text-decoration: none;
+  }
+
+  .contact__note-link:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 1000px) {
+    .contact__title-line {
+      font-size: 64px;
+    }
+
+    .contact__background-text {
+      font-size: 220px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .contact__content {
+      padding: 1.5rem;
+      padding-top: calc(80px + 4vh);
+    }
+
+    .contact__title-line {
+      font-size: 48px;
+    }
+
+    .contact__background-text {
+      font-size: 150px;
+    }
+
+    .contact__description {
+      font-size: 16px;
+    }
+
+    .contact__form {
+      padding: 1.5rem;
+    }
+  }
+</style>

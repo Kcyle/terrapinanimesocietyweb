@@ -1,13 +1,11 @@
 ---
 import CardCarousel from './CardCarousel.astro';
 import home from '../data/home.json';
-import site from '../data/site.json';
 
-const { hero, about } = home;
-const aboutHtml = about.descriptionHtml.replace('{discordUrl}', site.discordUrl);
+const { hero } = home;
 ---
 
-<div class="hero-content" data-hero-content>
+<div class="hero-content">
   <div class="hero-content__title-wrapper">
     <span class="hero-content__background-text" aria-hidden="true">TAS</span>
     <h1 class="hero-content__title">
@@ -22,66 +20,9 @@ const aboutHtml = about.descriptionHtml.replace('{discordUrl}', site.discordUrl)
       <a href={button.url} class={`hero-content__button hero-content__button--${button.variant}`}>{button.label}</a>
     ))}
   </div>
-</div>
 
-<div class="hero-carousel-wrapper" data-hero-carousel>
-  <CardCarousel />
-</div>
-
-<div class="about-content" data-about-content>
-  <div class="about-content__bg" data-about-bg></div>
-  <div class="about-content__title-wrapper">
-    <span class="about-content__background-text" aria-hidden="true">TAS</span>
-    <h2 class="about-content__title">
-      <span class="about-content__title-line">{about.heading}</span>
-    </h2>
-  </div>
-  <div class="about-content__info">
-    <p class="about-content__description" set:html={aboutHtml}></p>
-
-    <div class="about-content__details">
-      <div class="about-content__detail-item">
-        <span class="about-content__detail-label">{about.meetingsLabel}</span>
-        <p class="about-content__detail-text">{about.meetingsText}</p>
-      </div>
-      <div class="about-content__detail-item">
-        <span class="about-content__detail-label">{about.subgroupsLabel}</span>
-        <div class="about-content__subgroups">
-          {about.subgroupLinks.map((link) => (
-            <a href={link.url} class="about-content__subgroup-btn">{link.label}</a>
-          ))}
-        </div>
-      </div>
-      <div class="about-content__detail-item">
-        <span class="about-content__detail-label">{about.eventsLabel}</span>
-        <div class="about-content__events">
-          {about.eventLinks.map((event) => (
-            <a href={event.url} class="about-content__event-btn">{event.label} <span>{event.note}</span></a>
-          ))}
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="about-content__buttons">
-    <a href={site.joinUrl} target="_blank" rel="noopener noreferrer" class="about-content__button about-content__button--primary">{about.joinLabel}</a>
-    <a href={about.contactUrl} class="about-content__button about-content__button--secondary">{about.contactLabel}</a>
-  </div>
-  <div class="about-content__gallery">
-    <div class="about-content__collage">
-      {about.galleryImages.map((image) => (
-        <div class="about-content__collage-item">
-          <img src={image.src} alt={image.alt} loading="lazy" />
-        </div>
-      ))}
-    </div>
-    <div class="about-content__mascot-container">
-      <img
-        src={about.mascotImage}
-        alt={about.mascotAlt}
-        class="about__mascot"
-        data-about-mascot
-      />
-    </div>
+  <div class="hero-carousel-wrapper">
+    <CardCarousel />
   </div>
 </div>
 
@@ -93,14 +34,10 @@ const aboutHtml = about.descriptionHtml.replace('{discordUrl}', site.discordUrl)
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
-    will-change: transform;
-    transform: translateZ(0);
-    backface-visibility: hidden;
   }
 
   .hero-content__title-wrapper {
     position: relative;
-
     min-height: 7.5vw;
   }
 
@@ -146,12 +83,12 @@ const aboutHtml = about.descriptionHtml.replace('{discordUrl}', site.discordUrl)
     position: relative;
     z-index: 1;
     font-family: 'Inter', sans-serif;
-    font-size: 0.83vw;
+    font-size: 1rem;
     font-weight: 500;
     line-height: 1.5;
     color: #a0a0a0;
-    max-width: 41.67vw;
-    margin-top: 1.11vh;
+    max-width: 640px;
+    margin-top: 0.5rem;
   }
 
   .hero-content__buttons {
@@ -159,31 +96,31 @@ const aboutHtml = about.descriptionHtml.replace('{discordUrl}', site.discordUrl)
     z-index: 1;
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5vw;
-    margin-top: 0.56vh;
+    gap: 0.75rem;
+    margin-top: 0.25rem;
   }
 
   .hero-content__button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 1.19vh 1.5vw;
+    padding: 0.85rem 1.5rem;
     font-family: 'Inter', sans-serif;
-    font-size: 0.75vw;
+    font-size: 0.9rem;
     font-weight: 600;
-    border-radius: 0.5vw;
+    border-radius: 8px;
     text-decoration: none;
-    transition: all 0.2s ease;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
   }
 
   .hero-content__button--primary {
-    background-color: #ffffff;
-    color: #0a0a0a;
-    border: 1px solid #ffffff;
+    background-color: var(--accent);
+    color: #ffffff;
+    border: 1px solid var(--accent);
   }
 
   .hero-content__button--primary:hover {
-    background-color: #e0e0e0;
+    background-color: var(--accent-dark);
   }
 
   .hero-content__button--secondary {
@@ -199,414 +136,12 @@ const aboutHtml = about.descriptionHtml.replace('{discordUrl}', site.discordUrl)
   .hero-carousel-wrapper {
     position: relative;
     z-index: 10;
-    min-height: 0;
+    margin-top: 1rem;
+    width: min(100%, 720px);
+    height: 220px;
     overflow: hidden;
-
-    width: 65vw;
     -webkit-mask-image: linear-gradient(to right, black 85%, transparent 100%);
     mask-image: linear-gradient(to right, black 85%, transparent 100%);
-  }
-
-  .about-content {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    max-width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    padding: var(--page-padding, 3rem);
-    padding-top: 14vh;
-    opacity: 0;
-    pointer-events: none;
-    z-index: 5;
-  }
-
-  .about-content__bg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #0a0a0a;
-    z-index: 0;
-  }
-
-  .about-content__bg::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image: url('/images/Backgrounds/tas1.webp');
-    background-size: cover;
-    background-position: center;
-    opacity: 0.12;
-  }
-
-  .about-content__title-wrapper {
-    position: relative;
-    min-height: 7.5vw;
-    z-index: 1;
-  }
-
-  .about-content__background-text {
-    position: absolute;
-
-    top: calc(4.17vw * 0.9);
-    left: 0;
-    transform: translateY(-50%);
-    font-family: 'Inter', sans-serif;
-    font-size: 15.83vw;
-    font-weight: 800;
-    line-height: 1;
-    letter-spacing: -0.02em;
-    text-transform: uppercase;
-    color: transparent;
-    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.35);
-    pointer-events: none;
-    user-select: none;
-    z-index: 0;
-  }
-
-  .about-content__title {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-    margin: 0;
-  }
-
-  .about-content__title-line {
-    font-family: 'Inter', sans-serif;
-    font-size: 4.17vw;
-    font-weight: 800;
-    line-height: 0.9;
-    letter-spacing: -0.04em;
-    color: #ffffff;
-    text-transform: uppercase;
-    display: block;
-    text-shadow: 0 4px 40px rgba(0, 0, 0, 0.9), 0 2px 10px rgba(0, 0, 0, 0.7);
-  }
-
-  .about-content__info {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 1.11vh;
-    max-width: 29.17vw;
-    margin-top: 2.96vh;
-  }
-
-  .about-content__description {
-    font-family: 'Inter', sans-serif;
-    font-size: 0.92vw;
-    font-weight: 400;
-    line-height: 1.6;
-    color: #a0a0a0;
-    margin: 0;
-  }
-
-  .about-content__highlight {
-    color: #ffffff;
-    font-weight: 500;
-    background: rgba(255, 255, 255, 0.1);
-    padding: 2px 6px;
-    border-radius: 4px;
-  }
-
-  .about-content__discord-link {
-    display: inline-flex;
-    align-items: center;
-    padding: 2px 8px;
-    font-size: 0.9em;
-    font-weight: 600;
-    color: #ffffff;
-    background: #5865F2;
-    border-radius: 4px;
-    text-decoration: none;
-    transition: all 0.2s ease;
-  }
-
-  .about-content__discord-link:hover {
-    background: #4752C4;
-    transform: translateY(-1px);
-  }
-
-  .about-content__details {
-    display: flex;
-    flex-direction: column;
-    gap: 1.25rem;
-  }
-
-  .about-content__detail-item {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-  }
-
-  .about-content__detail-label {
-    font-family: 'Inter', sans-serif;
-    font-size: 0.54vw;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.4);
-  }
-
-  .about-content__detail-text {
-    font-family: 'Inter', sans-serif;
-    font-size: 0.75vw;
-    font-weight: 500;
-    line-height: 1.5;
-    color: #ffffff;
-    margin: 0;
-  }
-
-  .about-content__subgroups {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.44vh;
-    margin-top: 0.37vh;
-  }
-
-  .about-content__subgroup-btn {
-    display: inline-flex;
-    align-items: center;
-    padding: 0.74vh 0.83vw;
-    font-family: 'Inter', sans-serif;
-    font-size: 0.625vw;
-    font-weight: 500;
-    color: #ffffff;
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 0.33vw;
-    text-decoration: none;
-    transition: all 0.2s ease;
-  }
-
-  .about-content__subgroup-btn:hover {
-    background: rgba(255, 255, 255, 0.15);
-    border-color: rgba(255, 255, 255, 0.3);
-  }
-
-  .about-content__events {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.56vh;
-    margin-top: 0.37vh;
-  }
-
-  .about-content__event-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.56vh;
-    padding: 0.89vh 0.92vw;
-    font-family: 'Inter', sans-serif;
-    font-size: 0.67vw;
-    font-weight: 600;
-    color: #ff6b6b;
-    background: rgba(255, 100, 100, 0.15);
-    border: 1px solid rgba(255, 100, 100, 0.4);
-    border-radius: 0.42vw;
-    text-decoration: none;
-    transition: all 0.2s ease;
-  }
-
-  .about-content__event-btn:hover {
-    background: rgba(255, 100, 100, 0.25);
-    border-color: rgba(255, 100, 100, 0.6);
-  }
-
-  .about-content__event-btn span {
-    font-size: 0.5vw;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: rgba(255, 255, 255, 0.5);
-  }
-
-  .about-content__buttons {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    gap: 0.74vh;
-    margin-top: 0.74vh;
-  }
-
-  .about-content__button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 1.04vh 1.33vw;
-    font-family: 'Inter', sans-serif;
-    font-size: 0.67vw;
-    font-weight: 600;
-    border-radius: 0.5vw;
-    text-decoration: none;
-    transition: all 0.2s ease;
-  }
-
-  .about-content__button--primary {
-    background-color: #ffffff;
-    color: #0a0a0a;
-    border: 1px solid #ffffff;
-  }
-
-  .about-content__button--primary:hover {
-    background-color: #e0e0e0;
-  }
-
-  .about-content__button--secondary {
-    background-color: transparent;
-    color: #ffffff;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-  }
-
-  .about-content__button--secondary:hover {
-    border-color: rgba(255, 255, 255, 0.6);
-  }
-
-  .about-content__gallery {
-    position: absolute;
-    top: 22%;
-    left: 40%;
-    right: 3%;
-    bottom: 10%;
-    z-index: 2;
-  }
-
-  .about-content__collage {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    grid-template-rows: repeat(4, 1fr);
-    gap: 0.5rem;
-    width: 100%;
-    height: 100%;
-    transform: perspective(1200px) rotateY(-4deg);
-    transform-origin: right center;
-  }
-
-  .about-content__collage-item {
-    overflow: hidden;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-    background-color: #0a0a0a;
-    border-radius: 4px;
-  }
-
-  .about-content__collage-item:nth-child(1) {
-    grid-column: span 3;
-    grid-row: span 2;
-  }
-  .about-content__collage-item:nth-child(2) {
-    grid-column: span 2;
-    grid-row: span 1;
-  }
-  .about-content__collage-item:nth-child(3) {
-    grid-column: span 1;
-    grid-row: span 1;
-  }
-
-  .about-content__collage-item:nth-child(4) {
-    grid-column: span 2;
-    grid-row: span 1;
-  }
-  .about-content__collage-item:nth-child(5) {
-    grid-column: span 1;
-    grid-row: span 2;
-  }
-
-  .about-content__collage-item:nth-child(6) {
-    grid-column: span 1;
-    grid-row: span 1;
-  }
-  .about-content__collage-item:nth-child(7) {
-    grid-column: span 2;
-    grid-row: span 1;
-  }
-  .about-content__collage-item:nth-child(8) {
-    grid-column: span 2;
-    grid-row: span 1;
-  }
-
-  .about-content__collage-item:nth-child(9) {
-    grid-column: span 2;
-    grid-row: span 1;
-  }
-  .about-content__collage-item:nth-child(10) {
-    grid-column: span 3;
-    grid-row: span 1;
-  }
-  .about-content__collage-item:nth-child(11) {
-    grid-column: span 1;
-    grid-row: span 1;
-  }
-
-  .about-content__collage-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    background-color: #0a0a0a;
-    transition: transform 0.3s ease;
-  }
-
-  .about-content__collage-item:hover img {
-    transform: scale(1.05);
-  }
-
-  .about-content__mascot-container {
-    position: absolute;
-
-    right: 0;
-    width: 20.83vw;
-    height: auto;
-    transform: perspective(1200px) rotateY(-4deg);
-    transform-origin: right center;
-    pointer-events: none;
-    z-index: 30;
-  }
-
-  .about__mascot {
-    position: relative;
-    width: 100%;
-    max-width: 20.83vw;
-    height: auto;
-    filter: drop-shadow(0 10px 40px rgba(0, 0, 0, 0.5));
-    pointer-events: none;
-    will-change: transform;
-    backface-visibility: hidden;
-    transform: translateZ(0);
-    contain: layout paint;
-  }
-
-  @media (max-width: 992px) {
-    .hero-content__buttons {
-      flex-wrap: wrap;
-    }
-
-    .about-content__gallery {
-
-      top: 25%;
-    }
-
-    .about-content__mascot-container {
-      width: clamp(200px, 30vw, 300px);
-
-    }
-
-    .about__mascot {
-      max-width: clamp(200px, 30vw, 300px);
-    }
-
-    .about-content__info {
-      max-width: 450px;
-      margin-top: 2rem;
-    }
   }
 
   @media (max-width: 768px) {
@@ -625,240 +160,25 @@ const aboutHtml = about.descriptionHtml.replace('{discordUrl}', site.discordUrl)
     .hero-content__description {
       font-size: 14px;
       max-width: 100%;
-      margin-top: 1rem;
     }
 
     .hero-content__buttons {
       flex-direction: column;
       align-items: flex-start;
       gap: 0.75rem;
-      margin-top: 0.5rem;
     }
 
     .hero-content__button {
       padding: 12px 24px;
       font-size: 14px;
-      border-radius: 8px;
       width: 100%;
       max-width: 280px;
     }
 
     .hero-carousel-wrapper {
-      position: relative;
-      bottom: auto;
-      left: auto;
-      width: 100%;
-      max-width: 100%;
-      height: var(--mobile-carousel-height, 35dvh);
+      height: 35dvh;
       -webkit-mask-image: none;
       mask-image: none;
     }
-
-    .about-content__title-wrapper {
-      min-height: 80px;
-    }
-
-    .about-content__background-text {
-      font-size: 120px;
-      top: calc(40px * 0.9);
-    }
-
-    .about-content__title-line {
-      font-size: 40px;
-    }
-
-    .about-content__info {
-      max-width: 100%;
-      gap: 1rem;
-      margin-top: 1.5rem;
-    }
-
-    .about-content__description {
-      font-size: 14px;
-    }
-
-    .about-content__detail-label {
-      font-size: 11px;
-    }
-
-    .about-content__detail-text {
-      font-size: 14px;
-    }
-
-    .about-content__subgroup-btn {
-      padding: 8px 16px;
-      font-size: 13px;
-      border-radius: 6px;
-    }
-
-    .about-content__event-btn {
-      padding: 10px 18px;
-      font-size: 14px;
-      border-radius: 8px;
-    }
-
-    .about-content__event-btn span {
-      font-size: 10px;
-    }
-
-    .about-content__buttons {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 0.75rem;
-      margin-top: 1rem;
-    }
-
-    .about-content__button {
-      padding: 12px 24px;
-      font-size: 14px;
-      border-radius: 10px;
-      width: 100%;
-      max-width: 280px;
-    }
-
-    .about-content__gallery {
-      position: relative;
-      top: auto;
-      left: auto;
-      right: auto;
-      bottom: auto;
-      width: 100%;
-      height: 300px;
-      margin-top: 2rem;
-    }
-
-    .about-content__collage {
-      transform: none;
-      grid-template-columns: repeat(3, 1fr);
-      grid-template-rows: repeat(4, 1fr);
-    }
-
-    .about-content__collage-item:nth-child(1) {
-      grid-column: span 2;
-      grid-row: span 2;
-    }
-    .about-content__collage-item:nth-child(2),
-    .about-content__collage-item:nth-child(3),
-    .about-content__collage-item:nth-child(4),
-    .about-content__collage-item:nth-child(5),
-    .about-content__collage-item:nth-child(6),
-    .about-content__collage-item:nth-child(7),
-    .about-content__collage-item:nth-child(8),
-    .about-content__collage-item:nth-child(9),
-    .about-content__collage-item:nth-child(10),
-    .about-content__collage-item:nth-child(11) {
-      grid-column: span 1;
-      grid-row: span 1;
-    }
-
-    .about-content__mascot-container {
-      display: none;
-    }
   }
-
-  @media (max-width: 480px) {
-    .about-content__gallery {
-      height: 200px;
-    }
-
-    .about-content__collage {
-      grid-template-columns: repeat(2, 1fr);
-      grid-template-rows: repeat(3, 1fr);
-      gap: 0.25rem;
-    }
-
-    .about-content__collage-item:nth-child(1) {
-      grid-column: span 2;
-      grid-row: span 1;
-    }
-    .about-content__collage-item:nth-child(2),
-    .about-content__collage-item:nth-child(3),
-    .about-content__collage-item:nth-child(4),
-    .about-content__collage-item:nth-child(5),
-    .about-content__collage-item:nth-child(6) {
-      grid-column: span 1;
-      grid-row: span 1;
-    }
-
-    .about-content__collage-item:nth-child(7),
-    .about-content__collage-item:nth-child(8),
-    .about-content__collage-item:nth-child(9),
-    .about-content__collage-item:nth-child(10),
-    .about-content__collage-item:nth-child(11) {
-      display: none;
-    }
-
-    .about-content__info {
-      gap: 1rem;
-      margin-top: 1rem;
-    }
-
-    .about-content__description {
-      font-size: 14px;
-    }
-
-    .about-content__detail-label {
-      font-size: 11px;
-    }
-
-    .about-content__detail-text {
-      font-size: 14px;
-    }
-
-    .about-content__subgroups {
-      gap: 0.4rem;
-    }
-
-    .about-content__subgroup-btn {
-      padding: 6px 12px;
-      font-size: 12px;
-    }
-
-    .about-content__events {
-      gap: 0.5rem;
-    }
-
-    .about-content__event-btn {
-      padding: 8px 14px;
-      font-size: 13px;
-    }
-
-    .about-content__event-btn span {
-      font-size: 10px;
-    }
-
-    .about-content__button {
-      padding: 12px 24px;
-      font-size: 14px;
-    }
-  }
-
 </style>
-
-<script>
-
-  function anchorCCToCollage() {
-    const mascotContainer = document.querySelector('.about-content__mascot-container') as HTMLElement;
-    const mascotImg = document.querySelector('.about__mascot') as HTMLImageElement;
-
-    if (!mascotContainer || !mascotImg) return;
-
-    if (!mascotImg.complete) {
-      mascotImg.addEventListener('load', anchorCCToCollage, { once: true });
-      return;
-    }
-
-    const mascotHeight = mascotImg.offsetHeight;
-
-    mascotContainer.style.top = `${-(mascotHeight * 0.75)}px`;
-  }
-
-  if (typeof window !== 'undefined') {
-    window.addEventListener('load', anchorCCToCollage);
-    window.addEventListener('resize', anchorCCToCollage);
-
-    if (document.readyState !== 'loading') {
-      anchorCCToCollage();
-    }
-  }
-</script>

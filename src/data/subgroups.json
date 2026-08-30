@@ -7,7 +7,7 @@
       "name": "Animusic",
       "tagline": "Anime Music & J-Music",
       "meets": "Saturdays 4-7pm",
-      "leader": "Annie",
+      "leader": "Adam",
       "description": "Please check #subgroup-announcements and #animusic in the Discord server for any updates! Any questions please DM ricottarat214",
       "previewImage": "/images/Backgrounds/animusic.png",
       "photos": [
@@ -66,6 +66,27 @@
       ]
     },
     {
+      "id": "weeklywatchers",
+      "name": "Weekly Watchers",
+      "tagline": "Watch Anime Weekly",
+      "meets": "",
+      "leader": "",
+      "description": "Weekly Watchers is a chill group to unwind after the school week and watch the new seasonal anime with friends!",
+      "previewImage": "/images/Backgrounds/old anime.jpg",
+      "photos": [
+        {
+          "src": "/images/Characters/old1.png",
+          "alt": "Old anime character",
+          "side": "right"
+        },
+        {
+          "src": "/images/Characters/old2.png",
+          "alt": "Old anime character",
+          "side": "left"
+        }
+      ]
+    },
+    {
       "id": "bookclub",
       "name": "Book Club",
       "tagline": "Manga & Light Novels",
@@ -84,6 +105,27 @@
       "description": "A welcoming space for LGBTQ+ anime fans and allies. Open to everyone and focused on community connection, representation, and discussion.",
       "previewImage": "/images/Backgrounds/rainbow.png",
       "photos": []
+    },
+    {
+      "id": "dubbers",
+      "name": "Dubbers",
+      "tagline": "Dub n Stuff",
+      "meets": "Biweekly on Sundays 12-3pm",
+      "leader": "Aahil (@DaTiggerDude)",
+      "description": "Dub your favorite anime scenes using your own unique voice! Whether you are new to voice acting or not, participate in fun VA activities with us and immerse yourself in the community. Pick up the dubbers role now if interested!",
+      "previewImage": "/images/Backgrounds/dubbers.png",
+      "photos": []
+    },
+    {
+      "id": "visual",
+      "name": "Visual Novels",
+      "tagline": "Visuals n Novels",
+      "meets": "",
+      "leader": "Alex",
+      "description": "We like to novel",
+      "previewImage": "/images/Backgrounds/visual.png",
+      "photos": []
     }
   ]
+  
 }

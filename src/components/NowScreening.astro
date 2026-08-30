@@ -10,69 +10,57 @@ const schedule = screenings.map((screening, index) => ({
   date: dates[index],
   formattedDate: formatScreeningDate(dates[index]),
 }));
-
 ---
 
-<div class="meetings__bg-collage" data-meetings-bg>
-  {Array.from({ length: 200 }).map((_, i) => (
-    <div class="meetings__bg-cell" data-cell={i}></div>
-  ))}
-</div>
+<section class="section meetings" id="meetings-section">
+  <div class="section__inner">
+    <p class="section__eyebrow">03 / Meetings</p>
+    <h2 class="section__title">{screeningsData.meetingsHeading}</h2>
 
-<div class="meetings-content" data-meetings-content>
-  <div class="meetings__punch">
-    <img src="/images/Characters/punch.webp" alt="Punch mascot" class="meetings__punch-image" />
-  </div>
-
-  <div class="meetings__reze">
-    <img src="/images/Characters/Reze.webp" alt="Reze" class="meetings__reze-image" />
-  </div>
-
-  <div class="meetings__main">
-    <h1 class="meetings__hero-title">{screeningsData.meetingsHeading}</h1>
-
-    <div class="meetings__screenings-section">
-      <div class="meetings__section-header">
-        <h2 class="meetings__section-title">{screeningsData.screeningsTitle}</h2>
-        <p class="meetings__section-subtitle">{screeningsData.screeningsSubtitle}</p>
-      </div>
+    <div class="meetings__screenings">
+      <h3 class="meetings__screenings-title">{screeningsData.screeningsTitle}</h3>
+      <p class="meetings__screenings-subtitle">{screeningsData.screeningsSubtitle}</p>
 
       <div class="meetings__viewer" data-anime-viewer>
-        <button class="meetings__arrow meetings__arrow--left" data-arrow-left aria-label="Previous anime">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-            <polyline points="15 18 9 12 15 6"></polyline>
-          </svg>
-        </button>
+        {schedule.length > 1 && (
+          <button class="meetings__arrow meetings__arrow--left" data-arrow-left aria-label="Previous anime">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </button>
+        )}
 
         <div class="meetings__anime-display">
           {schedule.map((anime, index) => (
             <div
               class={`meetings__anime-slide ${index === 0 ? 'meetings__anime-slide--active' : ''}`}
               data-slide={index}
-              data-image={anime.image}
-              data-title={anime.title}
-              data-synopsis={anime.synopsis}
-              data-episodes={anime.episodes || '?'}
-              data-date={anime.formattedDate}
-              data-score={anime.score || ''}
             >
               <div class="meetings__anime-poster">
-                <img src={anime.image} alt={anime.title} loading="lazy" />
+                {anime.image ? (
+                  <img src={anime.image} alt={anime.title} loading="lazy" />
+                ) : (
+                  <div class="meetings__anime-poster-placeholder" aria-hidden="true">{anime.title}</div>
+                )}
               </div>
               <div class="meetings__anime-details">
-                <span class="meetings__anime-date">{anime.formattedDate}</span>
-                <h3 class="meetings__anime-title">{anime.title}</h3>
+                {anime.scheduled !== false && (
+                  <span class="meetings__anime-date">{anime.formattedDate}</span>
+                )}
+                <h4 class="meetings__anime-title">{anime.title}</h4>
                 {anime.score && (
                   <span class="meetings__anime-score">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
                       <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
                     </svg>
                     {anime.score}
                   </span>
                 )}
-                <div class="meetings__anime-meta">
-                  <span class="meetings__anime-episodes">{anime.episodes || '?'} Episodes</span>
-                </div>
+                {anime.episodes && (
+                  <div class="meetings__anime-meta">
+                    <span class="meetings__anime-episodes">{anime.episodes} Episodes</span>
+                  </div>
+                )}
                 <p class="meetings__anime-synopsis">
                   {anime.synopsis.length > 280
                     ? anime.synopsis.substring(0, 280) + '...'
@@ -83,302 +71,134 @@ const schedule = screenings.map((screening, index) => ({
           ))}
         </div>
 
-        <button class="meetings__arrow meetings__arrow--right" data-arrow-right aria-label="Next anime">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-            <polyline points="9 18 15 12 9 6"></polyline>
-          </svg>
-        </button>
+        {schedule.length > 1 && (
+          <button class="meetings__arrow meetings__arrow--right" data-arrow-right aria-label="Next anime">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </button>
+        )}
       </div>
 
-      <div class="meetings__thumbnails" data-thumbnails>
-        {schedule.map((anime, index) => (
-          <button
-            class={`meetings__thumbnail ${index === 0 ? 'meetings__thumbnail--active' : ''}`}
-            data-thumbnail={index}
-            aria-label={`Go to ${anime.title}`}
-          >
-            <img src={anime.image} alt={anime.title} loading="lazy" />
-          </button>
-        ))}
-      </div>
+      {schedule.length > 1 && (
+        <div class="meetings__thumbnails" data-thumbnails>
+          {schedule.map((anime, index) => (
+            <button
+              class={`meetings__thumbnail ${index === 0 ? 'meetings__thumbnail--active' : ''}`}
+              data-thumbnail={index}
+              aria-label={`Go to ${anime.title}`}
+            >
+              <img src={anime.image} alt={anime.title} loading="lazy" />
+            </button>
+          ))}
+        </div>
+      )}
     </div>
 
-    <div class="meetings__location-section">
-      <div class="meetings__location">
-        <div class="meetings__location-image">
-          <img src="/images/Photos/sociology.webp" alt="Parren J Mitchell Art-Sociology Building" />
-        </div>
-        <div class="meetings__location-info">
-          <h3 class="meetings__location-name">{location.building}</h3>
-          <p class="meetings__location-address">{location.address}</p>
-          <div class="meetings__location-rooms">
-            {location.rooms.map((room) => (
-              <div class="meetings__location-room">
-                <span class="meetings__location-room-label">{room.label}</span>
-                <span class="meetings__location-room-value">{room.value}</span>
-              </div>
-            ))}
-          </div>
-        </div>
+    <div class="meetings__location">
+      <div class="meetings__location-image">
+        <img src="/images/Photos/sociology.webp" alt="Parren J Mitchell Art-Sociology Building" />
       </div>
+      <div class="meetings__location-info">
+        <h3 class="meetings__location-name">{location.building}</h3>
+        <p class="meetings__location-address">{location.address}</p>
+        <div class="meetings__location-rooms">
+          {location.rooms.map((room) => (
+            <div class="meetings__location-room">
+              <span class="meetings__location-room-label">{room.label}</span>
+              <span class="meetings__location-room-value">{room.value}</span>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   </div>
-</div>
+</section>
 
 <style>
-
-  .meetings-content {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    width: 100%;
-    height: 100vh;
-    padding: 1.25vw;
-    padding-top: 7.41vh;
-    padding-bottom: 1.48vh;
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    overflow: hidden;
-    z-index: 30;
-    display: flex;
-    flex-direction: column;
-    will-change: transform, opacity;
-    backface-visibility: hidden;
-    transform: translateZ(0);
+  .meetings {
+    background-color: var(--panel-bg);
+    padding-top: calc(var(--space-4xl) + 4rem);
   }
 
-  .meetings__bg-collage {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    width: 100%;
-    height: 100%;
-    display: grid;
-
-    grid-template-columns: repeat(auto-fill, minmax(5vw, 1fr));
-    gap: 0;
-    pointer-events: none;
-    z-index: 25;
-    overflow: hidden;
-    visibility: visible;
-
-    background-color: #1a1a1a;
-    will-change: transform;
-    backface-visibility: hidden;
-    transform: translateZ(0);
+  @media (max-width: 768px) {
+    .meetings {
+      padding-top: calc(var(--space-4xl) + 3rem);
+    }
   }
 
-  .meetings__bg-collage::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-color: rgba(10, 10, 10, 0.7);
-    pointer-events: none;
-    z-index: 2;
+  .meetings__screenings {
+    max-width: 900px;
+    margin: 0 auto 3rem;
   }
 
-  .meetings__bg-collage::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(ellipse 65% 65% at center,
-      transparent 0%,
-      transparent 35%,
-      rgba(10, 10, 10, 0.1) 45%,
-      rgba(10, 10, 10, 0.25) 55%,
-      rgba(10, 10, 10, 0.45) 65%,
-      rgba(10, 10, 10, 0.7) 80%,
-      rgba(10, 10, 10, 0.9) 90%,
-      #0a0a0a 100%);
-    pointer-events: none;
-    z-index: 3;
-  }
-
-  .meetings__bg-cell {
-
-    position: relative;
-    z-index: 1;
-    width: calc(100% + 0.083vw);
-    aspect-ratio: 2 / 3;
-    background-color: #1a1a1a;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-
-    margin-right: -0.083vw;
-    margin-bottom: -0.083vw;
-  }
-
-  .meetings__punch {
-    position: absolute;
-    top: 0;
-    right: 5vw;
-    z-index: 2;
-    pointer-events: none;
-  }
-
-  .meetings__punch-image {
-    height: 75vh;
-    width: auto;
-    object-fit: contain;
-    object-position: top;
-    opacity: 0.85;
-  }
-
-  .meetings__reze {
-    position: absolute;
-    bottom: 0;
-    left: 5vw;
-    z-index: 2;
-    pointer-events: none;
-  }
-
-  .meetings__reze-image {
-    height: 85vh;
-    width: auto;
-    object-fit: contain;
-    object-position: bottom;
-    opacity: 0.85;
-  }
-
-  .meetings__hero-title {
-    font-family: 'Inter', sans-serif;
-    font-size: 4.17vw;
-    font-weight: 800;
-    color: #ffffff;
-    text-align: left;
-    margin: 0;
-    letter-spacing: -0.04em;
-    text-transform: uppercase;
-    line-height: 0.9;
-    text-shadow: 0 4px 40px rgba(0, 0, 0, 0.9), 0 2px 10px rgba(0, 0, 0, 0.7);
-  }
-
-  .meetings__section-header {
-    margin-bottom: 0.74vh;
-    text-align: center;
-  }
-
-  .meetings__section-title {
-    font-family: 'Inter', sans-serif;
-    font-size: 1.17vw;
+  .meetings__screenings-title {
+    font-size: 1.35rem;
     font-weight: 700;
-    color: #ffffff;
-    margin: 0 0 0.19vh 0;
-    letter-spacing: -0.02em;
+    color: var(--color-text-primary);
+    text-align: center;
+    margin: 0 0 0.35rem;
   }
 
-  .meetings__section-subtitle {
-    font-family: 'Inter', sans-serif;
-    font-size: 0.58vw;
-    font-weight: 400;
-    color: rgba(255, 255, 255, 0.6);
-    margin: 0;
-  }
-
-  .meetings__main {
-    position: relative;
-    z-index: 5;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    flex: 1;
-    min-height: 0;
-    max-width: 50vw;
-    margin: 0 auto;
-    width: 100%;
-    gap: 1.11vh;
-  }
-
-  .meetings__screenings-section {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-height: 0;
-    overflow: visible;
-  }
-
-  .meetings__location-section {
-    width: 100%;
-    max-width: 800px;
-    flex-shrink: 0;
+  .meetings__screenings-subtitle {
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+    text-align: center;
+    margin: 0 0 2rem;
   }
 
   .meetings__viewer {
     display: flex;
     align-items: center;
-    gap: 1vw;
-    margin-bottom: 0.74vh;
-    width: 100%;
-    max-width: 33.33vw;
+    gap: 1rem;
   }
 
   .meetings__arrow {
     flex-shrink: 0;
-    width: 2.5vw;
-    height: 2.5vw;
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.08);
-    border: 2px solid rgba(255, 255, 255, 0.2);
+    background: var(--color-bg-tertiary);
+    border: 2px solid var(--color-border);
     color: #ffffff;
-    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.3s ease;
+    transition: border-color 0.15s ease;
   }
 
   .meetings__arrow:hover {
-    background: rgba(255, 255, 255, 0.15);
-    border-color: rgba(255, 255, 255, 0.4);
-    transform: scale(1.08);
-  }
-
-  .meetings__arrow:active {
-    transform: scale(0.95);
+    border-color: var(--color-border-hover);
   }
 
   .meetings__anime-display {
     flex: 1;
     position: relative;
-    min-height: 0;
+    min-height: 260px;
   }
 
   .meetings__anime-slide {
     position: absolute;
     inset: 0;
     display: flex;
-    gap: 1.33vw;
+    gap: 1.5rem;
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.4s ease, transform 0.4s ease;
-    transform: translateX(20px);
-    will-change: transform, opacity;
-    backface-visibility: hidden;
-    overflow: hidden;
+    transition: opacity 0.2s ease;
   }
 
   .meetings__anime-slide--active {
     opacity: 1;
     pointer-events: auto;
     position: relative;
-    transform: translateX(0);
   }
 
   .meetings__anime-poster {
     flex-shrink: 0;
-    width: 9.17vw;
+    width: 150px;
     aspect-ratio: 2 / 3;
-    border-radius: 0.5vw;
+    border-radius: 8px;
     overflow: hidden;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
   }
 
   .meetings__anime-poster img {
@@ -387,92 +207,99 @@ const schedule = screenings.map((screening, index) => ({
     object-fit: cover;
   }
 
+  .meetings__anime-poster-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-bg-tertiary);
+    border: 2px solid var(--accent);
+    border-radius: 4px;
+    font-family: 'Inter', sans-serif;
+    font-size: 1.75rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    color: var(--accent);
+  }
+
   .meetings__anime-details {
     flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    min-width: 0;
   }
 
   .meetings__anime-date {
-    font-family: 'Inter', sans-serif;
-    font-size: 0.5vw;
+    font-size: 0.7rem;
     font-weight: 600;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.5);
-    margin-bottom: 0.37vh;
+    color: var(--color-text-muted);
+    margin-bottom: 0.4rem;
   }
 
   .meetings__anime-title {
-    font-family: 'Inter', sans-serif;
-    font-size: 1.17vw;
+    font-size: 1.15rem;
     font-weight: 700;
-    color: #ffffff;
-    margin: 0 0 0.37vh 0;
-    letter-spacing: -0.02em;
+    color: var(--color-text-primary);
+    margin: 0 0 0.4rem;
   }
 
   .meetings__anime-score {
     display: inline-flex;
     align-items: center;
-    gap: 0.26vh;
-    font-family: 'Inter', sans-serif;
-    font-size: 0.625vw;
+    gap: 0.25rem;
+    font-size: 0.8rem;
     font-weight: 600;
-    color: #fbbf24;
-    margin-bottom: 0.37vh;
-  }
-
-  .meetings__anime-meta {
-    margin-bottom: 0.56vh;
+    color: var(--accent-gold);
+    margin-bottom: 0.4rem;
   }
 
   .meetings__anime-episodes {
     display: inline-block;
-    padding: 0.26vh 0.5vw;
-    font-family: 'Inter', sans-serif;
-    font-size: 0.5vw;
+    padding: 0.25rem 0.6rem;
+    font-size: 0.65rem;
     font-weight: 600;
     letter-spacing: 0.05em;
     text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.8);
-    background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 0.25vw;
+    color: var(--color-text-secondary);
+    background: var(--color-bg-tertiary);
+    border-radius: 4px;
   }
 
   .meetings__anime-synopsis {
-    font-family: 'Inter', sans-serif;
-    font-size: 0.58vw;
-    font-weight: 400;
+    font-size: 0.85rem;
     line-height: 1.6;
-    color: rgba(255, 255, 255, 0.65);
-    margin: 0;
-    max-width: 16.67vw;
+    color: var(--color-text-secondary);
+    margin: 0.6rem 0 0;
+    max-width: 55ch;
     overflow: hidden;
     display: -webkit-box;
-    -webkit-line-clamp: 4;
+    -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
   }
 
   .meetings__thumbnails {
     display: flex;
     justify-content: center;
-    gap: 0.5vw;
-    padding-bottom: 0.37vh;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
   }
 
   .meetings__thumbnail {
-    width: 2.29vw;
+    width: 44px;
     aspect-ratio: 2 / 3;
-    border-radius: 0.25vw;
+    border-radius: 4px;
     overflow: hidden;
     border: 2px solid transparent;
-    background: rgba(255, 255, 255, 0.1);
+    background: var(--color-bg-tertiary);
     cursor: pointer;
-    transition: all 0.3s ease;
     padding: 0;
     opacity: 0.5;
+    transition: opacity 0.15s ease, border-color 0.15s ease;
   }
 
   .meetings__thumbnail img {
@@ -483,112 +310,94 @@ const schedule = screenings.map((screening, index) => ({
 
   .meetings__thumbnail:hover {
     opacity: 0.8;
-    transform: scale(1.05);
   }
 
   .meetings__thumbnail--active {
     opacity: 1;
     border-color: #ffffff;
-    transform: scale(1.1);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
   }
 
   .meetings__location {
     display: flex;
     align-items: stretch;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 0.67vw;
+    max-width: 800px;
+    margin: 0 auto;
+    background: var(--color-bg-tertiary);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
     overflow: hidden;
   }
 
   .meetings__location-image {
     flex-shrink: 0;
-    width: 14.58vw;
-    position: relative;
-    overflow: hidden;
+    width: 220px;
   }
 
   .meetings__location-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center;
     display: block;
   }
 
   .meetings__location-info {
     flex: 1;
-    padding: 1.48vh 1.67vw;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    padding: 1.5rem;
     min-width: 0;
   }
 
   .meetings__location-name {
-    font-family: 'Inter', sans-serif;
-    font-size: 1vw;
+    font-size: 1rem;
     font-weight: 700;
-    color: #ffffff;
-    margin: 0 0 0.26vh 0;
-    letter-spacing: 0.01em;
+    color: var(--color-text-primary);
+    margin: 0 0 0.35rem;
   }
 
   .meetings__location-address {
-    font-family: 'Inter', sans-serif;
-    font-size: 0.67vw;
-    font-weight: 400;
-    color: rgba(255, 255, 255, 0.6);
-    margin: 0 0 0.93vh 0;
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+    margin: 0 0 1rem;
   }
 
   .meetings__location-rooms {
     display: flex;
-    gap: 0.67vw;
+    gap: 0.75rem;
+    flex-wrap: wrap;
   }
 
   .meetings__location-room {
     flex: 1;
+    min-width: 140px;
     display: flex;
     flex-direction: column;
-    gap: 0.22vh;
-    padding: 0.74vh 0.83vw;
+    gap: 0.2rem;
+    padding: 0.6rem 0.8rem;
     background: rgba(255, 255, 255, 0.05);
-    border-radius: 0.42vw;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    border: 1px solid var(--color-border);
   }
 
   .meetings__location-room-label {
-    font-family: 'Inter', sans-serif;
-    font-size: 0.5vw;
-    font-weight: 600;
+    font-size: 0.6rem;
+    font-weight: 700;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.5);
+    color: var(--color-text-muted);
   }
 
   .meetings__location-room-value {
-    font-family: 'Inter', sans-serif;
-    font-size: 0.75vw;
+    font-size: 0.85rem;
     font-weight: 600;
-    color: #ffffff;
+    color: var(--color-text-primary);
   }
 
-  @media (max-width: 1000px) {
-    .meetings__hero-title {
-      text-align: center;
-    }
-
+  @media (max-width: 720px) {
     .meetings__anime-slide {
       flex-direction: column;
-      align-items: center;
-      text-align: center;
     }
 
     .meetings__anime-synopsis {
       max-width: 100%;
-      -webkit-line-clamp: 3;
     }
 
     .meetings__location {
@@ -597,173 +406,12 @@ const schedule = screenings.map((screening, index) => ({
 
     .meetings__location-image {
       width: 100%;
-      border-right: none;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    }
-
-    .meetings__location-rooms {
-      flex-direction: column;
-    }
-  }
-
-  @media (max-width: 768px) {
-    .meetings-content {
-      padding: 1rem;
-      padding-top: 60px;
-      padding-bottom: 1rem;
-    }
-
-    .meetings__punch-image {
-      height: 50vh;
-    }
-
-    .meetings__reze-image {
-      height: 60vh;
-    }
-
-    .meetings__hero-title {
-      font-size: 32px;
-    }
-
-    .meetings__section-title {
-      font-size: 18px;
-    }
-
-    .meetings__section-subtitle {
-      font-size: 11px;
-    }
-
-    .meetings__main {
-      max-width: 100%;
-    }
-
-    .meetings__viewer {
-      max-width: 100%;
-      gap: 0.5rem;
-    }
-
-    .meetings__arrow {
-      width: 40px;
-      height: 40px;
-    }
-
-    .meetings__arrow svg {
-      width: 20px;
-      height: 20px;
-    }
-
-    .meetings__anime-poster {
-      width: 100px;
-      border-radius: 8px;
-    }
-
-    .meetings__anime-date {
-      font-size: 10px;
-    }
-
-    .meetings__anime-title {
-      font-size: 16px;
-    }
-
-    .meetings__anime-score {
-      font-size: 12px;
-    }
-
-    .meetings__anime-episodes {
-      font-size: 10px;
-      padding: 4px 8px;
-      border-radius: 4px;
-    }
-
-    .meetings__anime-synopsis {
-      font-size: 12px;
-      max-width: 100%;
-      -webkit-line-clamp: 2;
-    }
-
-    .meetings__thumbnails {
-      gap: 6px;
-    }
-
-    .meetings__thumbnail {
-      width: 36px;
-      border-radius: 4px;
-    }
-
-    .meetings__location {
-      border-radius: 12px;
-    }
-
-    .meetings__location-image {
-      display: none;
-    }
-
-    .meetings__location-info {
-      padding: 1rem;
-    }
-
-    .meetings__location-name {
-      font-size: 14px;
-    }
-
-    .meetings__location-address {
-      font-size: 12px;
-    }
-
-    .meetings__location-room {
-      padding: 0.5rem 0.75rem;
-      border-radius: 8px;
-    }
-
-    .meetings__location-room-label {
-      font-size: 9px;
-    }
-
-    .meetings__location-room-value {
-      font-size: 12px;
+      height: 180px;
     }
   }
 </style>
 
 <script>
-
-  (async function() {
-    const cells = document.querySelectorAll('.meetings__bg-cell') as NodeListOf<HTMLElement>;
-    if (cells.length === 0) return;
-
-    try {
-
-      const [res1, res2, res3, res4] = await Promise.all([
-        fetch('https://api.jikan.moe/v4/top/anime?limit=25&page=1'),
-        fetch('https://api.jikan.moe/v4/top/anime?limit=25&page=2'),
-        fetch('https://api.jikan.moe/v4/top/anime?limit=25&page=3'),
-        fetch('https://api.jikan.moe/v4/top/anime?limit=25&page=4')
-      ]);
-      const [json1, json2, json3, json4] = await Promise.all([
-        res1.json(), res2.json(), res3.json(), res4.json()
-      ]);
-
-      const extractImages = (json: any) => json.data
-        ?.map((a: any) => a.images?.jpg?.large_image_url || a.images?.jpg?.image_url)
-        .filter(Boolean) || [];
-
-      const allImages = [
-        ...extractImages(json1), ...extractImages(json2),
-        ...extractImages(json3), ...extractImages(json4)
-      ];
-      const uniqueImages = [...new Set(allImages)];
-      if (uniqueImages.length === 0) return;
-
-      const shuffled = [...uniqueImages].sort(() => Math.random() - 0.5);
-
-      cells.forEach((cell, i) => {
-        cell.style.backgroundImage = `url(${shuffled[i % shuffled.length]})`;
-      });
-    } catch (e) {
-      console.error('Failed to load anime background images:', e);
-    }
-  })();
-
   (function() {
     const slides = document.querySelectorAll('.meetings__anime-slide') as NodeListOf<HTMLElement>;
     const thumbnails = document.querySelectorAll('.meetings__thumbnail') as NodeListOf<HTMLElement>;
@@ -776,51 +424,25 @@ const schedule = screenings.map((screening, index) => ({
     const totalSlides = slides.length;
 
     function goToSlide(index: number) {
-
       if (index < 0) index = totalSlides - 1;
       if (index >= totalSlides) index = 0;
 
       slides.forEach((slide, i) => {
-        slide.classList.remove('meetings__anime-slide--active');
-        if (i === index) {
-          slide.classList.add('meetings__anime-slide--active');
-        }
+        slide.classList.toggle('meetings__anime-slide--active', i === index);
       });
 
       thumbnails.forEach((thumb, i) => {
-        thumb.classList.remove('meetings__thumbnail--active');
-        if (i === index) {
-          thumb.classList.add('meetings__thumbnail--active');
-        }
+        thumb.classList.toggle('meetings__thumbnail--active', i === index);
       });
 
       currentIndex = index;
     }
 
-    if (leftArrow) {
-      leftArrow.addEventListener('click', () => {
-        goToSlide(currentIndex - 1);
-      });
-    }
-
-    if (rightArrow) {
-      rightArrow.addEventListener('click', () => {
-        goToSlide(currentIndex + 1);
-      });
-    }
+    leftArrow?.addEventListener('click', () => goToSlide(currentIndex - 1));
+    rightArrow?.addEventListener('click', () => goToSlide(currentIndex + 1));
 
     thumbnails.forEach((thumb, i) => {
-      thumb.addEventListener('click', () => {
-        goToSlide(i);
-      });
-    });
-
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowLeft') {
-        goToSlide(currentIndex - 1);
-      } else if (e.key === 'ArrowRight') {
-        goToSlide(currentIndex + 1);
-      }
+      thumb.addEventListener('click', () => goToSlide(i));
     });
   })();
 </script>

@@ -64,83 +64,7 @@ const navItems = site.nav;
   </div>
 </nav>
 
-<div class="teleport-loader" data-teleport-loader>
-  <div class="teleport-loader__content">
-    <img src="/images/Icons/chibi.webp" alt="" class="teleport-loader__icon" />
-    <div class="teleport-loader__bar">
-      <div class="teleport-loader__bar-fill"></div>
-    </div>
-  </div>
-</div>
-
 <style>
-  .teleport-loader {
-    position: fixed;
-    inset: 0;
-    z-index: 10000;
-    background-color: #0a0a0a;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.15s ease, visibility 0.15s ease;
-  }
-
-  .teleport-loader[data-active="true"] {
-    opacity: 1;
-    visibility: visible;
-  }
-
-  .teleport-loader__content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1.5rem;
-  }
-
-  .teleport-loader__icon {
-    width: 56px;
-    height: 56px;
-    object-fit: contain;
-    opacity: 0;
-    transform: scale(0.8);
-  }
-
-  .teleport-loader[data-active="true"] .teleport-loader__icon {
-    animation: iconReveal 0.3s ease forwards;
-  }
-
-  @keyframes iconReveal {
-    to {
-      opacity: 1;
-      transform: scale(1);
-    }
-  }
-
-  .teleport-loader__bar {
-    width: 120px;
-    height: 2px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 1px;
-    overflow: hidden;
-  }
-
-  .teleport-loader__bar-fill {
-    height: 100%;
-    width: 0;
-    background: rgba(255, 255, 255, 0.8);
-    border-radius: 1px;
-  }
-
-  .teleport-loader[data-active="true"] .teleport-loader__bar-fill {
-    animation: barProgress 0.4s ease forwards;
-  }
-
-  @keyframes barProgress {
-    to { width: 100%; }
-  }
-
   .navigation-menu {
     position: fixed;
     inset: 0;
@@ -341,85 +265,43 @@ const navItems = site.nav;
 </style>
 
 <script>
+  // Sections now live in normal document flow with real ids, so navigation
+  // is just a plain anchor jump (smooth-scrolled via CSS). The only extra
+  // work needed is: if a hash link is clicked from a page that isn't the
+  // homepage, send the visitor to the homepage first, then let the browser
+  // scroll to the anchor once it lands.
   document.addEventListener('DOMContentLoaded', () => {
-    const loader = document.querySelector('[data-teleport-loader]') as HTMLElement;
+    const menu = document.querySelector('[data-menu]');
 
-    const sectionPositions: Record<string, number> = {
-      '/': 0,
-      '#about-section': 0.06,
-      '#meetings-section': 0.12,
-      '#activities-section': 0.19,
-      '#partners-section': 0.39,
-      '#subgroups-section': 0.50,
-      '#subgroup-animusic': 0.57,
-      '#subgroup-cosplay': 0.66,
-      '#subgroup-oldanime': 0.75,
-      '#subgroup-bookclub': 0.83,
-      '#subgroup-rainbow': 0.93,
-    };
-
-    const teleportTo = (position: number) => {
-      if (loader) {
-        loader.setAttribute('data-active', 'true');
-      }
-
-      const menu = document.querySelector('[data-menu]');
+    const closeMenu = () => {
       if (menu) {
         menu.setAttribute('data-open', 'false');
         document.body.style.overflow = '';
       }
-
-      setTimeout(() => {
-        const docHeight = document.documentElement.scrollHeight;
-        const viewportHeight = window.innerHeight;
-        const maxScroll = docHeight - viewportHeight;
-        const targetScroll = maxScroll * position;
-
-        window.scrollTo(0, targetScroll);
-
-        if (window.ScrollTrigger) {
-          window.ScrollTrigger.update();
-          requestAnimationFrame(() => {
-            window.ScrollTrigger.update();
-          });
-        }
-
-        setTimeout(() => {
-          if (loader) {
-            loader.setAttribute('data-active', 'false');
-          }
-        }, 400);
-      }, 400);
     };
 
-    Object.entries(sectionPositions).forEach(([href, position]) => {
-      const links = document.querySelectorAll(`a[href="${href}"]`);
+    document.querySelectorAll('a[href^="#"]').forEach((link) => {
+      link.addEventListener('click', (e) => {
+        const href = link.getAttribute('href') || '';
+        if (href === '#') return;
 
-      links.forEach(link => {
-        link.addEventListener('click', (e) => {
+        if (window.location.pathname !== '/') {
           e.preventDefault();
+          window.location.href = `/${href}`;
+          return;
+        }
 
-          if (window.location.pathname !== '/') {
-            if (href.startsWith('#')) {
-              sessionStorage.setItem('teleportTo', String(position));
-              window.location.href = '/';
-            } else if (href === '/') {
-              window.location.href = '/';
-            }
-            return;
-          }
-
-          teleportTo(position);
-        });
+        closeMenu();
       });
     });
 
-    const storedPosition = sessionStorage.getItem('teleportTo');
-    if (storedPosition && window.location.pathname === '/') {
-      sessionStorage.removeItem('teleportTo');
-      setTimeout(() => {
-        teleportTo(parseFloat(storedPosition));
-      }, 100);
+    if (window.location.pathname === '/' && window.location.hash) {
+      const target = document.querySelector(window.location.hash);
+      if (target) {
+        requestAnimationFrame(() => {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+      }
     }
   });
 </script>

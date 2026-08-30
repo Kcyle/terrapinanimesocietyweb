@@ -18,15 +18,4 @@ import NowScreening from '../components/NowScreening.astro';
 
 <script>
   import '../animations/index';
-  import { initScreeningAnimations } from '../animations/screening';
-
-  if (typeof window !== 'undefined') {
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', () => {
-        initScreeningAnimations();
-      });
-    } else {
-      initScreeningAnimations();
-    }
-  }
 </script>

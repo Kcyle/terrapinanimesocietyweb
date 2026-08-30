@@ -1,0 +1,228 @@
+---
+import home from '../data/home.json';
+import site from '../data/site.json';
+
+const { about } = home;
+const aboutHtml = about.descriptionHtml.replace('{discordUrl}', site.discordUrl);
+---
+
+<section class="section about" id="about-section">
+  <div class="section__inner about__inner">
+    <div class="about__copy">
+      <p class="section__eyebrow">02 / About</p>
+      <h2 class="section__title">{about.heading}</h2>
+      <p class="about__lede" set:html={aboutHtml} />
+
+      <div class="about__detail">
+        <span class="about__detail-label">{about.meetingsLabel}</span>
+        <p class="about__detail-text">{about.meetingsText}</p>
+      </div>
+
+      <div class="about__detail">
+        <!-- <span class="about__detail-label">{about.subgroupsLabel}</span>
+        <div class="about__chips">
+          {about.subgroupLinks.map((link) => (
+            <a href={link.url} class="about__chip">{link.label}</a>
+          ))}
+        </div> -->
+      </div>
+
+      <div class="about__detail">
+        <span class="about__detail-label">{about.eventsLabel}</span>
+        <div class="about__chips">
+          {about.eventLinks.map((event) => (
+            <a href={event.url} class="about__chip about__chip--event">{event.label} <span>{event.note}</span></a>
+          ))}
+        </div>
+      </div>
+
+      <div class="about__ctas">
+        <a href={site.joinUrl} target="_blank" rel="noopener noreferrer" class="about__button about__button--primary">{about.joinLabel}</a>
+        <a href={about.contactUrl} class="about__button about__button--secondary">{about.contactLabel}</a>
+      </div>
+    </div>
+
+    <div class="about__gallery">
+      {about.galleryImages.slice(0, 6).map((image) => (
+        <div class="about__gallery-item">
+          <img src={image.src} alt={image.alt} loading="lazy" />
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .about {
+    background-color: var(--panel-bg-alt);
+  }
+
+  .about__inner {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  .about__lede {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--color-text-secondary);
+    max-width: 46ch;
+  }
+
+  .about__lede :global(a) {
+    color: #ffffff;
+    font-weight: 600;
+  }
+
+  .about__lede :global(.about-content__highlight) {
+    color: #ffffff;
+    font-weight: 500;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+
+  .about__lede :global(.about-content__discord-link) {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 8px;
+    font-size: 0.9em;
+    font-weight: 600;
+    color: #ffffff;
+    background: #5865F2;
+    border-radius: 4px;
+    text-decoration: none;
+  }
+
+  .about__detail {
+    margin-top: 1.75rem;
+  }
+
+  .about__detail-label {
+    display: block;
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    margin-bottom: 0.5rem;
+  }
+
+  .about__detail-text {
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    max-width: 46ch;
+    margin: 0;
+  }
+
+  .about__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+
+  .about__chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.5rem 0.9rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    background: var(--color-bg-tertiary);
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    text-decoration: none;
+    transition: border-color 0.15s ease;
+  }
+
+  .about__chip:hover {
+    border-color: var(--color-border-hover);
+  }
+
+  .about__chip--event span {
+    color: var(--accent);
+    font-size: 0.75em;
+  }
+
+  .about__ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 2rem;
+  }
+
+  .about__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.85rem 1.5rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+  }
+
+  .about__button--primary {
+    background-color: var(--accent);
+    color: #ffffff;
+    border: 1px solid var(--accent);
+  }
+
+  .about__button--primary:hover {
+    background-color: var(--accent-dark);
+  }
+
+  .about__button--secondary {
+    background: transparent;
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .about__button--secondary:hover {
+    border-color: rgba(255, 255, 255, 0.6);
+  }
+
+  .about__gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: 140px;
+    gap: 0.75rem;
+  }
+
+  .about__gallery-item {
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .about__gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+
+  .about__gallery-item:hover img {
+    transform: scale(1.04);
+  }
+
+  .about__gallery-item:first-child {
+    grid-column: span 2;
+    grid-row: span 2;
+  }
+
+  @media (max-width: 900px) {
+    .about__inner {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .about__gallery {
+      grid-auto-rows: 100px;
+    }
+  }
+</style>

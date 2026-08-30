@@ -44,9 +44,9 @@
       {
         "title": "Scarlet",
         "image": "/images/Photos/scarlet.webp",
-        "status": "Upcoming",
-        "featured": false,
-        "upcoming": true
+        "status": "Screened",
+        "featured": true,
+        "upcoming": false
       }
     ]
   }

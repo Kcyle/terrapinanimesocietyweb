@@ -2,12 +2,14 @@
   "metaDescription": "Terrapin Anime Society at the University of Maryland",
   "discordUrl": "https://discord.gg/fzKBsnS",
   "joinUrl": "https://terplink.umd.edu/organization/terrapin-anime-society",
+  "contactEmail": "terrapinanimesociety@gmail.com",
   "pageTitles": {
     "home": "Terrapin Anime Society",
     "about": "About | Terrapin Anime Society",
     "meetings": "Meetings | Terrapin Anime Society",
     "kamecon": "KAMECON 2025 | Terrapin Anime Society",
-    "terpcon": "TERPCON 2026 | Terrapin Anime Society"
+    "terpcon": "TERPCON 2026 | Terrapin Anime Society",
+    "contact": "Contact | Terrapin Anime Society"
   },
   "nav": [
     {

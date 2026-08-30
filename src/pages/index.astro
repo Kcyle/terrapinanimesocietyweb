@@ -5,8 +5,10 @@ import Header from '../components/navigation/Header.astro';
 import Footer from '../components/Footer.astro';
 import HeroSection from '../sections/HeroSection.astro';
 import HeroContent from '../components/HeroContent.astro';
+import AboutSection from '../components/AboutSection.astro';
 import NowScreening from '../components/NowScreening.astro';
 import ActivitiesSection from '../components/ActivitiesSection.astro';
+import SubgroupsSection from '../components/SubgroupsSection.astro';
 import PartnersSection from '../components/PartnersSection.astro';
 ---
 
@@ -16,10 +18,14 @@ import PartnersSection from '../components/PartnersSection.astro';
   <main>
     <HeroSection>
       <HeroContent />
-      <NowScreening slot="meetings" />
-      <ActivitiesSection slot="activities" />
-      <PartnersSection slot="partners" />
     </HeroSection>
+
+    <AboutSection />
+    <NowScreening />
+    <SubgroupsSection />
+    <PartnersSection />
+    <ActivitiesSection />
+    
   </main>
 
   <Footer />
@@ -27,15 +33,4 @@ import PartnersSection from '../components/PartnersSection.astro';
 
 <script>
   import '../animations/index';
-  import { initScreeningAnimations } from '../animations/screening';
-
-  if (typeof window !== 'undefined') {
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', () => {
-        initScreeningAnimations();
-      });
-    } else {
-      initScreeningAnimations();
-    }
-  }
 </script>
