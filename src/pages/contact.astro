@@ -25,6 +25,18 @@ import Footer from '../components/Footer.astro';
       <div class="contact__main">
         <form class="contact__form" data-contact-form novalidate>
           <div class="contact__field">
+            <label for="contact-email" class="contact__label">Your Email</label>
+            <input
+              type="email"
+              id="contact-email"
+              name="email"
+              class="contact__input"
+              placeholder="you@example.com"
+              required
+            />
+          </div>
+
+          <div class="contact__field">
             <label for="contact-topic" class="contact__label">Topic</label>
             <input
               type="text"
@@ -48,12 +60,9 @@ import Footer from '../components/Footer.astro';
             ></textarea>
           </div>
 
-          <button type="submit" class="contact__submit">Send Message</button>
+          <button type="submit" class="contact__submit" data-contact-submit>Send Message</button>
 
-          <p class="contact__note">
-            Sending opens your email app with this message addressed to
-            <a href={`mailto:${site.contactEmail}`} class="contact__note-link">{site.contactEmail}</a>.
-          </p>
+          <p class="contact__note" data-contact-status role="status" aria-live="polite"></p>
         </form>
       </div>
     </div>
@@ -63,26 +72,68 @@ import Footer from '../components/Footer.astro';
 </BaseLayout>
 
 <script define:vars={{ contactEmail: site.contactEmail }}>
+  // Sends the form via Formspree (https://formspree.io) so this works from a
+  // static site with no backend of its own. Replace FORM_ENDPOINT below with
+  // your own Formspree endpoint URL after creating a free form there — the
+  // "New Form" screen gives you a URL like https://formspree.io/f/xxxxxxxx.
+  const FORM_ENDPOINT = 'https://formspree.io/f/xkjnqeeb';
+
   const form = document.querySelector('[data-contact-form]');
+  const submitButton = document.querySelector('[data-contact-submit]');
+  const statusEl = document.querySelector('[data-contact-status]');
+
+  function setStatus(message, isError) {
+    if (!statusEl) return;
+    statusEl.textContent = message;
+    statusEl.style.color = isError ? '#e0102b' : '#666666';
+  }
 
   if (form) {
-    form.addEventListener('submit', (event) => {
+    form.addEventListener('submit', async (event) => {
       event.preventDefault();
 
+      const emailInput = document.getElementById('contact-email');
       const topicInput = document.getElementById('contact-topic');
       const messageInput = document.getElementById('contact-message');
 
+      const email = emailInput && 'value' in emailInput ? emailInput.value.trim() : '';
       const topic = topicInput && 'value' in topicInput ? topicInput.value.trim() : '';
       const message = messageInput && 'value' in messageInput ? messageInput.value.trim() : '';
 
-      if (!topic || !message) {
+      if (!email || !emailInput.checkValidity()) {
+        setStatus('Enter a valid email before sending.', true);
+        emailInput?.focus();
         return;
       }
 
-      const subject = encodeURIComponent(topic);
-      const body = encodeURIComponent(message);
+      if (!topic || !message) {
+        setStatus('Fill in a topic and a message before sending.', true);
+        return;
+      }
 
-      window.location.href = `mailto:${contactEmail}?subject=${subject}&body=${body}`;
+      submitButton.disabled = true;
+      submitButton.textContent = 'Sending...';
+      setStatus('', false);
+
+      try {
+        const response = await fetch(FORM_ENDPOINT, {
+          method: 'POST',
+          headers: { Accept: 'application/json' },
+          body: new FormData(form),
+        });
+
+        if (response.ok) {
+          form.reset();
+          setStatus(`Message sent. We'll get back to you at ${contactEmail} soon.`, false);
+        } else {
+          setStatus("Couldn't send your message. Try again in a moment.", true);
+        }
+      } catch (error) {
+        setStatus("Couldn't send your message. Check your connection and try again.", true);
+      } finally {
+        submitButton.disabled = false;
+        submitButton.textContent = 'Send Message';
+      }
     });
   }
 </script>
@@ -246,20 +297,17 @@ import Footer from '../components/Footer.astro';
     background-color: #a10c1f;
   }
 
+  .contact__submit:disabled {
+    background-color: #666666;
+    border-color: #666666;
+    cursor: not-allowed;
+  }
+
   .contact__note {
     font-family: 'Inter', sans-serif;
     font-size: 13px;
     color: #666666;
     margin: 0;
-  }
-
-  .contact__note-link {
-    color: #e0102b;
-    text-decoration: none;
-  }
-
-  .contact__note-link:hover {
-    text-decoration: underline;
   }
 
   @media (max-width: 1000px) {
