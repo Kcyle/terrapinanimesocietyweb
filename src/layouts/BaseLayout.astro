@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import site from '../data/site.json';
+import ComingSoonModal from '../components/ComingSoonModal.astro';
 
 interface Props {
   title: string;
@@ -25,5 +26,6 @@ const { title, description = site.metaDescription } = Astro.props;
   </head>
   <body>
     <slot />
+    <ComingSoonModal />
   </body>
 </html>

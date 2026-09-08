@@ -8,7 +8,7 @@ const { list } = subgroups;
   <div class="subgroups__bg" aria-hidden="true">
     <div
       class="subgroups__bg-layer subgroups__bg-layer--a subgroups__bg-layer--visible"
-      style={`background-image: url("${list[0].previewImage}");`}
+      style={`background-image: url("${list[0].previewImage}"); background-size: ${list[0].previewImageFit || 'cover'};`}
       data-subgroups-bg-a
     ></div>
     <div class="subgroups__bg-layer subgroups__bg-layer--b" data-subgroups-bg-b></div>
@@ -43,6 +43,7 @@ const { list } = subgroups;
           data-subgroup-slide
           data-subgroup-index={index}
           data-subgroup-bg={subgroup.previewImage}
+          data-subgroup-bg-fit={subgroup.previewImageFit || 'cover'}
         >
           <h3 class="subgroups__intro-name">{subgroup.name}</h3>
           <p class="subgroups__intro-tagline">{subgroup.tagline}</p>
@@ -123,6 +124,7 @@ const { list } = subgroups;
     inset: 0;
     background-size: cover;
     background-position: center;
+    background-repeat: no-repeat;
     opacity: 0;
     transition: opacity 0.6s ease;
   }
@@ -339,11 +341,13 @@ const { list } = subgroups;
       if (!bgLayerA || !bgLayerB) return;
       const src = slides[index].dataset.subgroupBg;
       if (!src) return;
+      const fit = slides[index].dataset.subgroupBgFit || 'cover';
 
       const incoming = showingLayerA ? bgLayerB : bgLayerA;
       const outgoing = showingLayerA ? bgLayerA : bgLayerB;
 
       incoming.style.backgroundImage = `url("${src}")`;
+      incoming.style.backgroundSize = fit;
       incoming.classList.add('subgroups__bg-layer--visible');
       outgoing.classList.remove('subgroups__bg-layer--visible');
 

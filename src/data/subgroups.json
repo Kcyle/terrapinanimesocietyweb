@@ -7,8 +7,8 @@
       "name": "Animusic",
       "tagline": "Anime Music & J-Music",
       "meets": "Saturdays 4-7pm",
-      "leader": "Adam",
-      "description": "Please check #subgroup-announcements and #animusic in the Discord server for any updates! Any questions please DM ricottarat214",
+      "leader": "Adam (@bepis3206)",
+      "description": "Please check #subgroup-announcements and #animusic in the Discord server for any updates! Any questions please DM bepis3206",
       "previewImage": "/images/Backgrounds/animusic.png",
       "photos": [
         {
@@ -28,72 +28,31 @@
       "name": "Cosplay",
       "tagline": "Workshops & Events",
       "meets": "",
-      "leader": "Nikolai",
-      "description": "A hands on subgroup focused on cosplay workshops and event preparation. Members collaborate on builds, share techniques, and help support major club events like the Maid Café. Check the cosplay channel for updates.",
+      "leader": "Nikolai (@spica)",
+      "description": "A hands on subgroup focused on cosplay workshops and event preparation. Members collaborate on builds, share techniques, and help support major club events like Maid Café and Kamekon. Check the cosplay channel for updates.",
       "previewImage": "/images/Backgrounds/cosplay.jpg",
-      "photos": [
-        {
-          "src": "/images/Photos/Cosplay 1.webp",
-          "alt": "Cosplay photo",
-          "side": "left"
-        },
-        {
-          "src": "/images/Photos/Cosplay 2.webp",
-          "alt": "Cosplay photo",
-          "side": "right"
-        }
-      ]
+      "photos": []
     },
-    {
-      "id": "oldanime",
-      "name": "Old Anime",
-      "tagline": "Classic & Retro",
-      "meets": "",
-      "leader": "Dylan",
-      "description": "A small group for long time anime fans interested in classic series and deeper discussion. Open to anyone who wants to learn more about older anime and its influence.",
-      "previewImage": "/images/Backgrounds/old anime.jpg",
-      "photos": [
-        {
-          "src": "/images/Characters/old1.png",
-          "alt": "Old anime character",
-          "side": "right"
-        },
-        {
-          "src": "/images/Characters/old2.png",
-          "alt": "Old anime character",
-          "side": "left"
-        }
-      ]
-    },
+
     {
       "id": "weeklywatchers",
       "name": "Weekly Watchers",
       "tagline": "Watch Anime Weekly",
       "meets": "",
-      "leader": "",
+      "leader": "Lucas (@thekazaki)",
       "description": "Weekly Watchers is a chill group to unwind after the school week and watch the new seasonal anime with friends!",
-      "previewImage": "/images/Backgrounds/old anime.jpg",
-      "photos": [
-        {
-          "src": "/images/Characters/old1.png",
-          "alt": "Old anime character",
-          "side": "right"
-        },
-        {
-          "src": "/images/Characters/old2.png",
-          "alt": "Old anime character",
-          "side": "left"
-        }
-      ]
+      "previewImage": "/images/Backgrounds/jjk_background.jpeg",
+      "photos": []
     },
     {
       "id": "bookclub",
       "name": "Book Club",
       "tagline": "Manga & Light Novels",
       "meets": "",
-      "leader": "Joseph",
-      "description": "A relaxed subgroup for manga, light novels, and anime related reading. Flexible and open to growth. If you are interested in joining or helping lead, contact Joseph.",
-      "previewImage": "/images/Backgrounds/book club.png",
+      "leader": "Joseph (@ojojostar)",
+      "description": "A subgroup for reading manga! The book club subgroup functions like a regular book club where a short manga is read every few weeks and discussion is hosted in the #book club channel in our discord. Suggestions for what to read are always welcome!",
+      "previewImage": "/images/Backgrounds/manga_club.png",
+      "previewImageFit": "contain",
       "photos": []
     },
     {
@@ -101,9 +60,9 @@
       "name": "Rainbow",
       "tagline": "LGBTQ+ Community",
       "meets": "",
-      "leader": "Corvidae",
+      "leader": "Corvidae (@corvid_queen)",
       "description": "A welcoming space for LGBTQ+ anime fans and allies. Open to everyone and focused on community connection, representation, and discussion.",
-      "previewImage": "/images/Backgrounds/rainbow.png",
+      "previewImage": "/images/Backgrounds/rainbow_background.png",
       "photos": []
     },
     {
@@ -114,16 +73,6 @@
       "leader": "Aahil (@DaTiggerDude)",
       "description": "Dub your favorite anime scenes using your own unique voice! Whether you are new to voice acting or not, participate in fun VA activities with us and immerse yourself in the community. Pick up the dubbers role now if interested!",
       "previewImage": "/images/Backgrounds/dubbers.png",
-      "photos": []
-    },
-    {
-      "id": "visual",
-      "name": "Visual Novels",
-      "tagline": "Visuals n Novels",
-      "meets": "",
-      "leader": "Alex",
-      "description": "We like to novel",
-      "previewImage": "/images/Backgrounds/visual.png",
       "photos": []
     }
   ]

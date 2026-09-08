@@ -9,10 +9,14 @@ const { images = home.cardCarousel } = Astro.props;
 const duplicatedImages = [...images, ...images];
 ---
 
+<a href="#card-carousel-end" class="card-carousel__skip">Skip card carousel</a>
+
 <div class="card-carousel" data-card-carousel>
   <div class="card-carousel__track" data-carousel-track>
-    {duplicatedImages.map((src, index) => (
-      <div class="card-carousel__slide" data-carousel-slide>
+    {duplicatedImages.map((src, index) => {
+      const isDuplicate = index >= images.length;
+      return (
+      <div class="card-carousel__slide" data-carousel-slide aria-hidden={isDuplicate}>
         <img
           src={src}
           alt={`Anime card ${(index % images.length) + 1}`}
@@ -25,6 +29,7 @@ const duplicatedImages = [...images, ...images];
             download={`card-${(index % images.length) + 1}`}
             class="card-carousel__download"
             aria-label={`Download card ${(index % images.length) + 1}`}
+            tabindex={isDuplicate ? -1 : 0}
           >
             <svg class="card-carousel__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
@@ -35,11 +40,33 @@ const duplicatedImages = [...images, ...images];
           </a>
         </div>
       </div>
-    ))}
+      );
+    })}
   </div>
 </div>
+<span id="card-carousel-end"></span>
 
 <style>
+  .card-carousel__skip {
+    position: absolute;
+    top: -100px;
+    left: 0;
+    z-index: 10;
+    padding: 0.6rem 1rem;
+    background-color: var(--accent);
+    color: #ffffff;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border-radius: 0 0 8px 0;
+    text-decoration: none;
+    transition: top 0.15s ease;
+  }
+
+  .card-carousel__skip:focus {
+    top: 0;
+  }
+
   .card-carousel {
     position: relative;
     width: 100%;
@@ -95,7 +122,8 @@ const duplicatedImages = [...images, ...images];
     pointer-events: none;
   }
 
-  .card-carousel__slide:hover .card-carousel__overlay {
+  .card-carousel__slide:hover .card-carousel__overlay,
+  .card-carousel__slide:focus-within .card-carousel__overlay {
     opacity: 1;
     pointer-events: auto;
   }
@@ -135,7 +163,8 @@ const duplicatedImages = [...images, ...images];
     }
   }
 
-  .card-carousel:hover .card-carousel__track {
+  .card-carousel:hover .card-carousel__track,
+  .card-carousel:focus-within .card-carousel__track {
     animation-play-state: paused;
   }
 
