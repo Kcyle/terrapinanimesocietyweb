@@ -1,0 +1,747 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import site from '../../data/site.json';
+import Header from '../../components/navigation/Header.astro';
+import kamecon from '../../data/kamecon.json';
+
+const { vendors } = kamecon;
+---
+
+<BaseLayout title={site.pageTitles.kamecon}>
+  <Header />
+
+  <main class="kamecon-page">
+    <div class="kamecon-section">
+      <div class="kamecon-section__bg"></div>
+      <div class="kamecon-section__content">
+        <div class="kamecon-section__left">
+          <div class="kamecon-carousel" data-kamecon-carousel>
+            <div class="kamecon-carousel__container">
+              <div class="kamecon-carousel__track" data-kamecon-track>
+                {kamecon.photos.map((photo) => (
+                  <div class="kamecon-carousel__slide"><img src={photo} alt="KAMECON Photo" /></div>
+                ))}
+              </div>
+              <div class="kamecon-carousel__overlay">
+                <span class="kamecon-carousel__overlay-text">{kamecon.highlightsLabel}</span>
+              </div>
+            </div>
+            <div class="kamecon-carousel__dots" data-kamecon-dots></div>
+          </div>
+        </div>
+        <div class="kamecon-section__right">
+          <img src={kamecon.mascotImage} alt="Kamecon Turtle Mascot" class="kamecon-turtle" data-kamecon-turtle />
+
+          <h1 class="kamecon-section__title" data-kamecon-title>{kamecon.title}</h1>
+
+          <div class="kamecon-section__info-row">
+            <p class="kamecon-section__description" data-kamecon-desc>{kamecon.description}</p>
+
+            <div class="kamecon-section__buttons" data-kamecon-buttons>
+              <a href={kamecon.concertVideosUrl} target="_blank" rel="noopener noreferrer" class="kamecon-section__btn kamecon-section__btn--primary">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/>
+                </svg>
+                {kamecon.concertVideosLabel}
+              </a>
+              <a href={kamecon.photosUrl} target="_blank" rel="noopener noreferrer" class="kamecon-section__btn kamecon-section__btn--secondary">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                  <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                  <polyline points="21 15 16 10 5 21"></polyline>
+                </svg>
+                {kamecon.photosLabel}
+              </a>
+            </div>
+          </div>
+          <div class="kamecon-section__vendors" data-kamecon-vendors>
+            <h3 class="kamecon-section__vendors-title">{kamecon.vendorsHeading}</h3>
+            <div class="kamecon-section__vendors-scroll">
+              <div class="kamecon-section__vendors-grid">
+                {vendors.map((vendor) => (
+                  <div class="kamecon-vendor-card">
+                    <h4 class="kamecon-vendor-card__name">{vendor.name}</h4>
+                    {vendor.social ? (
+                      <a href={vendor.social} target="_blank" rel="noopener noreferrer" class="kamecon-vendor-card__social">
+                        {vendor.socialDisplay}
+                      </a>
+                    ) : null}
+                    <p class="kamecon-vendor-card__desc">{vendor.description}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</BaseLayout>
+
+<script>
+  import gsap from 'gsap';
+  import { initMenuAnimations } from '../../animations/menu';
+
+  function initPageAnimations() {
+    initMenuAnimations();
+    const carousel = document.querySelector('[data-kamecon-carousel]');
+    const title = document.querySelector('[data-kamecon-title]');
+    const desc = document.querySelector('[data-kamecon-desc]');
+    const buttons = document.querySelector('[data-kamecon-buttons]');
+    const vendors = document.querySelector('[data-kamecon-vendors]');
+    const turtle = document.querySelector('[data-kamecon-turtle]');
+
+    gsap.set(carousel, { x: -100, opacity: 0 });
+    gsap.set(title, { y: -100, opacity: 0 });
+    gsap.set(desc, { y: 100, opacity: 0 });
+    gsap.set(buttons, { y: 100, opacity: 0 });
+    gsap.set(vendors, { x: 100, opacity: 0 });
+    gsap.set(turtle, { x: 100, opacity: 0 });
+
+    const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+
+    tl.to(carousel, { x: 0, opacity: 1, duration: 0.8 }, 0.1)
+      .to(title, { y: 0, opacity: 1, duration: 0.7 }, 0.2)
+      .to(desc, { y: 0, opacity: 1, duration: 0.6 }, 0.4)
+      .to(buttons, { y: 0, opacity: 1, duration: 0.6 }, 0.5)
+      .to(vendors, { x: 0, opacity: 1, duration: 0.7 }, 0.5)
+      .to(turtle, { x: 0, opacity: 1, duration: 0.6 }, 0.6);
+
+  }
+
+  function initCarousel() {
+    const track = document.querySelector('[data-kamecon-track]') as HTMLElement;
+    const dotsContainer = document.querySelector('[data-kamecon-dots]') as HTMLElement;
+    const carousel = document.querySelector('[data-kamecon-carousel]') as HTMLElement;
+    if (!track || !dotsContainer || !carousel) return;
+
+    const slides = track.querySelectorAll('.kamecon-carousel__slide');
+    const totalSlides = slides.length;
+    let currentIndex = 0;
+    let isPaused = false;
+    let intervalId: number | null = null;
+
+    for (let i = 0; i < totalSlides; i++) {
+      const dot = document.createElement('button');
+      dot.className = 'kamecon-carousel__dot' + (i === 0 ? ' active' : '');
+      dot.addEventListener('click', () => goToSlide(i));
+      dotsContainer.appendChild(dot);
+    }
+
+    const dots = dotsContainer.querySelectorAll('.kamecon-carousel__dot');
+
+    function goToSlide(index: number) {
+      currentIndex = index;
+      track.style.transform = `translateX(-${index * 100}%)`;
+      dots.forEach((dot, i) => {
+        dot.classList.toggle('active', i === index);
+      });
+    }
+
+    function startInterval() {
+      if (intervalId) return;
+      intervalId = window.setInterval(() => {
+        if (!isPaused) {
+          currentIndex = (currentIndex + 1) % totalSlides;
+          goToSlide(currentIndex);
+        }
+      }, 4000);
+    }
+
+    function stopInterval() {
+      if (intervalId) {
+        clearInterval(intervalId);
+        intervalId = null;
+      }
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            isPaused = false;
+            startInterval();
+          } else {
+            isPaused = true;
+            stopInterval();
+          }
+        });
+      },
+      { threshold: 0, rootMargin: '50px' }
+    );
+
+    observer.observe(carousel);
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        isPaused = true;
+        stopInterval();
+      } else {
+        const rect = carousel.getBoundingClientRect();
+        const inViewport = rect.top < window.innerHeight && rect.bottom > 0;
+        if (inViewport) {
+          isPaused = false;
+          startInterval();
+        }
+      }
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+      initPageAnimations();
+      initCarousel();
+    });
+  } else {
+    initPageAnimations();
+    initCarousel();
+  }
+</script>
+
+<style>
+  .kamecon-page {
+    height: 100vh;
+    background-color: #0a0a0a;
+    overflow: hidden;
+  }
+
+  .kamecon-section {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    background-color: #0a0a0a;
+  }
+
+  .kamecon-section__bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('/images/Backgrounds/kamecon.webp');
+    background-size: cover;
+    background-position: center;
+    z-index: 0;
+  }
+
+  .kamecon-section__bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(10, 10, 10, 0.85);
+  }
+
+  .kamecon-section__content {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100vh;
+    padding: 7.41vh 2.5vw 5.93vh 2.5vw;
+    box-sizing: border-box;
+    display: flex;
+    gap: 2.5vw;
+    overflow: hidden;
+  }
+
+  .kamecon-section__left {
+    flex: 0 0 38%;
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 7.41vh - 5.93vh);
+  }
+
+  .kamecon-carousel {
+    position: relative;
+    width: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    opacity: 0;
+    transform: translateX(-100px);
+  }
+
+  .kamecon-section__title {
+    opacity: 0;
+    transform: translateY(-100px);
+  }
+
+  .kamecon-section__description {
+    opacity: 0;
+    transform: translateY(100px);
+  }
+
+  .kamecon-section__buttons {
+    opacity: 0;
+    transform: translateY(100px);
+  }
+
+  .kamecon-section__vendors {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+
+  .kamecon-turtle {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+
+  .kamecon-carousel__container {
+    position: relative;
+    width: 100%;
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+    border-radius: 1vw;
+    background: #111;
+  }
+
+  .kamecon-carousel__container::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 1vw;
+    pointer-events: none;
+    border: 0.04vw solid rgba(255, 255, 255, 0.1);
+    z-index: 5;
+  }
+
+  .kamecon-carousel__track {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    height: 100%;
+    transition: transform 0.6s cubic-bezier(0.25, 0.1, 0.25, 1);
+  }
+
+  .kamecon-carousel__slide {
+    flex: 0 0 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .kamecon-carousel__slide img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .kamecon-carousel__overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 3.56vh 1.33vw 1.78vh;
+    background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 100%);
+    pointer-events: none;
+    z-index: 3;
+    border-radius: 0 0 1vw 1vw;
+  }
+
+  .kamecon-carousel__overlay-text {
+    font-family: 'Inter', sans-serif;
+    font-size: 2vw;
+    font-weight: 700;
+    color: #ffffff;
+  }
+
+  .kamecon-carousel__dots {
+    display: flex;
+    justify-content: center;
+    gap: 0.33vw;
+    margin-top: 1.19vh;
+  }
+
+  .kamecon-carousel__dot {
+    width: 0.42vw;
+    height: 0.42vw;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 0;
+  }
+
+  .kamecon-carousel__dot:hover {
+    background: rgba(255, 255, 255, 0.5);
+  }
+
+  .kamecon-carousel__dot.active {
+    background: #ef5350;
+    transform: scale(1.2);
+  }
+
+  .kamecon-section__right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding-right: 1.33vw;
+    overflow: visible;
+    position: relative;
+  }
+
+  .kamecon-turtle {
+    position: absolute;
+    bottom: 48vh;
+    right: 1.67vw;
+    width: 9.17vw;
+    height: auto;
+    z-index: 10;
+    pointer-events: none;
+  }
+
+  .kamecon-section__title {
+    font-family: 'Inter', sans-serif;
+    font-size: 6.67vw;
+    font-weight: 900;
+    line-height: 0.85;
+    color: #ef5350;
+    letter-spacing: -0.04em;
+    margin: 0 0 1.11vh 0;
+    text-transform: uppercase;
+    text-shadow: 0.17vw 0.17vw 0px rgba(0, 0, 0, 0.5), 0.33vw 0.33vw 0px rgba(0, 0, 0, 0.25);
+    flex-shrink: 0;
+  }
+
+  .kamecon-section__info-row {
+    display: flex;
+    flex-direction: column;
+    gap: 1.19vh;
+    margin-bottom: 1.19vh;
+    flex-shrink: 0;
+  }
+
+  .kamecon-section__description {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.92vw;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.7;
+    margin: 0 0 1.11vh 0;
+  }
+
+  .kamecon-section__buttons {
+    display: flex;
+    gap: 0.67vw;
+    flex-wrap: wrap;
+  }
+
+  .kamecon-section__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4vw;
+    padding: 1.19vh 1.2vw;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.67vw;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 0.5vw;
+    transition: all 0.3s ease;
+  }
+
+  .kamecon-section__btn svg {
+    width: 0.83vw;
+    height: 0.83vw;
+  }
+
+  .kamecon-section__btn--primary {
+    background: #ef5350;
+    color: #ffffff;
+    border: 2px solid #ef5350;
+  }
+
+  .kamecon-section__btn--primary:hover {
+    background: #e53935;
+    border-color: #e53935;
+    transform: translateY(-2px);
+  }
+
+  .kamecon-section__btn--secondary {
+    background: transparent;
+    color: #ffffff;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .kamecon-section__btn--secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: translateY(-2px);
+  }
+
+  .kamecon-section__vendors {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    margin-top: 1.19vh;
+  }
+
+  .kamecon-section__vendors-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.17vw;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0 0 0.74vh 0;
+  }
+
+  .kamecon-section__vendors-scroll {
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(239, 83, 80, 0.3) rgba(0, 0, 0, 0.2);
+    padding-right: 0.33vw;
+    max-height: calc(19.26vh * 3 + 1.19vh * 2 + 0.15vh);
+  }
+
+  .kamecon-section__vendors-scroll::-webkit-scrollbar {
+    width: 0.25vw;
+  }
+
+  .kamecon-section__vendors-scroll::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 0.125vw;
+  }
+
+  .kamecon-section__vendors-scroll::-webkit-scrollbar-thumb {
+    background: rgba(239, 83, 80, 0.4);
+    border-radius: 0.125vw;
+  }
+
+  .kamecon-section__vendors-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(10.83vw, 1fr));
+    gap: 0.67vw;
+  }
+
+  .kamecon-vendor-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    padding: 1.25vw;
+    background: rgba(15, 15, 15, 0.95);
+    border: 0.08vw solid rgba(239, 83, 80, 0.4);
+    border-radius: 0.67vw;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+  }
+
+  .kamecon-vendor-card:hover {
+    background: rgba(25, 25, 25, 0.98);
+    border-color: rgba(239, 83, 80, 0.7);
+    transform: translateY(-3px);
+  }
+
+  .kamecon-vendor-card__name {
+    font-family: 'Inter', sans-serif;
+    font-size: 1vw;
+    font-weight: 800;
+    color: #ffffff;
+    margin: 0 0 0.37vh 0;
+    line-height: 1.2;
+    max-width: 100%;
+  }
+
+  .kamecon-vendor-card__social {
+    display: inline-block;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.63vw;
+    font-weight: 500;
+    color: #ff6659;
+    text-decoration: none;
+    transition: color 0.2s ease;
+    margin-bottom: 0.56vh;
+    word-break: break-word;
+    max-width: 100%;
+  }
+
+  .kamecon-vendor-card__social:hover {
+    color: #ff8a80;
+    text-decoration: underline;
+  }
+
+  .kamecon-vendor-card__desc {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.67vw;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.5;
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  @media (max-width: 1100px) {
+    .kamecon-section__content {
+      padding: 90px 2rem 2rem 2rem;
+      gap: 2rem;
+    }
+
+    .kamecon-turtle {
+      width: 180px;
+    }
+
+    .kamecon-section__title {
+      font-size: 100px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .kamecon-section__content {
+      flex-direction: column;
+      padding: 90px 1.5rem 1.5rem 1.5rem;
+      gap: 1.5rem;
+      overflow-y: auto;
+    }
+
+    .kamecon-turtle {
+      width: 120px;
+      top: -20px;
+      right: -10px;
+    }
+
+    .kamecon-section__left,
+    .kamecon-section__right {
+      flex: none;
+      height: auto;
+    }
+
+    .kamecon-section__left {
+      align-items: center;
+      text-align: center;
+    }
+
+    .kamecon-section__title {
+      font-size: 70px;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    .kamecon-carousel {
+      max-width: 450px;
+      height: 300px;
+      flex: none;
+    }
+
+    .kamecon-carousel__container {
+      border-radius: 16px;
+    }
+
+    .kamecon-carousel__overlay-text {
+      font-size: 28px;
+    }
+
+    .kamecon-section__right {
+      padding-right: 0;
+      align-items: center;
+      text-align: center;
+    }
+
+    .kamecon-section__info-row {
+      align-items: center;
+    }
+
+    .kamecon-section__description {
+      font-size: 16px;
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    .kamecon-section__buttons {
+      justify-content: center;
+    }
+
+    .kamecon-section__vendors-title {
+      font-size: 20px;
+      margin-bottom: 12px;
+    }
+
+    .kamecon-section__vendors-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .kamecon-vendor-card {
+      padding: 12px;
+      border-radius: 10px;
+    }
+
+    .kamecon-vendor-card__name {
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+
+    .kamecon-vendor-card__social {
+      font-size: 11px;
+      margin-bottom: 6px;
+    }
+
+    .kamecon-vendor-card__desc {
+      font-size: 12px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .kamecon-section__content {
+      padding: 80px 1rem 1rem 1rem;
+    }
+
+    .kamecon-turtle {
+      width: 80px;
+      top: -30px;
+      right: -5px;
+    }
+
+    .kamecon-section__title {
+      font-size: 50px;
+    }
+
+    .kamecon-carousel {
+      max-width: 100%;
+      height: 220px;
+    }
+
+    .kamecon-carousel__overlay-text {
+      font-size: 22px;
+    }
+
+    .kamecon-section__vendors-grid {
+      gap: 8px;
+    }
+
+    .kamecon-section__description {
+      font-size: 14px;
+    }
+
+    .kamecon-section__btn {
+      padding: 10px 16px;
+      font-size: 14px;
+    }
+
+    .kamecon-vendor-card__name {
+      font-size: 12px;
+    }
+
+    .kamecon-vendor-card__social {
+      font-size: 10px;
+    }
+
+    .kamecon-vendor-card__desc {
+      font-size: 11px;
+      -webkit-line-clamp: 2;
+    }
+  }
+</style>

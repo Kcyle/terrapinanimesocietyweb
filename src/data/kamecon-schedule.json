@@ -1,0 +1,136 @@
+{
+  "date": "November 15th, 2026",
+  "stage": {
+    "location": "Atrium",
+    "hours": "11 AM – 10 PM",
+    "groups": [
+      {
+        "name": "Doors",
+        "items": [
+          { "start": "11:00 AM", "title": "KAMECON officially opens", "type": "info" }
+        ]
+      },
+      {
+        "name": "Panel block",
+        "note": "",
+        "items": [
+          { "start": "11:30 AM", "end": "12:20 PM", "title": "Panel #1: Speedtunes", "type": "panel" },
+          { "start": "12:30 PM", "end": "1:00 PM", "title": "Panel #2: Dubbers", "type": "panel" },
+          { "start": "1:10 PM", "end": "2:00 PM", "title": "Panel #3: Kendo", "type": "panel" }
+        ]
+      },
+      {
+        "name": "Anime Soundtracks",
+        "note": "",
+        "items": [
+          { "start": "2:10 PM", "end": "3:00 PM", "title": "Cinema Symphony Orchestra", "link": "https://www.instagram.com/p/De7TW9UlSss/?cplk=MzRlODBiNWFlZA==&srtk=MzRlODBiNWFlZA==", "type": "show" }
+        ]
+      },
+      {
+        "name": "Idol groups",
+        "note": "",
+        "items": [
+          { "start": "3:10 PM", "end": "3:40 PM", "title": "Lucky Clover Idols", "link": "https://www.instagram.com/p/De7aJjLoJtG/?mdxt=MzRlODBiNWFlZA==&srtk=MzRlODBiNWFlZA==", "type": "show" },
+          { "start": "3:50 PM", "end": "4:20 PM", "title": "YumeStars", "link": "https://www.instagram.com/p/De7hCFjoFZA/?xtok=MzRlODBiNWFlZA==&srtk=MzRlODBiNWFlZA==", "type": "show" }
+        ]
+      },
+      {
+        "name": "Anime rock",
+        "note": "",
+        "items": [
+          { "start": "5:20 PM", "end": "5:50 PM", "title": "Peach Tea Punch", "link": "https://www.instagram.com/p/De78hkCkeoW/?exln=MzRlODBiNWFlZA==&srtk=MzRlODBiNWFlZA==", "type": "band" },
+          { "start": "6:00 PM", "end": "6:30 PM", "title": "JJAM", "link": "https://www.instagram.com/p/De8DXvRkSjV/?rpxt=MzRlODBiNWFlZA==&srtk=MzRlODBiNWFlZA==", "type": "band" }
+        ]
+      },
+      {
+        "name": "Stand Up Comedy",
+        "items": [
+          { "start": "6:40 PM", "end": "7:40 PM", "title": "Panel #4: Geek Comedy Tour", "link": "https://www.facebook.com/groups/53638073183", "linkLabel": "Facebook", "type": "panel" }
+        ]
+      },
+      {
+        "name": "Vocaloid-themed performances",
+        "items": [
+          { "start": "7:50 PM", "end": "8:35 PM", "title": "Lenana Split", "link": "https://www.instagram.com/p/DfAPN2VEXoK/?rpxt=MzRlODBiNWFlZA==&srtk=MzRlODBiNWFlZA==", "type": "band" },
+          { "start": "8:45 PM", "end": "9:00 PM", "title": "VIVIDS", "link": "https://www.instagram.com/p/DfAWCZdkSyZ/?cplk=MzRlODBiNWFlZA==&srtk=MzRlODBiNWFlZA==", "type": "band" },
+          { "start": "9:15 PM", "end": "9:45 PM", "title": "Skyansam", "link": "https://www.instagram.com/p/DfAc4CQEaiS/?dlrf=MzRlODBiNWFlZA==&srtk=MzRlODBiNWFlZA==", "type": "band" }
+        ]
+      }
+    ]
+  },
+  "cosplay": {
+    "location": "Grand Ballroom Lounge",
+    "hours": "4:30 PM – 5:30 PM",
+    "steps": [
+      "Head to the Grand Ballroom Lounge.",
+      "Add your name to the competition sheet on the table as you walk in.",
+      "Be there for your turn. Names aren't called again once everyone has gone."
+    ],
+    "rules": [
+      "Basic etiquette is expected.",
+      "No shaming, bullying, harassment, or hate will be tolerated.",
+      "Sportsmanship is appreciated and encouraged.",
+      "Remember to have fun!"
+    ],
+    "meetups": [
+      { "start": "11:00 AM", "end": "11:30 AM", "title": "Assassination Classroom", "leaders": ["Jidelle (BumbleWasp)"] },
+      { "start": "11:30 AM", "end": "12:00 PM", "title": "Black Butler", "leaders": ["Josh (Chummycoot)"] },
+      { "start": "12:00 PM", "end": "12:30 PM", "title": "Chainsaw Man", "leaders": ["Han (Buraikans)"] },
+      { "start": "12:30 PM", "end": "1:00 PM", "title": "One Piece", "leaders": ["Nikolai"] },
+      { "start": "1:30 PM", "end": "2:00 PM", "title": "Naruto", "leaders": ["Kayla (Kayak_Silver)"] },
+      { "start": "2:30 PM", "end": "3:00 PM", "title": "Bungo Stray Dogs", "leaders": ["Jo"] },
+      { "start": "3:00 PM", "end": "3:30 PM", "title": "JJK", "leaders": ["Nikolai"] },
+      { "start": "3:30 PM", "end": "4:00 PM", "title": "Hoyoverse", "leaders": ["Jo", "Nikolai"] },
+      { "start": "4:00 PM", "end": "4:30 PM", "title": "Umamusume", "leaders": ["Ethan (E12345E)"] },
+      { "start": "4:30 PM", "end": "5:30 PM", "title": "Cosplay Contest", "leaders": ["Nikolai", "Jo"], "contest": true },
+      { "start": "5:30 PM", "end": "6:00 PM", "title": "Cyberpunk", "leaders": ["Jo", "Nikolai"] },
+      { "start": "6:30 PM", "end": "7:00 PM", "title": "Alien Stage", "leaders": ["Jo"] },
+      { "start": "7:00 PM", "end": "7:30 PM", "title": "Love and Deepspace", "leaders": ["Jo"] },
+      { "start": "7:30 PM", "end": "8:00 PM", "title": "Vocaloid/PJSK", "leaders": ["Jo"] }
+    ]
+  },
+  "arcade": {
+    "controllerNote": "Bring your own controller. You must bring your own controller to enter any tournament.",
+    "registerLabel": "Register on start.gg",
+    "registerUrl": "https://www.start.gg/tournament/umd-kamecon-26-terpin-out/details",
+    "prizeNote": "Each tournament winner gets a prize, except Smash Ultimate Doubles.",
+    "tournaments": [
+      { "time": "12:00 PM", "name": "Smash Ultimate Doubles", "host": "Smash, hosted by Papi", "prize": false },
+      { "time": "12:00 PM", "name": "Mario Kart 8 Deluxe", "host": "Mario Kart, hosted by Klax/Kyle", "prize": true },
+      { "time": "12:30 PM", "name": "Project Sekai", "host": "PJSK, hosted by Teto", "prize": true, "signup": "https://forms.gle/tsMDXFRjDeoHLKrW6" },
+      { "time": "1:00 PM", "name": "BlazBlue CentralFiction", "host": "FGC, hosted by Avi", "prize": true },
+      { "time": "2:00 PM", "name": "Smash Ultimate Squad Strike", "host": "Smash, hosted by Papi", "prize": true },
+      { "time": "2:15 PM", "name": "Persona 4 Arena Ultimax", "host": "FGC, hosted by Avi", "prize": true },
+      { "time": "3:00 PM", "name": "Mario Kart World", "host": "Mario Kart, hosted by Klax/Kyle", "prize": true },
+      { "time": "3:30 PM", "name": "Guilty Gear Strive", "host": "FGC, hosted by Avi", "prize": true },
+      { "time": "4:00 PM", "name": "Smash Ultimate Singles", "host": "Smash, hosted by Papi", "prize": true }
+    ],
+    "stations": [
+      {
+        "name": "Fighting games",
+        "host": "",
+        "games": ["BlazBlue CentralFiction (all DLC, vanilla and modded)", "Guilty Gear Strive", "Under Night In-Birth II", "Persona 4 Arena Ultimax", "Melty Blood (AACC and TL)", "Dragon Ball FighterZ"]
+      },
+      {
+        "name": "Wii U",
+        "host": "",
+        "games": ["Wii Sports Club", "Mario Kart 8", "Nintendo Land", "Super Smash Bros. for Wii U", "Wii Party U", "Mario & Sonic at the Sochi 2014 Olympic Winter Games", "Mario & Sonic at the Rio 2016 Olympic Games", "Mario Party 10", "Game & Wario", "Just Dance 2016", "Just Dance 2018", "Just Dance 2019"]
+      },
+      {
+        "name": "Wii",
+        "games": ["Just Dance 2020", "Punch-Out!! (Wii)", "Rhythm Heaven Fever", "Wii Sports", "Super Smash Bros. Brawl", "Bomberman Blast", "Mario & Sonic at the Olympic Winter Games", "Mario & Sonic at the London 2012 Olympic Games", "Mario Party 8", "Mario Party 9", "Mario Sports Mix", "Mario Kart Wii", "WarioWare: Smooth Moves", "Wii Sports Resort", "Wii Party", "Wii Play", "Wii Play: Motion"]
+      },
+      {
+        "name": "VR powered by XR Club",
+        "host": "PS5, PSVR2, and PCVR",
+        "games": ["Kizuna AI: Touch the Beat!", "Tetris Effect: Connected", "Pistol Whip", "Beat Saber (Modded)"],
+        "link": { "label": "Request a Beat Saber song", "url": "https://forms.gle/rbz9w1kHfmycDMvp6" }
+      },
+      {
+        "name": "Rhythm games",
+        "host": "Lan",
+        "games": ["Groove Coaster: Future Performers", "Fitness Boxing feat. Hatsune Miku", "Taiko no Tatsujin: Rhythm Festival", "Rhythm Heaven Groove", "Just Dance"]
+      }
+    ]
+  }
+}
