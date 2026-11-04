@@ -14,9 +14,9 @@
         "name": "Panel block",
         "note": "",
         "items": [
-          { "start": "11:30 AM", "end": "12:20 PM", "title": "Panel #1: Speedtunes", "type": "panel" },
-          { "start": "12:30 PM", "end": "1:00 PM", "title": "Panel #2: Dubbers", "type": "panel" },
-          { "start": "1:10 PM", "end": "2:00 PM", "title": "Panel #3: Kendo", "type": "panel" }
+          { "start": "11:30 AM", "end": "12:45 PM", "title": "Panel #1: Speedtunes", "type": "panel" },
+          { "start": "1:00 PM", "end": "1:30 PM", "title": "Panel #2: Dubbers", "type": "panel" },
+          { "start": "1:40 PM", "end": "1:55 PM", "title": "Panel #3: Kendo", "type": "panel" }
         ]
       },
       {
