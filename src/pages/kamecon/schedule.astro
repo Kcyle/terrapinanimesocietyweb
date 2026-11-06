@@ -130,7 +130,6 @@ const { stage, cosplay, arcade } = schedule;
 
         <section class="kc__meetups" aria-labelledby="meetups-h">
           <h3 class="kc__h2 kc__meetups-h" id="meetups-h">Cosplay meetups</h3>
-          <p class="kc__intro">Coming soon...</p>
           <ol class="kc__tl kc__tl--meet">
             {cosplay.meetups.map((m) => (
               <li class={`kc__item kc__item--panel${'contest' in m && m.contest ? ' kc__item--contest' : ''}`}>

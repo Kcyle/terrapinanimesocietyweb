@@ -73,7 +73,22 @@
       "Remember to have fun!"
     ],
   
-    "meetups": []
+    "meetups": [
+      {"start": "11:00 AM", "end": "11:30 AM", "title": "Frieren", "leaders": ["Lucas"]},
+      {"start": "11:30 AM", "end": "12:00 PM", "title": "One Piece", "leaders": ["Kyle D Luffy (Kyledluffy)"]},
+      {"start": "12:00 PM", "end": "12:30 PM", "title": "Chainsaw Man", "leaders": ["Han (Buraikans)"]},
+      {"start": "12:30 PM", "end": "1:00 PM", "title": "Black Butler", "leaders": ["Josh (Chummycoot)"]},
+      {"start": "1:30 PM", "end": "2:00 PM", "title": "Naruto", "leaders": ["Kayla (Kayak_Silver)"]},
+      {"start": "2:30 PM", "end": "3:00 PM", "title": "Bungo Stray Dogs", "leaders": ["Jo"]},
+      {"start": "3:00 PM", "end": "3:30 PM", "title": "JJK", "leaders": ["Nikolai"]},
+      {"start": "3:30 PM", "end": "4:00 PM", "title": "Hoyoverse", "leaders": ["Jo", "Nikolai"]},
+      {"start": "4:00 PM", "end": "4:30 PM", "title": "Umamusume", "leaders": ["Ethan (E12345E)"]},
+      {"start": "4:30 PM", "end": "5:30 PM", "title": "Cosplay Contest", "leaders": ["Nikolai", "Jo"], "contest": true},
+      {"start": "5:30 PM", "end": "6:00 PM", "title": "Cyberpunk", "leaders": ["Jo", "Nikolai"]},
+      {"start": "6:30 PM", "end": "7:00 PM", "title": "Alien Stage", "leaders": ["Jo"]},
+      {"start": "7:00 PM", "end": "7:30 PM", "title": "Love and Deepspace", "leaders": ["Jo"]},
+      {"start": "7:30 PM", "end": "8:00 PM", "title": "Vocaloid/PJSK", "leaders": ["Jo"]}
+    ]
   
   },
   

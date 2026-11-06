@@ -24,332 +24,676 @@
   ],
   "vendors": [
     {
-      "name": "GinkgoMART",
-      "social": "https://ginkgomart.bigcartel.com",
-      "socialDisplay": "ginkgomart.bigcartel.com",
-      "description": "Anime/manga/game fanart prints, keychains, buttons, and stickers",
-      "logos":[
-        "/images/Icons/chibi.webp"
-      ]
-    },
-    {
-      "name": "Inywiny",
-      "social": "https://inywiny.carrd.co",
-      "socialDisplay": "inywiny.carrd.co",
-      "description": "Handmade trinkets, acrylic charms, stickers, and prints",
-      "logos":[
-        "/images/Icons/chibi.webp"
-      ]
-    },
-    {
-      "name": "Meshi Market",
-      "social": "https://meshimarket.carrd.co",
-      "socialDisplay": "meshimarket.carrd.co",
-      "description": "Food-themed magnets, charms, pins, prints, keychains, and stickers",
-      "logos":[
-        "/images/Icons/chibi.webp"
-      ]
-    },
-    {
-      "name": "B.S. Warren",
-      "social": "https://bswarren.carrd.co",
-      "socialDisplay": "bswarren.carrd.co",
-      "description": "Fantasy novels and merchandise",
-      "logos":[
-        "/images/Icons/chibi.webp"
-      ]
-    },
-    {
-      "name": "Lord Detaur Art",
-      "social": "https://lorddetaur.etsy.com",
-      "socialDisplay": "lorddetaur.etsy.com",
-      "description": "Anime and video game themed key chains, stickers, prints",
-      "logos":[
-        "/images/Icons/chibi.webp"
+      "name": "marclouart",
+      "social": "https://www.instagram.com/marclouart/",
+      "socialDisplay": "instagram.com/marclouart",
+      "description": "Large posters, small posters, clay figures, acrylic charms, and stickers!\nYou can expect gacha games, alien stage, and anime posters.",
+      "logos": [
+        "/images/Icons/silly_cyber_tess.png"
       ]
     },
     {
       "name": "cy-chin",
-      "social": "https://cychin.carrd.co",
+      "social": "https://cychin.carrd.co/",
       "socialDisplay": "cychin.carrd.co",
-      "description": "Anime-themed artwork (prints, stickers, buttons, keychains)",
-      "logos":[
+      "description": "Anime-styled merchandise including but not limited to: stickers, prints, acrylic keychains/phone charms, photocards, buttons, etc",
+      "logos": [
         "/images/Icons/chibi.webp"
       ]
     },
     {
-      "name": "Bonemealed",
-      "social": "https://bonemealed.carrd.co",
-      "socialDisplay": "bonemealed.carrd.co",
-      "description": "Anime artwork: prints, charms, stickers, shirts, and stationary",
-      "logos":[
-        "/images/Icons/chibi.webp"
-      ]
-    },
-    {
-      "name": "Mewychu",
-      "social": "https://mewychu.carrd.co",
-      "socialDisplay": "mewychu.carrd.co",
-      "description": "Anime inspired stickers, prints, keychains",
-      "logos":[
-        "/images/Icons/chibi.webp"
-      ]
-    },
-    {
-      "name": "Pops-A-Plenty, LLC",
-      "description": "Custom artwork Funko Pops and shadowboxes",
-      "logos":[
-        "/images/Icons/chibi.webp"
-      ]
-    },
-    {
-      "name": "Kyomi Star",
-      "description": "Button pins, stickers, prints, notepads, keychain & hairclips with Anime designs",
-      "logos":[
-        "/images/Icons/chibi.webp"
+      "name": "jsunnyart",
+      "description": "charms, prints, stickers, acrylic standees - for video games, anime, original works",
+      "logos": [
+        "/images/Icons/silly_cyber_tess.png"
       ]
     },
     {
       "name": "Novi Mochi",
-      "social": "https://novimochi.carrd.co",
+      "social": "https://novimochi.carrd.co/",
       "socialDisplay": "novimochi.carrd.co",
-      "description": "Anime themed prints, stickers, buttons, and keychains",
-      "logos":[
+      "description": "Art prints, keychains, stickers, and buttons",
+      "logos": [
         "/images/Icons/chibi.webp"
       ]
     },
     {
-      "name": "SvvLinh",
-      "social": "https://svvlinh.weebly.com",
-      "socialDisplay": "svvlinh.weebly.com",
-      "description": "Anime and gaming themed artwork/prints, stationary and small accessories",
-      "logos":[
-        "/images/Icons/chibi.webp"
-      ]
-    },
-    {
-      "name": "Summ.art",
-      "description": "Vibrant anime, video game, and superhero art: framed prints, apparel, keychains, stickers, pins",
-      "logos":[
-        "/images/Icons/chibi.webp"
-      ]
-    },
-    {
-      "name": "Teashot",
-      "description": "Handmade prints, stickers, tote bags, keychains, t-shirts, and canvas patches based on anime",
-      "logos":[
-        "/images/Icons/chibi.webp"
-      ]
-    },
-    {
-      "name": "Smogfrogg",
-      "social": "https://smogfrogg.com",
-      "socialDisplay": "smogfrogg.com",
-      "description": "Fanart and original artwork: prints, stickers, pins, acrylic keychains, comics, tote bags",
-      "logos":[
-        "/images/Icons/chibi.webp"
-      ]
-    },
-    {
-      "name": "Luniarci Art",
-      "social": "https://tumblr.com/luniarci",
-      "socialDisplay": "tumblr.com/luniarci",
-      "description": "Anime-themed artwork and prints, laser cut wooden keychains",
-      "logos":[
-        "/images/Icons/chibi.webp"
-      ]
-    },
-    {
-      "name": "Lumikha Cosplay Resale",
-      "social": "https://linktr.ee/lumikha",
-      "socialDisplay": "linktr.ee/lumikha",
-      "description": "Secondhand cosplays",
-      "logos":[
-        "/images/Icons/chibi.webp"
-      ]
-    },
-    {
-      "name": "Kaimatic",
-      "social": "https://kaimaticportfolio.carrd.co",
-      "socialDisplay": "kaimaticportfolio.carrd.co",
-      "description": "Genshin Impact, Splatoon, OMORI, Pokemon, JJK: stickers, buttons, charms, acrylic stands, prints",
-      "logos":[
-        "/images/Icons/chibi.webp"
+      "name": "Otaku553",
+      "social": "https://otaku553.carrd.co",
+      "socialDisplay": "otaku553.carrd.co",
+      "description": "I sell prints, and keychains of various games and anime, including Cookie Run Kingdom, Genshin Impact, One Piece, and more!",
+      "logos": [
+        "/images/Icons/silly_cyber_tess.png"
       ]
     },
     {
       "name": "Dracolegus",
       "social": "https://linktr.ee/dracolegus",
       "socialDisplay": "linktr.ee/dracolegus",
-      "description": "Fanart prints of pokemon, dungeon meshi, arcane, and mythical creatures",
-      "logos":[
+      "description": "Prints, stickers, keychains, buttons, and enamel pins of fanart and original art.",
+      "logos": [
         "/images/Icons/chibi.webp"
       ]
     },
     {
-      "name": "saeuchelle",
-      "social": "https://saeuchelle.bigcartel.com",
-      "socialDisplay": "saeuchelle.bigcartel.com",
-      "description": "Cute character artworks: keychains, apparel, plushies, pins, stickers, prints",
-      "logos":[
-        "/images/Icons/chibi.webp"
-      ]
-    },
-    {
-      "name": "PassionPhantom",
-      "social": "https://passionphantom.wixsite.com",
-      "socialDisplay": "passionphantom.wixsite.com",
-      "description": "Art books, zines, comics, OC Art, Anime Fan Art, key charms, stickers, prints, buttons",
-      "logos":[
-        "/images/Icons/chibi.webp"
-      ]
-    },
-    {
-      "name": "Blue bean crochet",
-      "description": "Hand made crochet plushies: Pokemon, characters from games/shows, animals",
-      "logos":[
-        "/images/Icons/chibi.webp"
-      ]
-    },
-    {
-      "name": "AnxiousLilies",
-      "social": "https://lilyibe.myportfolio.com",
-      "socialDisplay": "lilyibe.myportfolio.com",
-      "description": "Anime-themed artwork and prints, stickers and keychains",
-      "logos":[
-        "/images/Icons/chibi.webp"
-      ]
-    },
-    {
-      "name": "Mezurashii",
-      "social": "https://mezurashii.store",
-      "socialDisplay": "mezurashii.store",
-      "description": "Anime figurines, Monchhichis, anime keychains and phone charms, Japanese trinkets",
-      "logos":[
-        "/images/Icons/chibi.webp"
-      ]
-    },
-    {
-      "name": "quzzyplayground",
-      "social": "https://quzzyplayground.carrd.co",
-      "socialDisplay": "quzzyplayground.carrd.co",
-      "description": "Handmade anime keychains and prints",
-      "logos":[
-        "/images/Icons/chibi.webp"
-      ]
-    },
-    {
-      "name": "Chiimeshop",
-      "social": "https://instagram.com/chiime_",
-      "socialDisplay": "instagram.com/chiime_",
-      "description": "Fanart/original works, keychains, stickers, apparel, prints and pouches",
-      "logos":[
-        "/images/Icons/chibi.webp"
-      ]
-    },
-    {
-      "name": "Melina Rivera",
-      "social": "https://watermeloooms.myportfolio.com",
-      "socialDisplay": "watermeloooms.myportfolio.com",
-      "description": "Art prints, stickers, t-shirts with Japanese alternative themes",
-      "logos":[
-        "/images/Icons/chibi.webp"
-      ]
-    },
-    {
-      "name": "Somintso",
-      "social": "https://linktr.ee/somintso",
-      "socialDisplay": "linktr.ee/somintso",
-      "description": "Anime styled prints, keychains, stickers, and zines",
-      "logos":[
-        "/images/Icons/chibi.webp"
-      ]
-    },
-    {
-      "name": "Sophuia Liu",
-      "description": "Original art prints, postcards, acrylic keychains, acrylic stand",
-      "logos":[
-        "/images/Icons/chibi.webp"
-      ]
-    },
-    {
-      "name": "Artisfired Studio",
-      "social": "https://artisfired.carrd.co",
-      "socialDisplay": "artisfired.carrd.co",
-      "description": "Anime/Video Game Inspired Prints, Keychains, and Stickers",
-      "logos":[
-        "/images/Icons/chibi.webp"
-      ]
-    },
-    {
-      "name": "marclouart",
-      "description": "Large prints 11x17, Small prints 5.5x8.5, 3 inch stickers, 2 inch clay figures",
-      "logos":[
-        "/images/Icons/chibi.webp"
+      "name": "Sakurain Studios",
+      "social": "https://sakurainstudios.carrd.co/#",
+      "socialDisplay": "sakurainstudios.carrd.co",
+      "description": "Kawaii, sweets-themed original artwork and fanart in the form of art prints, keychains, die cut stickers, and sticker sheets.",
+      "logos": [
+        "/images/Icons/silly_cyber_tess.png"
       ]
     },
     {
       "name": "rivertylart",
-      "description": "Prints, Stickers (genshin/hsr fanart, original art like kitsune and sushi creatures)",
-      "logos":[
+      "social": "https://linktr.ee/rivertyl",
+      "socialDisplay": "linktr.ee/rivertyl",
+      "description": "Genshin/hsr/original prints and stickers",
+      "logos": [
         "/images/Icons/chibi.webp"
       ]
     },
     {
-      "name": "SnarkFish",
-      "description": "Geeky t-shirts, gaming dice, 3D-printed gaming wares, Pokemon finger puppets, plushies, trading cards",
-      "logos":[
+      "name": "sincerely, dani",
+      "social": "https://beacons.ai/sincerelydani7?utm_source=ig&utm_medium=social&utm_content=link_in_bio",
+      "socialDisplay": "beacons.ai/sincerelydani7",
+      "description": "Handmade crochet items and jewelry",
+      "logos": [
+        "/images/Icons/silly_cyber_tess.png"
+      ]
+    },
+    {
+      "name": "ChiimeShop",
+      "social": "https://www.instagram.com/chiime_?igsh=MTB0N2FuOW1vZGp3NQ==",
+      "socialDisplay": "instagram.com/chiime_",
+      "description": "Anime fanart and original works. I sell keychains, prints, stickers, buttons, apparel and handmade ceramics.",
+      "logos": [
         "/images/Icons/chibi.webp"
       ]
     },
     {
-      "name": "Art Club",
-      "description": "Student vendors selling a wide range of their own artwork",
-      "logos":[
+      "name": "Koifishin'",
+      "description": "Jewelry, prints, and stickers",
+      "logos": [
+        "/images/Icons/silly_cyber_tess.png"
+      ]
+    },
+    {
+      "name": "Merppies",
+      "social": "https://www.instagram.com/merppiez/",
+      "socialDisplay": "instagram.com/merppiez",
+      "description": "Stickers, sticker sheets, washi tape, photocards, charms, carabiners, buttons",
+      "logos": [
         "/images/Icons/chibi.webp"
       ]
     },
     {
-      "name": "Caitlin Goh",
-      "description": "Student vendor selling hand made crochet plushies",
-      "logos":[
+      "name": "Vertebra Confit",
+      "description": "Art prints, stickers, live sketch commissions, and digital art commissions; style is Baroque inspired with anime sensibilities",
+      "logos": [
+        "/images/Icons/silly_cyber_tess.png"
+      ]
+    },
+    {
+      "name": "Giraffenecc",
+      "social": "https://giraffenecc.carrd.co",
+      "socialDisplay": "giraffenecc.carrd.co",
+      "description": "art prints, keychains, buttons, stickers",
+      "logos": [
         "/images/Icons/chibi.webp"
       ]
     },
     {
-      "name": "Akuunosoku",
-      "social": "https://akuunosuke.carrd.co",
-      "socialDisplay": "akuunosuke.carrd.co",
-      "description": "Prints, charms, enamel pins, stickers & more (Genshin Impact, ALNST, BSD, etc.)",
-      "logos":[
+      "name": "Teashot",
+      "social": "https://linktr.ee/teashot",
+      "socialDisplay": "linktr.ee/teashot",
+      "description": "In addition to a roster of fan and original stickers, keychains, prints, zines, and stationery, I also integrate an emphasis on upcycling and rescuing materials to create lino block-printed apparel/accessories like patches, aprons, tote bags, and shirts! I aim to draw people in with recognizable franchises and then encourage sustainability in the process!",
+      "logos": [
+        "/images/Icons/silly_cyber_tess.png"
+      ]
+    },
+    {
+      "name": "Lord Detaur Art",
+      "social": "https://detaur.carrd.co/",
+      "socialDisplay": "detaur.carrd.co",
+      "description": "Stickers, key chains, art prints, magnetic book marks with my hand drawn anime fan art.",
+      "logos": [
         "/images/Icons/chibi.webp"
       ]
     },
     {
-      "name": "Liramic",
-      "social": "https://liramic.etsy.com",
-      "socialDisplay": "liramic.etsy.com",
-      "description": "Art prints and posters, charms, pins, buttons, tote bags, fanart includes Genshin Impact, TGCF, SVSSS, etc.",
-      "logos":[
+      "name": "SnarkFish T-Shirts",
+      "social": "https://www.snarkfishtshirts.com",
+      "socialDisplay": "snarkfishtshirts.com",
+      "description": "Geeky t-shirts, gaming wares, vintage video games, art, and Pokemon cards",
+      "logos": [
+        "/images/Icons/silly_cyber_tess.png"
+      ]
+    },
+    {
+      "name": "Inywiny",
+      "social": "https://inywiny.carrd.co/",
+      "socialDisplay": "inywiny.carrd.co",
+      "description": "Inywiny is a crafter and illustrator who offers acrylics, stickers, prints, and handmade original art. With a hodgepodge of items, everything is connected by being a bit small and a bit silly :)",
+      "logos": [
+        "/images/Icons/chibi.webp"
+      ]
+    },
+    {
+      "name": "KawaiiScary",
+      "social": "https://kawaiiscary.com/",
+      "socialDisplay": "kawaiiscary.com",
+      "description": "Acrylic keychains, Phone charms, Stickers, Sticker sheets, Magnets, Prints, and Buttons. Original art and fan art all drawn by me.",
+      "logos": [
+        "/images/Icons/silly_cyber_tess.png"
+      ]
+    },
+    {
+      "name": "BinkiStudio",
+      "social": "https://binkistudio.com",
+      "socialDisplay": "binkistudio.com",
+      "description": "Art prints, stickers, keychains, sticker sheets",
+      "logos": [
+        "/images/Icons/chibi.webp"
+      ]
+    },
+    {
+      "name": "Bonemealed",
+      "social": "https://bonemealed.carrd.co/#artistalley",
+      "socialDisplay": "bonemealed.carrd.co",
+      "description": "https://bonemealed.carrd.co/#artistalley all of my merchandise can be found here! I draw the artwork for everything shown",
+      "logos": [
+        "/images/Icons/silly_cyber_tess.png"
+      ]
+    },
+    {
+      "name": "Luniarci art",
+      "social": "https://www.tumblr.com/luniarci",
+      "socialDisplay": "tumblr.com/luniarci",
+      "description": "Prints, stickers, keychains, laser cut wood and acrylic designs",
+      "logos": [
+        "/images/Icons/chibi.webp"
+      ]
+    },
+    {
+      "name": "Scribble Storm",
+      "description": "Keychains, Stickers, Prints",
+      "logos": [
+        "/images/Icons/silly_cyber_tess.png"
+      ]
+    },
+    {
+      "name": "Quailparade",
+      "social": "https://quailparade.carrd.co/",
+      "socialDisplay": "quailparade.carrd.co",
+      "description": "Keychains, stickers, stationery (washi tape, sticker books), prints",
+      "logos": [
+        "/images/Icons/chibi.webp"
+      ]
+    },
+    {
+      "name": "Miuuujia",
+      "description": "Stickers/Prints",
+      "logos": [
+        "/images/Icons/silly_cyber_tess.png"
+      ]
+    },
+    {
+      "name": "most.western.man",
+      "description": "Stickers, Plush keychains (potentially?)",
+      "logos": [
+        "/images/Icons/chibi.webp"
+      ]
+    },
+    {
+      "name": "Jayce the Creature Creator",
+      "social": "https://www.instagram.com/jaycethecreaturecreator/",
+      "socialDisplay": "instagram.com/jaycethecreaturecreator",
+      "description": "Stickers, Prints, and Originals.",
+      "logos": [
+        "/images/Icons/silly_cyber_tess.png"
+      ]
+    },
+    {
+      "name": "Biodegradable Otaku/ Zero",
+      "description": "I will be selling prints of fanart from animes such as Gachiakuta and Chainsawman as well as acrylic keychains and stickers from those fandoms too. I also plan on offering live commissions.",
+      "logos": [
+        "/images/Icons/chibi.webp"
+      ]
+    },
+    {
+      "name": "Phossii",
+      "social": "https://phossii.com/",
+      "socialDisplay": "phossii.com",
+      "description": "Acrylic charm, prints, riso prints, stickers, buttons, totes",
+      "logos": [
+        "/images/Icons/silly_cyber_tess.png"
+      ]
+    },
+    {
+      "name": "Nagihiko_dayo",
+      "social": "https://nagihikodayo.carrd.co/",
+      "socialDisplay": "nagihikodayo.carrd.co",
+      "description": "Prints, keycharms, stickers, photocards, live commissions",
+      "logos": [
+        "/images/Icons/chibi.webp"
+      ]
+    },
+    {
+      "name": "snudbeen",
+      "social": "https://snudbeencons.carrd.co",
+      "socialDisplay": "snudbeencons.carrd.co",
+      "description": "I am a character illustrator that specializes in risograph prints as well as other paper goods including regular prints, sticker sheets, and stickers. I also sell a variety of acrylic goods such as acrylic charms and magnets as well as wooden magnets.",
+      "logos": [
+        "/images/Icons/silly_cyber_tess.png"
+      ]
+    },
+    {
+      "name": "EC Machlan",
+      "social": "https://www.instagram.com/ec_machlan?igsh=Z2VjbXU1cGw2aW40&utm_source=qr",
+      "socialDisplay": "instagram.com/ec_machlan",
+      "description": "I sell prints, stickers, charms, standees, t-shirts, and washi tape! I’m also hoping to have a few zine comics by then as well!",
+      "logos": [
+        "/images/Icons/chibi.webp"
+      ]
+    },
+    {
+      "name": "Yellow Up",
+      "social": "https://www.instagram.com/yellowuupp?igsh=NTc4MTIwNjQ2YQ%3D%3D&utm_source=qr",
+      "socialDisplay": "instagram.com/yellowuupp",
+      "description": "Original Art prints, keychains, stickers",
+      "logos": [
+        "/images/Icons/silly_cyber_tess.png"
+      ]
+    },
+    {
+      "name": "deca's catalogue",
+      "description": "Posters, cards, keychains, stickers and sticker sheets. Might also sell other smaller trinkets like jewelry, charms, or pins.",
+      "logos": [
+        "/images/Icons/chibi.webp"
+      ]
+    },
+    {
+      "name": "Otterkin Art",
+      "social": "https://otterkin.straw.page/",
+      "socialDisplay": "otterkin.straw.page",
+      "description": "Hoping to sell prints, keychains/buttons and stickers in my signature cartoon style! I'll have a variety of products from different franchises, including but not limited to vocaloid, Project Sekai, Undertale/Deltarune, Peanuts, etc, as well as some non-fandom-affiliated stuff. I'm also hoping to have some sort of blind/gacha system, and I might also offer doodles.",
+      "logos": [
+        "/images/Icons/silly_cyber_tess.png"
+      ]
+    },
+    {
+      "name": "worstkiddotcom",
+      "social": "https://linktr.ee/worstkiddotcom",
+      "socialDisplay": "linktr.ee/worstkiddotcom",
+      "description": "I will be selling prints, stickers, acrylic charms, totes, and magnets of fan art I have drawn myself as well as original art. Fandoms my art includes: Sanrio, Jujutsu Kaisen, Studio Ghibli, Love and Deepspace, Pokemon, Sailor Moon, Dandadan, Haikyu!!, Chainsaw Man, Nintendo (Animal Crossing, Pikmin), Adventure Time, Baldur's Gate 3, Owl House, Arcane, Hazbin Hotel, and Marvel Rivals. I also take commissions!",
+      "logos": [
         "/images/Icons/chibi.webp"
       ]
     },
     {
       "name": "Ari Inkart",
-      "social": "https://ariinkart.carrd.co",
-      "socialDisplay": "ariinkart.carrd.co",
-      "description": "Vocaloid and Project Sekai key chains and pin buttons",
-      "logos":[
+      "social": "https://sites.google.com/view/ari-inkart-portfolio/home",
+      "socialDisplay": "sites.google.com/view/ari-inkart-portfolio/home",
+      "description": "Stickers, pins, and art prints",
+      "logos": [
+        "/images/Icons/silly_cyber_tess.png"
+      ]
+    },
+    {
+      "name": "Doros Cute Crafts",
+      "social": "https://doroscutecrafts.etsy.com",
+      "socialDisplay": "doroscutecrafts.etsy.com",
+      "description": "Doros Cute Crafts is a multi medium studio that specializes in crochet amigurumi dolls, stationary products, and accessories. Some favorite items include vinyl stickers, enamel pin sets and huggable crocheted bunnies, bears, and cows.\n\nI draw inspiration from my everyday life including pets, puns, and personal interests.I love seeing people get excited as they explore my booth and find creations that they connect with. My goal is to create products that people love.",
+      "logos": [
         "/images/Icons/chibi.webp"
       ]
     },
     {
-      "name": "Anxious Lilies",
-      "social": "https://linktr.ee/anxious_lilies",
-      "socialDisplay": "linktr.ee/anxious_lilies",
-      "description": "Commissions, stickers, holographics",
-      "logos":[
+      "name": "erikensa",
+      "social": "https://erikensa-shop.square.site/",
+      "socialDisplay": "erikensa-shop.square.site",
+      "description": "small fan merchandise and prints. Media I focus on include: Fire Emblem, Ensemble Stars!!, Vocaloid, and Splatoon. may also offer live sketch commissions.",
+      "logos": [
+        "/images/Icons/silly_cyber_tess.png"
+      ]
+    },
+    {
+      "name": "Summ.art",
+      "social": "https://www.instagram.com/summ.art0816?igsh=MW1yOGltejNlMXQ3OA%3D%3D&utm_source=qr",
+      "socialDisplay": "instagram.com/summ.art0816",
+      "description": "I create colorful, vibrant artwork inspired by anime, pop culture, fantasy, and psychedelic aesthetics. My booth features framed prints, stickers, keychains, apparel, and original paintings, ranging from fan-inspired pieces to completely original designs. I focus on creating unique, eye-catching art filled with bold colors, playful details, and a distinctive trippy style.",
+      "logos": [
         "/images/Icons/chibi.webp"
+      ]
+    },
+    {
+      "name": "Angel’s Ad Infinitum",
+      "social": "https://www.instagram.com/angels.ad.infinitum?igsh=a2gxM2V4MW13OThl&utm_source=qr",
+      "socialDisplay": "instagram.com/angels.ad.infinitum",
+      "description": "I sell anime and video game posters, coasters, buttons, and magnets, with everything being sourced from vintage anime and gaming magazines.",
+      "logos": [
+        "/images/Icons/silly_cyber_tess.png"
+      ]
+    },
+    {
+      "name": "SHEEPB1T",
+      "social": "https://sheepb1t.etsy.com/",
+      "socialDisplay": "sheepb1t.etsy.com",
+      "description": "Art prints, keychains/acrylic charms, and pins/buttons based on various anime and video game franchises",
+      "logos": [
+        "/images/Icons/chibi.webp"
+      ]
+    },
+    {
+      "name": "Mezurashii",
+      "description": "Anime, stationary, blindboxes, and other Japanese trinkets",
+      "logos": [
+        "/images/Icons/silly_cyber_tess.png"
+      ]
+    },
+    {
+      "name": "LunarJaguar",
+      "social": "https://www.instagram.com/lunarjaguar/",
+      "socialDisplay": "instagram.com/lunarjaguar",
+      "description": "prints, keychains/charms, comics",
+      "logos": [
+        "/images/Icons/chibi.webp"
+      ]
+    },
+    {
+      "name": "inktai",
+      "social": "https://inktai.com",
+      "socialDisplay": "inktai.com",
+      "description": "Shirts, Playmats, Prints, Originals",
+      "logos": [
+        "/images/Icons/silly_cyber_tess.png"
+      ]
+    },
+    {
+      "name": "BowLaces",
+      "description": "Prints/stickers/keychains",
+      "logos": [
+        "/images/Icons/chibi.webp"
+      ]
+    },
+    {
+      "name": "CanaryHare",
+      "description": "Bird themed stickers, prints and charms",
+      "logos": [
+        "/images/Icons/silly_cyber_tess.png"
+      ]
+    },
+    {
+      "name": "Lumikha Cosplay Resale",
+      "social": "https://linktr.ee/lumikha?utm_source=linktree_profile_share&ltsid=8d7a2f88-9591-492e-8822-950924eae3ee",
+      "socialDisplay": "linktr.ee/lumikha",
+      "description": "Secondhand cosplay",
+      "logos": [
+        "/images/Icons/chibi.webp"
+      ]
+    },
+    {
+      "name": "Akishie",
+      "social": "https://x.com/akishie_?s=11&t=cv7wzmQCqUZx1fqAnwOy6g",
+      "socialDisplay": "x.com/akishie_",
+      "description": "Prints, stickers, photocards",
+      "logos": [
+        "/images/Icons/silly_cyber_tess.png"
+      ]
+    },
+    {
+      "name": "StarryLizard",
+      "social": "https://instagram.com/starry.lizard?utm_source=qr",
+      "socialDisplay": "instagram.com/starry.lizard",
+      "description": "Mostly fanart posters and stickers. Some original/animal art as well, again posters and stickers.",
+      "logos": [
+        "/images/Icons/chibi.webp"
+      ]
+    },
+    {
+      "name": "Mintyshi Art Shop",
+      "social": "https://www.etsy.com/shop/MintyshiArtShop?ref=profile_header",
+      "socialDisplay": "etsy.com/shop/MintyshiArtShop",
+      "description": "Keychains, prints, stickers, acrylic standees",
+      "logos": [
+        "/images/Icons/silly_cyber_tess.png"
+      ]
+    },
+    {
+      "name": "saeuchelle",
+      "social": "https://www.instagram.com/saeuchelle",
+      "socialDisplay": "instagram.com/saeuchelle",
+      "description": "Cute fandom fanart made merch of keychains, plush, stickers, apparel, pins",
+      "logos": [
+        "/images/Icons/chibi.webp"
+      ]
+    },
+    {
+      "name": "Miku workshop",
+      "social": "https://www.instagram.com/miku_workshop1?igsh=MTRxamVoc3FjeHo3eA==",
+      "socialDisplay": "instagram.com/miku_workshop1",
+      "description": "I will be selling crochet items such as  stuffed animals, and sew on corchet , box cats based on characters,kandi ( kandi, worms stars, bracelets)  and buttons ( buttons pins)",
+      "logos": [
+        "/images/Icons/silly_cyber_tess.png"
+      ]
+    },
+    {
+      "name": "Lei’s Sari Sari Store",
+      "description": "Art prints, crochet items, keychains, bracelets, arts and crafts",
+      "logos": [
+        "/images/Icons/chibi.webp"
+      ]
+    },
+    {
+      "name": "Llamasyes",
+      "social": "https://llamasyes.carrd.co/",
+      "socialDisplay": "llamasyes.carrd.co",
+      "description": "Keychains, Stickers, Maybe prints, Live commissions?",
+      "logos": [
+        "/images/Icons/silly_cyber_tess.png"
+      ]
+    },
+    {
+      "name": "Somintso",
+      "social": "https://www.instagram.com/somintso/",
+      "socialDisplay": "instagram.com/somintso",
+      "description": "Anime fan merch like keychains, stickers, and prints alone with my own comic/manga and personal art",
+      "logos": [
+        "/images/Icons/chibi.webp"
+      ]
+    },
+    {
+      "name": "Oliver De Leon",
+      "description": "Prints, keychains, earrings, stationery, stickers",
+      "logos": [
+        "/images/Icons/silly_cyber_tess.png"
+      ]
+    },
+    {
+      "name": "Lenyee",
+      "description": "Art Prints, Stickers, Keychains, and Zines\nA mix of original works by me and fanart. \nFandoms:\n- Link Click\n- Apothecary Diaries\n- ATLA\n- Alien Stage\n- Love Bullet + more!",
+      "logos": [
+        "/images/Icons/chibi.webp"
+      ]
+    },
+    {
+      "name": "SvvLinh",
+      "social": "https://svvlinh.weebly.com/",
+      "socialDisplay": "svvlinh.weebly.com",
+      "description": "Prints, stickers, small accessories",
+      "logos": [
+        "/images/Icons/silly_cyber_tess.png"
+      ]
+    },
+    {
+      "name": "Pokemon Rescue",
+      "social": "https://pokemonrescue.com/",
+      "socialDisplay": "pokemonrescue.com",
+      "description": "Helping with transferring older generations up to molder ones on the switch",
+      "logos": [
+        "/images/Icons/chibi.webp"
+      ]
+    },
+    {
+      "name": "Arkilide",
+      "social": "https://linktr.ee/Arkilide",
+      "socialDisplay": "linktr.ee/Arkilide",
+      "description": "Illustration prints, mainly fanart of anime like frieren, 86, mushoku tensei, witch hat atelier, and evangelion. I also plan to have some of my oc art there too.",
+      "logos": [
+        "/images/Icons/silly_cyber_tess.png"
+      ]
+    },
+    {
+      "name": "ZHI & INK",
+      "description": "We are a new Asian stationary store that will be opening in Baltimore soon. We'll be selling Japanese stickers, notebooks, pens, fountain pens, fountain pen inks, sticky notes, erasers, postcards, and other trinkets",
+      "logos": [
+        "/images/Icons/chibi.webp"
+      ]
+    },
+    {
+      "name": "Astrateia Art",
+      "description": "Prints, live portrait commissions",
+      "logos": [
+        "/images/Icons/silly_cyber_tess.png"
+      ]
+    },
+    {
+      "name": "Ettu Caina",
+      "social": "https://www.instagram.com/ettucaina?igsi=ejh6b2lub3htajRj&utm_source=qr",
+      "socialDisplay": "instagram.com/ettucaina",
+      "description": "Keychains, jewelry, stickers, prints, bags, mugs",
+      "logos": [
+        "/images/Icons/chibi.webp"
+      ]
+    },
+    {
+      "name": "GinkgoMART",
+      "social": "https://ginkgomartportfolio.carrd.co/",
+      "socialDisplay": "ginkgomartportfolio.carrd.co",
+      "description": "Primarily a fan artist inspired by various anime and pop-culture media my products mainly consist of prints, keychains, stickers, buttons, and original comics. Some fandoms include Gachiakuta, One Piece, JJK, DCU, Haikyuu, and many more!",
+      "logos": [
+        "/images/Icons/silly_cyber_tess.png"
+      ]
+    },
+    {
+      "name": "D.K.'s Figures & More",
+      "social": "https://www.instagram.com/figures.and.more/",
+      "socialDisplay": "instagram.com/figures.and.more",
+      "description": "I will be selling anime figures including prize figures, scale figures, flat (acrylic stand) figures, keychain figures, blind bag figures, action figures, and other figurines. \n\nI will also sell anime plushies, clear file [folders], towels, stickers, promo artwork, notepads, and other trinket / accessory like items. \n\nIf table space permits, I could include a smaller portion of American pop culture and non-Japanese gaming merch of similar categories.",
+      "logos": [
+        "/images/Icons/chibi.webp"
+      ]
+    },
+    {
+      "name": "miaocherii",
+      "social": "https://www.miaocherii.com/portfolio-combine",
+      "socialDisplay": "miaocherii.com/portfolio-combine",
+      "description": "Miaocherii is a cute lifestyle, accessories, and illustration brand that strives to make people feel happy and warm, and is inspired by kawaii characters, fun trinkets, and other items that bring joy to Cherie (the owner and artist of miaocherii). Miaocherii aims to share joy through both 2D and 3D products; products range from uniquely handmade clay trinkets, magnets, and jewelry, to stationery items such as prints, stickers, memo pads, note/sketchbooks, enamel pins, and to fun cloth items such as apparel (t-shirts), blankets, tote bags and other specialty bags, lanyards, and patches. Each fall, I also create a very kawaii calendar for the upcoming year, which is very popular at events! Come check out some miaocherii goods - I hope I can bring a smile to your face with my fun cat characters and pastel colors!",
+      "logos": [
+        "/images/Icons/silly_cyber_tess.png"
+      ]
+    },
+    {
+      "name": "Cattalooza",
+      "description": "Sticker Sheet/ Die Cut Stickers of cute cats",
+      "logos": [
+        "/images/Icons/chibi.webp"
+      ]
+    },
+    {
+      "name": "Soozi's Art",
+      "description": "I mainly sell kpop fanart prints and stickers",
+      "logos": [
+        "/images/Icons/silly_cyber_tess.png"
+      ]
+    },
+    {
+      "name": "AdrianSlothArt",
+      "social": "https://adrianslothart.carrd.co",
+      "socialDisplay": "adrianslothart.carrd.co",
+      "description": "My products include stickers, keychains, acrylic standees, fanny packs, messenger bags, sticky notes, washi tapes, reusable sticker books, microfiber cloths, enamel pins, and blanket hoodies. \n\nI have cute animal art, landscape art, Kirby fanart, and anime fanart (Pokemon, Apothecary Diaries, Frieren, FMA, Pandora Hearts, Kobayashi's Dragon Maid, Toilet Bound Hanako-Kun, etc)",
+      "logos": [
+        "/images/Icons/chibi.webp"
+      ]
+    },
+    {
+      "name": "helena_pocket",
+      "social": "https://helenapocket.art/illustration",
+      "socialDisplay": "helenapocket.art/illustration",
+      "description": "Hi! I'm a Taiwanese American illustrator that loves working with color, light, and lots of nature vibes. I create products and illustrations that feel a bit whimsical, and generally involves a cat or two. I sell prints, postcards, greeting cards, stickers, sticky notes, bookmarks, keychains, and tote bags.",
+      "logos": [
+        "/images/Icons/silly_cyber_tess.png"
+      ]
+    },
+    {
+      "name": "Jamie Noguchi",
+      "social": "https://jamienoguchi.com/",
+      "socialDisplay": "jamienoguchi.com",
+      "description": "Comics, Prints, Stickers, Plush",
+      "logos": [
+        "/images/Icons/chibi.webp"
+      ]
+    },
+    {
+      "name": "Wren’s Nest",
+      "social": "https://linktr.ee/wrensnestbusiness?utm_source=linktree_profile_share&ltsid=25a12f10-0573-4191-b6a0-1f9a64cc659c",
+      "socialDisplay": "linktr.ee/wrensnestbusiness",
+      "description": "Hand crafts:\n- Kandi bead bracelets, cuffs, necklaces, keychains, and other accessories \n- Hand painted ink paintings of pop culture characters \nExamples can be seen on my website!",
+      "logos": [
+        "/images/Icons/silly_cyber_tess.png"
+      ]
+    },
+    {
+      "name": "Turnipies",
+      "social": "https://turnipies.carrd.co/",
+      "socialDisplay": "turnipies.carrd.co",
+      "description": "Art prints, keychains, stickers",
+      "logos": [
+        "/images/Icons/chibi.webp"
+      ]
+    },
+    {
+      "name": "Artemis",
+      "description": "Handmade wooden coasters , paintings.",
+      "logos": [
+        "/images/Icons/silly_cyber_tess.png"
+      ]
+    },
+    {
+      "name": "Bianca Andersen",
+      "social": "https://biancaastro.etsy.com",
+      "socialDisplay": "biancaastro.etsy.com",
+      "description": "Self made prints of my own photos of space",
+      "logos": [
+        "/images/Icons/chibi.webp"
+      ]
+    },
+    {
+      "name": "Jinnie Lim",
+      "social": "https://www.instagram.com/vitamincharm",
+      "socialDisplay": "instagram.com/vitamincharm",
+      "description": "Anime and kpop prints and keychains and stickers!",
+      "logos": [
+        "/images/Icons/silly_cyber_tess.png"
+      ]
+    },
+    {
+      "name": "Ashley Qiao",
+      "social": "https://www.ashleyqiao.com",
+      "socialDisplay": "ashleyqiao.com",
+      "description": "My art prints, gift boxes, handmade jewelry, and gift boxes!",
+      "logos": [
+        "/images/Icons/chibi.webp"
+      ]
+    },
+    {
+      "name": "Migdalia Serrano",
+      "social": "https://asazul.com",
+      "socialDisplay": "asazul.com",
+      "description": "Live Doodle Portraits, hand painted items, stickers, tote bags, keychains and art prints",
+      "logos": [
+        "/images/Icons/silly_cyber_tess.png"
       ]
     }
   ]

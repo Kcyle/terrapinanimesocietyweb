@@ -212,6 +212,7 @@ const popup = (id: string) => POPUPS.find((p) => p.id === id)!;
               <div class="kc__vendor-info">
                 <h3>{v.name}</h3>
                 <p>{v.description}</p>
+                {v.social && <a class="kc__vendor-link" href={v.social} target="_blank" rel="noopener noreferrer">{v.socialDisplay}<span class="kc__sr"> (opens in a new tab)</span></a>}
               </div>
             </article>
           ))}
@@ -550,6 +551,8 @@ const popup = (id: string) => POPUPS.find((p) => p.id === id)!;
   .kc__carousel--mini .kc__dots { bottom: 0.25rem; }
   .kc__carousel--mini .kc__dot { width: 0.3rem; height: 0.3rem; }
   .kc__vendor-info h3 { font-family: var(--kc-font-head); font-size: clamp(0.95rem, 2.4vw, 1.25rem); font-weight: 800; color: var(--kc-hi); letter-spacing: -0.01em; }
+  .kc__vendor-link { display: inline-block; margin-top: 0.3rem; max-width: 100%; overflow-wrap: anywhere; font-family: var(--kc-font-label); font-size: 0.6rem; color: var(--kc-blue); text-decoration: underline; text-underline-offset: 2px; }
+  .kc__vendor-link:hover { color: var(--kc-hi); }
   .kc__vendor-info p { font-size: 0.65rem; color: var(--kc-sub); line-height: 1.5; margin-top: 0.2rem; }
 
   .kc__social { display: flex; justify-content: center; flex-wrap: wrap; gap: 1.5rem; margin-top: 2rem; }
