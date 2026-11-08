@@ -696,5 +696,41 @@
         "/images/Icons/silly_cyber_tess.png"
       ]
     }
+  ],
+
+  "sponsors": [
+    {
+      "name": "SEE",
+      "logo": "/images/Kamecon/see_logo.png",
+      "url": "https://www.see.umd.edu/"
+    },
+    {
+      "name": "Pepsi",
+      "logo": "/images/Kamecon/pepsi_logo.png",
+      "url": "https://www.pepsi.com/"
+    },
+    {
+      "name": "Arts For All",
+      "logo": "/images/Kamecon/arts_for_all_logo.png",
+      "url": "https://arts.umd.edu/"
+    }
+  ],
+
+  "additionalSupport": [
+    {
+      "name": "Japanese Program / CEAS",
+      "logo": "/images/Kamecon/CEAS_logo.png",
+      "url": "https://ceas.umd.edu/"
+    },
+    {
+      "name": "The Board and Brew",
+      "logo": "/images/Kamecon/board_and_brew_logo.png",
+      "url": "https://theboardandbrew.com/college-park"
+    },
+    {
+      "name": "Gundam Planet",
+      "logo": "/images/Kamecon/gundam_planet_logo.png",
+      "url": "https://www.gundamplanet.com/"
+    }
   ]
 }

@@ -34,6 +34,8 @@ const PHOTOS_2 = [
 // TODO: INSERT VENDOR LOGO FILEPATHS MANUALLY (max 3 logos per vendor, they rotate)
 // Add or remove vendor objects as needed. The list scrolls.
 const VENDORS = kameconData.vendors;
+const SPONSORS = kameconData.sponsors;
+const ADDITIONAL_SUPPORT = kameconData.additionalSupport;
 
 // Tickets now opens a "coming soon" popup (see POPUPS below).
 // When tickets go on sale, swap the Tickets button in the nav for a link to:
@@ -217,6 +219,52 @@ const popup = (id: string) => POPUPS.find((p) => p.id === id)!;
             </article>
           ))}
         </div>
+      </div>
+    </section>
+
+    <section class="kc__sponsors" aria-labelledby="kc-sponsors-h" data-kc-in>
+      <!-- ── Sponsors & Partners ── -->
+      <div class="kc__sp-divider">
+        <span class="kc__sp-line" aria-hidden="true"></span>
+        <h2 class="kc__sp-label" id="kc-sponsors-h">Sponsors &amp; Partners</h2>
+        <span class="kc__sp-line" aria-hidden="true"></span>
+      </div>
+      <div class="kc__sp-row">
+        {SPONSORS.map((s) => (
+          <div class="kc__sp-card">
+            {/* To add a logo: set "logo" in kamecon.json to the image path, e.g. "/images/Sponsors/see.png" */}
+            {s.logo
+              ? (s.url
+                  ? <a href={s.url} target="_blank" rel="noopener noreferrer" class="kc__sp-link" aria-label={s.name}><img src={s.logo} alt={s.name} /></a>
+                  : <img src={s.logo} alt={s.name} />)
+              : <span class="kc__ph kc__sp-ph">{s.name}<br/><span class="kc__sp-ph-hint">logo here</span></span>
+            }
+          </div>
+        ))}
+      </div>
+
+      <!-- ── Additional Support ── -->
+      <div class="kc__sp-divider kc__sp-divider--sub">
+        <span class="kc__sp-line" aria-hidden="true"></span>
+        <h3 class="kc__sp-label kc__sp-label--sub">Additional Support</h3>
+        <span class="kc__sp-line" aria-hidden="true"></span>
+      </div>
+      <div class="kc__sp-row kc__sp-row--support">
+        {ADDITIONAL_SUPPORT.map((s) => (
+          <div class="kc__sp-support">
+            {/* To add a logo: set "logo" in kamecon.json to the image path */}
+            <div class="kc__sp-support-logo">
+              {s.logo
+                ? <img src={s.logo} alt="" aria-hidden="true" />
+                : <span class="kc__ph kc__sp-ph">logo</span>
+              }
+            </div>
+            {s.url
+              ? <a href={s.url} target="_blank" rel="noopener noreferrer" class="kc__sp-support-name kc__sp-link">{s.name}<span class="kc__sr"> (opens in a new tab)</span></a>
+              : <span class="kc__sp-support-name">{s.name}</span>
+            }
+          </div>
+        ))}
       </div>
     </section>
 
@@ -665,5 +713,148 @@ const popup = (id: string) => POPUPS.find((p) => p.id === id)!;
     .kc__feature:hover .kc__feature-arr { transform: none; }
     .kc__cd-colon { animation: none; }
     .kc__notice-dot { animation: none; }
+  }
+
+  /* ── Sponsor section ── */
+  .kc__sponsors {
+    max-width: 70rem;
+    margin: 2.5rem auto 0;
+    padding: 2rem 2rem 1.5rem;
+    background: var(--kc-surface);
+    border: 1px solid var(--kc-border);
+    clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));
+    position: relative;
+  }
+
+  /* Section dividers */
+  .kc__sp-divider {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+  }
+  .kc__sp-line {
+    flex: 1;
+    height: 1px;
+    background: var(--kc-line);
+  }
+  .kc__sp-label {
+    font-family: var(--kc-font-label);
+    font-size: 0.6rem;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--kc-cyan);
+    white-space: nowrap;
+  }
+  .kc__sp-label--sub {
+    color: var(--kc-sub);
+    font-size: 0.55rem;
+  }
+  .kc__sp-divider--sub { margin-top: 1.75rem; }
+
+  /* Sponsor logo cards (chamfered, matches kc__card) */
+  .kc__sp-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .kc__sp-card {
+    position: relative;
+    flex: 1 1 160px;
+    max-width: 200px;
+    height: 90px;
+    background: var(--kc-panel);
+    box-shadow: inset 0 0 0 1px var(--kc-line);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem;
+    transition: box-shadow 0.2s;
+  }
+  /* Chamfer corner accent (top-right red bracket) */
+  .kc__sp-card::after {
+    content: '';
+    position: absolute;
+    right: 0; top: 0;
+    width: 0.75rem; height: 0.75rem;
+    border-top: 2px solid var(--kc-red);
+    border-right: 2px solid var(--kc-red);
+  }
+  .kc__sp-card:hover { box-shadow: inset 0 0 0 1px var(--kc-neon); }
+  .kc__sp-card img { max-width: 100%; max-height: 100%; object-fit: contain; }
+
+  /* Placeholder text inside logo card */
+  .kc__sp-ph {
+    font-family: var(--kc-font-label);
+    font-size: 0.55rem;
+    letter-spacing: 0.08em;
+    text-align: center;
+    line-height: 1.6;
+    color: var(--kc-sub);
+    text-transform: uppercase;
+  }
+  .kc__sp-ph-hint {
+    display: block;
+    color: rgba(255, 138, 155, 0.5);
+    font-size: 0.5rem;
+    letter-spacing: 0.06em;
+    margin-top: 0.1rem;
+  }
+
+  /* Additional support row */
+  .kc__sp-row--support { gap: 0.75rem; }
+  .kc__sp-support {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    flex: 1 1 200px;
+    max-width: 300px;
+    background: var(--kc-panel);
+    box-shadow: inset 0 0 0 1px var(--kc-line);
+    padding: 0.75rem 1rem;
+    position: relative;
+    transition: box-shadow 0.2s;
+  }
+  .kc__sp-support::after {
+    content: '';
+    position: absolute;
+    right: 0; top: 0;
+    width: 0.6rem; height: 0.6rem;
+    border-top: 2px solid var(--kc-red);
+    border-right: 2px solid var(--kc-red);
+  }
+  .kc__sp-support:has(.kc__sp-link):hover { box-shadow: inset 0 0 0 1px var(--kc-neon); }
+  .kc__sp-support-logo {
+    flex-shrink: 0;
+    width: 48px; height: 48px;
+    background: var(--kc-ph);
+    border: 1px dashed rgba(255, 138, 155, 0.4);
+    border-radius: 0.3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .kc__sp-support-logo img { width: 100%; height: 100%; object-fit: contain; }
+  .kc__sp-support-name {
+    font-family: var(--kc-font-head);
+    font-size: clamp(0.75rem, 2vw, 0.95rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: var(--kc-hi);
+    line-height: 1.3;
+  }
+  .kc__sp-link { text-decoration: none; }
+  .kc__sp-link:hover .kc__sp-support-name,
+  a.kc__sp-support-name:hover { color: var(--kc-text); }
+
+  @media (max-width: 600px) {
+    .kc__sponsors { padding: 1.5rem 1rem; }
+    .kc__sp-card { max-width: none; height: 70px; }
+    .kc__sp-support { max-width: none; }
   }
 </style>
