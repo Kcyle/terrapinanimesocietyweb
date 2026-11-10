@@ -445,6 +445,12 @@ const popup = (id: string) => POPUPS.find((p) => p.id === id)!;
   else init();
 </script>
 
+<style is:global>
+  /* Prevent horizontal overflow from creating extra vertical scroll on mobile.
+     Applied to html (not a child element) so it doesn't create a nested scroll container. */
+  html:has(.kc) { overflow-x: hidden; }
+</style>
+
 <style>
   .kc {
     --kc-bg: #0b0d12;
@@ -463,6 +469,7 @@ const popup = (id: string) => POPUPS.find((p) => p.id === id)!;
     --kc-ph: #1a2030;
     position: relative;
     min-height: 100vh;
+    min-height: 100dvh;
     background: var(--kc-bg);
     color: var(--kc-text);
     font-family: 'Chakra Petch', sans-serif;
@@ -754,15 +761,16 @@ const popup = (id: string) => POPUPS.find((p) => p.id === id)!;
   .kc__sp-row {
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: stretch;
     flex-wrap: wrap;
     gap: 1rem;
   }
   .kc__sp-card {
     position: relative;
-    flex: 1 1 160px;
+    flex: 1 1 150px;
+    min-width: 0;          /* prevent overflow past container */
     max-width: 200px;
-    height: 90px;
+    min-height: 80px;
     background: var(--kc-panel);
     box-shadow: inset 0 0 0 1px var(--kc-line);
     display: flex;
@@ -781,7 +789,7 @@ const popup = (id: string) => POPUPS.find((p) => p.id === id)!;
     border-right: 2px solid var(--kc-red);
   }
   .kc__sp-card:hover { box-shadow: inset 0 0 0 1px var(--kc-neon); }
-  .kc__sp-card img { max-width: 100%; max-height: 100%; object-fit: contain; }
+  .kc__sp-card img { max-width: 100%; max-height: 80px; object-fit: contain; }
 
   /* Placeholder text inside logo card */
   .kc__sp-ph {
@@ -808,7 +816,8 @@ const popup = (id: string) => POPUPS.find((p) => p.id === id)!;
     align-items: center;
     gap: 0.9rem;
     flex: 1 1 200px;
-    max-width: 300px;
+    min-width: 0;          /* prevent overflow */
+    max-width: 320px;
     background: var(--kc-panel);
     box-shadow: inset 0 0 0 1px var(--kc-line);
     padding: 0.75rem 1rem;
@@ -844,14 +853,58 @@ const popup = (id: string) => POPUPS.find((p) => p.id === id)!;
     letter-spacing: 0.03em;
     color: var(--kc-hi);
     line-height: 1.3;
+    min-width: 0;          /* allow text to wrap rather than overflow */
+    overflow-wrap: break-word;
   }
   .kc__sp-link { text-decoration: none; }
   .kc__sp-link:hover .kc__sp-support-name,
   a.kc__sp-support-name:hover { color: var(--kc-text); }
 
+  /* ── Sponsor responsive ── */
+
+  /* Tablet: cap section width, ease padding */
+  @media (max-width: 860px) {
+    .kc__sponsors { padding: 1.75rem 1.5rem; }
+  }
+
+  /* Mobile: stack cards, remove clip-path chamfer (it clips content), go full-width */
   @media (max-width: 600px) {
-    .kc__sponsors { padding: 1.5rem 1rem; }
-    .kc__sp-card { max-width: none; height: 70px; }
-    .kc__sp-support { max-width: none; }
+    .kc__sponsors {
+      padding: 1.25rem 1rem 1.5rem;
+      clip-path: none;              /* chamfer clip-path causes overflow issues on narrow screens */
+      border-radius: 0.6rem;
+    }
+    /* Sponsor logo cards: 2-per-row grid instead of flex (prevents uneven last item) */
+    .kc__sp-row {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem;
+    }
+    .kc__sp-card {
+      max-width: none;
+      min-height: 70px;
+      flex: none;
+    }
+    /* Additional support: each card full width, stacked */
+    .kc__sp-row--support {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+    .kc__sp-support {
+      max-width: none;
+      flex: none;
+      width: 100%;
+    }
+    .kc__sp-support-name {
+      font-size: 0.8rem;
+    }
+  }
+
+  /* Very small screens: single column for sponsor cards */
+  @media (max-width: 360px) {
+    .kc__sp-row {
+      grid-template-columns: 1fr;
+    }
   }
 </style>
