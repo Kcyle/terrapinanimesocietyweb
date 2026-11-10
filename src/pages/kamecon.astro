@@ -37,9 +37,7 @@ const VENDORS = kameconData.vendors;
 const SPONSORS = kameconData.sponsors;
 const ADDITIONAL_SUPPORT = kameconData.additionalSupport;
 
-// Tickets now opens a "coming soon" popup (see POPUPS below).
-// When tickets go on sale, swap the Tickets button in the nav for a link to:
-// https://umdtickets.universitytickets.com/w/event.aspx?id=1669
+const TICKETS_URL = 'https://umdtickets.universitytickets.com/w/event.aspx?id=1669';
 const CONTACT_URL = '/contact';
 
 const SOCIALS = {
@@ -56,10 +54,9 @@ const SCHEDULE_URL = '/kamecon/schedule';
 const EVENT_START = '2026-11-15T11:00:00-05:00';
 const EVENT_END = '2026-11-15T22:00:00-05:00';
 
-// Popup content for Tickets, Parking and Harassment Policy.
+// Popup content for Parking and Harassment Policy.
 // Buttons are wired by id in the nav (data-modal-open). `body` = plain paragraphs. `sections` = headed blocks made of p / ul / callout / links.
 const POPUPS = [
-  { id: 'tickets', label: 'Tickets', title: 'Tickets', body: ['Tickets coming soon.'] },
   {
     id: 'parking', label: 'Parking', title: 'Parking',
     // Text below is word-for-word from the parking doc. `html` blocks are trusted, hand-written strings (used only for bold words).
@@ -157,9 +154,9 @@ const popup = (id: string) => POPUPS.find((p) => p.id === id)!;
         </div>
         <p class="kc__cd-note" data-cd-note>Doors open 11:00 AM EST</p>
       </div>
-      <p class="kc__cta-text">Tickets coming soon</p>
+      <p class="kc__cta-text">Get your tickets now</p>
       <nav class="kc__nav" aria-label="KAMECON links">
-        <button type="button" class="kc__btn kc__btn--tickets" data-modal-open="tickets">{popup('tickets').label}</button>
+        <a class="kc__btn kc__btn--tickets" href={TICKETS_URL} target="_blank" rel="noopener noreferrer">Tickets<span class="kc__sr"> (opens in a new tab)</span></a>
         <a class="kc__feature" href={SCHEDULE_URL}>
           <span class="kc__feature-tag">See the lineup</span>
           <span class="kc__feature-txt">
