@@ -9,6 +9,9 @@ import schedule from '../../data/kamecon-schedule.json';
 const BG_IMAGE = '/images/Kamecon/kameback.jpeg';
 const BACK_URL = '/kamecon';
 
+// Venue map image showing all event locations
+const VENUE_MAP_IMAGE = '/images/Kamecon/event_location.png';
+
 const SOCIALS = {
   discord: 'https://discord.gg/qqsyXrk7fP',
   instagram: 'https://www.instagram.com/terrapinanimesociety/?utm_source=ig_web_button_share_sheet',
@@ -54,6 +57,15 @@ const { stage, cosplay, arcade } = schedule;
     </header>
 
     <div class="kc__wrap" id="kc-schedule" data-kc-in>
+
+      <!-- View Venue Map button — sits above the tab bar -->
+      <div class="kc__map-bar">
+        <button type="button" class="kc__map-btn" data-map-open aria-haspopup="dialog">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
+          View Venue Map
+        </button>
+      </div>
+
       <div class="kc__tabs" role="tablist" aria-label="Schedule sections" data-tabs>
         {TABS.map((t, i) => (
           <button
@@ -148,6 +160,11 @@ const { stage, cosplay, arcade } = schedule;
       <!-- ARCADE -->
       <section class="kc__panel" role="tabpanel" id="panel-arcade" aria-labelledby="tab-arcade" tabindex="0">
         <h2 class="kc__h2">Arcade</h2>
+        {'location' in arcade && arcade.location && (
+          <ul class="kc__meta" aria-label="Arcade details">
+            <li><span class="kc__meta-k">Location</span> {arcade.location}</li>
+          </ul>
+        )}
         <p class="kc__notice"><span class="kc__notice-k">Required</span> {arcade.controllerNote}</p>
 
         <h3 class="kc__h3 kc__h3--lg">Tournaments</h3>
@@ -192,6 +209,27 @@ const { stage, cosplay, arcade } = schedule;
         ))}
       </section>
     </div>
+
+    <!-- Venue map modal -->
+    <dialog class="kc__map-dialog" id="venue-map-modal" aria-labelledby="venue-map-title">
+      <div class="kc__map-frame">
+        <div class="kc__map-dlg">
+          <div class="kc__map-head">
+            <h2 class="kc__map-title" id="venue-map-title">Venue Map</h2>
+            <button type="button" class="kc__map-close" data-map-close aria-label="Close venue map">&times;</button>
+          </div>
+          <div class="kc__map-body">
+            {VENUE_MAP_IMAGE
+              ? <img src={VENUE_MAP_IMAGE} alt="KAMECON 2026 venue map showing event locations" class="kc__map-img" />
+              : <div class="kc__map-ph kc__ph">
+                  {/* Set VENUE_MAP_IMAGE at the top of this file to show your map */}
+                  Venue map image — set VENUE_MAP_IMAGE to your image path
+                </div>
+            }
+          </div>
+        </div>
+      </div>
+    </dialog>
 
     <footer class="kc__social" aria-label="Social media">
       <a href={SOCIALS.discord} target="_blank" rel="noopener noreferrer" aria-label="Discord (opens in a new tab)"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"></path></svg><span>Discord</span></a>
@@ -247,8 +285,22 @@ const { stage, cosplay, arcade } = schedule;
     select(fromHash());
   }
 
+  function initMapModal() {
+    const dlg = document.getElementById('venue-map-modal') as HTMLDialogElement | null;
+    if (!dlg) return;
+    document.querySelectorAll<HTMLElement>('[data-map-open]').forEach((btn) => {
+      btn.addEventListener('click', () => dlg.showModal());
+    });
+    dlg.querySelector('[data-map-close]')?.addEventListener('click', () => dlg.close());
+    dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });
+    if (location.hash === '#venue-map' || location.hash === '#map') {
+      dlg.showModal();
+    }
+  }
+
   function init() {
     initTabs();
+    initMapModal();
     if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       gsap.from('[data-kc-in]', { y: 40, opacity: 0, duration: 0.7, stagger: 0.15, ease: 'power3.out' });
     }
@@ -257,6 +309,17 @@ const { stage, cosplay, arcade } = schedule;
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
   else init();
 </script>
+
+<style is:global>
+  /* Clamp horizontal overflow and prevent phantom vertical scroll on mobile */
+  html, body {
+    overflow-x: hidden;
+    overflow-x: clip;
+  }
+  dialog:not([open]) {
+    display: none !important;
+  }
+</style>
 
 <style>
   .kc {
@@ -279,7 +342,6 @@ const { stage, cosplay, arcade } = schedule;
     --kc-gray: #7c8799;
     --cut: 10px;
     position: relative;
-    min-height: 100vh;
     background: var(--kc-bg);
     color: var(--kc-text);
     font-family: 'Chakra Petch', sans-serif;
@@ -448,5 +510,140 @@ const { stage, cosplay, arcade } = schedule;
     .kc__gl-a, .kc__gl-b { display: none; }
     .kc__item::before { background: CanvasText; box-shadow: none; }
     .kc__tab[aria-selected='true'] { outline: 2px solid Highlight; }
+  }
+
+  /* ── Venue Map (Demo A) ── */
+  .kc__map-bar {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 0.9rem;
+  }
+  .kc__map-btn {
+    font-family: var(--kc-font-label);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 2.3rem;
+    padding: 0.55rem 1.1rem;
+    font-size: 0.65rem;
+    font-weight: 600;
+    color: #fff;
+    background: var(--kc-panel);
+    border: 0;
+    box-shadow: inset 0 0 0 1px var(--kc-neon);
+    clip-path: polygon(0 0, calc(100% - var(--cut)) 0, 100% var(--cut), 100% 100%, var(--cut) 100%, 0 calc(100% - var(--cut)));
+    transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+    cursor: pointer;
+  }
+  .kc__map-btn svg {
+    color: var(--kc-cyan);
+    flex-shrink: 0;
+  }
+  .kc__map-btn:hover {
+    background: #16304f;
+    box-shadow: inset 0 0 0 1px var(--kc-cyan), 0 0 14px rgba(30, 155, 255, 0.45);
+    transform: translateY(-1px);
+  }
+  .kc__map-btn:focus-visible {
+    clip-path: none;
+    outline: 2px solid var(--kc-hi);
+    outline-offset: 3px;
+  }
+
+  /* Map modal dialog */
+  .kc__map-dialog {
+    margin: auto;
+    width: min(46rem, calc(100% - 2rem));
+    padding: 0;
+    border: 0;
+    overflow: visible;
+    background: transparent;
+    color: var(--kc-text);
+    filter: drop-shadow(0 0 16px rgba(30, 155, 255, 0.45));
+  }
+  .kc__map-dialog:not([open]) {
+    display: none !important;
+  }
+  .kc__map-dialog::backdrop {
+    background: rgba(5, 7, 12, 0.88);
+    backdrop-filter: blur(4px);
+  }
+  .kc__map-frame {
+    padding: 2px;
+    background: var(--kc-neon);
+    clip-path: polygon(22px 0, 100% 0, 100% calc(100% - 22px), calc(100% - 22px) 100%, 0 100%, 0 22px);
+  }
+  .kc__map-dlg {
+    position: relative;
+    background: repeating-linear-gradient(0deg, rgba(30, 155, 255, 0.04) 0, rgba(30, 155, 255, 0.04) 1px, transparent 1px, transparent 4px), #0f1522;
+    clip-path: polygon(21px 0, 100% 0, 100% calc(100% - 21px), calc(100% - 21px) 100%, 0 100%, 0 21px);
+  }
+  .kc__map-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.1rem 1.3rem 0.8rem 1.4rem;
+    border-bottom: 1px solid rgba(30, 155, 255, 0.25);
+  }
+  .kc__map-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--kc-neon);
+    text-shadow: 0 0 12px rgba(30, 155, 255, 0.6);
+    margin: 0;
+  }
+  .kc__map-close {
+    flex: 0 0 auto;
+    width: 2.2rem;
+    height: 2.2rem;
+    background: var(--kc-bg);
+    box-shadow: inset 0 0 0 1px var(--kc-border);
+    border: 0;
+    font-size: 1.2rem;
+    line-height: 1;
+    color: var(--kc-text);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .kc__map-close:hover {
+    box-shadow: inset 0 0 0 1px var(--kc-red);
+    color: var(--kc-red);
+  }
+  .kc__map-body {
+    padding: 1rem 1.25rem 1.25rem;
+    max-height: min(80vh, 42rem);
+    overflow-y: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .kc__map-img {
+    width: 100%;
+    height: auto;
+    max-height: min(72vh, 38rem);
+    object-fit: contain;
+    border-radius: 0.4rem;
+    border: 1px solid var(--kc-line);
+    background: #0d121c;
+  }
+  .kc__map-ph {
+    width: 100%;
+    aspect-ratio: 16/9;
+    font-size: 0.7rem;
+    padding: 2rem;
+    border: 1px dashed var(--kc-cyan);
+  }
+
+  @media (max-width: 480px) {
+    .kc__map-bar { justify-content: stretch; }
+    .kc__map-btn { width: 100%; }
+    .kc__map-body { padding: 0.75rem; }
   }
 </style>

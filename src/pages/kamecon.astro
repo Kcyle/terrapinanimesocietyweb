@@ -161,11 +161,12 @@ const popup = (id: string) => POPUPS.find((p) => p.id === id)!;
           <span class="kc__feature-tag">See the lineup</span>
           <span class="kc__feature-txt">
             <span class="kc__feature-ttl">Event Schedule</span>
-            <span class="kc__feature-sub">Stage &middot; Cosplay &middot; Arcade</span>
+            <span class="kc__feature-sub">Stage &middot; Cosplay &middot; Arcade &middot; Map</span>
           </span>
           <span class="kc__feature-arr" aria-hidden="true">&gt;&gt;</span>
         </a>
         <div class="kc__nav-row">
+          <a class="kc__btn" href={`${SCHEDULE_URL}#venue-map`}>Venue Map</a>
           <button type="button" class="kc__btn" data-modal-open="parking">{popup('parking').label}</button>
           <button type="button" class="kc__btn" data-modal-open="policy">{popup('policy').label}</button>
           <a class="kc__btn" href={CONTACT_URL || undefined}>Contact</a>
@@ -446,9 +447,16 @@ const popup = (id: string) => POPUPS.find((p) => p.id === id)!;
 </script>
 
 <style is:global>
-  /* Prevent horizontal overflow from creating extra vertical scroll on mobile.
-     Applied to html (not a child element) so it doesn't create a nested scroll container. */
-  html:has(.kc) { overflow-x: hidden; }
+  /* Clamp horizontal overflow at the root so no child element can widen
+     the page and create phantom vertical scroll space on mobile. */
+  html, body {
+    overflow-x: hidden;
+    overflow-x: clip;
+  }
+  /* Closed dialogs must never take up layout flow height on mobile */
+  dialog:not([open]) {
+    display: none !important;
+  }
 </style>
 
 <style>
@@ -468,8 +476,6 @@ const popup = (id: string) => POPUPS.find((p) => p.id === id)!;
     --kc-rose: #b8527a;
     --kc-ph: #1a2030;
     position: relative;
-    min-height: 100vh;
-    min-height: 100dvh;
     background: var(--kc-bg);
     color: var(--kc-text);
     font-family: 'Chakra Petch', sans-serif;
@@ -635,6 +641,9 @@ const popup = (id: string) => POPUPS.find((p) => p.id === id)!;
     background: transparent; color: var(--kc-text);
     filter: drop-shadow(0 0 12px rgba(224, 49, 79, 0.55));
   }
+  .kc__dialog:not([open]) {
+    display: none !important;
+  }
   .kc__dialog::backdrop { background: rgba(5, 7, 12, 0.85); }
   .kc__frame { padding: 2px; background: var(--kc-red); clip-path: polygon(22px 0, 100% 0, 100% calc(100% - 22px), calc(100% - 22px) 100%, 0 100%, 0 22px); }
   .kc__dlg {
@@ -699,7 +708,7 @@ const popup = (id: string) => POPUPS.find((p) => p.id === id)!;
   }
   @media (max-width: 860px) {
     .kc__grid { grid-template-columns: 1fr; }
-    .kc__vendors { max-height: 26rem; }
+    .kc__vendors { max-height: 26rem; overflow: hidden; }
   }
   @media (max-width: 480px) {
     .kc__nav-row { width: 100%; }
@@ -862,17 +871,19 @@ const popup = (id: string) => POPUPS.find((p) => p.id === id)!;
 
   /* ── Sponsor responsive ── */
 
-  /* Tablet: cap section width, ease padding */
+  /* Tablet: cap section width, ease padding, remove clip-path */
   @media (max-width: 860px) {
-    .kc__sponsors { padding: 1.75rem 1.5rem; }
+    .kc__sponsors {
+      padding: 1.75rem 1.5rem;
+      clip-path: none;
+      border-radius: 0.6rem;
+    }
   }
 
-  /* Mobile: stack cards, remove clip-path chamfer (it clips content), go full-width */
+  /* Mobile: stack cards, go full-width */
   @media (max-width: 600px) {
     .kc__sponsors {
       padding: 1.25rem 1rem 1.5rem;
-      clip-path: none;              /* chamfer clip-path causes overflow issues on narrow screens */
-      border-radius: 0.6rem;
     }
     /* Sponsor logo cards: 2-per-row grid instead of flex (prevents uneven last item) */
     .kc__sp-row {

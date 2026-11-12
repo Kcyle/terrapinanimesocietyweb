@@ -93,6 +93,7 @@
   },
   
   "arcade": {
+    "location": "Prince George's Room",
     "controllerNote": "Bring your own controller. You must bring your own controller to enter any tournament.",
     "registerLabel": "Register on start.gg",
     "registerUrl": "https://www.start.gg/tournament/umd-kamecon-26-terpin-out/details",
@@ -112,7 +113,7 @@
       {
         "name": "Fighting games",
         "host": "",
-        "games": ["BlazBlue CentralFiction (all DLC, vanilla and modded)", "Guilty Gear Strive", "Under Night In-Birth II", "Persona 4 Arena Ultimax", "Melty Blood (AACC and TL)", "Dragon Ball FighterZ"]
+        "games": ["BlazBlue CentralFiction (all DLC, vanilla and modded)", "Guilty Gear Strive", "Under Night In-Birth II", "Persona 4 Arena Ultimax", "Melty Blood (AACC and TL)", "Granblue Fantasy Versus", "Blazblue CrossTag"]
       },
       {
         "name": "Wii U",
